@@ -1,0 +1,26 @@
+:root {
+  --color-bg: #07070a;
+  --color-bg-elevated: rgba(255, 255, 255, 0.045);
+  --color-bg-strong: rgba(17, 24, 39, 0.88);
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-text-primary: #f5f7fb;
+  --color-text-secondary: #dde4f0;
+  --color-text-muted: #a1aab8;
+  --color-accent-orange: #ff7a18;
+  --color-accent-yellow: #f5ff65;
+  --color-accent-blue: #6d7cff;
+  --color-accent-violet: #8b5cf6;
+  --gradient-brand: linear-gradient(
+    135deg,
+    rgba(255, 122, 24, 0.95) 0%,
+    rgba(245, 255, 101, 0.9) 24%,
+    rgba(109, 124, 255, 0.92) 62%,
+    rgba(139, 92, 246, 0.9) 100%
+  );
+  --gradient-surface: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+}
+
