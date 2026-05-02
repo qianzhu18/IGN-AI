@@ -32,9 +32,9 @@ export function CTAButton({
       className={cn(
         "button-shine group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border px-5 py-3 text-sm font-medium transition duration-300",
         variant === "primary" &&
-          "border-white/80 bg-[#F8F3EE] text-[#111111] shadow-[0_14px_40px_rgba(255,255,255,0.14)] hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_20px_48px_rgba(255,255,255,0.18)]",
+          "border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] hover:-translate-y-0.5 hover:shadow-[0_26px_58px_rgba(255,122,24,0.34)]",
         variant === "secondary" &&
-          "border-white/12 bg-white/[0.04] text-white hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.08]",
+          "border-[#ffb879]/16 bg-[#0c1118]/90 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] hover:-translate-y-0.5 hover:border-[#ffb879]/30 hover:bg-[#121823]",
         variant === "ghost" &&
           "border-transparent bg-transparent px-0 py-0 text-[#DDE4F0] hover:text-white",
         className,

@@ -8,23 +8,19 @@ const xiaohongshuUrl = process.env.NEXT_PUBLIC_XIAOHONGSHU_URL?.trim() || "";
 const wechatUrl = process.env.NEXT_PUBLIC_WECHAT_URL?.trim() || "";
 const feishuUrl = process.env.NEXT_PUBLIC_FEISHU_URL?.trim() || "";
 const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL?.trim() || "";
-const discordUrl = process.env.NEXT_PUBLIC_DISCORD_URL?.trim() || "";
 
 type LinkSlot = {
   label: string;
-  detail: string;
   href: string;
   configured: boolean;
 };
 
 const buildSlot = (
   label: string,
-  detail: string,
   href: string,
   configured: boolean,
 ): LinkSlot => ({
   label,
-  detail,
   href: configured ? href : "#join",
   configured,
 });
@@ -51,16 +47,9 @@ export const primaryLinks = {
 };
 
 export const socialLinkSlots: LinkSlot[] = [
-  buildSlot("微信入口", "适合本地连接与活动同步", wechatUrl, Boolean(wechatUrl)),
-  buildSlot("飞书社群", "适合协作与资料沉淀", feishuUrl, Boolean(feishuUrl)),
-  buildSlot("Telegram", "适合跨地域连接", telegramUrl, Boolean(telegramUrl)),
-  buildSlot("Discord", "适合持续线上讨论", discordUrl, Boolean(discordUrl)),
-  buildSlot("小红书", "适合内容更新与扩散", xiaohongshuUrl, Boolean(xiaohongshuUrl)),
-  buildSlot(
-    "联系邮箱",
-    "合作、提案与对外联系",
-    `mailto:${contactEmail}`,
-    true,
-  ),
+  buildSlot("微信社群", wechatUrl, Boolean(wechatUrl)),
+  buildSlot("飞书", feishuUrl, Boolean(feishuUrl)),
+  buildSlot("Telegram", telegramUrl, Boolean(telegramUrl)),
+  buildSlot("小红书", xiaohongshuUrl, Boolean(xiaohongshuUrl)),
+  buildSlot("Email", `mailto:${contactEmail}`, true),
 ];
-

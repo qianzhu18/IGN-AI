@@ -11,9 +11,9 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 18% 14%, rgba(255, 144, 73, 0.1), transparent 22%),
-    radial-gradient(circle at 82% 16%, rgba(124, 101, 255, 0.12), transparent 28%),
-    linear-gradient(180deg, #020202 0%, #040406 36%, #050507 100%);
+    radial-gradient(circle at 16% 10%, rgba(255, 122, 24, 0.22), transparent 28%),
+    radial-gradient(circle at 84% 18%, rgba(93, 169, 255, 0.1), transparent 26%),
+    linear-gradient(180deg, #040507 0%, #07080c 38%, #090d14 100%);
   color: var(--color-text-primary);
   font-family: var(--font-sans), ui-sans-serif, system-ui;
   overflow-x: hidden;
@@ -36,17 +36,36 @@ body {
 
   a:focus-visible,
   button:focus-visible {
-    @apply ring-2 ring-[#F5FF65]/80 ring-offset-2 ring-offset-[#07070A];
+    @apply ring-2 ring-[#FF9A3C]/85 ring-offset-2 ring-offset-[#07080C];
   }
 }
 
 @layer components {
   .surface-card {
-    @apply rounded-[28px] border border-white/10 bg-white/[0.03] shadow-glow backdrop-blur-xl;
+    @apply rounded-[28px] border backdrop-blur-md;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(12, 17, 24, 0.88);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 24px 70px rgba(0, 0, 0, 0.46),
+      0 0 0 1px rgba(255, 154, 60, 0.04);
   }
 
   .surface-card-strong {
-    @apply rounded-[32px] border border-white/10 bg-black/50 shadow-glow backdrop-blur-2xl;
+    @apply rounded-[32px] border backdrop-blur-lg;
+    border-color: rgba(255, 154, 60, 0.16);
+    background-color: rgba(9, 13, 20, 0.92);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 32px 90px rgba(0, 0, 0, 0.56),
+      0 0 0 1px rgba(255, 122, 24, 0.06);
+  }
+
+  .eyebrow-label {
+    @apply inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-[0.68rem] font-medium uppercase tracking-[0.32em];
+    border-color: rgba(255, 184, 121, 0.2);
+    background-color: rgba(255, 154, 60, 0.08);
+    color: #f2c892;
   }
 
   .text-gradient {
@@ -66,7 +85,7 @@ body {
       120deg,
       transparent 0%,
       rgba(255, 255, 255, 0.08) 20%,
-      rgba(255, 255, 255, 0.55) 50%,
+      rgba(255, 255, 255, 0.46) 50%,
       transparent 100%
     );
     transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
@@ -86,6 +105,102 @@ body {
 
   .mask-bottom {
     mask-image: linear-gradient(180deg, black 0%, black 72%, transparent 100%);
+  }
+
+  .ignite-field {
+    pointer-events: none;
+    position: absolute;
+    inset: 10% 0 0;
+    opacity: 0.72;
+    background:
+      radial-gradient(ellipse at 24% 48%, rgba(255, 122, 24, 0.16), transparent 28%),
+      radial-gradient(ellipse at 72% 44%, rgba(124, 200, 255, 0.1), transparent 24%);
+    mix-blend-mode: screen;
+    animation: ignite-breathe 14s ease-in-out infinite;
+  }
+
+  .ignite-field::after {
+    content: "";
+    position: absolute;
+    left: 18%;
+    top: 34%;
+    width: min(42vw, 34rem);
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 154, 60, 0.16);
+    border-radius: 999px;
+    transform: scale(0.72);
+    animation: ignite-ring 9s ease-out infinite;
+  }
+
+  .energy-panel {
+    position: relative;
+  }
+
+  .energy-panel::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(
+      115deg,
+      rgba(255, 122, 24, 0.35),
+      rgba(255, 197, 107, 0.08),
+      rgba(124, 200, 255, 0.28),
+      rgba(255, 122, 24, 0.35)
+    );
+    background-size: 260% 260%;
+    opacity: 0.55;
+    animation: energy-border-flow 16s linear infinite;
+  }
+
+  .energy-card {
+    transition:
+      filter 0.45s ease,
+      transform 0.45s ease,
+      border-color 0.45s ease,
+      box-shadow 0.45s ease;
+    animation: card-energy-pulse 10s ease-in-out infinite;
+  }
+
+  .energy-card:hover {
+    filter: brightness(1.08) contrast(1.04);
+    transform: translateY(-4px);
+    border-color: rgba(255, 184, 121, 0.22);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 30px 90px rgba(0, 0, 0, 0.52),
+      0 0 42px rgba(255, 122, 24, 0.12);
+  }
+
+  .presence-card {
+    animation: presence-hold 16s ease-in-out infinite;
+  }
+
+  .converge-field {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0.82;
+    mix-blend-mode: screen;
+  }
+
+  .converge-ray {
+    position: absolute;
+    left: -14%;
+    top: var(--ray-y);
+    width: 64%;
+    height: 1px;
+    transform-origin: right center;
+    transform: rotate(var(--ray-rotate));
+    background: linear-gradient(90deg, transparent, rgba(255, 197, 107, 0.34), rgba(124, 200, 255, 0.18), transparent);
+    animation: converge-ray 9s ease-in-out infinite;
+    animation-delay: var(--ray-delay);
+  }
+
+  .motion-cta {
+    animation: cta-heat 7s ease-in-out infinite;
   }
 }
 
@@ -116,6 +231,10 @@ body {
 
   .ambient-fade {
     animation: ambient-fade 12s ease-in-out infinite;
+  }
+
+  .slow-pan {
+    animation: slow-pan 18s ease-in-out infinite;
   }
 }
 
@@ -172,6 +291,108 @@ body {
 
   50% {
     opacity: 0.5;
+  }
+}
+
+@keyframes slow-pan {
+  0%,
+  100% {
+    transform: scale(1.01) translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: scale(1.05) translate3d(-10px, -8px, 0);
+  }
+}
+
+@keyframes ignite-breathe {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  45% {
+    opacity: 0.78;
+    transform: translate3d(1.4rem, -0.8rem, 0) scale(1.04);
+  }
+}
+
+@keyframes ignite-ring {
+  0% {
+    opacity: 0;
+    transform: scale(0.55);
+  }
+
+  16% {
+    opacity: 0.55;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+
+@keyframes energy-border-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 260% 50%;
+  }
+}
+
+@keyframes card-energy-pulse {
+  0%,
+  100% {
+    filter: brightness(0.96) contrast(1);
+  }
+
+  46% {
+    filter: brightness(1.06) contrast(1.03);
+  }
+}
+
+@keyframes presence-hold {
+  0%,
+  100% {
+    filter: brightness(0.98);
+  }
+
+  50% {
+    filter: brightness(1.04);
+  }
+}
+
+@keyframes converge-ray {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-8%) rotate(var(--ray-rotate)) scaleX(0.54);
+  }
+
+  38% {
+    opacity: 0.72;
+  }
+
+  70% {
+    opacity: 0.2;
+    transform: translateX(74%) rotate(var(--ray-rotate)) scaleX(0.94);
+  }
+}
+
+@keyframes cta-heat {
+  0%,
+  100% {
+    filter: brightness(1);
+    box-shadow: 0 20px 48px rgba(255, 122, 24, 0.28);
+  }
+
+  48% {
+    filter: brightness(1.08);
+    box-shadow: 0 24px 68px rgba(255, 122, 24, 0.42);
   }
 }
 

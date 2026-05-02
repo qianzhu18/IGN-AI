@@ -4,10 +4,9 @@ import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
 export function PageBackdrop() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.025),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.02)_0%,transparent_100%)]" />
-      <div className="absolute left-[-14rem] top-[-10rem] h-[38rem] w-[38rem] rounded-full bg-[radial-gradient(circle,rgba(255,126,51,0.15)_0%,transparent_74%)] blur-3xl" />
-      <div className="absolute right-[-12rem] top-[8rem] h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle,rgba(119,97,255,0.14)_0%,transparent_72%)] blur-3xl" />
-      <div className="absolute bottom-[-12rem] left-[22%] h-[28rem] w-[44rem] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.06)_0%,transparent_72%)] blur-3xl" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.018)_0%,transparent_18%,transparent_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_12%_18%,rgba(255,122,24,0.2),transparent_34%),radial-gradient(ellipse_at_88%_22%,rgba(93,169,255,0.13),transparent_32%),linear-gradient(125deg,rgba(255,154,60,0.08),transparent_24%,rgba(124,200,255,0.08)_78%,transparent_100%)]" />
+      <div className="absolute inset-y-0 left-1/2 hidden w-px bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.06)_10%,rgba(255,255,255,0.02)_55%,transparent_100%)] lg:block" />
       <GridLines />
       <NoiseOverlay />
     </div>
