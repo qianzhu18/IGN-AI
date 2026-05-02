@@ -7,19 +7,24 @@ import { traitCards } from "@/content/community";
 export function TraitsSection() {
   return (
     <SectionContainer id="traits">
-      <div className="grid gap-12 xl:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] xl:gap-16">
-        <div className="xl:sticky xl:top-24 xl:h-fit">
+      <div className="section-grid-start">
+        <div className="section-copy">
           <Reveal>
-            <p className="text-xs font-medium uppercase tracking-[0.34em] text-[#F0CB8A]/78">
+            <p className="section-eyebrow">
               05 / Traits
             </p>
-            <h2 className="mt-6 max-w-[10ch] font-display text-[3.4rem] italic leading-[0.92] tracking-[-0.045em] text-white sm:text-[4.6rem] lg:text-[5.4rem]">
+            <h2 className="display-title mt-6 max-w-[13ch]">
               What makes
               <br />
               IGNAI different
             </h2>
-            <p className="mt-6 max-w-xl text-base leading-8 text-white/58 sm:text-lg">
-              本地土壤、国际视野、技术密度与真实连接，构成了 IGNAI 最核心的社区气质。
+            <p className="section-lead mt-6 max-w-[15ch] font-medium">
+              本地土壤、国际视野、
+              <br />
+              技术密度与真实连接。
+            </p>
+            <p className="section-body mt-5">
+              它们构成了 IGNAI 最核心的社区气质。
             </p>
           </Reveal>
         </div>
@@ -42,16 +47,16 @@ export function TraitsSection() {
                   }`}
                 />
                 <p
-                  className={`text-[0.7rem] uppercase tracking-[0.32em] ${
+                  className={`card-eyebrow ${
                     index === 0 || index === 3 ? "text-[#F0CB8A]/78" : "text-[#9aceff]"
                   }`}
                 >
-                  {card.subtitle}
+                  {card.eyebrow}
                 </p>
-                <h3 className="mt-5 text-[1.95rem] font-semibold leading-none tracking-[-0.03em] text-white">
+                <h3 className="card-title">
                   {card.title}
                 </h3>
-                <p className="mt-5 text-sm leading-7 text-white/60">{card.description}</p>
+                <p className="card-body">{card.description}</p>
               </div>
             </Reveal>
           ))}

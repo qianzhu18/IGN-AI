@@ -1,34 +1,36 @@
 export const siteContent = {
   name: "IGNAI",
   slogan: "Ignite before AGI.",
-  eyebrow: "Base in Changsha. Connected to the world.",
+  eyebrow: "Living AI Community",
   description:
     "IGNAI 是一个 base 长沙、面向国际、立足本地技术连接与行动实践的 AI 社群。",
   mission:
     "我们关注 AI、Agent、产品、内容、创业与新技术协作方式，也关注人在这个时代如何通过表达、行动、连接与正反馈持续成长。",
-  heroSummary: "base 长沙，连接本地，面向全球。",
-  heroDescription: "一个强调表达、行动与真实连接的 AI 社区。",
+  heroSummary: "IGNAI 是一个 base 长沙、连接本地、面向全球的 AI 社区。",
+  heroDescription: "关注 AI、Agent、Product、Startup 与真实行动。",
   heroSignals: [
     {
       title: "本地连接",
-      description: "扎根长沙，把开发者、创业者与创作者先连接起来。",
+      eyebrow: "Local roots",
+      description: "连接长沙、高校、开发者与行动者。",
     },
     {
       title: "国际信号",
-      description: "保持开放，和更广阔的 AI 浪潮持续同频。",
+      eyebrow: "Global signal",
+      description: "保持开放，吸收全球 AI 趋势。",
     },
     {
       title: "真实温度",
-      description: "不是冷讨论板，而是会彼此点燃的社区。",
+      eyebrow: "Human warmth",
+      description: "让连接发生在真实的人之间。",
     },
   ],
   navItems: [
     { label: "What", href: "#what-is-ignai" },
-    { label: "Why Now", href: "#why-now" },
     { label: "Culture", href: "#culture" },
-    { label: "Identity", href: "#identity" },
-    { label: "Traits", href: "#traits" },
-    { label: "Join", href: "#join" },
+    { label: "Events", href: "#upcoming-events" },
+    { label: "Records", href: "#field-notes" },
+    { label: "Join", href: "/join" },
   ],
   footerLocation: "Based in Changsha, connected to the world.",
 };

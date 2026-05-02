@@ -1,114 +1,142 @@
 export const whatIsContent = {
-  definition:
-    "一个 base 长沙、连接本地、面向全球的成长型 AI 社区。",
+  definitionLines: ["一个从长沙出发，", "连接真实行动者的 AI 社区。"],
   support:
-    "关注 AI，也关注人。关注技术，也关注表达、行动与连接。",
-  keywords: ["AI", "Agent", "Product", "Startup", "Content", "Community"],
+    "我们关注 AI、Agent、Product、Startup 与内容表达，把学习、实践、分享和连接变成持续发生的事情。",
+  memberCards: [
+    {
+      eyebrow: "AI Learners",
+      title: "AI 学习者",
+      description: "正在学习 AI、工具和未来工作方式的人。",
+    },
+    {
+      eyebrow: "Builders",
+      title: "项目行动者",
+      description: "做产品、Agent、工具和真实项目的人。",
+    },
+    {
+      eyebrow: "Storytellers",
+      title: "表达者",
+      description: "愿意分享观点、记录实践、传播信号的人。",
+    },
+    {
+      eyebrow: "Connectors",
+      title: "连接者",
+      description: "连接本地资源、全球趋势和更多行动机会的人。",
+    },
+  ],
 };
 
 export const whyNowContent = {
   title: "Ignite people before hype.",
-  support: "在 AGI 到来之前，最重要的是先点燃一群人。",
-  paragraph:
-    "我们相信，AI 时代最稀缺的不是信息，而是愿意表达、行动、协作，并把想法变成现实的人。",
+  supportLines: ["在 AGI 到来之前，", "先点燃一群能行动的人。"],
+  paragraph: "AI 时代最稀缺的不是热点，是判断、表达、行动和协作。",
+  visualTitle: "IGNITION CORE",
+  visualDescription: "热源先被点亮，连接和行动才会真正扩散。",
   cards: [
     {
-      title: "点燃好奇心",
-      subtitle: "Curiosity",
-      description: "保持开放，持续探索未知。",
+      eyebrow: "01",
+      title: "信息很多，判断很少",
+      description: "一起筛选高质量信号，不被热点推着走。",
     },
     {
-      title: "点燃表达欲",
-      subtitle: "Expression",
-      description: "敢于公开表达，让想法被看见。",
+      eyebrow: "02",
+      title: "工具很多，项目很少",
+      description: "从小项目开始，把想法真正做出来。",
     },
     {
-      title: "点燃行动力",
-      subtitle: "Action",
-      description: "从想法到实践，在行动中进化。",
+      eyebrow: "03",
+      title: "观点很多，表达很少",
+      description: "鼓励公开表达，让认知被看见、被讨论。",
     },
     {
-      title: "点燃协作力",
-      subtitle: "Collaboration",
-      description: "连接彼此，让可能真正发生。",
+      eyebrow: "04",
+      title: "链接很多，连接很少",
+      description: "让群聊关系走向真实协作。",
     },
   ],
 };
 
 export const cultureContent = {
-  support: "少一点围观，多一点上场。少一点内耗，多一点点火。",
-  paragraph:
-    "一个真正有生命力的社区，不是让人围观，是让人愿意上场。",
+  titleLines: ["不是围观，", "是上场。"],
+  support: "少一点围观，多一点参与。少一点内耗，多一点点火。",
+  paragraph: "一个真正有生命力的社区，不是让人围观，是让人愿意上场。",
   cards: [
     {
-      title: "先行动，再优化",
-      subtitle: "Start first. Refine later.",
-      description: "先开始，反馈会带来进化。",
+      eyebrow: "01",
+      title: "先行动",
+      description: "不要等想清楚一切，再开始。",
     },
     {
-      title: "先表达，再迭代",
-      subtitle: "Speak first. Iterate in public.",
-      description: "表达不是结论，表达是开始。",
+      eyebrow: "02",
+      title: "先表达",
+      description: "把想法说出来，让它有机会被连接。",
     },
     {
-      title: "少一点围观，多一点上场",
-      subtitle: "Show up, don’t just watch.",
-      description: "参与本身，就是成长的一部分。",
+      eyebrow: "03",
+      title: "先上场",
+      description: "少一点旁观，多一点参与。",
     },
     {
-      title: "少一点内耗，多一点点火",
-      subtitle: "Less friction. More ignition.",
-      description: "把能量用来创造，也用来照亮彼此。",
+      eyebrow: "04",
+      title: "先点火",
+      description: "用热情、项目和协作带动更多人。",
     },
   ],
 };
 
 export const identityContent = {
+  titleLines: ["有技术密度，", "也有人的温度。"],
   support:
-    "我们相信，好的社区既有判断与技术密度，也有真实连接、温度与行动力。",
+    "IGNAI 是面向全球的 AI 社区表达，洋来社是我们更本地、更亲近的内部名字。",
   paragraph:
-    "不是冷冰冰的技术讨论板，也不是单纯的信息转发群。我们更想把它做成一个真的有生命力的社区。",
+    "我们希望它既能承载技术讨论，也能承载真实连接、长期行动和人的温度。",
+  visualTitle: "HUMAN WARMTH",
+  visualDescription: "既能聊模型、产品和 Agent，也能在真实连接里彼此点燃。",
   cards: [
     {
+      eyebrow: "Public Identity",
       title: "IGNAI",
-      subtitle: "对外品牌名",
-      description: "面向国际的 AI 社区表达。连接本地实践，也连接更广阔的世界。",
-      tags: ["国际视野", "开放协作", "技术驱动"],
+      description: "面向全球的 AI 社区表达。连接技术实践、产品探索与国际视野。",
     },
     {
+      eyebrow: "Local Nickname",
       title: "洋来社",
-      subtitle: "内部俗名",
-      description: "更野一点，更热一点，也更有人味。这是我们在社区里的另一种自己。",
-      tags: ["本地归属", "鲜活有趣", "真实连接"],
+      description: "更本地、更亲近、更有人味。这里是朋友、行动者和长期主义者的聚集地。",
     },
   ],
 };
 
 export const traitCards = [
   {
+    eyebrow: "Local roots",
     title: "本地土壤",
-    subtitle: "Local roots",
-    description: "扎根长沙，连接本地高校、开发者与行动者。",
+    description: "从长沙出发，把真实的人聚到一起。",
   },
   {
+    eyebrow: "Global vision",
     title: "国际视野",
-    subtitle: "Global vision",
-    description: "保持开放，和更广阔的 AI 浪潮同频。",
+    description: "持续吸收全球 AI 产品、技术和创业信号。",
   },
   {
+    eyebrow: "Technical depth",
     title: "技术密度",
-    subtitle: "Technical depth",
-    description: "能聊模型、Agent、产品，也能聊实践与落地。",
+    description: "讨论模型、Agent、产品，也鼓励真正动手。",
   },
   {
+    eyebrow: "Human connection",
     title: "真实连接",
-    subtitle: "Human connection",
-    description: "这里有人味，也有彼此点燃的可能。",
+    description: "让关系不止停留在群聊，而是走向协作。",
   },
 ];
 
 export const joinContent = {
   support: "加入一个鼓励表达、持续行动、彼此点燃的 AI 社区。",
+  benefits: [
+    "参与线下交流",
+    "加入主题共创",
+    "分享项目与观点",
+    "连接长沙与全球 AI 信号",
+  ],
 };
 
 export const footerLines = ["Ignite before AGI.", "俗名：洋来社"];

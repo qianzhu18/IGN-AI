@@ -21,10 +21,9 @@ export function SectionContainer({
         className,
       )}
     >
-      <div className="mx-auto w-full max-w-[1280px] px-6 py-24 sm:px-8 lg:px-12 lg:py-32">
+      <div className="mx-auto w-full max-w-[1200px] px-5 py-24 sm:px-8 lg:py-[120px]">
         {children}
       </div>
     </section>
   );
 }
-

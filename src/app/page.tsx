@@ -1,13 +1,13 @@
 import { PageBackdrop } from "@/components/layout/PageBackdrop";
 import { BackgroundFX } from "@/components/motion/BackgroundFX";
+import { CommunityRolesSection } from "@/components/sections/CommunityRolesSection";
 import { CultureSection } from "@/components/sections/CultureSection";
+import { FieldNotesSection } from "@/components/sections/FieldNotesSection";
 import { Footer } from "@/components/sections/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { IdentitySection } from "@/components/sections/IdentitySection";
 import { JoinSection } from "@/components/sections/JoinSection";
-import { TraitsSection } from "@/components/sections/TraitsSection";
+import { UpcomingEventsSection } from "@/components/sections/UpcomingEventsSection";
 import { WhatIsSection } from "@/components/sections/WhatIsSection";
-import { WhyNowSection } from "@/components/sections/WhyNowSection";
 
 export default function HomePage() {
   return (
@@ -16,10 +16,10 @@ export default function HomePage() {
       <BackgroundFX />
       <HeroSection />
       <WhatIsSection />
-      <WhyNowSection />
       <CultureSection />
-      <IdentitySection />
-      <TraitsSection />
+      <UpcomingEventsSection />
+      <FieldNotesSection />
+      <CommunityRolesSection />
       <JoinSection />
       <Footer />
     </main>
