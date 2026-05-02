@@ -28,10 +28,10 @@ export function UpcomingEventsSection() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        <div className="mt-12 grid items-stretch gap-5 lg:grid-cols-3">
           {events.map((event, index) => (
-            <Reveal key={event.slug} delay={index * 0.06}>
-              <EventCard event={event} featured={index === 0} />
+            <Reveal key={event.slug} delay={index * 0.06} className="h-full">
+              <EventCard event={event} />
             </Reveal>
           ))}
         </div>

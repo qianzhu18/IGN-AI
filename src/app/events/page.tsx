@@ -36,9 +36,9 @@ export default function EventsPage() {
               ))}
             </div>
 
-            <div className="grid gap-5 lg:grid-cols-3">
-              {events.map((event, index) => (
-                <EventCard key={event.slug} event={event} featured={index === 0} />
+            <div className="grid items-stretch gap-5 lg:grid-cols-3">
+              {events.map((event) => (
+                <EventCard key={event.slug} event={event} />
               ))}
             </div>
           </div>
