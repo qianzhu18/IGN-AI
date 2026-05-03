@@ -8,6 +8,8 @@ export type JoinApplicationInput = {
   interests: string[];
   message: string;
   source?: string;
+  status?: "submitted" | "reviewing" | "contacted" | "accepted" | "waitlisted" | "withdrawn" | "spam" | "archived";
+  metadata?: Record<string, unknown>;
 };
 
 export const isSupabaseServerConfigured = Boolean(supabaseUrl && supabaseServiceRoleKey);
@@ -39,7 +41,8 @@ export async function insertJoinApplication(input: JoinApplicationInput) {
       interests: input.interests,
       message: input.message,
       source: input.source || "website",
-      status: "new",
+      status: input.status || "submitted",
+      metadata: input.metadata || {},
     }),
   });
 

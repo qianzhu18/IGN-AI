@@ -33,6 +33,10 @@ export async function POST(request: Request) {
     interests,
     message,
     source: "website",
+    metadata: {
+      entrypoint: "/join",
+      is_test: process.env.NODE_ENV !== "production",
+    },
   });
 
   if (!result.ok) {
