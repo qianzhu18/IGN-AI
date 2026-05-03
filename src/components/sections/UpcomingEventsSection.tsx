@@ -3,8 +3,8 @@ import { EventCard } from "@/components/cards/EventCard";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { getUpcomingEvents } from "@/lib/events";
 
-export function UpcomingEventsSection() {
-  const events = getUpcomingEvents();
+export async function UpcomingEventsSection() {
+  const events = await getUpcomingEvents();
 
   return (
     <section id="upcoming-events" className="relative z-10 border-t border-white/8">
@@ -28,7 +28,7 @@ export function UpcomingEventsSection() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid items-stretch gap-5 lg:grid-cols-3">
+        <div className="mt-16 grid items-stretch gap-6 lg:grid-cols-3">
           {events.map((event, index) => (
             <Reveal key={event.slug} delay={index * 0.06} className="h-full">
               <EventCard event={event} />

@@ -31,7 +31,7 @@ export function ContentCollectionPage({
             <p className="section-body mt-6">{description}</p>
           </div>
 
-          <div className={isEventPage ? "surface-card-strong p-5 sm:p-6 lg:p-8" : "space-y-6"}>
+          <div className={isEventPage ? "border-y border-white/10" : "space-y-6"}>
             {filteredItems.length > 0 ? (
               isEventPage ? (
                 <div>

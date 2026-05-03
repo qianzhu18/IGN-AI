@@ -11,7 +11,7 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group flex h-full min-h-[620px] flex-col overflow-hidden rounded-[24px] border border-white/10 bg-[#0a0f16]/90 shadow-[0_24px_70px_rgba(0,0,0,0.34)] transition duration-300 hover:-translate-y-1 hover:border-[#ffb879]/28 sm:min-h-[660px] lg:min-h-[0]"
+      className="group flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg border border-white/10 bg-[#080d14]/72 transition duration-300 hover:-translate-y-1 hover:border-[#ffb879]/28 hover:bg-[#0a1018]/82 sm:min-h-[620px] lg:min-h-[0]"
     >
       <div className="relative overflow-hidden">
         <img
@@ -51,7 +51,7 @@ export function EventCard({ event }: EventCardProps) {
           {event.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/58"
+              className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58"
             >
               {tag}
             </span>

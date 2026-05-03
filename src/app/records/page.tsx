@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   description: "IGNAI 社区现场记录、活动复盘、项目记录和工具清单。",
 };
 
-export default function RecordsPage() {
-  const records = getAllRecords();
+export default async function RecordsPage() {
+  const records = await getAllRecords();
 
   return (
     <PageShell>

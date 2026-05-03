@@ -3,8 +3,8 @@ import { RecordCard } from "@/components/cards/RecordCard";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { getFeaturedRecords } from "@/lib/records";
 
-export function FieldNotesSection() {
-  const records = getFeaturedRecords();
+export async function FieldNotesSection() {
+  const records = await getFeaturedRecords();
 
   return (
     <section id="field-notes" className="relative z-10 border-t border-white/8">
@@ -28,7 +28,7 @@ export function FieldNotesSection() {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        <div className="mt-16 grid gap-6 lg:grid-cols-3">
           {records.map((record, index) => (
             <Reveal key={record.slug} delay={index * 0.06}>
               <RecordCard record={record} featured={index === 0} />

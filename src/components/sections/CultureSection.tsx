@@ -27,16 +27,11 @@ export function CultureSection() {
           </Reveal>
         </div>
 
-        <div className="grid auto-rows-fr gap-4 md:grid-cols-2">
+        <div className="open-grid">
           {cultureContent.cards.map((card, index) => (
-            <Reveal key={card.title} delay={index * 0.08}>
-              <div
-                className="info-card presence-card min-h-[160px]"
-                style={{ animationDelay: `${index * 0.7}s` }}
-              >
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F0CB8A]/80 to-transparent opacity-80" />
-                <div className="absolute inset-x-6 top-12 h-px bg-[linear-gradient(90deg,transparent,rgba(255,197,107,0.22),transparent)]" />
-                <p className="card-eyebrow text-white/42">
+            <Reveal key={card.title} delay={index * 0.08} className="open-grid-item">
+              <div className="presence-card" style={{ animationDelay: `${index * 0.7}s` }}>
+                <p className="card-eyebrow text-[#F0CB8A]/72">
                   {card.eyebrow}
                 </p>
                 <h3 className="card-title">

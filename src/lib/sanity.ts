@@ -1,47 +1,35 @@
+import { createClient } from "next-sanity";
+
 import { fallbackContentItems, type CommunityContentItem } from "@/content/platform";
+import {
+  isSanityConfigured,
+  sanityApiVersion,
+  sanityDataset,
+  sanityProjectId,
+  sanityReadToken,
+} from "@/sanity/env";
 
-const projectId = process.env.SANITY_PROJECT_ID;
-const dataset = process.env.SANITY_DATASET || "production";
-const apiVersion = process.env.SANITY_API_VERSION || "2025-02-19";
+export { isSanityConfigured };
 
-type SanityQueryResponse<T> = {
-  result?: T;
-  error?: {
-    description?: string;
-    message?: string;
-  };
-};
+const client = createClient({
+  projectId: sanityProjectId,
+  dataset: sanityDataset,
+  apiVersion: sanityApiVersion,
+  useCdn: !sanityReadToken,
+  token: sanityReadToken,
+});
 
-export const isSanityConfigured = Boolean(projectId && dataset);
-
-export async function sanityFetch<T>(query: string, params?: Record<string, string>) {
+export async function sanityFetch<T>(
+  query: string,
+  params?: Record<string, unknown>,
+): Promise<T | null> {
   if (!isSanityConfigured) {
     return null;
   }
 
-  const url = new URL(
-    `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}`,
-  );
-  url.searchParams.set("query", query);
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-    url.searchParams.set(`$${key}`, JSON.stringify(value));
-  });
-
-  const response = await fetch(url, {
+  return client.fetch<T>(query, params || {}, {
     next: { revalidate: 60 },
   });
-
-  if (!response.ok) {
-    throw new Error(`Sanity request failed: ${response.status}`);
-  }
-
-  const payload = (await response.json()) as SanityQueryResponse<T>;
-  if (payload.error) {
-    throw new Error(payload.error.description || payload.error.message || "Sanity query failed");
-  }
-
-  return payload.result ?? null;
 }
 
 const contentQuery = `*[_type in ["post", "event", "story", "resource"]] | order(coalesce(publishedAt, _createdAt) desc)[0...12] {

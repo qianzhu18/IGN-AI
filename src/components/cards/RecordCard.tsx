@@ -11,7 +11,7 @@ export function RecordCard({ record, featured = false }: RecordCardProps) {
   return (
     <Link
       href={`/records/${record.slug}`}
-      className={`group block overflow-hidden rounded-[24px] border border-white/10 bg-[#0a0f16]/86 shadow-[0_24px_70px_rgba(0,0,0,0.34)] transition duration-300 hover:-translate-y-1 hover:border-[#7cc8ff]/24 ${
+      className={`group block overflow-hidden rounded-lg border border-white/10 bg-[#080d14]/68 transition duration-300 hover:-translate-y-1 hover:border-[#7cc8ff]/24 hover:bg-[#0a1018]/78 ${
         featured ? "lg:col-span-2" : ""
       }`}
     >
@@ -24,7 +24,7 @@ export function RecordCard({ record, featured = false }: RecordCardProps) {
               {record.location ? ` · ${record.location}` : ""}
             </p>
           </div>
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/58">
+          <span className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58">
             {recordTypeLabel[record.type]}
           </span>
         </div>
@@ -41,7 +41,7 @@ export function RecordCard({ record, featured = false }: RecordCardProps) {
         <img
           src={record.cover}
           alt=""
-          className="aspect-[2.05] w-full rounded-[18px] border border-white/8 object-cover"
+          className="aspect-[2.05] w-full rounded-lg border border-white/8 object-cover"
         />
       </div>
 
@@ -62,7 +62,7 @@ export function RecordCard({ record, featured = false }: RecordCardProps) {
             {record.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/58"
+                className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58"
               >
                 {tag}
               </span>

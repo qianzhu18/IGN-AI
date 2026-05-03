@@ -25,9 +25,9 @@ export default function JoinPage() {
                 V1 先保持轻量：可以接飞书 / 问卷星 / Notion 表单，也可以在 Supabase
                 配好后写入申请记录。上线优先保证加入入口真实可用。
               </p>
-              <div className="mt-8 grid gap-4">
+              <div className="mt-8 border-y border-white/10">
                 {["线下交流", "主题共创", "项目展示", "内容分享"].map((item) => (
-                  <div key={item} className="info-card min-h-0 p-5">
+                  <div key={item} className="border-t border-white/10 py-4 first:border-t-0">
                     <p className="card-title mt-0 text-[1.1rem]">{item}</p>
                   </div>
                 ))}

@@ -13,15 +13,16 @@ type EventDetailPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return getAllEvents().map((event) => ({ slug: event.slug }));
+export async function generateStaticParams() {
+  const events = await getAllEvents();
+  return events.map((event) => ({ slug: event.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: EventDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const event = getEventBySlug(slug);
+  const event = await getEventBySlug(slug);
 
   if (!event) {
     return {
@@ -37,7 +38,7 @@ export async function generateMetadata({
 
 export default async function EventDetailPage({ params }: EventDetailPageProps) {
   const { slug } = await params;
-  const event = getEventBySlug(slug);
+  const event = await getEventBySlug(slug);
 
   if (!event) {
     notFound();
@@ -56,7 +57,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
               ) : null}
               <p className="section-body mt-6">{event.excerpt}</p>
 
-              <div className="mt-8 grid gap-3">
+              <div className="mt-8 border-y border-white/10">
                 {[
                   ["状态", eventStatusLabel[event.status]],
                   ["时间", event.dateText],
@@ -65,7 +66,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                 ].map(([label, value]) => (
                   <div
                     key={label}
-                    className="flex items-center justify-between rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm"
+                    className="flex items-center justify-between gap-6 border-t border-white/10 py-3 text-sm first:border-t-0"
                   >
                     <span className="text-white/42">{label}</span>
                     <span className="font-medium text-white/82">{value}</span>
@@ -91,9 +92,9 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                 ))}
 
                 <DetailSection title="适合谁参加">
-                  <ul className="grid gap-3 md:grid-cols-2">
+                  <ul className="grid border-y border-white/10 md:grid-cols-2">
                     {event.audience.map((item) => (
-                      <li key={item} className="rounded-[16px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm">
+                      <li key={item} className="border-t border-white/10 py-3 text-sm first:border-t-0 md:px-4 md:[&:nth-child(-n+2)]:border-t-0 md:[&:nth-child(odd)]:pl-0 md:[&:nth-child(even)]:border-l md:[&:nth-child(even)]:border-white/10">
                         {item}
                       </li>
                     ))}
@@ -101,9 +102,9 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                 </DetailSection>
 
                 <DetailSection title="活动流程">
-                  <ol className="space-y-3">
+                  <ol className="border-y border-white/10">
                     {event.agenda.map((item) => (
-                      <li key={item} className="rounded-[16px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm">
+                      <li key={item} className="border-t border-white/10 py-3 text-sm first:border-t-0">
                         {item}
                       </li>
                     ))}

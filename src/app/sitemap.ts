@@ -6,7 +6,7 @@ import { getAllRecords } from "@/lib/records";
 
 const absoluteUrl = (path: string) => new URL(path, siteLinks.siteUrl).toString();
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -35,14 +35,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const eventRoutes = getAllEvents().map((event) => ({
+  const events = await getAllEvents();
+  const records = await getAllRecords();
+
+  const eventRoutes = events.map((event) => ({
     url: absoluteUrl(`/events/${event.slug}`),
     lastModified: now,
     changeFrequency: "monthly" as const,
     priority: event.status === "open" ? 0.9 : 0.7,
   }));
 
-  const recordRoutes = getAllRecords().map((record) => ({
+  const recordRoutes = records.map((record) => ({
     url: absoluteUrl(`/records/${record.slug}`),
     lastModified: now,
     changeFrequency: "monthly" as const,

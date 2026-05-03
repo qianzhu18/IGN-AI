@@ -27,15 +27,15 @@ export function HeroSection() {
   const imageScale = useTransform(scrollYProgress, [0, 1], [1.02, shouldReduceMotion ? 1.02 : 1.08]);
 
   return (
-    <section ref={ref} className="relative min-h-[760px] overflow-hidden">
+    <section ref={ref} className="relative min-h-[760px] overflow-hidden lg:min-h-[880px]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(255,122,24,0.18),transparent_32%),radial-gradient(circle_at_84%_16%,rgba(93,169,255,0.1),transparent_26%),linear-gradient(180deg,#06080C_0%,#090B10_56%,#06080C_100%)]" />
       <div className="absolute inset-x-0 top-0 h-[34vh] bg-[linear-gradient(180deg,rgba(255,154,60,0.06)_0%,transparent_100%)]" />
       <div className="absolute bottom-[-16rem] left-[-10rem] h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(255,122,24,0.16)_0%,transparent_72%)] blur-3xl" />
       <div className="absolute right-[-10rem] top-[20%] h-[24rem] w-[24rem] rounded-full bg-[radial-gradient(circle,rgba(93,169,255,0.1)_0%,transparent_72%)] blur-3xl" />
       <div className="ignite-field" />
 
-      <div className="relative mx-auto flex min-h-[760px] max-w-[1200px] flex-col px-5 pb-8 pt-5 sm:px-8 lg:min-h-screen">
-          <div className="surface-card flex items-center justify-between gap-4 px-4 py-3 sm:px-5">
+      <div className="relative mx-auto flex min-h-[760px] max-w-[1200px] flex-col px-5 pb-8 pt-5 sm:px-8 lg:min-h-[880px]">
+          <div className="flex items-center justify-between gap-4 border-b border-white/10 py-4">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ffb879]/20 bg-[radial-gradient(circle,rgba(255,168,94,0.92)_0%,rgba(93,169,255,0.28)_100%)] text-sm font-semibold text-white shadow-[0_12px_34px_rgba(255,140,76,0.16)]">
                 IG
@@ -100,8 +100,8 @@ export function HeroSection() {
             </motion.div>
 
             <motion.div style={{ y: imageY, scale: imageScale }} className="relative z-10">
-              <div className="surface-card-strong energy-panel p-4 sm:p-5">
-                <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-black/60">
+              <div className="relative">
+                <div className="relative overflow-hidden rounded-lg border border-white/10 bg-black/50 shadow-[0_28px_80px_rgba(0,0,0,0.26)]">
                   <Image
                     src="/images/generated/local-global-embers.png"
                     alt="Warm local embers and blue signal lines showing local roots connected to a wider world"
@@ -123,18 +123,14 @@ export function HeroSection() {
                   </div>
                 </div>
 
-                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                <div className="mt-6 grid gap-5 border-y border-white/10 py-5 sm:grid-cols-3 sm:gap-6">
                   {siteContent.heroSignals.map((signal, index) => (
                     <div
                       key={signal.title}
-                      className={`rounded-[22px] border p-4 ${
-                        index === 1
-                          ? "border-[#7cc8ff]/14 bg-[#08121d]/88"
-                          : "border-[#ffb879]/14 bg-[#0c1118]/88"
-                      }`}
+                      className={index > 0 ? "sm:border-l sm:border-white/10 sm:pl-6" : ""}
                     >
                       <p
-                        className={`card-eyebrow ${
+                        className={`text-[0.7rem] font-medium uppercase ${
                           index === 1 ? "text-[#9aceff]" : "text-[#f0c78e]/84"
                         }`}
                       >

@@ -16,7 +16,7 @@ export function JoinSection() {
 
   return (
     <SectionContainer id="join" className="pb-8">
-      <div className="surface-card-strong relative overflow-hidden p-6 sm:p-8 lg:p-10">
+      <div className="relative overflow-hidden border-y border-white/10 py-10 sm:py-12 lg:py-16">
         <div className="converge-field">
           <span className="converge-ray" style={{ "--ray-y": "20%", "--ray-rotate": "6deg", "--ray-delay": "0s" } as CSSProperties} />
           <span className="converge-ray" style={{ "--ray-y": "42%", "--ray-rotate": "-3deg", "--ray-delay": "1.4s" } as CSSProperties} />
@@ -39,11 +39,11 @@ export function JoinSection() {
             </Reveal>
 
             <Reveal delay={0.08}>
-              <div className="mt-8 grid max-w-[520px] gap-3 sm:grid-cols-2">
+              <div className="mt-8 grid max-w-[520px] gap-x-6 border-y border-white/10 sm:grid-cols-2">
                 {joinContent.benefits.map((benefit) => (
                   <div
                     key={benefit}
-                    className="flex min-h-12 items-center gap-3 rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-6 text-white/72"
+                    className="flex min-h-12 items-center gap-3 border-t border-white/10 py-3 text-sm leading-6 text-white/72 first:border-t-0 sm:[&:nth-child(-n+2)]:border-t-0"
                   >
                     <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/20 bg-[#ff9a3c]/10 text-[#f2c892]">
                       <Check className="h-3.5 w-3.5" />
@@ -67,8 +67,8 @@ export function JoinSection() {
           </div>
 
           <Reveal>
-            <div className="surface-card relative overflow-hidden p-4 sm:p-5">
-              <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-[#06080d]">
+            <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]">
                 <motion.div
                   className="absolute inset-0"
                   animate={

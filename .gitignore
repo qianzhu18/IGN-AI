@@ -1,5 +1,9 @@
 node_modules
 .next
+.env
+.env.local
+.env.*.local
+!.env.example
 .codex-assets
 dist
 out

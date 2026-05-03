@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   description: "IGNAI 近期活动、线下聚会、主题共创和公开分享。",
 };
 
-export default function EventsPage() {
-  const events = getAllEvents();
+export default async function EventsPage() {
+  const events = await getAllEvents();
 
   return (
     <PageShell>
@@ -29,7 +29,7 @@ export default function EventsPage() {
               {["全部", ...Object.values(eventStatusLabel), ...Object.values(eventFormatLabel)].map((filter) => (
                 <span
                   key={filter}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-white/60"
+                  className="rounded-full border border-white/10 px-4 py-2 text-sm text-white/60"
                 >
                   {filter}
                 </span>

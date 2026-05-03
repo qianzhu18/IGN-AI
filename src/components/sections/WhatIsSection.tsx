@@ -30,30 +30,25 @@ export function WhatIsSection() {
         </div>
 
         <Reveal>
-          <div className="surface-card-strong relative overflow-hidden p-5 sm:p-6">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#F0CB8A]/80 to-transparent opacity-80" />
-            <div className="absolute right-[-6rem] top-[-6rem] h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(255,154,60,0.18)_0%,transparent_72%)] blur-3xl" />
-
-            <p className="section-eyebrow">
+          <div>
+            <p className="section-eyebrow mb-5">
               Community Members
             </p>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div className="open-grid">
               {whatIsContent.memberCards.map((card, index) => (
                 <div
                   key={card.title}
-                  className={`info-card min-h-[160px] ${
-                    index % 2 === 1
-                      ? "border-[#7cc8ff]/14 bg-[#08121d]/88"
-                      : "border-white/10 bg-[#0e131c]/88"
-                  }`}
+                  className="open-grid-item"
                 >
                   <p
-                    className={`card-eyebrow ${
-                      index % 2 === 1 ? "text-[#9aceff]" : "text-[#F0CB8A]/72"
-                    }`}
+                    className={
+                      index % 2 === 1
+                        ? "card-eyebrow text-[#9aceff]"
+                        : "card-eyebrow text-[#F0CB8A]/72"
+                    }
                   >
-                    {card.eyebrow}
+                    0{index + 1} / {card.eyebrow}
                   </p>
                   <h3 className="card-title">
                     {card.title}

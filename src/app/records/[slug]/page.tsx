@@ -13,15 +13,16 @@ type RecordDetailPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return getAllRecords().map((record) => ({ slug: record.slug }));
+export async function generateStaticParams() {
+  const records = await getAllRecords();
+  return records.map((record) => ({ slug: record.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: RecordDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const record = getRecordBySlug(slug);
+  const record = await getRecordBySlug(slug);
 
   if (!record) {
     return {
@@ -37,7 +38,7 @@ export async function generateMetadata({
 
 export default async function RecordDetailPage({ params }: RecordDetailPageProps) {
   const { slug } = await params;
-  const record = getRecordBySlug(slug);
+  const record = await getRecordBySlug(slug);
 
   if (!record) {
     notFound();
@@ -53,13 +54,13 @@ export default async function RecordDetailPage({ params }: RecordDetailPageProps
               <h1 className="section-title mt-6 max-w-[12ch]">{record.title}</h1>
               <p className="section-body mt-6">{record.excerpt}</p>
 
-              <div className="mt-8 grid gap-3">
-                <div className="flex items-center justify-between rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm">
+              <div className="mt-8 border-y border-white/10">
+                <div className="flex items-center justify-between gap-6 py-3 text-sm">
                   <span className="text-white/42">时间</span>
                   <span className="font-medium text-white/82">{record.dateText}</span>
                 </div>
                 {record.location ? (
-                  <div className="flex items-center justify-between rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm">
+                  <div className="flex items-center justify-between gap-6 border-t border-white/10 py-3 text-sm">
                     <span className="text-white/42">地点</span>
                     <span className="font-medium text-white/82">{record.location}</span>
                   </div>
@@ -70,7 +71,7 @@ export default async function RecordDetailPage({ params }: RecordDetailPageProps
                 {record.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/58"
+                    className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58"
                   >
                     {tag}
                   </span>

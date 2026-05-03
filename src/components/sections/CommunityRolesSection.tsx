@@ -36,14 +36,12 @@ export function CommunityRolesSection() {
             </Reveal>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="open-grid">
             {roles.map((role, index) => (
-              <Reveal key={role.title} delay={index * 0.06}>
-                <div className="info-card min-h-[160px]">
-                  <p className="card-eyebrow">0{index + 1}</p>
-                  <h3 className="card-title">{role.title}</h3>
-                  <p className="card-body">{role.description}</p>
-                </div>
+              <Reveal key={role.title} delay={index * 0.06} className="open-grid-item">
+                <p className="card-eyebrow">0{index + 1}</p>
+                <h3 className="card-title">{role.title}</h3>
+                <p className="card-body">{role.description}</p>
               </Reveal>
             ))}
           </div>

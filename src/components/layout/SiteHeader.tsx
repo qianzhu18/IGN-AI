@@ -13,7 +13,7 @@ const navItems = [
 export function SiteHeader() {
   return (
     <header className="relative z-20 mx-auto w-full max-w-[1200px] px-5 pt-5 sm:px-8">
-      <div className="surface-card flex items-center justify-between gap-4 px-4 py-3 sm:px-5">
+      <div className="flex items-center justify-between gap-4 border-b border-white/10 py-4">
         <Link href="/" className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ffb879]/20 bg-[radial-gradient(circle,rgba(255,168,94,0.92)_0%,rgba(93,169,255,0.28)_100%)] text-sm font-semibold text-white shadow-[0_12px_34px_rgba(255,140,76,0.16)]">
             IG

@@ -35,7 +35,7 @@ export function EventListCard({ item }: ContentCardProps) {
           {item.tags.map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/58"
+              className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58"
             >
               {tag}
             </span>
@@ -54,7 +54,7 @@ export function PublicationFeedCard({ item }: ContentCardProps) {
   return (
     <Link
       href={item.href}
-      className="group block overflow-hidden rounded-[24px] border border-white/10 bg-[#0a0f16]/86 shadow-[0_24px_70px_rgba(0,0,0,0.34)] transition duration-300 hover:-translate-y-1 hover:border-[#ffb879]/24"
+      className="group block overflow-hidden rounded-lg border border-white/10 bg-[#080d14]/68 transition duration-300 hover:-translate-y-1 hover:border-[#ffb879]/24 hover:bg-[#0a1018]/78"
     >
       <div className="p-5 sm:p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -62,7 +62,7 @@ export function PublicationFeedCard({ item }: ContentCardProps) {
             <p className="text-sm font-semibold text-white">IGNAI</p>
             <p className="mt-1 text-xs text-white/42">{item.date}</p>
           </div>
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/58">
+          <span className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58">
             {item.eyebrow}
           </span>
         </div>
@@ -78,7 +78,7 @@ export function PublicationFeedCard({ item }: ContentCardProps) {
           <img
             src={item.coverImage}
             alt=""
-            className="aspect-[2.15] w-full rounded-[18px] border border-white/8 object-cover"
+            className="aspect-[2.15] w-full rounded-lg border border-white/8 object-cover"
           />
         </div>
       ) : null}
@@ -90,7 +90,7 @@ export function PublicationFeedCard({ item }: ContentCardProps) {
         {item.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-white/58"
+            className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58"
           >
             {tag}
           </span>
@@ -113,7 +113,7 @@ export function CompactContentRow({ item }: ContentCardProps) {
           className="aspect-[1.55] w-full rounded-[16px] border border-white/8 object-cover"
         />
       ) : (
-        <div className="aspect-[1.55] rounded-[16px] border border-white/8 bg-white/[0.04]" />
+        <div className="aspect-[1.55] rounded-lg border border-white/8 bg-white/[0.04]" />
       )}
       <div>
         <div className="flex flex-wrap items-center gap-3">
