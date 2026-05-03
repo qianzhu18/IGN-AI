@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { insertJoinApplication, type JoinApplicationInput } from "@/lib/supabase";
+import { createJoinApplication } from "@/lib/join";
+import type { JoinApplicationInput } from "@/lib/supabase";
 
 const interestOptions = new Set(["线下交流", "主题共创", "项目展示", "内容分享", "合作咨询"]);
 
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await insertJoinApplication({
+  const result = await createJoinApplication({
     name,
     contact,
     role,
@@ -38,13 +39,11 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          result.status === 503
-            ? "后台数据源还没有配置。请先在 Vercel 中补充 Supabase 环境变量。"
-            : "提交失败，请稍后再试。",
+          result.status === 503 ? result.message : "提交失败，请稍后再试。",
       },
       { status: result.status },
     );
   }
 
-  return NextResponse.json({ message: "已收到申请，我们会尽快联系你。" });
+  return NextResponse.json({ message: result.message });
 }

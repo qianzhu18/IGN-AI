@@ -5,6 +5,7 @@ node_modules
 .env.*.local
 !.env.example
 .codex-assets
+.data
 dist
 out
 .DS_Store
