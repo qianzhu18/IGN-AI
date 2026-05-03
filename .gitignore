@@ -11,3 +11,4 @@ out
 .DS_Store
 npm-debug.log*
 tsconfig.tsbuildinfo
+*.tsbuildinfo

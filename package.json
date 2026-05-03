@@ -6,10 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "next typegen && tsc --noEmit",
-    "studio": "next dev -p 3003",
+    "typecheck": "next typegen && tsc --noEmit -p tsconfig.typecheck.json",
+    "check": "npm run typecheck && npm run build",
+    "studio": "sanity dev --port 3333",
+    "studio:embedded": "next dev -p 3003",
     "sanity:cors:list": "sanity cors list",
-    "sanity:cors:add-local": "sanity cors add http://localhost:3003 --credentials"
+    "sanity:cors:add-local": "sanity cors add http://localhost:3333 --credentials",
+    "sanity:cors:add-embedded-local": "sanity cors add http://localhost:3003 --credentials"
   },
   "dependencies": {
     "@sanity/vision": "^4.22.0",
