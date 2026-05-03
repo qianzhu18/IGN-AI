@@ -280,3 +280,20 @@ Postgres 后续加列本身很轻：
 2. 归档而非直接删除
 3. `metadata jsonb` 扩展位
 4. local inbox 到 Supabase 的统一 adapter
+
+## 13. Publishable Key 接入说明
+
+当前项目已经支持两种服务端写入方式：
+
+1. `SUPABASE_SERVICE_ROLE_KEY`
+   - 最直接
+   - 权限最大
+   - 适合服务端全控
+2. `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+   - 适合先用 RLS policy 控制公开写入
+   - 当前 Join 场景可以先用它打通 `submitted` 插入
+
+推荐顺序：
+
+- 先用 publishable key + RLS insert policy 打通站内申请
+- 后续如果要做更复杂的后台管理，再补 service role

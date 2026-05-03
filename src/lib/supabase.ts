@@ -1,5 +1,7 @@
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabasePublishableKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+const supabaseWriteKey = supabaseServiceRoleKey || supabasePublishableKey;
 
 export type JoinApplicationInput = {
   name: string;
@@ -12,7 +14,8 @@ export type JoinApplicationInput = {
   metadata?: Record<string, unknown>;
 };
 
-export const isSupabaseServerConfigured = Boolean(supabaseUrl && supabaseServiceRoleKey);
+export const isSupabaseServerConfigured = Boolean(supabaseUrl && supabaseWriteKey);
+export const isSupabaseUsingServiceRole = Boolean(supabaseUrl && supabaseServiceRoleKey);
 
 export async function insertJoinApplication(input: JoinApplicationInput) {
   if (!isSupabaseServerConfigured) {
@@ -24,13 +27,13 @@ export async function insertJoinApplication(input: JoinApplicationInput) {
   }
 
   const url = supabaseUrl as string;
-  const serviceRoleKey = supabaseServiceRoleKey as string;
+  const writeKey = supabaseWriteKey as string;
 
   const response = await fetch(`${url}/rest/v1/join_applications`, {
     method: "POST",
     headers: {
-      apikey: serviceRoleKey,
-      Authorization: `Bearer ${serviceRoleKey}`,
+      apikey: writeKey,
+      Authorization: `Bearer ${writeKey}`,
       "Content-Type": "application/json",
       Prefer: "return=minimal",
     },

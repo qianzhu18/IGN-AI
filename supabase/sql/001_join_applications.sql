@@ -32,6 +32,8 @@ create table if not exists public.join_applications (
   )
 );
 
+alter table public.join_applications enable row level security;
+
 create index if not exists join_applications_status_created_at_idx
   on public.join_applications (status, created_at desc);
 
@@ -98,3 +100,13 @@ comment on table public.join_applications is
 
 comment on column public.join_applications.metadata is
 'Flexible extension field for low-frequency additions such as UTM, experiment tags, or referral context.';
+
+drop policy if exists "Allow public submit join applications" on public.join_applications;
+
+create policy "Allow public submit join applications"
+on public.join_applications
+for insert
+to anon, authenticated
+with check (
+  status = 'submitted'
+);
