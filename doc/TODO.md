@@ -34,8 +34,11 @@
   - `/not-found-demo` -> `404`
 - `POST /api/join` 必填校验：`400`
 - `POST /api/join` 完整提交：`200`
-- `/join` 当前表现：默认进入本地 inbox 模式，展示站内表单，可直接完成联调
-- 本地提交收件箱：`/.data/join-applications.json`
+- `/join` 当前表现：已切换为 Supabase 社区后台模式
+- `/api/join/submissions`：可读取最新申请记录
+- Supabase 已验证写入记录：
+  - `建表后联调用户`
+  - `站内API联调用户`
 
 ## 3. 测试集总表
 
@@ -73,7 +76,7 @@
 - [x] D01 无 Supabase、无外部表单时存在可用入口
 - [x] D02 无 Supabase 时默认进入本地 inbox 模式
 - [ ] D03 配置 `NEXT_PUBLIC_JOIN_FORM_URL` 后显示外部表单入口
-- [ ] D04 配置 Supabase 后显示站内提交表单
+- [x] D04 配置 Supabase 后显示站内提交表单
 - [ ] D05 三种模式切换互不冲突
 - [ ] D06 Join 页文案与实际行为一致
 
@@ -81,7 +84,7 @@
 
 - [x] E01 缺失 `name/contact/role` 时返回 `400`
 - [x] E02 本地 inbox 模式下完整提交返回 `200`
-- [ ] E03 完整配置 Supabase 后返回 `200`
+- [x] E03 完整配置 Supabase 后返回 `200`
 - [ ] E04 成功提交后页面出现成功提示
 - [ ] E05 成功提交后表单自动重置
 - [x] E06 `interests` 非法值会被过滤
@@ -148,24 +151,26 @@
 
 ## 4. 当前问题点
 
-### P1 - 业务主链路已接到本地 inbox，但生产数据后端仍未配置
+### P1 - 业务主链路已接到 Supabase，但运营侧流程仍未补齐
 
 现象：
 
-- `/join` 现在会展示站内申请表单
-- 本地完整提交会写入 `/.data/join-applications.json`
-- 但 Supabase 生产数据后端仍未配置
+- `/join` 已展示站内申请表单
+- 站内 `POST /api/join` 已写入 Supabase
+- `GET /api/join/submissions` 已可读取申请列表
+- 但状态流转、查看后台、归档流程还没补齐
 
 原因定位：
 
-- `.env.local` 仍未配置 `SUPABASE_URL`
-- `.env.local` 仍未配置 `SUPABASE_SERVICE_ROLE_KEY`
-- 当前新增了本地 inbox 兜底，所以联调不再被 Email 模式卡住
+- 目前只完成了最小读写打通
+- 还没有运营后台视图
+- 还没有状态更新接口
+- 还没有归档 / 清理流程
 
 影响：
 
-- 本地和预演环境已可完整走通提交流程
-- 生产级数据沉淀、状态流转、成员管理仍未接到正式业务库
+- 申请已经能真实入库
+- 但还不能顺手管理、筛选、跟进和归档
 
 相关文件：
 
@@ -175,24 +180,25 @@
 - `src/content/links.ts`
 - `.env.local`
 
-### P2 - 生产级 Supabase 链路仍待接通
+### P2 - 运营后台与状态流转仍待接通
 
 现象：
 
-- 当前 `/join` 在未配 Supabase 时写入本地 inbox
-- 还没有把申请数据接入正式业务库
+- 已能写入正式业务库
+- 还没有最小运营面板
+- 还没有 `status` 更新链路
 
 影响：
 
-- 现在适合联调、验收和本地预演
-- 不等于正式成员申请后台已经完成
+- 现在可以真实收集申请
+- 但后续跟进还不够顺滑
 
 下一步：
 
-- 配置 `SUPABASE_URL`
-- 配置 `SUPABASE_SERVICE_ROLE_KEY`
-- 建 `join_applications` 表
-- 跑通站内表单到 Supabase 的写入链路
+- 增加申请列表页 / 运营视图
+- 增加状态更新接口
+- 增加筛选与归档动作
+- 再考虑成员系统联动
 
 ### P3 - 首页 CTA 可访问名称重复
 
@@ -255,15 +261,15 @@
 
 | Issue ID | 标题 | 优先级 | 状态 | 说明 |
 | --- | --- | --- | --- | --- |
-| IGNAI-001 | Join 链路体验断裂 | P0 | In Progress | 已补本地 inbox 模式，下一步接 Supabase 正式业务库 |
+| IGNAI-001 | Join 链路体验断裂 | P0 | Resolved | 站内申请已接入 Supabase，主链路完成读写打通 |
 | IGNAI-002 | `npm run check` 失败 | P1 | Resolved | 已拆出 `tsconfig.typecheck.json`，`npm run check` 恢复通过 |
 | IGNAI-003 | 首页“加入社区”CTA 可访问名称重复 | P2 | Open | 自动化定位歧义 |
 | IGNAI-004 | 缺少统一 smoke/e2e 自动化测试脚本 | P2 | Open | 当前回归依赖手工测试 |
-| IGNAI-005 | Join 生产级数据后端未落地 | P1 | Open | 当前站内申请可写入本地 inbox，但正式业务库未接通 |
+| IGNAI-005 | Join 运营后台与状态流转未完成 | P1 | In Progress | Supabase 已打通，下一步补最小运营读写流 |
 
 ## 6. 修复顺序建议
 
-1. 先继续处理 `IGNAI-001 / IGNAI-005`，把 Join 从本地 inbox 升级到正式业务库
+1. 先继续处理 `IGNAI-005`，补最小运营后台和状态流转
 2. 然后处理 `IGNAI-003`，提升可测试性与可访问性
 3. 最后处理 `IGNAI-004`，补自动化测试与回归脚本
 
