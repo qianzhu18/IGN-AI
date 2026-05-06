@@ -11,7 +11,7 @@
 |------|-----|
 | 名称 | IGNAI 社区官网 |
 | 架构 | NotionNext v4.9.5+ (Pages Router) 二开 |
-| 主题 | heo (暗色) |
+| 主题 | ignai (IGNAI 自定义，基于 heo 骨架，复刻 v1.0.0 UI) |
 | 后端 | Notion（唯一后端） |
 | 部署 | Vercel (主) / Docker (备用) |
 | 包管理 | yarn |
@@ -40,12 +40,13 @@
 
 **读取顺序：**
 
-1. `themes/heo/config.js` — heo 主题的所有可配置项（Hero 标题、通知栏、卡片、分类等）
-2. `themes/heo/style.js` — heo 主题的 CSS 样式注入（滚动条、动画、背景色）
-3. `themes/heo/components/` — heo 主题的 React 组件
-4. `conf/font.config.js` — 字体配置
-5. `conf/image.config.js` — 图片相关配置
-6. `conf/animation.config.js` — 动效配置
+1. `themes/ignai/config.js` — IGNAI 主题配置（品牌文案、导航、Hero、Footer）
+2. `themes/ignai/style.js` — IGNAI 主题的 CSS（v1 design tokens、动画、品牌色）
+3. `themes/ignai/components/` — IGNAI 主题组件（复刻自 v1.0.0）
+4. `src/` — v1.0.0 原始 UI 参考（设计稿源头，复刻时对照）
+5. `conf/font.config.js` — 字体配置
+6. `conf/image.config.js` — 图片相关配置
+7. `conf/animation.config.js` — 动效配置
 
 **IGNAI 品牌规范（参考 `doc/design/` 目录）：**
 
@@ -59,9 +60,10 @@
 | 标题字体 | 按品牌规范 |
 
 **修改原则：**
-- 只改 `themes/heo/` 下的文件，不动 `components/` 的共享组件
-- CSS 优先在 `themes/heo/style.js` 注入
-- 组件级修改在 `themes/heo/components/` 下覆盖
+- 只改 `themes/ignai/` 下的文件，不动 `components/` 的共享组件
+- CSS 优先在 `themes/ignai/style.js` 注入
+- 组件级修改在 `themes/ignai/components/` 下覆盖
+- 参考 v1.0.0 原始实现时，对照 `src/` 目录的组件和样式
 
 ---
 
@@ -104,14 +106,14 @@ NOTION_PAGE_ID='主库ID,members:成员库ID,events:活动库ID'
 2. `pages/[prefix]/` — NotionNext 的动态路由前缀机制
 3. `lib/db/` — 数据获取层（从 Notion 读取数据）
 4. `lib/cache/` — ISR 缓存机制
-5. `themes/heo/components/` — 可复用的 heo 主题组件
+5. `themes/ignai/components/` — 可复用的 heo 主题组件
 6. `doc/TO DO/TODO.md` — 确认功能是否在路线图中
 
 **添加页面的步骤：**
 
 1. 在 `pages/` 下创建路由文件（如 `pages/members.js`）
 2. 在 `lib/db/` 中添加数据获取函数（从 Notion Database 读取）
-3. 在 `themes/heo/components/` 中创建页面组件
+3. 在 `themes/ignai/components/` 中创建页面组件
 4. 如果需要新数据库，在 `NOTION_PAGE_ID` 中添加对应前缀
 
 **注意：** NotionNext 使用 Pages Router (`getStaticProps` / `getServerSideProps`)，不是 App Router。
@@ -122,7 +124,7 @@ NOTION_PAGE_ID='主库ID,members:成员库ID,events:活动库ID'
 
 **读取顺序：**
 
-1. `themes/heo/components/` — 查找 Header、Footer、Layout 相关组件
+1. `themes/ignai/components/` — 查找 Header、Footer、Layout 相关组件
 2. `conf/layout-map.config.js` — 路由与布局映射
 3. `blog.config.js` — 菜单配置相关
 
@@ -202,12 +204,12 @@ IGN AI 官网/
 │   └── ...                 #   其他配置
 │
 ├── themes/
-│   ├── heo/                # ★ 当前使用的主题
-│   │   ├── config.js       #   heo 主题配置（Hero、通知栏、卡片等）
-│   │   ├── style.js        #   heo 主题 CSS 注入
-│   │   ├── index.js        #   主题入口
-│   │   └── components/     #   heo 主题组件
-│   └── [其他主题]/          # 不使用，不要修改
+│   ├── ignai/               # ★ 当前使用的 IGNAI 自定义主题
+│   │   ├── config.js        #   IGNAI 主题配置（品牌、Hero、导航、Footer）
+│   │   ├── style.js         #   IGNAI CSS（v1 design tokens、动画、品牌色）
+│   │   ├── index.js         #   主题入口（LayoutBase、LayoutIndex 等）
+│   │   └── components/      #   主题组件（Header、Hero、Footer 等）
+│   └── heo/                 # 基础骨架（参考，非活跃主题）
 │
 ├── pages/                  # 路由（Pages Router）
 │   ├── index.js            #   首页
@@ -226,6 +228,11 @@ IGN AI 官网/
 │   └── utils/              #   工具函数
 │
 ├── components/             # 跨主题共享组件
+│
+├── src/                    # v1.0.0 UI 参考（复刻源头，不参与构建）
+│   ├── components/         #   原始 UI 组件（sections、ui、layout、motion 等）
+│   ├── content/            #   原始文案数据（site、community、events 等）
+│   └── styles/             #   原始样式（tokens.css、globals.css）
 │
 ├── public/
 │   ├── brand/              # ★ IGNAI 品牌资产（logo 等）
@@ -286,12 +293,13 @@ IGN AI 官网/
 ## 6. 关键约束
 
 1. **包管理器用 yarn**，不用 npm
-2. **主题修改只在 `themes/heo/`**，不动共享组件或其他主题
-3. **配置优先级**：环境变量 > `blog.config.js` > `conf/` 分配置
-4. **每次重大修改后运行 `yarn build`** 验证
-5. **Notion 就是后端** — 不需要数据库、不需要 API key（除了 Notion Database ID）
-6. **Pages Router** — 不是 App Router，不要用 `app/` 目录的路由方式
-7. **v1.0.0 代码已存档** — 不要修改 `v1.0.0` tag 的内容
+2. **主题修改只在 `themes/ignai/`**，不动共享组件、heo 或其他主题
+3. **`src/` 是 v1.0.0 的 UI 参考**，不参与 NotionNext 构建，复刻时对照用
+4. **配置优先级**：环境变量 > `blog.config.js` > `conf/` 分配置
+5. **每次重大修改后运行 `yarn build`** 验证
+6. **Notion 就是后端** — 不需要数据库、不需要 API key（除了 Notion Database ID）
+7. **Pages Router** — 不是 App Router，不要用 `app/` 目录的路由方式
+8. **v1.0.0 代码已存档** — 不要修改 `v1.0.0` tag 的内容
 
 ---
 

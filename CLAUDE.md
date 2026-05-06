@@ -26,7 +26,7 @@ Note: NotionNext uses **yarn** as the package manager (not npm).
 
 - **NotionNext** (Pages Router, Next.js) — the base framework
 - **Notion** — sole backend: content CMS + data storage
-- **Theme: heo** — dark theme optimized for Chinese developer community sites
+- **Theme: ignai** — IGNAI custom theme (based on heo, replicating v1.0.0 UI design)
 - **Deployment**: Vercel (primary) or Docker (VPS alternative)
 
 ### Key Configuration
@@ -34,7 +34,8 @@ Note: NotionNext uses **yarn** as the package manager (not npm).
 - `blog.config.js` — main site configuration (theme, author, appearance, etc.)
 - `conf/` — split configuration files (comment, analytics, fonts, etc.)
 - `.env.local` — environment variables (only `NOTION_PAGE_ID` is required)
-- `themes/heo/` — the active theme directory
+- `themes/ignai/` — the active theme (IGNAI custom, based on heo skeleton)
+- `src/` — v1.0.0 UI reference (components, content, styles from original architecture)
 
 ### Notion Multi-Database
 
@@ -51,7 +52,12 @@ This enables separate sections (events, members, stories) from different Notion 
 ├── conf/               # Split config files
 ├── components/         # Shared components
 ├── themes/
-│   └── heo/            # Active theme (dark, community-oriented)
+│   ├── ignai/            # ★ Active theme (IGNAI custom, based on heo)
+│   │   ├── config.js     #   IGNAI theme config (brand, hero, nav, footer)
+│   │   ├── style.js      #   IGNAI CSS (v1 design tokens, animations, brand colors)
+│   │   ├── index.js      #   Theme entry (LayoutBase, LayoutIndex, etc.)
+│   │   └── components/   #   Theme components (Header, Hero, Footer, etc.)
+│   └── heo/              # Base theme (reference, not active)
 ├── lib/                # Core logic (Notion API, data fetching)
 ├── pages/              # Next.js Pages Router
 ├── public/
@@ -67,11 +73,12 @@ This enables separate sections (events, members, stories) from different Notion 
 
 ### Customization Strategy
 
-Like the qianzhu_blog project, customization is done by:
-1. **Theme selection**: heo theme as the base (dark, feature-rich)
-2. **Visual overhaul**: modify theme components for IGNAI brand identity
-3. **Feature additions**: custom pages (members, events) reading Notion databases
-4. **Asset replacement**: logos, favicons, brand colors in theme config
+The `ignai` theme is a custom theme that replicates the v1.0.0 IGNAI website UI:
+1. **Theme skeleton**: Based on heo theme's component structure (for NotionNext compatibility)
+2. **Visual identity**: v1.0.0 design tokens, brand colors (Heat #FF7A18, Signal #5DA9FF), animations
+3. **Key components**: Header (BrandLockup + IGNAI nav), Hero (ignite field + signals), Footer (IGNAI branding)
+4. **Reference**: `src/` contains original v1.0.0 components for reference during porting
+5. **Feature additions**: Custom pages (members, events) reading Notion databases
 
 ## Workflow Conventions
 

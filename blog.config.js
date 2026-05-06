@@ -8,7 +8,7 @@ const BLOG = {
   NOTION_PAGE_ID:
     process.env.NOTION_PAGE_ID ||
     '02ab3b8678004aa69e9e415905ef32a5', // TODO: 替换为 IGNAI 的 Notion Database ID
-  THEME: process.env.NEXT_PUBLIC_THEME || 'heo', // heo 暗色主题，最适合社区官网
+  THEME: process.env.NEXT_PUBLIC_THEME || 'ignai', // IGNAI 自定义主题（基于 heo，复刻 v1 UI）
   LANG: process.env.NEXT_PUBLIC_LANG || 'zh-CN', // 中文为主
   SINCE: process.env.NEXT_PUBLIC_SINCE || 2025, // IGNAI 社区成立年份
 
