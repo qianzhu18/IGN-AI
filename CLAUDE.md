@@ -4,99 +4,79 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-IGNAI community website — a Next.js 15 + React 19 landing site for an AI community based in Changsha. The site is a bilingual (Chinese-primary, English secondary) dark-themed community platform with content management, join applications, and event management.
+IGNAI community website — based on **NotionNext** (v4.9.5+), a Notion-powered Next.js site for the IGNAI AI community in Changsha. Dark-themed, Chinese-primary, using Notion as the sole backend for content and data management.
+
+**Architecture: v2 (NotionNext 二开)** — migrated from v1.0.0 (Sanity + Supabase self-built). See `doc/architecture/` for the full decision process.
 
 ## Commands
 
 ```bash
-npm run dev              # Start Next.js dev server
-npm run build            # Production build
-npm run typecheck        # Run next typegen + tsc --noEmit (uses tsconfig.typecheck.json)
-npm run check            # typecheck + build (full validation)
-npm run test:smoke       # Playwright smoke tests (needs running dev server)
-npm run studio           # Standalone Sanity Studio on :3333
-npm run studio:embedded  # Embedded Sanity Studio via Next.js on :3003
+yarn dev              # Start dev server (port 3000)
+yarn build            # Production build
+yarn start            # Start production server
+yarn lint             # ESLint check
+yarn test             # Run tests
 ```
 
-Smoke tests require Playwright and a running dev server:
-```bash
-npx playwright install chromium  # one-time setup
-SMOKE_BASE_URL=http://localhost:3000 npm run test:smoke
-```
+Note: NotionNext uses **yarn** as the package manager (not npm).
 
 ## Architecture
 
-### Dual Backend Strategy
+### Core Stack
 
-The site uses two separate backends, each with a specific role:
+- **NotionNext** (Pages Router, Next.js) — the base framework
+- **Notion** — sole backend: content CMS + data storage
+- **Theme: heo** — dark theme optimized for Chinese developer community sites
+- **Deployment**: Vercel (primary) or Docker (VPS alternative)
 
-- **Sanity** (`src/sanity/`, `src/lib/sanity.ts`): Content CMS for events, records, stories, and articles. Accessed via GROQ queries through `sanityFetch()`. Falls back to hardcoded content in `src/content/` when Sanity is unavailable or returns empty results. Configured via `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `SANITY_API_READ_TOKEN`.
+### Key Configuration
 
-- **Supabase** (`src/lib/supabase.ts`): Business data backend for join applications. Uses direct REST calls to Supabase PostgREST (no client SDK). Configured via `SUPABASE_URL`, `SUPABASE_SECRET_KEY` / `SUPABASE_SERVICE_ROLE_KEY` / `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. Falls back to local JSON file storage (`.data/join-applications.json`) when Supabase is not configured.
+- `blog.config.js` — main site configuration (theme, author, appearance, etc.)
+- `conf/` — split configuration files (comment, analytics, fonts, etc.)
+- `.env.local` — environment variables (only `NOTION_PAGE_ID` is required)
+- `themes/heo/` — the active theme directory
 
-### Join Application Flow
+### Notion Multi-Database
 
-`src/lib/join.ts` orchestrates the three-tier join storage:
-1. **Supabase mode**: Production path — writes to `join_applications` table
-2. **Local mode**: Dev/fallback — writes to `.data/join-applications.json`
-3. **Unconfigured**: Returns 503
+The `NOTION_PAGE_ID` supports multiple Notion databases with path prefixes:
+```
+NOTION_PAGE_ID='主库ID,members:成员库ID,events:活动库ID'
+```
+This enables separate sections (events, members, stories) from different Notion databases.
 
-The join form at `/join` posts to `/api/join`. An external form URL can override the built-in form via `NEXT_PUBLIC_JOIN_FORM_URL`.
+### Project Structure
 
-### Ops/Admin Auth
+```
+├── blog.config.js      # Main config (IGNAI brand settings)
+├── conf/               # Split config files
+├── components/         # Shared components
+├── themes/
+│   └── heo/            # Active theme (dark, community-oriented)
+├── lib/                # Core logic (Notion API, data fetching)
+├── pages/              # Next.js Pages Router
+├── public/
+│   ├── brand/          # IGNAI brand assets (logo, etc.)
+│   └── contact/        # Contact assets (QR codes)
+├── doc/                # Architecture docs & design specs
+│   ├── architecture/   # Technical decisions
+│   ├── design/         # Visual design specs
+│   ├── dev/            # Dev guides
+│   └── requirements/   # Feature requirements
+└── CLAUDE.md           # This file
+```
 
-Admin pages (`/studio`, `/ops/join`, `/manage`) are protected by a simple password-gate system:
-- `src/lib/opsAuth.ts`: SHA-256 hashed password comparison with timing-safe equality
-- `src/components/admin/OpsAccessGate.tsx`: Login UI
-- `src/components/admin/AdminShell.tsx`: Shared admin page shell with navigation
-- Session stored as an `httpOnly` cookie (`ignai_ops_session`), 12-hour expiry
-- Controlled by `OPS_ACCESS_PASSWORD` env var
+### Customization Strategy
 
-### Content Fallback Pattern
-
-All content-fetching functions follow the same pattern: try Sanity first, fall back to static data from `src/content/`:
-- Events: `src/lib/events.ts` → `src/content/events.ts`
-- Community content: `src/lib/sanity.ts` → `src/content/platform.ts`
-- Site copy: `src/content/site.ts`, `src/content/links.ts`
-
-This means the site renders correctly even without Sanity connectivity.
-
-### Path Aliases
-
-`@/*` maps to `./src/*` (configured in `tsconfig.json`).
-
-### Styling
-
-- Tailwind CSS 3 with custom fonts: `font-sans` (Noto Sans SC), `font-display` (Cormorant Garamond)
-- Dark theme by default (`colorScheme: "dark"`, themeColor `#07070A`)
-- Framer Motion for animations (`src/components/motion/`, `src/lib/motion.ts`)
-- Custom shadow: `shadow-glow`
-
-### Sanity Studio
-
-Sanity Studio is embedded at `/studio` route (`src/app/studio/[[...tool]]/page.tsx`) using `next-sanity`. It's also available standalone on port 3333 via `npm run studio`. Schema types are in `src/sanity/schemaTypes/` — currently: `event`, `record`, `sectionBlock`, `link`.
-
-### Supabase Schema
-
-SQL migrations live in `supabase/sql/`. The `join_applications` table stores join submissions with status workflow: `submitted → reviewing → contacted → accepted/waitlisted/withdrawn/spam/archived`.
-
-### Key Page Routes
-
-- `/` — Homepage: composed of section components from `src/components/sections/`
-- `/join` — Community join page (QR code contact card or application form)
-- `/events` and `/events/[slug]` — Event listing and detail
-- `/records` — Field notes / community records
-- `/blog/[slug]` — Blog articles
-- `/stories/[slug]` — Member stories
-- `/ops/join` — Ops dashboard for managing join applications
-- `/manage` — Admin hub
-- `/studio` — Embedded Sanity Studio
+Like the qianzhu_blog project, customization is done by:
+1. **Theme selection**: heo theme as the base (dark, feature-rich)
+2. **Visual overhaul**: modify theme components for IGNAI brand identity
+3. **Feature additions**: custom pages (members, events) reading Notion databases
+4. **Asset replacement**: logos, favicons, brand colors in theme config
 
 ## Workflow Conventions
 
-See `agent.md` for the full issue-driven development workflow. Key points:
-
-- **Commit messages** must include the Issue ID: `feat(IGNAI-001):`, `fix(IGNAI-002):`, `docs(IGNAI-003):`
-- **One issue per commit** — never mix unrelated changes
-- **Always validate after changes**: run `npm run check` before committing
-- **Issue tracking** lives in `doc/TODO.md` with states: Open → In Progress → Blocked → Resolved → Closed
+- **Branch**: `notionnext-v2` is the active development branch
+- **v1.0.0 tag**: archived self-built architecture (Sanity + Supabase), do not modify
+- **Commit messages**: include scope, e.g. `feat(heo):`, `fix(config):`, `docs:`
+- **Always verify**: run `yarn build` before committing major changes
+- **Issue tracking**: `doc/ISSUES/ISSUES.md` and `doc/TO DO/TODO.md`
