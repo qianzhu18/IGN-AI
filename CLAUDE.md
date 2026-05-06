@@ -77,6 +77,14 @@ Like the qianzhu_blog project, customization is done by:
 
 - **Branch**: `notionnext-v2` is the active development branch
 - **v1.0.0 tag**: archived self-built architecture (Sanity + Supabase), do not modify
-- **Commit messages**: include scope, e.g. `feat(heo):`, `fix(config):`, `docs:`
+- **Commit messages**: include scope, e.g. `feat(P1-01):`, `fix(P3-02):`, `docs:` (reference task IDs from TODO.md)
 - **Always verify**: run `yarn build` before committing major changes
-- **Issue tracking**: `doc/ISSUES/ISSUES.md` and `doc/TO DO/TODO.md`
+- **Issue tracking**: `doc/TO DO/TODO.md` (main roadmap), `doc/ISSUES/` (detailed issues)
+
+## AI Development Guide
+
+For comprehensive guidance on what files to read for different development scenarios, see `agent.md`. It covers:
+- Scenario-based file reading order (theme customization, config changes, new pages, debugging)
+- Directory structure with annotations
+- IGNAI brand specifications
+- Development workflow
