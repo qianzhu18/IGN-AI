@@ -5,6 +5,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { Sparkles } from "lucide-react";
 import { useRef } from "react";
 
+import { BrandLockup } from "@/components/layout/BrandLockup";
 import { CTAButton } from "@/components/ui/CTAButton";
 import { primaryLinks } from "@/content/links";
 import { siteContent } from "@/content/site";
@@ -36,28 +37,19 @@ export function HeroSection() {
 
       <div className="relative mx-auto flex min-h-[760px] max-w-[1200px] flex-col px-5 pb-8 pt-5 sm:px-8 lg:min-h-[880px]">
           <div className="flex items-center justify-between gap-4 border-b border-white/10 py-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#ffb879]/20 bg-[radial-gradient(circle,rgba(255,168,94,0.92)_0%,rgba(93,169,255,0.28)_100%)] text-sm font-semibold text-white shadow-[0_12px_34px_rgba(255,140,76,0.16)]">
-                IG
-              </div>
-              <div>
-                <p className="text-sm font-semibold uppercase text-white/92">
-                  {siteContent.name}
-                </p>
-                <p className="text-xs text-white/50">{siteContent.slogan}</p>
-              </div>
-            </div>
+            <BrandLockup />
 
             <nav className="hidden items-center gap-5 text-sm text-white/68 lg:flex">
               {siteContent.navItems.map((item) => (
                 <a
                   key={item.href}
-                  href={item.href}
-                  className="transition hover:text-white"
-                >
-                  {item.label}
-                </a>
-              ))}
+                    href={item.href}
+                    aria-label={`首页首屏导航：${item.label}`}
+                    className="transition hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                ))}
             </nav>
           </div>
 
@@ -92,8 +84,18 @@ export function HeroSection() {
               </p>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <CTAButton href={primaryLinks.joinCommunity.href}>加入社区</CTAButton>
-                <CTAButton href="#upcoming-events" variant="secondary">
+                <CTAButton
+                  href={primaryLinks.joinCommunity.href}
+                  ariaLabel="加入社区（首屏）"
+                  testId="hero-join-cta"
+                >
+                  加入社区
+                </CTAButton>
+                <CTAButton
+                  href="#upcoming-events"
+                  variant="secondary"
+                  ariaLabel="查看近期活动（首屏）"
+                >
                   查看近期活动
                 </CTAButton>
               </div>

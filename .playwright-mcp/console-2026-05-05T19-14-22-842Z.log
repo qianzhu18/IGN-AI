@@ -1,0 +1,23 @@
+[    1930ms] [LOG] [ThemeResolver][runtime-final] {
+  "note": "This is the final theme used for rendering.",
+  "configTheme": "gitbook",
+  "notionTheme": null,
+  "queryTheme": null,
+  "finalTheme": "gitbook",
+  "source": "blog/env:config"
+} @ https://docs.tangly1024.com/_next/static/chunks/pages/_app-9114fbab351e9a51.js:0
+[    2000ms] [WARNING] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview @ https://cosmic-impala-14.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js:18
+[    2100ms] [LOG] 重定向 about @ https://docs.tangly1024.com/_next/static/chunks/64462.87ed0293bb19549d.js:0
+[    2107ms] [LOG] 重定向 about @ https://docs.tangly1024.com/_next/static/chunks/64462.87ed0293bb19549d.js:0
+[    2637ms] [LOG] 当前路径不在黄名单中，放行 @ https://docs.tangly1024.com/_next/static/chunks/50838-60485c16906119a3.js:0
+[    2666ms] [LOG] 当前路径不在黄名单中，放行 @ https://docs.tangly1024.com/_next/static/chunks/50838-60485c16906119a3.js:0
+[    2682ms] [LOG] Live2D %s 2.1.00_1 @ https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js:0
+[    2683ms] [LOG] profile : Desktop @ https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js:0
+[    2683ms] [LOG]   [PROFILE_NAME] = Desktop @ https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js:0
+[    2683ms] [LOG]   [USE_ADJUST_TRANSLATION] = false @ https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js:0
+[    2683ms] [LOG]   [USE_CACHED_POLYGON_IMAGE] = false @ https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js:0
+[    2683ms] [LOG]   [EXPAND_W] = 2 @ https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/live2d.min.js:0
+[    2981ms] [LOG] 当前路径不在黄名单中，放行 @ https://docs.tangly1024.com/_next/static/chunks/50838-60485c16906119a3.js:0
+[    4939ms] [LOG] Load Adsense @ https://docs.tangly1024.com/_next/static/chunks/pages/_app-9114fbab351e9a51.js:0
+[    5638ms] [LOG] Load Adsense @ https://docs.tangly1024.com/_next/static/chunks/pages/_app-9114fbab351e9a51.js:0
+[    8509ms] [ERROR] Attestation check for Shared Storage on https://www.googleadservices.com failed. @ https://www.googleadservices.com/pagead/managed/js/activeview/current/reach_worklet.html:0

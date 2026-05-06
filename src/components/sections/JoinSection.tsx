@@ -56,10 +56,19 @@ export function JoinSection() {
 
             <Reveal delay={0.12}>
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-                <CTAButton href={primaryLinks.joinCommunity.href} className="motion-cta">
+                <CTAButton
+                  href={primaryLinks.joinCommunity.href}
+                  className="motion-cta"
+                  ariaLabel="加入社区（Join 区域）"
+                  testId="join-section-join-cta"
+                >
                   加入社区
                 </CTAButton>
-                <CTAButton href={primaryLinks.contact.href} variant="secondary">
+                <CTAButton
+                  href={primaryLinks.contact.href}
+                  variant="secondary"
+                  ariaLabel="联系合作（Join 区域）"
+                >
                   联系合作
                 </CTAButton>
               </div>

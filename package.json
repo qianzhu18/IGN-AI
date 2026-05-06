@@ -8,6 +8,7 @@
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit -p tsconfig.typecheck.json",
     "check": "npm run typecheck && npm run build",
+    "test:smoke": "node scripts/smoke-test.mjs",
     "studio": "sanity dev --port 3333",
     "studio:embedded": "next dev -p 3003",
     "sanity:cors:list": "sanity cors list",

@@ -24,6 +24,14 @@ const display = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteLinks.siteUrl),
+  alternates: {
+    canonical: "./",
+  },
+  icons: {
+    icon: "/brand/ignai-logo-transparent.png",
+    shortcut: "/brand/ignai-logo-transparent.png",
+    apple: "/brand/ignai-logo-transparent.png",
+  },
   title: "IGNAI | Ignite before AGI.",
   description:
     "IGNAI 是一个 base 长沙、面向国际、立足本地技术连接与行动实践的 AI 社群。",

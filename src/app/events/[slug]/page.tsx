@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 
 import { PageShell } from "@/components/layout/PageShell";
 import { CTAButton } from "@/components/ui/CTAButton";
@@ -80,6 +81,24 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                   加入社区了解更多
                 </CTAButton>
               </div>
+
+              {event.registrationQrImage ? (
+                <div className="mt-8 rounded-[24px] border border-white/10 bg-white/[0.03] p-4">
+                  <p className="card-eyebrow">报名二维码</p>
+                  <div className="mt-4 overflow-hidden rounded-[18px] border border-white/10 bg-white p-3">
+                    <Image
+                      src={event.registrationQrImage}
+                      alt={`${event.title} 报名二维码`}
+                      width={720}
+                      height={720}
+                      className="h-auto w-full rounded-[14px]"
+                    />
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-white/56">
+                    适合活动主办方直接挂飞书多维表格或外部报名二维码，桌面和移动端都可以直接扫码。
+                  </p>
+                </div>
+              ) : null}
             </aside>
 
             <div className="surface-card-strong overflow-hidden">

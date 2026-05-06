@@ -1,0 +1,760 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - region
+    - generic [ref=e3]:
+      - link "Skip to content" [ref=e4] [cursor=pointer]:
+        - /url: "#start-of-content"
+      - banner [ref=e6]:
+        - heading "Navigation Menu" [level=2] [ref=e7]
+        - generic [ref=e8]:
+          - link "Homepage" [ref=e10] [cursor=pointer]:
+            - /url: /
+            - img [ref=e11]
+          - generic [ref=e13]:
+            - navigation "Global" [ref=e16]:
+              - list [ref=e17]:
+                - listitem [ref=e18]:
+                  - button "Platform" [ref=e20] [cursor=pointer]:
+                    - text: Platform
+                    - img [ref=e21]
+                - listitem [ref=e23]:
+                  - button "Solutions" [ref=e25] [cursor=pointer]:
+                    - text: Solutions
+                    - img [ref=e26]
+                - listitem [ref=e28]:
+                  - button "Resources" [ref=e30] [cursor=pointer]:
+                    - text: Resources
+                    - img [ref=e31]
+                - listitem [ref=e33]:
+                  - button "Open Source" [ref=e35] [cursor=pointer]:
+                    - text: Open Source
+                    - img [ref=e36]
+                - listitem [ref=e38]:
+                  - button "Enterprise" [ref=e40] [cursor=pointer]:
+                    - text: Enterprise
+                    - img [ref=e41]
+                - listitem [ref=e43]:
+                  - link "Pricing" [ref=e44] [cursor=pointer]:
+                    - /url: https://github.com/pricing
+                    - generic [ref=e45]: Pricing
+            - generic [ref=e46]:
+              - button "Search or jump to…" [ref=e49] [cursor=pointer]:
+                - img [ref=e51]
+              - link "Sign in" [ref=e54] [cursor=pointer]:
+                - /url: /login?return_to=https%3A%2F%2Fgithub.com%2Ftangly1024%2FNotionNext%2Fblob%2Fmain%2Fconf%2Flayout-map.config.js
+              - link "Sign up" [ref=e55] [cursor=pointer]:
+                - /url: /signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F%3Cuser-name%3E%2F%3Crepo-name%3E%2Fblob%2Fshow&source=header-repo&source_repo=tangly1024%2FNotionNext
+              - button "Appearance settings" [ref=e58] [cursor=pointer]:
+                - img
+    - main [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e66]:
+            - img [ref=e67]
+            - link "tangly1024" [ref=e70] [cursor=pointer]:
+              - /url: /tangly1024
+            - generic [ref=e71]: /
+            - strong [ref=e72]:
+              - link "NotionNext" [ref=e73] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext
+            - generic [ref=e74]: Public
+          - generic [ref=e75]:
+            - list:
+              - listitem
+              - listitem [ref=e76]:
+                - link "You must be signed in to change notification settings" [ref=e77] [cursor=pointer]:
+                  - /url: /login?return_to=%2Ftangly1024%2FNotionNext
+                  - img [ref=e78]
+                  - text: Notifications
+              - listitem [ref=e80]:
+                - link "Fork 14.6k" [ref=e81] [cursor=pointer]:
+                  - /url: /login?return_to=%2Ftangly1024%2FNotionNext
+                  - img [ref=e82]
+                  - text: Fork
+                  - generic "14,593" [ref=e84]: 14.6k
+              - listitem [ref=e85]:
+                - link "You must be signed in to star a repository" [ref=e87] [cursor=pointer]:
+                  - /url: /login?return_to=%2Ftangly1024%2FNotionNext
+                  - img [ref=e88]
+                  - text: Star
+                  - generic "11386 users starred this repository" [ref=e90]: 11.4k
+        - navigation "Repository" [ref=e91]:
+          - list [ref=e92]:
+            - listitem [ref=e93]:
+              - link "Code" [ref=e94] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext
+                - img [ref=e95]
+                - generic [ref=e97]: Code
+            - listitem [ref=e98]:
+              - link "Issues 388" [ref=e99] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/issues
+                - img [ref=e100]
+                - generic [ref=e103]: Issues
+                - generic "388" [ref=e104]
+            - listitem [ref=e105]:
+              - link "Pull requests 17" [ref=e106] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/pulls
+                - img [ref=e107]
+                - generic [ref=e109]: Pull requests
+                - generic "17" [ref=e110]
+            - listitem [ref=e111]:
+              - link "Discussions" [ref=e112] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/discussions
+                - img [ref=e113]
+                - generic [ref=e115]: Discussions
+            - listitem [ref=e116]:
+              - link "Actions" [ref=e117] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/actions
+                - img [ref=e118]
+                - generic [ref=e120]: Actions
+            - listitem [ref=e121]:
+              - link "Projects" [ref=e122] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/projects
+                - img [ref=e123]
+                - generic [ref=e125]: Projects
+            - listitem [ref=e126]:
+              - link "Wiki" [ref=e127] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/wiki
+                - img [ref=e128]
+                - generic [ref=e130]: Wiki
+            - listitem [ref=e131]:
+              - link "Security and quality" [ref=e132] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/security
+                - img [ref=e133]
+                - generic [ref=e135]: Security and quality
+            - listitem [ref=e136]:
+              - link "Insights" [ref=e137] [cursor=pointer]:
+                - /url: /tangly1024/NotionNext/pulse
+                - img [ref=e138]
+                - generic [ref=e140]: Insights
+      - generic [ref=e148]:
+        - generic [ref=e150]:
+          - generic [ref=e153]:
+            - generic [ref=e154]:
+              - generic [ref=e155]:
+                - heading "Collapse file tree" [level=2] [ref=e156]:
+                  - button "Collapse file tree" [expanded] [ref=e157] [cursor=pointer]:
+                    - img [ref=e158]
+                - heading "Files" [level=2] [ref=e161]
+              - generic [ref=e162]:
+                - button "main branch" [ref=e164] [cursor=pointer]:
+                  - generic [ref=e165]:
+                    - generic [ref=e167]:
+                      - img [ref=e169]
+                      - generic [ref=e172]: main
+                    - generic:
+                      - img
+                - button "Search this repository (forward slash)" [ref=e174] [cursor=pointer]:
+                  - img [ref=e175]
+            - generic [ref=e178]:
+              - img [ref=e180]
+              - combobox "Go to file" [ref=e182]
+            - navigation "File Tree Navigation" [ref=e188]:
+              - tree "Files" [ref=e190]:
+                - treeitem ".github" [level=1] [ref=e191]:
+                  - generic [ref=e192] [cursor=pointer]:
+                    - img [ref=e194]
+                    - generic [ref=e196]:
+                      - img [ref=e200]
+                      - generic [ref=e202]: .github
+                - treeitem "__tests__" [level=1] [ref=e203]:
+                  - generic [ref=e204] [cursor=pointer]:
+                    - img [ref=e206]
+                    - generic [ref=e208]:
+                      - img [ref=e212]
+                      - generic [ref=e214]: __tests__
+                - treeitem "components" [level=1] [ref=e215]:
+                  - generic [ref=e216] [cursor=pointer]:
+                    - img [ref=e218]
+                    - generic [ref=e220]:
+                      - img [ref=e224]
+                      - generic [ref=e226]: components
+                - treeitem "conf" [expanded] [level=1] [ref=e227]:
+                  - generic [ref=e228] [cursor=pointer]:
+                    - img [ref=e230]
+                    - generic [ref=e232]:
+                      - img [ref=e236]
+                      - generic [ref=e238]: conf
+                  - group "conf" [ref=e239]:
+                    - treeitem "ad.config.js" [level=2] [ref=e240]:
+                      - generic [ref=e245] [cursor=pointer]:
+                        - img [ref=e248]
+                        - generic [ref=e250]: ad.config.js
+                    - treeitem "ai.confg.js" [level=2] [ref=e251]:
+                      - generic [ref=e256] [cursor=pointer]:
+                        - img [ref=e259]
+                        - generic [ref=e261]: ai.confg.js
+                    - treeitem "analytics.config.js" [level=2] [ref=e262]:
+                      - generic [ref=e267] [cursor=pointer]:
+                        - img [ref=e270]
+                        - generic [ref=e272]: analytics.config.js
+                    - treeitem "animation.config.js" [level=2] [ref=e273]:
+                      - generic [ref=e278] [cursor=pointer]:
+                        - img [ref=e281]
+                        - generic [ref=e283]: animation.config.js
+                    - treeitem "code.config.js" [level=2] [ref=e284]:
+                      - generic [ref=e289] [cursor=pointer]:
+                        - img [ref=e292]
+                        - generic [ref=e294]: code.config.js
+                    - treeitem "comment.config.js" [level=2] [ref=e295]:
+                      - generic [ref=e300] [cursor=pointer]:
+                        - img [ref=e303]
+                        - generic [ref=e305]: comment.config.js
+                    - treeitem "contact.config.js" [level=2] [ref=e306]:
+                      - generic [ref=e311] [cursor=pointer]:
+                        - img [ref=e314]
+                        - generic [ref=e316]: contact.config.js
+                    - treeitem "dev.config.js" [level=2] [ref=e317]:
+                      - generic [ref=e322] [cursor=pointer]:
+                        - img [ref=e325]
+                        - generic [ref=e327]: dev.config.js
+                    - treeitem "font.config.js" [level=2] [ref=e328]:
+                      - generic [ref=e333] [cursor=pointer]:
+                        - img [ref=e336]
+                        - generic [ref=e338]: font.config.js
+                    - treeitem "image.config.js" [level=2] [ref=e339]:
+                      - generic [ref=e344] [cursor=pointer]:
+                        - img [ref=e347]
+                        - generic [ref=e349]: image.config.js
+                    - treeitem "layout-map.config.js" [level=2] [ref=e350]:
+                      - generic [ref=e355] [cursor=pointer]:
+                        - img [ref=e358]
+                        - generic [ref=e360]: layout-map.config.js
+                    - treeitem "notion.config.js" [level=2] [ref=e361]:
+                      - generic [ref=e366] [cursor=pointer]:
+                        - img [ref=e369]
+                        - generic [ref=e371]: notion.config.js
+                    - treeitem "performance.config.js" [level=2] [ref=e372]:
+                      - generic [ref=e377] [cursor=pointer]:
+                        - img [ref=e380]
+                        - generic [ref=e382]: performance.config.js
+                    - treeitem "plugin.config.js" [level=2] [ref=e383]:
+                      - generic [ref=e388] [cursor=pointer]:
+                        - img [ref=e391]
+                        - generic [ref=e393]: plugin.config.js
+                    - treeitem "post.config.js" [level=2] [ref=e394]:
+                      - generic [ref=e399] [cursor=pointer]:
+                        - img [ref=e402]
+                        - generic [ref=e404]: post.config.js
+                    - treeitem "right-click-menu.js" [level=2] [ref=e405]:
+                      - generic [ref=e410] [cursor=pointer]:
+                        - img [ref=e413]
+                        - generic [ref=e415]: right-click-menu.js
+                    - treeitem "techgrow.config.js" [level=2] [ref=e416]:
+                      - generic [ref=e421] [cursor=pointer]:
+                        - img [ref=e424]
+                        - generic [ref=e426]: techgrow.config.js
+                    - treeitem "themeSwitch.manifest.js" [level=2] [ref=e427]:
+                      - generic [ref=e432] [cursor=pointer]:
+                        - img [ref=e435]
+                        - generic [ref=e437]: themeSwitch.manifest.js
+                    - treeitem "top-tag.config.js" [level=2] [ref=e438]:
+                      - generic [ref=e443] [cursor=pointer]:
+                        - img [ref=e446]
+                        - generic [ref=e448]: top-tag.config.js
+                    - treeitem "widget.config.js" [level=2] [ref=e449]:
+                      - generic [ref=e454] [cursor=pointer]:
+                        - img [ref=e457]
+                        - generic [ref=e459]: widget.config.js
+                - treeitem "docs" [level=1] [ref=e460]:
+                  - generic [ref=e461] [cursor=pointer]:
+                    - img [ref=e463]
+                    - generic [ref=e465]:
+                      - img [ref=e469]
+                      - generic [ref=e471]: docs
+                - treeitem "hooks" [level=1] [ref=e472]:
+                  - generic [ref=e473] [cursor=pointer]:
+                    - img [ref=e475]
+                    - generic [ref=e477]:
+                      - img [ref=e481]
+                      - generic [ref=e483]: hooks
+                - treeitem "lib" [level=1] [ref=e484]:
+                  - generic [ref=e485] [cursor=pointer]:
+                    - img [ref=e487]
+                    - generic [ref=e489]:
+                      - img [ref=e493]
+                      - generic [ref=e495]: lib
+                - treeitem "pages" [level=1] [ref=e496]:
+                  - generic [ref=e497] [cursor=pointer]:
+                    - img [ref=e499]
+                    - generic [ref=e501]:
+                      - img [ref=e505]
+                      - generic [ref=e507]: pages
+                - treeitem "patches" [level=1] [ref=e508]:
+                  - generic [ref=e509] [cursor=pointer]:
+                    - img [ref=e511]
+                    - generic [ref=e513]:
+                      - img [ref=e517]
+                      - generic [ref=e519]: patches
+                - treeitem "public" [level=1] [ref=e520]:
+                  - generic [ref=e521] [cursor=pointer]:
+                    - img [ref=e523]
+                    - generic [ref=e525]:
+                      - img [ref=e529]
+                      - generic [ref=e531]: public
+                - treeitem "scripts" [level=1] [ref=e532]:
+                  - generic [ref=e533] [cursor=pointer]:
+                    - img [ref=e535]
+                    - generic [ref=e537]:
+                      - img [ref=e541]
+                      - generic [ref=e543]: scripts
+                - treeitem "styles" [level=1] [ref=e544]:
+                  - generic [ref=e545] [cursor=pointer]:
+                    - img [ref=e547]
+                    - generic [ref=e549]:
+                      - img [ref=e553]
+                      - generic [ref=e555]: styles
+                - treeitem "themes" [level=1] [ref=e556]:
+                  - generic [ref=e557] [cursor=pointer]:
+                    - img [ref=e559]
+                    - generic [ref=e561]:
+                      - img [ref=e565]
+                      - generic [ref=e567]: themes
+                - treeitem "types" [level=1] [ref=e568]:
+                  - generic [ref=e569] [cursor=pointer]:
+                    - img [ref=e571]
+                    - generic [ref=e573]:
+                      - img [ref=e577]
+                      - generic [ref=e579]: types
+                - treeitem ".dockerignore" [level=1] [ref=e580]:
+                  - generic [ref=e582] [cursor=pointer]:
+                    - img [ref=e585]
+                    - generic [ref=e587]: .dockerignore
+                - treeitem ".env.example" [level=1] [ref=e588]:
+                  - generic [ref=e590] [cursor=pointer]:
+                    - img [ref=e593]
+                    - generic [ref=e595]: .env.example
+                - treeitem ".eslintrc.js" [level=1] [ref=e596]:
+                  - generic [ref=e598] [cursor=pointer]:
+                    - img [ref=e601]
+                    - generic [ref=e603]: .eslintrc.js
+                - treeitem ".gitignore" [level=1] [ref=e604]:
+                  - generic [ref=e606] [cursor=pointer]:
+                    - img [ref=e609]
+                    - generic [ref=e611]: .gitignore
+                - treeitem ".npmrc" [level=1] [ref=e612]:
+                  - generic [ref=e614] [cursor=pointer]:
+                    - img [ref=e617]
+                    - generic [ref=e619]: .npmrc
+                - treeitem ".nvmrc" [level=1] [ref=e620]:
+                  - generic [ref=e622] [cursor=pointer]:
+                    - img [ref=e625]
+                    - generic [ref=e627]: .nvmrc
+                - treeitem ".prettierrc.json" [level=1] [ref=e628]:
+                  - generic [ref=e630] [cursor=pointer]:
+                    - img [ref=e633]
+                    - generic [ref=e635]: .prettierrc.json
+                - treeitem ".yarnrc.yml" [level=1] [ref=e636]:
+                  - generic [ref=e638] [cursor=pointer]:
+                    - img [ref=e641]
+                    - generic [ref=e643]: .yarnrc.yml
+                - treeitem "CONTRIBUTING.md" [level=1] [ref=e644]:
+                  - generic [ref=e646] [cursor=pointer]:
+                    - img [ref=e649]
+                    - generic [ref=e651]: CONTRIBUTING.md
+                - treeitem "CONTRIBUTING.zh-CN.md" [level=1] [ref=e652]:
+                  - generic [ref=e654] [cursor=pointer]:
+                    - img [ref=e657]
+                    - generic [ref=e659]: CONTRIBUTING.zh-CN.md
+                - treeitem "DEPLOYMENT.md" [level=1] [ref=e660]:
+                  - generic [ref=e662] [cursor=pointer]:
+                    - img [ref=e665]
+                    - generic [ref=e667]: DEPLOYMENT.md
+                - treeitem "DEVELOPMENT.md" [level=1] [ref=e668]:
+                  - generic [ref=e670] [cursor=pointer]:
+                    - img [ref=e673]
+                    - generic [ref=e675]: DEVELOPMENT.md
+                - treeitem "Dockerfile" [level=1] [ref=e676]:
+                  - generic [ref=e678] [cursor=pointer]:
+                    - img [ref=e681]
+                    - generic [ref=e683]: Dockerfile
+                - treeitem "LICENSE" [level=1] [ref=e684]:
+                  - generic [ref=e686] [cursor=pointer]:
+                    - img [ref=e689]
+                    - generic [ref=e691]: LICENSE
+                - treeitem "OPTIMIZATION_SUMMARY.md" [level=1] [ref=e692]:
+                  - generic [ref=e694] [cursor=pointer]:
+                    - img [ref=e697]
+                    - generic [ref=e699]: OPTIMIZATION_SUMMARY.md
+                - treeitem "PROJECT_COMPLETION_REPORT.md" [level=1] [ref=e700]:
+                  - generic [ref=e702] [cursor=pointer]:
+                    - img [ref=e705]
+                    - generic [ref=e707]: PROJECT_COMPLETION_REPORT.md
+                - treeitem "README.md" [level=1] [ref=e708]:
+                  - generic [ref=e710] [cursor=pointer]:
+                    - img [ref=e713]
+                    - generic [ref=e715]: README.md
+                - treeitem "README_EN.md" [level=1] [ref=e716]:
+                  - generic [ref=e718] [cursor=pointer]:
+                    - img [ref=e721]
+                    - generic [ref=e723]: README_EN.md
+                - treeitem "SECURITY.md" [level=1] [ref=e724]:
+                  - generic [ref=e726] [cursor=pointer]:
+                    - img [ref=e729]
+                    - generic [ref=e731]: SECURITY.md
+                - treeitem "blog.config.js" [level=1] [ref=e732]:
+                  - generic [ref=e734] [cursor=pointer]:
+                    - img [ref=e737]
+                    - generic [ref=e739]: blog.config.js
+                - treeitem "jest.config.js" [level=1] [ref=e740]:
+                  - generic [ref=e742] [cursor=pointer]:
+                    - img [ref=e745]
+                    - generic [ref=e747]: jest.config.js
+                - treeitem "jest.env.js" [level=1] [ref=e748]:
+                  - generic [ref=e750] [cursor=pointer]:
+                    - img [ref=e753]
+                    - generic [ref=e755]: jest.env.js
+                - treeitem "jest.setup.js" [level=1] [ref=e756]:
+                  - generic [ref=e758] [cursor=pointer]:
+                    - img [ref=e761]
+                    - generic [ref=e763]: jest.setup.js
+                - treeitem "jsconfig.json" [level=1] [ref=e764]:
+                  - generic [ref=e766] [cursor=pointer]:
+                    - img [ref=e769]
+                    - generic [ref=e771]: jsconfig.json
+                - treeitem "lighthouserc.js" [level=1] [ref=e772]:
+                  - generic [ref=e774] [cursor=pointer]:
+                    - img [ref=e777]
+                    - generic [ref=e779]: lighthouserc.js
+                - treeitem "middleware.ts" [level=1] [ref=e780]:
+                  - generic [ref=e782] [cursor=pointer]:
+                    - img [ref=e785]
+                    - generic [ref=e787]: middleware.ts
+                - treeitem "netlify.toml" [level=1] [ref=e788]:
+                  - generic [ref=e790] [cursor=pointer]:
+                    - img [ref=e793]
+                    - generic [ref=e795]: netlify.toml
+                - treeitem "next-env.d.ts" [level=1] [ref=e796]:
+                  - generic [ref=e798] [cursor=pointer]:
+                    - img [ref=e801]
+                    - generic [ref=e803]: next-env.d.ts
+                - treeitem "next-sitemap.config.js" [level=1] [ref=e804]:
+                  - generic [ref=e806] [cursor=pointer]:
+                    - img [ref=e809]
+                    - generic [ref=e811]: next-sitemap.config.js
+                - treeitem "next.config.js" [level=1] [ref=e812]:
+                  - generic [ref=e814] [cursor=pointer]:
+                    - img [ref=e817]
+                    - generic [ref=e819]: next.config.js
+                - treeitem "package.json" [level=1] [ref=e820]:
+                  - generic [ref=e822] [cursor=pointer]:
+                    - img [ref=e825]
+                    - generic [ref=e827]: package.json
+                - treeitem "postcss.config.js" [level=1] [ref=e828]:
+                  - generic [ref=e830] [cursor=pointer]:
+                    - img [ref=e833]
+                    - generic [ref=e835]: postcss.config.js
+                - treeitem "pushUrl.py" [level=1] [ref=e836]:
+                  - generic [ref=e838] [cursor=pointer]:
+                    - img [ref=e841]
+                    - generic [ref=e843]: pushUrl.py
+                - treeitem "tailwind.config.js" [level=1] [ref=e844]:
+                  - generic [ref=e846] [cursor=pointer]:
+                    - img [ref=e849]
+                    - generic [ref=e851]: tailwind.config.js
+                - treeitem "tsconfig.eslint.json" [level=1] [ref=e852]:
+                  - generic [ref=e854] [cursor=pointer]:
+                    - img [ref=e857]
+                    - generic [ref=e859]: tsconfig.eslint.json
+                - treeitem "tsconfig.json" [level=1] [ref=e860]:
+                  - generic [ref=e862] [cursor=pointer]:
+                    - img [ref=e865]
+                    - generic [ref=e867]: tsconfig.json
+                - treeitem "validation-report.json" [level=1] [ref=e868]:
+                  - generic [ref=e870] [cursor=pointer]:
+                    - img [ref=e873]
+                    - generic [ref=e875]: validation-report.json
+                - treeitem "vercel.json" [level=1] [ref=e876]:
+                  - generic [ref=e878] [cursor=pointer]:
+                    - img [ref=e881]
+                    - generic [ref=e883]: vercel.json
+                - treeitem "yarn.lock" [level=1] [ref=e884]:
+                  - generic [ref=e886] [cursor=pointer]:
+                    - img [ref=e889]
+                    - generic [ref=e891]: yarn.lock
+          - slider "Draggable pane splitter" [ref=e893]
+        - generic [ref=e896]:
+          - generic [ref=e900]:
+            - generic [ref=e902]:
+              - navigation "Breadcrumbs" [ref=e903]:
+                - heading "Breadcrumbs" [level=2] [ref=e904]
+                - list [ref=e905]:
+                  - listitem [ref=e906]:
+                    - link "NotionNext" [ref=e907] [cursor=pointer]:
+                      - /url: /tangly1024/NotionNext/tree/main
+                  - listitem [ref=e908]:
+                    - text: /
+                    - link "conf" [ref=e909] [cursor=pointer]:
+                      - /url: /tangly1024/NotionNext/tree/main/conf
+              - generic [ref=e910]:
+                - text: /
+                - heading "layout-map.config.js" [level=1] [ref=e911]
+              - button "Copy path" [ref=e912] [cursor=pointer]:
+                - img [ref=e913]
+            - button "More file actions" [ref=e919] [cursor=pointer]:
+              - img [ref=e920]
+          - generic [ref=e922]:
+            - generic [ref=e924]:
+              - heading "Latest commit" [level=2] [ref=e925]
+              - generic [ref=e928]:
+                - heading "History" [level=2] [ref=e929]
+                - link "History" [ref=e930] [cursor=pointer]:
+                  - /url: /tangly1024/NotionNext/commits/main/conf/layout-map.config.js
+                  - generic [ref=e931]:
+                    - generic:
+                      - img
+                    - generic [ref=e932]: History
+            - generic [ref=e934]:
+              - generic [ref=e936]:
+                - heading "File metadata and controls" [level=2] [ref=e937]
+                - list "File view" [ref=e939]:
+                  - listitem [ref=e940]:
+                    - button "Code" [ref=e941] [cursor=pointer]:
+                      - generic [ref=e943]: Code
+                  - listitem [ref=e944]:
+                    - button "Blame" [ref=e945] [cursor=pointer]:
+                      - generic [ref=e947]: Blame
+                - generic [ref=e948]:
+                  - generic [ref=e949]:
+                    - generic [ref=e950]:
+                      - link "Raw" [ref=e952] [cursor=pointer]:
+                        - /url: https://github.com/tangly1024/NotionNext/raw/refs/heads/main/conf/layout-map.config.js
+                        - generic [ref=e954]: Raw
+                      - button "Copy raw file" [ref=e956] [cursor=pointer]:
+                        - img [ref=e957]
+                      - button "Download raw file" [ref=e961] [cursor=pointer]:
+                        - img [ref=e962]
+                    - generic [ref=e965]:
+                      - button "You must be signed in to make or propose changes" [disabled] [ref=e967]:
+                        - img [ref=e968]
+                      - button "More edit options" [ref=e971] [cursor=pointer]:
+                        - img [ref=e972]
+                  - button "Open symbols panel" [ref=e974] [cursor=pointer]:
+                    - img [ref=e975]
+              - region "layout-map.config.js" [ref=e978]:
+                - generic [ref=e982]:
+                  - textbox "file content" [ref=e987]: "/** * 路径和组件映射，不同路径分别展示主题的什么组件 * 可在添加新的路径和对应主题下的布局名称 * */ module.exports = { // LAYOUT_MAPPINGS: { '-1': 'LayoutBase', '/': 'LayoutIndex', '/archive': 'LayoutArchive', '/page/[page]': 'LayoutPostList', '/category/[category]': 'LayoutPostList', '/category/[category]/page/[page]': 'LayoutPostList', '/tag/[tag]': 'LayoutPostList', '/tag/[tag]/page/[page]': 'LayoutPostList', '/search': 'LayoutSearch', '/search/[keyword]': 'LayoutSearch', '/search/[keyword]/page/[page]': 'LayoutSearch', '/404': 'Layout404', '/tag': 'LayoutTagIndex', '/category': 'LayoutCategoryIndex', '/[prefix]': 'LayoutSlug', '/[prefix]/[slug]': 'LayoutSlug', '/[prefix]/[slug]/[...suffix]': 'LayoutSlug', '/auth/result': 'LayoutAuth', '/sign-in/[[...index]]': 'LayoutSignIn', '/sign-up/[[...index]]': 'LayoutSignUp', '/dashboard/[[...index]]': 'LayoutDashboard' } }"
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic [ref=e988]:
+                          - generic [ref=e989] [cursor=pointer]: "1"
+                          - generic [ref=e990] [cursor=pointer]: "2"
+                          - generic [ref=e991] [cursor=pointer]: "3"
+                          - generic [ref=e992] [cursor=pointer]: "4"
+                          - generic [ref=e993] [cursor=pointer]: "5"
+                          - generic [ref=e994] [cursor=pointer]: "6"
+                          - generic [ref=e995] [cursor=pointer]: "7"
+                          - generic [ref=e996] [cursor=pointer]: "8"
+                          - generic [ref=e997] [cursor=pointer]: "9"
+                          - generic [ref=e998] [cursor=pointer]: "10"
+                          - generic [ref=e999] [cursor=pointer]: "11"
+                          - generic [ref=e1000] [cursor=pointer]: "12"
+                          - generic [ref=e1001] [cursor=pointer]: "13"
+                          - generic [ref=e1002] [cursor=pointer]: "14"
+                          - generic [ref=e1003] [cursor=pointer]: "15"
+                          - generic [ref=e1004] [cursor=pointer]: "16"
+                          - generic [ref=e1005] [cursor=pointer]: "17"
+                          - generic [ref=e1006] [cursor=pointer]: "18"
+                          - generic [ref=e1007] [cursor=pointer]: "19"
+                          - generic [ref=e1008] [cursor=pointer]: "20"
+                          - generic [ref=e1009] [cursor=pointer]: "21"
+                          - generic [ref=e1010] [cursor=pointer]: "22"
+                          - generic [ref=e1011] [cursor=pointer]: "23"
+                          - generic [ref=e1012] [cursor=pointer]: "24"
+                          - generic [ref=e1013] [cursor=pointer]: "25"
+                          - generic [ref=e1014] [cursor=pointer]: "26"
+                          - generic [ref=e1015] [cursor=pointer]: "27"
+                          - generic [ref=e1016] [cursor=pointer]: "28"
+                          - generic [ref=e1017] [cursor=pointer]: "29"
+                          - generic [ref=e1018] [cursor=pointer]: "30"
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: /**
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "* 路径和组件映射，不同路径分别展示主题的什么组件"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "* 可在添加新的路径和对应主题下的布局名称"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "* */"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: module
+                                - generic: .
+                                - generic: exports
+                                - generic: =
+                                - generic: "{"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: //
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: LAYOUT_MAPPINGS
+                                - text: ":"
+                                - generic: "{"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'-1'"
+                                - text: ":"
+                                - generic: "'LayoutBase'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/'"
+                                - text: ":"
+                                - generic: "'LayoutIndex'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/archive'"
+                                - text: ":"
+                                - generic: "'LayoutArchive'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/page/[page]'"
+                                - text: ":"
+                                - generic: "'LayoutPostList'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/category/[category]'"
+                                - text: ":"
+                                - generic: "'LayoutPostList'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/category/[category]/page/[page]'"
+                                - text: ":"
+                                - generic: "'LayoutPostList'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/tag/[tag]'"
+                                - text: ":"
+                                - generic: "'LayoutPostList'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/tag/[tag]/page/[page]'"
+                                - text: ":"
+                                - generic: "'LayoutPostList'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/search'"
+                                - text: ":"
+                                - generic: "'LayoutSearch'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/search/[keyword]'"
+                                - text: ":"
+                                - generic: "'LayoutSearch'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/search/[keyword]/page/[page]'"
+                                - text: ":"
+                                - generic: "'LayoutSearch'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/404'"
+                                - text: ":"
+                                - generic: "'Layout404'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/tag'"
+                                - text: ":"
+                                - generic: "'LayoutTagIndex'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/category'"
+                                - text: ":"
+                                - generic: "'LayoutCategoryIndex'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/[prefix]'"
+                                - text: ":"
+                                - generic: "'LayoutSlug'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/[prefix]/[slug]'"
+                                - text: ":"
+                                - generic: "'LayoutSlug'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/[prefix]/[slug]/[...suffix]'"
+                                - text: ":"
+                                - generic: "'LayoutSlug'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/auth/result'"
+                                - text: ":"
+                                - generic: "'LayoutAuth'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/sign-in/[[...index]]'"
+                                - text: ":"
+                                - generic: "'LayoutSignIn'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/sign-up/[[...index]]'"
+                                - text: ":"
+                                - generic: "'LayoutSignUp'"
+                                - generic: ","
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "'/dashboard/[[...index]]'"
+                                - text: ":"
+                                - generic: "'LayoutDashboard'"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "}"
+                          - generic:
+                            - generic:
+                              - generic:
+                                - generic: "}"
+  - alert [ref=e1022]

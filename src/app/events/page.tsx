@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { EventCard } from "@/components/cards/EventCard";
+import { ContentAdminPanel } from "@/components/content/ContentAdminPanel";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { eventFormatLabel, eventStatusLabel } from "@/content/events";
@@ -35,6 +36,8 @@ export default async function EventsPage() {
                 </span>
               ))}
             </div>
+
+            <ContentAdminPanel type="events" />
 
             <div className="grid items-stretch gap-5 lg:grid-cols-3">
               {events.map((event) => (

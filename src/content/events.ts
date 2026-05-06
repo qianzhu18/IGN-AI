@@ -13,6 +13,7 @@ export type EventItem = {
   excerpt: string;
   tags: string[];
   registrationUrl?: string;
+  registrationQrImage?: string;
   audience: string[];
   agenda: string[];
   hosts: string[];
@@ -50,6 +51,7 @@ export const events: EventItem[] = [
       "围绕 Agent、产品原型和内容生产，邀请本地行动者做一次小规模圆桌交流。",
     tags: ["线下聚会", "长沙", "Builder"],
     registrationUrl: "/join",
+    registrationQrImage: "",
     audience: [
       "正在做 AI 产品或原型的人",
       "正在学习 Agent、自动化和未来工作流的学生",
@@ -94,6 +96,7 @@ export const events: EventItem[] = [
       "用一个晚上拆解真实工作流，把提示词、自动化和发布链路整理成可复用模板。",
     tags: ["工作流", "共创", "内容生产"],
     registrationUrl: "/join",
+    registrationQrImage: "",
     audience: [
       "正在用 AI 提升个人工作流的人",
       "想把内容生产流程系统化的创作者",
@@ -128,6 +131,7 @@ export const events: EventItem[] = [
       "一次轻量的线上 Demo 时段，鼓励成员展示正在做的 Agent、工具或产品雏形。",
     tags: ["Demo", "Agent", "线上"],
     registrationUrl: "/join",
+    registrationQrImage: "",
     audience: ["正在做 Agent 的开发者", "想获得真实反馈的产品行动者", "希望找到协作者的人"],
     agenda: ["Demo 展示", "问题反馈", "协作匹配", "下次迭代目标"],
     hosts: ["IGNAI Demo Circle"],

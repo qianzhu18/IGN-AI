@@ -1,0 +1,1046 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - link "NotionNext NotionNext帮助手册" [ref=e9] [cursor=pointer]:
+            - /url: /about
+            - img "NotionNext" [ref=e10]
+            - text: NotionNext帮助手册
+          - generic [ref=e11]:
+            - listitem [ref=e12] [cursor=pointer]:
+              - generic [ref=e14]:
+                - generic [ref=e15]: 
+                - text: Language
+                - generic [ref=e16]: 
+            - listitem [ref=e17] [cursor=pointer]:
+              - generic [ref=e19]:
+                - generic [ref=e20]: 
+                - text: 更多
+                - generic [ref=e21]: 
+        - generic [ref=e22]:
+          - button "Sign In" [ref=e23] [cursor=pointer]
+          - img [ref=e26] [cursor=pointer]
+          - generic [ref=e28]:
+            - generic [ref=e30] [cursor=pointer]: 
+            - textbox "Search" [ref=e31]
+            - generic [ref=e32]: Ctrl+K
+          - text: 
+      - text:   E     N
+    - main [ref=e33]:
+      - generic [ref=e35]:
+        - generic [ref=e37]:
+          - link "Notion开源、免费、快速建站" [ref=e38] [cursor=pointer]:
+            - /url: /about
+            - generic [ref=e40]: Notion开源、免费、快速建站
+          - generic [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: ✨ 更新日志
+            - generic:
+              - generic: 
+          - generic:
+            - link "NotionNext-升级教程" [ref=e44] [cursor=pointer]:
+              - /url: /article/how-to-update-notionnext
+              - generic [ref=e46]: NotionNext-升级教程
+            - link "V4.9.5.2 - Latest" [ref=e48] [cursor=pointer]:
+              - /url: /article/latest
+              - generic [ref=e50]: V4.9.5.2 - Latest
+            - link "V4.0 → V4.9.0" [ref=e52] [cursor=pointer]:
+              - /url: /article/v4.0
+              - generic [ref=e54]: V4.0 → V4.9.0
+            - link "V3.0 → V3.16.3" [ref=e56] [cursor=pointer]:
+              - /url: /article/v3.0
+              - generic [ref=e58]: V3.0 → V3.16.3
+            - link "V2.0 → V2.9.1" [ref=e60] [cursor=pointer]:
+              - /url: /article/V2.0
+              - generic [ref=e62]: V2.0 → V2.9.1
+            - link "V1.0 → V1.5.0" [ref=e64] [cursor=pointer]:
+              - /url: /article/v1.0
+              - generic [ref=e66]: V1.0 → V1.5.0
+          - generic [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]: 🚀 安装部署
+            - generic:
+              - generic: 
+          - generic [ref=e69]:
+            - link "Vercel部署NotionNext" [ref=e71] [cursor=pointer]:
+              - /url: /article/vercel-deploy-notion-next
+              - generic [ref=e73]: Vercel部署NotionNext
+            - link "Vercel绑定自定义域名" [ref=e78] [cursor=pointer]:
+              - /url: /article/vercel-domain
+              - generic [ref=e80]: Vercel绑定自定义域名
+            - link "Vercel域名加速" [ref=e82] [cursor=pointer]:
+              - /url: /article/vercel-accelerate
+              - generic [ref=e84]: Vercel域名加速
+            - link "NotionNext项目运行原理" [ref=e86] [cursor=pointer]:
+              - /url: /article/vercel-notionnext-notion
+              - generic [ref=e88]: NotionNext项目运行原理
+            - link "Vercel部署多个Github网站" [ref=e90] [cursor=pointer]:
+              - /url: /article/vercel-multi-sites
+              - generic [ref=e92]: Vercel部署多个Github网站
+            - link "Vercel静态部署NotionNext" [ref=e94] [cursor=pointer]:
+              - /url: /article/vercel-deploy-notion-next-static
+              - generic [ref=e96]: Vercel静态部署NotionNext
+            - link "Vercel快速重新部署项目" [ref=e98] [cursor=pointer]:
+              - /url: /article/vercel-redploy
+              - generic [ref=e100]: Vercel快速重新部署项目
+            - link "CloudFlarePage静态部署" [ref=e102] [cursor=pointer]:
+              - /url: /article/notion-next-cloud-flare
+              - generic [ref=e104]: CloudFlarePage静态部署
+            - link "Netlify云函数部署" [ref=e109] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-with-netlify
+              - generic [ref=e111]: Netlify云函数部署
+            - link "EdgeOne部署NotionNext" [ref=e116] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-with-edge-one
+              - generic [ref=e118]: EdgeOne部署NotionNext
+            - link "VPS本地服务器" [ref=e123] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-on-vps
+              - generic [ref=e125]: VPS本地服务器
+            - link "4EverLand部署NotionNext-Web3.0方案" [ref=e127] [cursor=pointer]:
+              - /url: /article/notionnext-deploy-web3.0-4everland
+              - generic [ref=e129]: 4EverLand部署NotionNext-Web3.0方案
+            - link "Zeabur云部署" [ref=e131] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-with-zeabur
+              - generic [ref=e133]: Zeabur云部署
+          - generic [ref=e134] [cursor=pointer]:
+            - generic [ref=e135]: ✒ Notion教程
+            - generic:
+              - generic: 
+          - generic:
+            - link "Notion文章示例" [ref=e137] [cursor=pointer]:
+              - /url: /article/example-1
+              - generic [ref=e139]: Notion文章示例
+            - link "Notion数据备份" [ref=e141] [cursor=pointer]:
+              - /url: /article/notion-backup
+              - generic [ref=e143]: Notion数据备份
+            - link "Notion数据库的使用" [ref=e145] [cursor=pointer]:
+              - /url: /article/start-to-write
+              - generic [ref=e147]: Notion数据库的使用
+            - link "Notion模板的使用" [ref=e149] [cursor=pointer]:
+              - /url: /article/notion-template
+              - generic [ref=e151]: Notion模板的使用
+            - link "Notion嵌入B站视频" [ref=e153] [cursor=pointer]:
+              - /url: /article/notionnext-video
+              - generic [ref=e155]: Notion嵌入B站视频
+            - link "Notion快捷键大全" [ref=e157] [cursor=pointer]:
+              - /url: /article/notion-short-key
+              - generic [ref=e159]: Notion快捷键大全
+            - link "Notion-faster加速Notion" [ref=e161] [cursor=pointer]:
+              - /url: /article/notion-faster
+              - generic [ref=e163]: Notion-faster加速Notion
+            - link "Notion文字添加超链接" [ref=e165] [cursor=pointer]:
+              - /url: /article/how-to-add-link-for-text-in-notion
+              - generic [ref=e167]: Notion文字添加超链接
+            - link "NotionNext将单页隐藏" [ref=e169] [cursor=pointer]:
+              - /url: /article/notionnext-hidden-page
+              - generic [ref=e171]: NotionNext将单页隐藏
+            - link "NotionNext定时发布文章" [ref=e173] [cursor=pointer]:
+              - /url: /article/notionnext-scheduled-article-release
+              - generic [ref=e175]: NotionNext定时发布文章
+            - link "📓 Notion进阶教程" [ref=e177] [cursor=pointer]:
+              - /url: /article/notion-tutorial
+              - generic [ref=e179]: 📓 Notion进阶教程
+          - generic [ref=e180] [cursor=pointer]:
+            - generic [ref=e181]: 🛠 站点配置
+            - generic:
+              - generic: 
+          - generic:
+            - link "关于站点缓存" [ref=e186] [cursor=pointer]:
+              - /url: /article/cache-of-notion-next
+              - generic [ref=e188]: 关于站点缓存
+            - link "如何配置站点" [ref=e190] [cursor=pointer]:
+              - /url: /article/how-to-config-notion-next
+              - generic [ref=e192]: 如何配置站点
+            - link "批量配置 INLINE_CONFIG" [ref=e197] [cursor=pointer]:
+              - /url: /article/notion-next-inline-config
+              - generic [ref=e199]: 批量配置 INLINE_CONFIG
+            - link "基础信息" [ref=e201] [cursor=pointer]:
+              - /url: /article/notion-next-guide
+              - generic [ref=e203]: 基础信息
+            - link "图片/封面管理" [ref=e205] [cursor=pointer]:
+              - /url: /article/notion-next-image-cover
+              - generic [ref=e207]: 图片/封面管理
+            - link "站点图标favicon与Github图床" [ref=e209] [cursor=pointer]:
+              - /url: /article/use-github-as-image-hosting-service
+              - generic [ref=e211]: 站点图标favicon与Github图床
+            - link "URL风格自定义" [ref=e213] [cursor=pointer]:
+              - /url: /article/notion-next-url-customize
+              - generic [ref=e215]: URL风格自定义
+            - link "网站公告" [ref=e217] [cursor=pointer]:
+              - /url: /article/notionnext-notice
+              - generic [ref=e219]: 网站公告
+            - link "菜单管理-二级菜单" [ref=e221] [cursor=pointer]:
+              - /url: /article/notion-next-secondary-menu
+              - generic [ref=e223]: 菜单管理-二级菜单
+            - link "字体字号" [ref=e225] [cursor=pointer]:
+              - /url: /article/notion-next-web-font
+              - generic [ref=e227]: 字体字号
+            - link "图标库-FontAwesome" [ref=e229] [cursor=pointer]:
+              - /url: /article/notion-next-font-awesome
+              - generic [ref=e231]: 图标库-FontAwesome
+            - link "图标库-IconFont" [ref=e233] [cursor=pointer]:
+              - /url: /article/notion-next-iconfont
+              - generic [ref=e235]: 图标库-IconFont
+            - link "代码块风格" [ref=e237] [cursor=pointer]:
+              - /url: /article/notion-next-code-style
+              - generic [ref=e239]: 代码块风格
+            - link "自定义数据库表头" [ref=e241] [cursor=pointer]:
+              - /url: /article/notion-next-custom-properties
+              - generic [ref=e243]: 自定义数据库表头
+            - link "多数据库：多语言/多板块" [ref=e245] [cursor=pointer]:
+              - /url: /article/notion-next-mulity-languages
+              - generic [ref=e247]: 多数据库：多语言/多板块
+            - link "站点组合" [ref=e249] [cursor=pointer]:
+              - /url: /article/notion-next-site-combine
+              - generic [ref=e251]: 站点组合
+            - link "API_BASE_URL" [ref=e253] [cursor=pointer]:
+              - /url: /article/notion-next-api_base_url
+              - generic [ref=e255]: API_BASE_URL
+          - generic [ref=e256] [cursor=pointer]:
+            - generic [ref=e257]: ⭐ 主题参数
+            - generic:
+              - generic: 
+          - generic:
+            - link "主题功能说明" [ref=e259] [cursor=pointer]:
+              - /url: /article/notion-next-themes
+              - generic [ref=e261]: 主题功能说明
+            - link "Typography主题" [ref=e263] [cursor=pointer]:
+              - /url: /article/notion-next-typography
+              - generic [ref=e265]: Typography主题
+            - link "Magzine主题" [ref=e267] [cursor=pointer]:
+              - /url: /article/notion-next-magzine
+              - generic [ref=e269]: Magzine主题
+            - link "Proxio主题" [ref=e271] [cursor=pointer]:
+              - /url: /article/notion-next-proxio
+              - generic [ref=e273]: Proxio主题
+            - link "Simple主题" [ref=e275] [cursor=pointer]:
+              - /url: /article/notionnext-simple
+              - generic [ref=e277]: Simple主题
+            - link "Hexo/Matery主题" [ref=e279] [cursor=pointer]:
+              - /url: /article/notion-next-greetings
+              - generic [ref=e281]: Hexo/Matery主题
+            - link "Gitbook主题" [ref=e283] [cursor=pointer]:
+              - /url: /article/notionnext-gitbook
+              - generic [ref=e285]: Gitbook主题
+            - link "HEO主题" [ref=e287] [cursor=pointer]:
+              - /url: /article/notionnext-heo
+              - generic [ref=e289]: HEO主题
+            - link "Starter主题" [ref=e291] [cursor=pointer]:
+              - /url: /article/notionnext-starter
+              - generic [ref=e293]: Starter主题
+            - link "Movie主题" [ref=e295] [cursor=pointer]:
+              - /url: /article/notionnext-movie
+              - generic [ref=e297]: Movie主题
+            - link "Game主题" [ref=e299] [cursor=pointer]:
+              - /url: /article/notionnext-game
+              - generic [ref=e301]: Game主题
+            - link "Commerce主题" [ref=e303] [cursor=pointer]:
+              - /url: /article/notionnext-commerce
+              - generic [ref=e305]: Commerce主题
+          - generic [ref=e306] [cursor=pointer]:
+            - generic [ref=e307]: 📊 网站统计
+            - generic:
+              - generic: 
+          - generic:
+            - link "站点统计相关" [ref=e309] [cursor=pointer]:
+              - /url: /article/notion-next-analytics
+              - generic [ref=e311]: 站点统计相关
+            - link "UMAMI统计" [ref=e313] [cursor=pointer]:
+              - /url: /article/notion-next-umami
+              - generic [ref=e315]: UMAMI统计
+            - link "搜索引擎收录" [ref=e317] [cursor=pointer]:
+              - /url: /article/notion-next-search-engine-index
+              - generic [ref=e319]: 搜索引擎收录
+            - link "Clarity站点统计" [ref=e321] [cursor=pointer]:
+              - /url: /article/notion-next-clarity
+              - generic [ref=e323]: Clarity站点统计
+            - link "51LA站点统计" [ref=e325] [cursor=pointer]:
+              - /url: /article/notion-next-51-la
+              - generic [ref=e327]: 51LA站点统计
+            - link "Ackee站点统计" [ref=e329] [cursor=pointer]:
+              - /url: /article/notion-next-ackee
+              - generic [ref=e331]: Ackee站点统计
+          - generic [ref=e332] [cursor=pointer]:
+            - generic [ref=e333]: 📩 评论插件
+            - generic:
+              - generic: 
+          - generic:
+            - link "评论插件说明" [ref=e335] [cursor=pointer]:
+              - /url: /article/notion-next-comment-plugin
+              - generic [ref=e337]: 评论插件说明
+            - link "Cusdis" [ref=e339] [cursor=pointer]:
+              - /url: /article/notion-next-cusdis
+              - generic [ref=e341]: Cusdis
+            - link "Utterance" [ref=e343] [cursor=pointer]:
+              - /url: /article/notion-next-utterance
+              - generic [ref=e345]: Utterance
+            - link "Giscus" [ref=e347] [cursor=pointer]:
+              - /url: /article/notion-next-giscus
+              - generic [ref=e349]: Giscus
+            - link "Twikoo" [ref=e351] [cursor=pointer]:
+              - /url: /article/notionnext-twikoo
+              - generic [ref=e353]: Twikoo
+            - link "Artalk" [ref=e355] [cursor=pointer]:
+              - /url: /article/notion-next-artalk
+              - generic [ref=e357]: Artalk
+            - link "Gitalk" [ref=e359] [cursor=pointer]:
+              - /url: /article/notion-next-gitalk
+              - generic [ref=e361]: Gitalk
+            - link "Valine" [ref=e363] [cursor=pointer]:
+              - /url: /article/notionnext-valine
+              - generic [ref=e365]: Valine
+            - link "Waline" [ref=e367] [cursor=pointer]:
+              - /url: /article/notion-next-waline
+              - generic [ref=e369]: Waline
+          - generic [ref=e370] [cursor=pointer]:
+            - generic [ref=e371]: 🧷 外部扩展
+            - generic:
+              - generic: 
+          - generic:
+            - link "外部插件说明" [ref=e373] [cursor=pointer]:
+              - /url: /article/notion-next-plugins
+              - generic [ref=e375]: 外部插件说明
+            - link "音乐播放器" [ref=e377] [cursor=pointer]:
+              - /url: /article/notion-next-plugin-music-player
+              - generic [ref=e379]: 音乐播放器
+            - link "Live2D宠物插件" [ref=e381] [cursor=pointer]:
+              - /url: /article/notion-next-plugin-live2d
+              - generic [ref=e383]: Live2D宠物插件
+            - link "Algolia搜索引擎" [ref=e385] [cursor=pointer]:
+              - /url: /article/notion-next-algolia
+              - generic [ref=e387]: Algolia搜索引擎
+            - link "AI聊天机器人-Coze" [ref=e389] [cursor=pointer]:
+              - /url: /article/notion-next-coze
+              - generic [ref=e391]: AI聊天机器人-Coze
+            - link "AI聊天机器人-ChatBase" [ref=e393] [cursor=pointer]:
+              - /url: /article/notion-next-chat-base
+              - generic [ref=e395]: AI聊天机器人-ChatBase
+            - link "Facebook聊天插件[已失效]" [ref=e397] [cursor=pointer]:
+              - /url: /article/notion-next-facebook-chat-plugn
+              - generic [ref=e399]: Facebook聊天插件[已失效]
+            - link "SaleSmartly聊天插件" [ref=e401] [cursor=pointer]:
+              - /url: /article/notion-next-salesmatly-pulgin
+              - generic [ref=e403]: SaleSmartly聊天插件
+            - link "TIDIO聊天插件" [ref=e405] [cursor=pointer]:
+              - /url: /article/notion-next-tidio
+              - generic [ref=e407]: TIDIO聊天插件
+            - link "Google广告营收插件" [ref=e409] [cursor=pointer]:
+              - /url: /article/notion-next-google-adsense
+              - generic [ref=e411]: Google广告营收插件
+          - generic [ref=e412] [cursor=pointer]:
+            - generic [ref=e413]: ⌨ 开发教程
+            - generic:
+              - generic: 
+          - generic:
+            - link "小白学习-前端开发入门到精通" [ref=e418] [cursor=pointer]:
+              - /url: /article/frontend-development-tutorial
+              - generic [ref=e420]: 小白学习-前端开发入门到精通
+            - link "NotionNext开发先导" [ref=e422] [cursor=pointer]:
+              - /url: /article/how-to-develop-with-notion-next
+              - generic [ref=e424]: NotionNext开发先导
+            - link "NotionNext用配置调整样式" [ref=e426] [cursor=pointer]:
+              - /url: /article/custom-your-style
+              - generic [ref=e428]: NotionNext用配置调整样式
+            - link "NotionNext自建主题" [ref=e430] [cursor=pointer]:
+              - /url: /article/your-own-theme
+              - generic [ref=e432]: NotionNext自建主题
+            - link "实操案例-自定义鼠标特效" [ref=e434] [cursor=pointer]:
+              - /url: /article/notion-next-click-effect
+              - generic [ref=e436]: 实操案例-自定义鼠标特效
+            - link "借助AI开发NotionNext" [ref=e438] [cursor=pointer]:
+              - /url: /article/notion-next-develop-with-ai
+              - generic [ref=e440]: 借助AI开发NotionNext
+            - link "基础教程-简单理解React和JSX" [ref=e445] [cursor=pointer]:
+              - /url: /article/react-jsx
+              - generic [ref=e447]: 基础教程-简单理解React和JSX
+            - link "基础教程-NextJs是什么" [ref=e449] [cursor=pointer]:
+              - /url: /article/next-js
+              - generic [ref=e451]: 基础教程-NextJs是什么
+            - link "基础教程-Tailwind CSS" [ref=e453] [cursor=pointer]:
+              - /url: /article/about-tailwindcss
+              - generic [ref=e455]: 基础教程-Tailwind CSS
+            - link "基础教程-如何用Git提交代码" [ref=e457] [cursor=pointer]:
+              - /url: /article/notionnext-how-to-pr
+              - generic [ref=e459]: 基础教程-如何用Git提交代码
+          - generic [ref=e460] [cursor=pointer]:
+            - generic [ref=e461]: 🔊 运营教程
+            - generic:
+              - generic: 
+          - generic:
+            - link "🏫 网站SEO推广" [ref=e463] [cursor=pointer]:
+              - /url: /article/seo-course
+              - generic [ref=e465]: 🏫 网站SEO推广
+            - link "💬 验证码解锁文章OpenWrite/TechGrow" [ref=e467] [cursor=pointer]:
+              - /url: /article/wechat-offical-account
+              - generic [ref=e469]: 💬 验证码解锁文章OpenWrite/TechGrow
+            - link "✉️ Mailchimp邮件订阅" [ref=e471] [cursor=pointer]:
+              - /url: /article/notion-next-mailchimp
+              - generic [ref=e473]: ✉️ Mailchimp邮件订阅
+          - generic [ref=e474] [cursor=pointer]:
+            - generic [ref=e475]: 👨‍👦‍👦 获取帮助
+            - generic:
+              - generic: 
+          - generic:
+            - link "1.社群守则" [ref=e477] [cursor=pointer]:
+              - /url: /article/how-to-question
+              - generic [ref=e479]: 1.社群守则
+            - link "2.留言反馈" [ref=e481] [cursor=pointer]:
+              - /url: /article/about-author
+              - generic [ref=e483]: 2.留言反馈
+            - link "3.社群讨论" [ref=e485] [cursor=pointer]:
+              - /url: /article/chat-community
+              - generic [ref=e487]: 3.社群讨论
+            - link "4.付费求助" [ref=e489] [cursor=pointer]:
+              - /url: /article/my-service
+              - generic [ref=e491]: 4.付费求助
+          - generic [ref=e492] [cursor=pointer]:
+            - generic [ref=e493]: 💪 支持我们
+            - generic:
+              - generic: 
+          - generic:
+            - link "👋 支持NotionNext" [ref=e495] [cursor=pointer]:
+              - /url: /article/support-notion-next
+              - generic [ref=e497]: 👋 支持NotionNext
+            - link "💴 Waiting List" [ref=e499] [cursor=pointer]:
+              - /url: /article/crowdfunding
+              - generic [ref=e501]: 💴 Waiting List
+        - generic [ref=e502]:
+          - generic [ref=e504]:
+            - generic "email" [ref=e505] [cursor=pointer]:
+              - generic [ref=e506]: 
+            - link "" [ref=e507] [cursor=pointer]:
+              - /url: /rss/feed.xml
+              - generic [ref=e508]: 
+          - generic [ref=e509]:
+            - generic [ref=e510]:
+              - generic [ref=e511]: 
+              - link "NotionNext" [ref=e512] [cursor=pointer]:
+                - /url: https://docs.tangly1024.com
+              - text: .
+            - text: © 2021-2026
+          - generic [ref=e513]:
+            - generic [ref=e514]: 
+            - text: "1240136"
+          - generic [ref=e515]:
+            - generic [ref=e516]: 
+            - text: "229879"
+          - generic [ref=e517]:
+            - text: Powered By
+            - link "NotionNext 4.9.5.2" [ref=e518] [cursor=pointer]:
+              - /url: https://github.com/tangly1024/NotionNext
+      - generic [ref=e519]:
+        - generic [ref=e520]:
+          - generic [ref=e521]:
+            - link "万维广告联盟" [ref=e522] [cursor=pointer]:
+              - /url: https://wwads.cn/click/bundle?code=yjMT4SGShEic9J3Dlzk57MVQeSwhJo
+              - img "万维广告联盟" [ref=e523]
+            - generic [ref=e524]:
+              - link "📊 开源免费的 BI 工具。仅需 5 分钟，数据变大屏。众多精美可视化大屏模板等你来选。" [ref=e525] [cursor=pointer]:
+                - /url: https://wwads.cn/click/bundle?code=yjMT4SGShEic9J3Dlzk57MVQeSwhJo
+              - link "广告" [ref=e526] [cursor=pointer]:
+                - /url: https://wwads.cn/?utm_source=property-322&utm_medium=footer
+                - img [ref=e527]
+                - generic [ref=e528]: 广告
+            - generic "隐藏广告" [ref=e529] [cursor=pointer]:
+              - img [ref=e530]
+          - generic [ref=e531]:
+            - heading "VPS本地服务器" [level=1] [ref=e532]
+            - generic [ref=e533]:
+              - main [ref=e536]:
+                - generic [ref=e537]:
+                  - img "💡" [ref=e539]
+                  - generic [ref=e541]: 更新记录： 20250708，添加了用Docker运行项目的文档教程。
+                - heading "前言" [level=2] [ref=e542]:
+                  - generic [ref=e543]:
+                    - link "前言" [ref=e544] [cursor=pointer]:
+                      - /url: "#eae33420e4c44b0798f12124e6d615da"
+                      - img [ref=e545]
+                    - text: 前言
+                - generic [ref=e547]: NotionNext可以轻松地使用Vercel免费托管，不过免费的流量和函数执行次数有限，如果你的网站访问量非常大，可以尝试在自己的云服务器、vps上部署。
+                - generic [ref=e548]: 用国内的VPS部署服务、会大大提升网站的访问速度。
+                - generic [ref=e549]:
+                  - img "💡" [ref=e551]
+                  - generic [ref=e553]: 可以选择裸机安装Nodejs环境启动项目，注意：服务器的操作系统、CPU内存配置都有可能影响到服务运行。推荐用Docker容器化部署。
+                - generic [ref=e554]:
+                  - img "💡" [ref=e556]
+                  - generic [ref=e558]: 比较推荐有技术经验的小伙伴使用这套方案！
+                - generic [ref=e560]: 分享一篇网友自己实践分享的教程：
+                - link "建站|VPS裸机安装NotionNext个人博客 | Ywba's Blog 个人博客 建站|VPS裸机安装NotionNext个人博客 | Ywba's Blog https://www.ywba.top/article/375dc6b6-1eaa-4a0f-bbc1-f2149b285b7a 建站|VPS裸机安装NotionNext个人博客 | Ywba's Blog" [ref=e562] [cursor=pointer]:
+                  - /url: https://www.ywba.top/article/375dc6b6-1eaa-4a0f-bbc1-f2149b285b7a
+                  - generic [ref=e563]:
+                    - generic [ref=e564]: 建站|VPS裸机安装NotionNext个人博客 | Ywba's Blog
+                    - generic [ref=e565]: 个人博客
+                    - generic [ref=e566]:
+                      - img "建站|VPS裸机安装NotionNext个人博客 | Ywba's Blog" [ref=e568]
+                      - generic [ref=e569]: https://www.ywba.top/article/375dc6b6-1eaa-4a0f-bbc1-f2149b285b7a
+                  - img "建站|VPS裸机安装NotionNext个人博客 | Ywba's Blog" [ref=e571]
+                - heading "安装步骤" [level=2] [ref=e572]:
+                  - generic [ref=e573]:
+                    - link "安装步骤" [ref=e574] [cursor=pointer]:
+                      - /url: "#389a83d5e3b34146b117d10fb586aad5"
+                      - img [ref=e575]
+                    - text: 安装步骤
+                - generic [ref=e577]:
+                  - img "💡" [ref=e579]
+                  - generic [ref=e581]:
+                    - text: 准备一台任意操作系统的VPS云服务器，不同系统的安装步骤大同小异，以下我用
+                    - code [ref=e582]: linux-centos-7
+                    - text: 主机为例
+                - generic [ref=e583]: 安装分为三个步骤，一是下载NotionNext代码；二是安装运行环境、三是启动项目。
+                - heading "一、NotionNext代码下载" [level=3] [ref=e584]:
+                  - generic [ref=e585]:
+                    - link "一、NotionNext代码下载" [ref=e586] [cursor=pointer]:
+                      - /url: "#9a62d470a8ea47f49cd0d9ef670825c8"
+                      - img [ref=e587]
+                    - text: 一、NotionNext代码下载
+                - list [ref=e589]:
+                  - listitem [ref=e590]: 安装Git
+                  - list [ref=e591]:
+                    - generic [ref=e592]:
+                      - img "💡" [ref=e594]
+                      - generic [ref=e596]: git是一个代码托管工具，你可以用它来下载github上的代码。
+                    - generic [ref=e597]:
+                      - code [ref=e599]: "# 一个命令安装 yum install git -y"
+                      - generic [ref=e600]:
+                        - generic [ref=e601]: Bash
+                        - button "Copy" [ref=e603] [cursor=pointer]
+                    - group [ref=e604]:
+                      - generic "执行效果" [ref=e605] [cursor=pointer]
+                - list [ref=e606]:
+                  - listitem [ref=e607]: 从Github仓库拉取代码
+                  - list [ref=e608]:
+                    - generic [ref=e609]:
+                      - code [ref=e611]: "# 来到您的用户主目录 cd ~ # 将Git上的代码下载到服务器中 ; git clone https://github.com/tangly1024/NotionNext && # 若您的服务器因为网络问题，无法访问github，可手动下载NotionNext代码 上传至服务器"
+                      - generic [ref=e612]:
+                        - generic [ref=e613]: Bash
+                        - button "Copy" [ref=e615] [cursor=pointer]
+                - heading "二、运行项目" [level=2] [ref=e616]:
+                  - generic [ref=e617]:
+                    - link "二、运行项目" [ref=e618] [cursor=pointer]:
+                      - /url: "#65e98fcec90746d08c466224d6da599d"
+                      - img [ref=e619]
+                    - text: 二、运行项目
+                - generic [ref=e621]: 可以使用Docker运行，或者系统安装NodeJS环境运行，出于兼容性和稳定性的考虑，这里推荐使用Docker方案运行。
+                - heading "1. Docker运行" [level=4] [ref=e622]:
+                  - generic [ref=e623]:
+                    - link "1. Docker运行" [ref=e624] [cursor=pointer]:
+                      - /url: "#22af93b9208b8083b60fdf7a0c1050d8"
+                      - img [ref=e625]
+                    - text: 1. Docker运行
+                - generic [ref=e627]: 原先文档是推荐在服务器上使用NodeJS环境，奈何在NotionNext V4.0 之后的新版要用到 Node 20 及以上的环境，这里有部分服务器无法兼容安装。同时Docker本身的稳定性也更加适合在生产环境使用，因此我在2025年7月8日更新了这部分手册，加入了Docker运行方案。
+                - list [ref=e628]:
+                  - listitem [ref=e629]: 安装Docker最新版(CentOS为例)
+                  - list [ref=e630]:
+                    - generic [ref=e631]:
+                      - code [ref=e633]: "# 1.更新系统 sudo yum update -y # 2.安装依赖 sudo yum install -y yum-utils device-mapper-persistent-data lvm2 # 3.添加国内阿里镜像下载源 sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo # 4.下载安装docker sudo yum install -y docker-ce # 5.启动docker sudo systemctl start docker"
+                      - generic [ref=e634]:
+                        - generic [ref=e635]: Bash
+                        - button "Copy" [ref=e637] [cursor=pointer]
+                    - group [ref=e638]:
+                      - generic "其它操作系统-Debian" [ref=e639] [cursor=pointer]
+                - list [ref=e640]:
+                  - listitem [ref=e641]: 创建Dockerfile文件
+                  - list [ref=e642]:
+                    - generic [ref=e643]:
+                      - text: 由于国内防火墙的规定，Docker的镜像网络访问受限，现在Docker要下载官方NodeJs环境变得困难，因此推荐使用国内替代的镜像源下载(来自
+                      - link "https://docker.aityp.com/" [ref=e644] [cursor=pointer]:
+                        - /url: https://docker.aityp.com/
+                      - text: )。以下是我尝试成功的完整版本（已将镜像替换成国内版本，可能存在过期风险）。
+                    - generic [ref=e645]:
+                      - code [ref=e647]: "# 1.确保当前目录是NotionNext代码文件夹 cd NotionNext # 2.创建构建文件 cat > Dockerfile <<EOF # 第一阶段：基础镜像 FROM swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/library/node:20-alpine AS base # 第二阶段：依赖安装 FROM base AS deps # 声明阶段参数（推荐方式） ARG NOTION_PAGE_ID ARG NEXT_PUBLIC_THEME # 安装依赖 RUN apk add --no-cache libc6-compat WORKDIR /app COPY package.json ./ RUN yarn config set registry https://registry.npmmirror.com && \\ yarn config set disturl https://npmmirror.com/dist && \\ yarn install --frozen-lockfile --network-timeout 600000 # 第三阶段：构建 FROM base AS builder ARG NOTION_PAGE_ID ARG NEXT_PUBLIC_THEME ENV NEXT_BUILD_STANDALONE=true ENV NEXT_DEBUG=${NEXT_DEBUG:-false} WORKDIR /app COPY --from=deps /app/node_modules ./node_modules COPY . . RUN yarn build # 第四阶段：运行 FROM base AS runner ENV NODE_ENV=production WORKDIR /app COPY --from=builder /app/public ./public # Automatically leverage output traces to reduce image size # https://nextjs.org/docs/advanced-features/output-file-tracing COPY --from=builder /app/.next/standalone ./ COPY --from=builder /app/.next/static ./.next/static # 个人仓库把将配置好的.env.local文件放到项目根目录，可自动使用环境变量 # COPY --from=builder /app/.env.local ./ EXPOSE 3000 # Next.js collects completely anonymous telemetry data about general usage. # Learn more here: https://nextjs.org/telemetry # Uncomment the following line in case you want to disable telemetry. # ENV NEXT_TELEMETRY_DISABLED 1 CMD [\"node\", \"server.js\"] EOF"
+                      - generic [ref=e648]:
+                        - generic [ref=e649]: Bash
+                        - button "Copy" [ref=e651] [cursor=pointer]
+                - list [ref=e652]:
+                  - listitem [ref=e653]: 开始构建
+                  - list [ref=e654]:
+                    - generic [ref=e655]: 以下命令将读取当前NotionNext文件夹下的Dockerfile文件，按照文件内容下载Nodejs环境，并将NotionNext代码包括blog.config.js等配置打包进环境中，成为一个可执行的Docker镜像，并且镜像名为my-app。
+                    - generic [ref=e656]:
+                      - code [ref=e658]: docker build --build-arg NEXT_DEBUG=true -t my-app .
+                      - generic [ref=e659]:
+                        - generic [ref=e660]: Bash
+                        - button "Copy" [ref=e662] [cursor=pointer]
+                    - generic [ref=e663]: 根据服务器网络环境，首次打包过程可能要十分钟左右。
+                    - figure [ref=e664]:
+                      - img "notion image" [ref=e666]
+                - list [ref=e667]:
+                  - listitem [ref=e668]: 使用docker运行项目
+                  - list [ref=e669]:
+                    - generic [ref=e670]:
+                      - code [ref=e672]: docker run -d -p 3000:3000 --name app --restart unless-stopped my-app
+                      - generic [ref=e673]:
+                        - generic [ref=e674]: Bash
+                        - button "Copy" [ref=e676] [cursor=pointer]
+                - list [ref=e677]:
+                  - listitem [ref=e678]: 重启docker项目
+                  - list [ref=e679]:
+                    - generic [ref=e680]:
+                      - code [ref=e682]: docker restart app
+                      - generic [ref=e683]:
+                        - generic [ref=e684]: Bash
+                        - button "Copy" [ref=e686] [cursor=pointer]
+                    - generic [ref=e687]: 更多关于docker的用法，请查阅手册或借助AI使用。
+                - list [ref=e688]:
+                  - listitem [ref=e689]: 更新项目
+                  - list [ref=e690]:
+                    - generic [ref=e691]: 拉取最新代码，或者修改对应的配置文件后，执行以下命令重新打包
+                    - generic [ref=e692]:
+                      - code [ref=e694]: docker build --build-arg NEXT_DEBUG=true -t my-app .
+                      - generic [ref=e695]:
+                        - generic [ref=e696]: Bash
+                        - button "Copy" [ref=e698] [cursor=pointer]
+                    - generic [ref=e699]: 然后关停旧的服务
+                    - generic [ref=e700]:
+                      - code [ref=e702]: docker rm -f app
+                      - generic [ref=e703]:
+                        - generic [ref=e704]: Bash
+                        - button "Copy" [ref=e706] [cursor=pointer]
+                    - generic [ref=e707]: 启动新服务
+                    - generic [ref=e708]:
+                      - code [ref=e710]: docker run -d -p 3000:3000 --name app --restart unless-stopped my-app
+                      - generic [ref=e711]:
+                        - generic [ref=e712]: Bash
+                        - button "Copy" [ref=e714] [cursor=pointer]
+                - heading "2. 系统中运行（本地安装NodeJS环境）" [level=4] [ref=e715]:
+                  - generic [ref=e716]:
+                    - link "2. 系统中运行（本地安装NodeJS环境）" [ref=e717] [cursor=pointer]:
+                      - /url: "#6c04388d6d884a449085e95d94ecbf98"
+                      - img [ref=e718]
+                    - text: 2. 系统中运行（本地安装NodeJS环境）
+                - generic [ref=e720]:
+                  - text: 除了上述的Docker环境运行，还可以在系统中直接安装NodeJS环境运行。若要在系统中安装Nodejs，推荐使用
+                  - code [ref=e721]: nvm
+                  - text: 进行安装，NVM（Node version manager）是nodejs的专用版本管理器，可以快速方便地安装并切换nodejs的版本，方便以后升级NodeJS环境。
+                - list [ref=e722]:
+                  - listitem [ref=e723]: 关于NodeJs环境的警告
+                  - list [ref=e724]:
+                    - listitem [ref=e725]: 如果服务器版本不兼容最新版本的nodejs，运行时出现如下错误，需要尝试升级系统的模块组件（危险操作），或尝试用上面推荐的Docker方案。
+                    - list [ref=e726]:
+                      - generic [ref=e727]:
+                        - img "⚠️" [ref=e729]
+                        - generic [ref=e731]:
+                          - text: 运行nodejs命令时出现如下相关错误：
+                          - code [ref=e732]: npm install -g yarn
+                          - text: "node: /lib64/libstdc++.so.6: version"
+                          - code [ref=e733]: "GLIBCXX_3.4.21' not found (required by node) node: /lib64/libstdc++.so.6: version"
+                - generic [ref=e734]: 安装NVM与NodeJS步骤：
+                - list [ref=e735]:
+                  - listitem [ref=e736]: 使用git下载nvm源代码
+                  - list [ref=e737]:
+                    - generic [ref=e738]:
+                      - code [ref=e740]: "# 用git从github下载nvm源码。 git clone https://github.com/cnpm/nvm.git ~/.nvm && cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`"
+                      - generic [ref=e741]:
+                        - generic [ref=e742]: Bash
+                        - button "Copy" [ref=e744] [cursor=pointer]
+                    - generic [ref=e745]:
+                      - img "❓" [ref=e747]
+                      - generic [ref=e749]:
+                        - text: 若您的服务器 因为网络限制 无法访问github，可使用国内的gitee下载nvm源码：
+                        - code [ref=e750]: git clone https://gitee.com/koalakit/nvm.git ~/.nvm && cd ~/.nvm && git checkout \
+                        - text: "git describe --abbrev=0 --tags``"
+                - list [ref=e751]:
+                  - listitem [ref=e752]: 使用nvm安装Nodejs
+                  - list [ref=e753]:
+                    - generic [ref=e754]:
+                      - code [ref=e756]: "# 1. 将nvm设置为系统环境变量 echo \"source ~/.nvm/nvm.sh\" >> ~/.bashrc # 2. 更新变量环境 source ~/.bashrc # 3. 安装 nodejs ， 这里举例使用 Node 20（与官方 README 要求一致），其它版本请自行按需选择 nvm install 20"
+                      - generic [ref=e757]:
+                        - generic [ref=e758]: Bash
+                        - button "Copy" [ref=e760] [cursor=pointer]
+                    - generic [ref=e761]:
+                      - img "💡" [ref=e763]
+                      - generic [ref=e765]:
+                        - text: 题外话： 用
+                        - code [ref=e766]: nvm list-remote
+                        - text: 命令可查看所有可安装的nodejs版本 用
+                        - code [ref=e767]: nvm ls
+                        - text: 可查看所有已安装到本地的nodejs 版本
+                - list [ref=e768]:
+                  - listitem [ref=e769]: 安装yarn环境
+                  - list [ref=e770]:
+                    - generic [ref=e771]: NodeJS 自带了 NPM（Node Package Manager），他可以用来安装打包编译NotionNext这类基于Webpack打包的项目。不过npm不太好用，这里安装一个npm升级版yarn。
+                    - generic [ref=e772]:
+                      - code [ref=e774]: "# 1.【可选步骤】 NPM切换国内淘宝网镜像，便于加速安装。 npm config set registry https://registry.npmmirror.com # 2. npm 全局安装 yarn npm install -g yarn"
+                      - generic [ref=e775]:
+                        - generic [ref=e776]: Java
+                        - button "Copy" [ref=e778] [cursor=pointer]
+                - generic [ref=e779]: NodeJs运行NotionNext
+                - list [ref=e780]:
+                  - listitem [ref=e781]: 安装NotionNext依赖
+                  - list [ref=e782]:
+                    - generic [ref=e783]:
+                      - code [ref=e785]: "# 执行以下命令，使用yarn安装项目所有依赖的脚本和库 yarn"
+                      - generic [ref=e786]:
+                        - generic [ref=e787]: JavaScript
+                        - button "Copy" [ref=e789] [cursor=pointer]
+                    - generic [ref=e790]:
+                      - text: 如果你没有安装yarn，也可以用
+                      - code [ref=e791]: npm install
+                      - text: 命令进行安装依赖。
+                - list [ref=e792]:
+                  - listitem [ref=e793]: 项目编译
+                  - list [ref=e794]:
+                    - generic [ref=e795]:
+                      - text: 每次
+                      - code [ref=e796]: 修改代码
+                      - text: ，包括
+                      - code [ref=e797]: 修改blog.config.js文件
+                      - text: 的内容后，都需要重新执行这步骤。
+                    - generic [ref=e798]:
+                      - code [ref=e800]: "# 2.打包编译 yarn build # 3.将你的notion_page_id设为环境变量，例如： NOTION_PAGE_ID=29d5ia78b858e4a3bbc13e51b5400fb82"
+                      - generic [ref=e801]:
+                        - generic [ref=e802]: Bash
+                        - button "Copy" [ref=e804] [cursor=pointer]
+                - list [ref=e805]:
+                  - listitem [ref=e806]: 启动项目
+                  - list [ref=e807]:
+                    - generic [ref=e808]:
+                      - code [ref=e810]: "# 执行命令启动 yarn start"
+                      - generic [ref=e811]:
+                        - generic [ref=e812]: JavaScript
+                        - button "Copy" [ref=e814] [cursor=pointer]
+                    - group [ref=e815]:
+                      - generic "执行效果记录" [ref=e816] [cursor=pointer]
+                - heading "三、访问项目" [level=2] [ref=e817]:
+                  - generic [ref=e818]:
+                    - link "三、访问项目" [ref=e819] [cursor=pointer]:
+                      - /url: "#f68ec59849474e79b8f9741b0de47845"
+                      - img [ref=e820]
+                    - text: 三、访问项目
+                - generic [ref=e822]:
+                  - img "💡" [ref=e824]
+                  - generic [ref=e826]:
+                    - text: 项目默认将在 3000端口启动，访问你的服务器
+                    - link "http://ip:3000" [ref=e827] [cursor=pointer]:
+                      - /url: http://ip:3000
+                    - text: 即可打开网站。
+                - generic [ref=e828]:
+                  - img "💡" [ref=e830]
+                  - generic [ref=e832]: 有时候3000端口可能无法访问，原因是服务器防火墙，以及云服务厂商的安全组限制。
+                - group [ref=e833]:
+                  - generic "关于阿里云服务器安全组 点击展开" [ref=e834] [cursor=pointer]
+                - list [ref=e835]:
+                  - listitem [ref=e836]: 访问效果，用服务器ip加端口号打开了网页
+                - figure [ref=e837]:
+                  - img "notion image" [ref=e839]
+                - generic [ref=e840]:
+                  - img "💡" [ref=e842]
+                  - generic [ref=e844]: 这种模式运行，您的服务器控制台会实时打印出网站的日志，以便于调试和排查问题。
+                - heading "四、NodeJS项目后台运行" [level=2] [ref=e846]:
+                  - generic [ref=e847]:
+                    - link "四、NodeJS项目后台运行" [ref=e848] [cursor=pointer]:
+                      - /url: "#fba78928eba94e30a1997766c6daa7b7"
+                      - img [ref=e849]
+                    - text: 四、NodeJS项目后台运行
+                - generic [ref=e851]:
+                  - img "⚠️" [ref=e853]
+                  - generic [ref=e855]: 若使用的是系统的NodeJs方式运行，则需要此处的步骤进行后台挂起，若用的是Docker运行，则此章节的文档可以忽略。
+                - generic [ref=e856]:
+                  - text: 直接使用
+                  - code [ref=e857]: yarn start
+                  - text: 启动服务主要用于调试排查日志，一旦你关闭ssh终端或登出服务器，这个进程也会随之关闭。
+                - heading "方式一：nohup运行" [level=3] [ref=e858]:
+                  - generic [ref=e859]:
+                    - link "方式一：nohup运行" [ref=e860] [cursor=pointer]:
+                      - /url: "#0ef34d2140de42719d5f8e3bf9e1066d"
+                      - img [ref=e861]
+                    - text: 方式一：nohup运行
+                - generic [ref=e863]: nohup是linux系统的指令，用于在系统后台不挂断地运行命令。为了让你的网站始终在后台保持运行，可以用以下方式：
+                - list [ref=e864]:
+                  - listitem [ref=e865]:
+                    - text: 按
+                    - code [ref=e866]: ctrl+c
+                    - text: 退出上面正运行的yarn进程
+                - list [ref=e867]:
+                  - listitem [ref=e868]: 改用nohup运行
+                  - list [ref=e869]:
+                    - generic [ref=e870]:
+                      - code [ref=e872]: cd NotionNext nohup yarn start >/dev/null 2>&1 &
+                      - generic [ref=e873]:
+                        - generic [ref=e874]: Bash
+                        - button "Copy" [ref=e876] [cursor=pointer]
+                    - generic [ref=e877]:
+                      - img "💡" [ref=e879]
+                      - generic [ref=e881]:
+                        - text: 若想要输出日志文件，可执行
+                        - code [ref=e882]: nohup yarn start > notionnext.log 2>&1 &
+                        - text: ；
+                    - group [ref=e883]:
+                      - generic "执行结果" [ref=e884] [cursor=pointer]
+                - heading "如何关闭进程" [level=4] [ref=e885]:
+                  - generic [ref=e886]:
+                    - link "如何关闭进程" [ref=e887] [cursor=pointer]:
+                      - /url: "#15f53afecf0c4bd1882a0b7863265435"
+                      - img [ref=e888]
+                    - text: 如何关闭进程
+                - generic [ref=e890]:
+                  - code [ref=e892]: pkill -f "yarn start"
+                  - generic [ref=e893]:
+                    - generic [ref=e894]: Bash
+                    - button "Copy" [ref=e896] [cursor=pointer]
+                - heading "方式二：使用PM2管理NotionNext" [level=3] [ref=e897]:
+                  - generic [ref=e898]:
+                    - link "方式二：使用PM2管理NotionNext" [ref=e899] [cursor=pointer]:
+                      - /url: "#a2139549a54d4a9488e66c740273568e"
+                      - img [ref=e900]
+                    - text: 方式二：使用PM2管理NotionNext
+                - generic [ref=e902]:
+                  - text: PM2作为Node的进程管理工具，可以提升您维护站点的效率，您可以阅读《
+                  - link "使用PM2启动Notionnext实现多开和进程守护" [ref=e903] [cursor=pointer]:
+                    - /url: https://jjdctg.com/pm2
+                  - text: 》获取帮助。
+                - link "jjdctg.com jjdctg.com https://jjdctg.com/pm2" [ref=e905] [cursor=pointer]:
+                  - /url: https://jjdctg.com/pm2
+                  - generic [ref=e906]:
+                    - generic [ref=e907]: jjdctg.com
+                    - generic [ref=e908]:
+                      - img "jjdctg.com" [ref=e910]
+                      - generic [ref=e911]: https://jjdctg.com/pm2
+                - heading "五、NodeJS网站崩溃问题" [level=2] [ref=e913]:
+                  - generic [ref=e914]:
+                    - link "五、NodeJS网站崩溃问题" [ref=e915] [cursor=pointer]:
+                      - /url: "#60e768bee6ae46d29134351482c8c006"
+                      - img [ref=e916]
+                    - text: 五、NodeJS网站崩溃问题
+                - generic [ref=e918]:
+                  - img "⚠️" [ref=e920]
+                  - generic [ref=e922]: 此处特指用Nodejs运行项目可能出现的问题，若使用docker运行则可忽略此章节文档。
+                - generic [ref=e923]: 部分网友的服务器运行NotionNext站点后，总会出现过一段时间 站点进程莫名其妙被杀死，导致网站暂停，这个问题，我目前还没有找到原因，也有可能是服务器配置不够导致的。
+                - generic [ref=e924]: 如果您的站点出现这种情况，可以尝试这种做法，创建一个启动脚本启动网站，并且实时检测网站关闭时自动启动站点：
+                - list [ref=e925]:
+                  - listitem [ref=e926]:
+                    - text: 创建一个脚本
+                    - code [ref=e927]: start_yarn.sh
+                    - text: 在服务器NotionNext文件夹下，脚本的内容如下：
+                - generic [ref=e928]:
+                  - code [ref=e930]: "#!/bin/bash while true; do # 检查 Yarn 进程是否存在 if pgrep -x \"yarn\" > /dev/null; then echo \"Yarn process is already running.\" else # 执行命令 nohup yarn start >/dev/null 2>&1 & # 获取最新启动的进程ID pid=$! echo \"Yarn process started with PID: $pid\" fi # 等待一段时间后重新执行 sleep 5 done"
+                  - generic [ref=e931]:
+                    - generic [ref=e932]: Bash
+                    - button "Copy" [ref=e934] [cursor=pointer]
+                - group [ref=e935]:
+                  - generic "如何将此脚本粘贴到文件中并保存？" [ref=e936] [cursor=pointer]
+                - list [ref=e937]:
+                  - listitem [ref=e938]: 为这个脚本添加可执行的权限
+                  - list [ref=e939]:
+                    - generic [ref=e940]:
+                      - code [ref=e942]: chmod +x start_yarn.sh
+                      - generic [ref=e943]:
+                        - generic [ref=e944]: Bash
+                        - button "Copy" [ref=e946] [cursor=pointer]
+                - list [ref=e947]:
+                  - listitem [ref=e948]: 运行启动脚本
+                  - list [ref=e949]:
+                    - generic [ref=e950]:
+                      - code [ref=e952]: nohup ./start_yarn.sh > /dev/null 2>&1 &
+                      - generic [ref=e953]:
+                        - generic [ref=e954]: Bash
+                        - button "Copy" [ref=e956] [cursor=pointer]
+                - list [ref=e957]:
+                  - listitem [ref=e958]: 运行关闭脚本
+                  - list [ref=e959]:
+                    - generic [ref=e960]:
+                      - code [ref=e962]: pkill -f "yarn"
+                      - generic [ref=e963]:
+                        - generic [ref=e964]: Bash
+                        - button "Copy" [ref=e966] [cursor=pointer]
+                - heading "六、关于本地代码配置修改" [level=2] [ref=e967]:
+                  - generic [ref=e968]:
+                    - link "六、关于本地代码配置修改" [ref=e969] [cursor=pointer]:
+                      - /url: "#a2ea5ba0e252493db740661f61d19d8d"
+                      - img [ref=e970]
+                    - text: 六、关于本地代码配置修改
+                - generic [ref=e972]:
+                  - img "⚠️" [ref=e974]
+                  - generic [ref=e976]: 如果用Docker方案，建议直接修改NOTION_CONFIG或配置文件config.js，因为Docker对环境变量的兼容性不太够。
+                - heading "1.用环境变量修改配置" [level=3] [ref=e977]:
+                  - generic [ref=e978]:
+                    - link "1.用环境变量修改配置" [ref=e979] [cursor=pointer]:
+                      - /url: "#287ea2668de04414b4c9f961df73d293"
+                      - img [ref=e980]
+                    - text: 1.用环境变量修改配置
+                - generic [ref=e982]:
+                  - img "💡" [ref=e984]
+                  - generic [ref=e986]: 用环境变量的好处是，不需要修改代码，不用重新打包编译。直接重启服务即可。
+                - list [ref=e987]:
+                  - listitem [ref=e988]:
+                    - code [ref=e989]: NOTION_PAGE_ID
+                    - text: 等诸多配置支持用环境变量配置。
+                  - list [ref=e990]:
+                    - generic [ref=e991]:
+                      - code [ref=e993]: "# 1.设置环境变量 NOTION_PAGE_ID=29d5ia78b858e4a3bbc13e51b5400fb82 # 2.关闭旧进程 # 命令参考上文 # 3.后台运行 nohup yarn start >/dev/null 2>&1 &"
+                      - generic [ref=e994]:
+                        - generic [ref=e995]: Bash
+                        - button "Copy" [ref=e997] [cursor=pointer]
+                    - generic [ref=e998]:
+                      - img "💡" [ref=e1000]
+                      - generic [ref=e1002]:
+                        - text: 删除环境变量可用以下命令：
+                        - code [ref=e1003]: unset NOTION_PAGE_ID
+                - list [ref=e1004]:
+                  - listitem [ref=e1005]:
+                    - text: 支持环境变量的配置可参考
+                    - link "blog.config.js" [ref=e1006] [cursor=pointer]:
+                      - /url: https://github.com/tangly1024/NotionNext/blob/main/blog.config.js
+                    - text: 文件
+                - heading "2.修改代码" [level=3] [ref=e1007]:
+                  - generic [ref=e1008]:
+                    - link "2.修改代码" [ref=e1009] [cursor=pointer]:
+                      - /url: "#c72e1827140d46e5b7707e1e8f24b444"
+                      - img [ref=e1010]
+                    - text: 2.修改代码
+                - list [ref=e1012]:
+                  - listitem [ref=e1013]:
+                    - text: 如果修改blog.config.js或其他代码文件，NodeJS环境需要重新执行
+                    - code [ref=e1014]: yarn build
+                    - text: 才可 生效，Docker环境重新执行前面的docker build 相关命令即可重新构建镜像。
+                - list [ref=e1015]:
+                  - listitem [ref=e1016]:
+                    - text: 您可以在项目根目录的
+                    - link ".env.local" [ref=e1017] [cursor=pointer]:
+                      - /url: https://github.com/tangly1024/NotionNext/blob/main/.env.local
+                      - code [ref=e1018]: .env.local
+                    - text: 文件中配置您的环境变量
+                - list [ref=e1019]:
+                  - listitem [ref=e1020]:
+                    - text: 重新编译后需要先关闭旧进程，再用
+                    - code [ref=e1021]: yarn start
+                    - text: 重启服务 。
+                - heading "3.自定义端口" [level=3] [ref=e1022]:
+                  - generic [ref=e1023]:
+                    - link "3.自定义端口" [ref=e1024] [cursor=pointer]:
+                      - /url: "#1def40c7807542129ecb5104562c3f96"
+                      - img [ref=e1025]
+                    - text: 3.自定义端口
+                - generic [ref=e1027]: 使用系统的NodeJS环境部署，假如3000端口被占用，或您想多开notionnext可用以下命令指定端口
+                - generic [ref=e1028]:
+                  - code [ref=e1030]: "yarn start -p 8080 # -p [自定义端口号]"
+                  - generic [ref=e1031]:
+                    - generic [ref=e1032]: Bash
+                    - button "Copy" [ref=e1034] [cursor=pointer]
+                - generic [ref=e1035]: 若是Docker环境运行，则使用Docker自带的端口映射功能即可。
+                - generic [ref=e1036]:
+                  - code [ref=e1038]: docker run -d -p 8080:3000 --name app my-app
+                  - generic [ref=e1039]:
+                    - generic [ref=e1040]: Bash
+                    - button "Copy" [ref=e1042] [cursor=pointer]
+                - heading "隐藏端口：Nginx反向代理" [level=2] [ref=e1043]:
+                  - generic [ref=e1044]:
+                    - link "隐藏端口：Nginx反向代理" [ref=e1045] [cursor=pointer]:
+                      - /url: "#92e95b960cd6455f9f4cc1fb4454d816"
+                      - img [ref=e1046]
+                    - text: 隐藏端口：Nginx反向代理
+                - list [ref=e1048]:
+                  - listitem [ref=e1049]: 为了隐藏你的3000端口号，用一个nginx就可以，如果你有宝塔面板之类的运维工具可以很方便地一键配置。
+                - list [ref=e1050]:
+                  - listitem [ref=e1051]: 小白安装nginx
+                  - list [ref=e1052]:
+                    - generic [ref=e1053]:
+                      - code [ref=e1055]: "# 添加nginx源 sudo rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm # 安装nginx sudo yum install nginx sudo systemctl enable nginx sudo systemctl start nginx"
+                      - generic [ref=e1056]:
+                        - generic [ref=e1057]: Bash
+                        - button "Copy" [ref=e1059] [cursor=pointer]
+                    - group [ref=e1060]:
+                      - generic "安装成功访问服务器地址 效果：" [ref=e1061] [cursor=pointer]
+                - list [ref=e1062]:
+                  - listitem [ref=e1063]: 反向代理配置参考
+                  - list [ref=e1064]:
+                    - generic [ref=e1065]:
+                      - text: 修改相关配置文件
+                      - code [ref=e1066]: /etc/nginx/conf.d/default.conf
+                    - generic [ref=e1067]:
+                      - code [ref=e1069]: "# 用vi编辑器修改 vi /etc/nginx/conf.d/default.conf # 在 `location /` 下增加一行 proxy_pass http://127.0.0.1:3000; # 刷新ng配置 sudo systemctl reload nginx"
+                      - generic [ref=e1070]:
+                        - generic [ref=e1071]: Bash
+                        - button "Copy" [ref=e1073] [cursor=pointer]
+                    - figure [ref=e1074]:
+                      - img "notion image" [ref=e1076]
+                    - figure [ref=e1077]:
+                      - img "notion image" [ref=e1079]
+                    - generic [ref=e1080]:
+                      - img "💡" [ref=e1082]
+                      - generic [ref=e1084]:
+                        - text: 如果访问出错可能是SELinux设置不允许nginx的转发 ，执行
+                        - code [ref=e1085]: setsebool -P httpd_can_network_connect on
+                        - text: 即可修复。
+                    - heading "VPS部署NotionNext如何自动更新？" [level=2] [ref=e1087]:
+                      - generic [ref=e1088]:
+                        - link "VPS部署NotionNext如何自动更新？" [ref=e1089] [cursor=pointer]:
+                          - /url: "#1a35b9f4c0b24fc882a01f7596f0b4e1"
+                          - img [ref=e1090]
+                        - text: VPS部署NotionNext如何自动更新？
+                    - generic [ref=e1092]:
+                      - text: 因为代码是在自己的服务器上拉取和部署，所以每次都要执行更新代码，编译代码，并重启服务的步骤，建议是创建一个
+                      - code [ref=e1093]: update.sh
+                      - text: 脚本在服务器上。
+                    - generic [ref=e1094]: 示例代码，仅供参考：
+                    - generic [ref=e1095]:
+                      - code [ref=e1097]: "#!/bin/bash # 切换到工作目录 cd NotionNext # 从仓库更新拉取最新代码 git pull https://github.com/tangly1024/NotionNext # 编译新版代码 yarn build # 启动 yarn start"
+                      - generic [ref=e1098]:
+                        - generic [ref=e1099]: Bash
+                        - button "Copy" [ref=e1101] [cursor=pointer]
+                    - generic [ref=e1102]: 这是最简易的自动脚本，当然也可以做成可交互的高级脚本。
+              - generic [ref=e1104]:
+                - button "link" [ref=e1105] [cursor=pointer]:
+                  - generic [ref=e1107]: 
+                - button "wechat" [ref=e1108] [cursor=pointer]:
+                  - generic [ref=e1110]: 
+                - button "Share by QQ" [ref=e1111] [cursor=pointer]:
+                  - link "Share by QQ" [ref=e1112]:
+                    - /url: http://connect.qq.com/widget/shareqq/index.html?url=https://docs.tangly1024.com/article/deploy-notion-next-on-vps&sharesource=qzone&title=VPS本地服务器&desc=VPS本地服务器 | VPS本地服务器 https://docs.tangly1024.com/article/deploy-notion-next-on-vps 在你的云服务器上手动部署NotionNext
+                    - generic [ref=e1113]: 
+                - button "weibo" [ref=e1114] [cursor=pointer]:
+                  - generic [ref=e1115]: 
+                - button "email" [ref=e1116] [cursor=pointer]:
+                  - generic [ref=e1117]: 
+                - button "facebook" [ref=e1118] [cursor=pointer]:
+                  - generic [ref=e1119]: 
+                - button "twitter" [ref=e1120] [cursor=pointer]
+                - button "telegram" [ref=e1121] [cursor=pointer]:
+                  - generic [ref=e1122]: 
+                - button "messenger" [ref=e1123] [cursor=pointer]:
+                  - generic [ref=e1124]: 
+                - button "line" [ref=e1125] [cursor=pointer]:
+                  - generic [ref=e1126]: 
+                - button "reddit" [ref=e1127] [cursor=pointer]:
+                  - generic [ref=e1128]: 
+                - button "whatsapp" [ref=e1129] [cursor=pointer]:
+                  - generic [ref=e1130]: 
+                - button "linkedin" [ref=e1131] [cursor=pointer]:
+                  - generic [ref=e1132]: 
+                - button "csdn" [ref=e1133] [cursor=pointer]:
+                  - img "CSDN" [ref=e1135]
+                - button "juejin" [ref=e1136] [cursor=pointer]:
+                  - img "掘金" [ref=e1138]
+              - generic [ref=e1139]:
+                - link " Prev EdgeOne部署NotionNext" [ref=e1140] [cursor=pointer]:
+                  - /url: /article/deploy-notion-next-with-edge-one
+                  - generic [ref=e1141]: 
+                  - generic [ref=e1142]:
+                    - generic [ref=e1143]: Prev
+                    - generic [ref=e1144]: EdgeOne部署NotionNext
+                - link "Next 4EverLand部署NotionNext-Web3.0方案 " [ref=e1145] [cursor=pointer]:
+                  - /url: /article/notionnext-deploy-web3.0-4everland
+                  - generic [ref=e1146]:
+                    - generic [ref=e1147]: Next
+                    - generic [ref=e1148]: 4EverLand部署NotionNext-Web3.0方案
+                  - generic [ref=e1149]: 
+              - generic [ref=e1151]:
+                - text: Loading...
+                - generic [ref=e1152]: 
+            - text: 
+          - insertion
+          - generic [ref=e1153]:
+            - link "万维广告联盟" [ref=e1154] [cursor=pointer]:
+              - /url: https://wwads.cn/click/bundle?code=yjMT4SGShEic9J3Dlzk57MVQeSwhJo
+              - img "万维广告联盟" [ref=e1155]
+            - generic [ref=e1156]:
+              - link "📊 开源免费的 BI 工具。仅需 5 分钟，数据变大屏。众多精美可视化大屏模板等你来选。" [ref=e1157] [cursor=pointer]:
+                - /url: https://wwads.cn/click/bundle?code=yjMT4SGShEic9J3Dlzk57MVQeSwhJo
+              - link "广告" [ref=e1158] [cursor=pointer]:
+                - /url: https://wwads.cn/?utm_source=property-322&utm_medium=footer
+                - img [ref=e1159]
+                - generic [ref=e1160]: 广告
+            - generic "隐藏广告" [ref=e1161] [cursor=pointer]:
+              - img [ref=e1162]
+        - text:     
+      - text: 
+    - generic [ref=e1164] [cursor=pointer]: 
+    - text:               
+  - alert [ref=e1165]

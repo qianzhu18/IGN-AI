@@ -133,7 +133,8 @@ export function JoinApplicationForm({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
 
     setState({ status: "submitting", message: "正在提交..." });
 
@@ -153,15 +154,16 @@ export function JoinApplicationForm({
       });
 
       const payload = (await response.json()) as { message?: string };
+
+      if (response.ok) {
+        form.reset();
+        setInterests(["线下交流"]);
+      }
+
       setState({
         status: response.ok ? "success" : "error",
         message: payload.message || (response.ok ? "提交成功。" : "提交失败。"),
       });
-
-      if (response.ok) {
-        event.currentTarget.reset();
-        setInterests(["线下交流"]);
-      }
     } catch {
       setState({
         status: "error",
@@ -257,6 +259,7 @@ export function JoinApplicationForm({
         </button>
         {state.message ? (
           <p
+            aria-live="polite"
             className={`text-sm ${
               state.status === "success" ? "text-[#bdf0c8]" : "text-[#ffd09a]"
             }`}

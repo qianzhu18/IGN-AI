@@ -21,25 +21,32 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-2 text-sm text-white/56">
-          <Link href="/#what-is-ignai" className="transition hover:text-white">
+          <Link href="/#what-is-ignai" aria-label="页脚导航：What is IGNAI" className="transition hover:text-white">
             What is IGNAI
           </Link>
-          <Link href="/#culture" className="transition hover:text-white">
+          <Link href="/#culture" aria-label="页脚导航：Culture" className="transition hover:text-white">
             Culture
           </Link>
-          <Link href="/events" className="transition hover:text-white">
+          <Link href="/events" aria-label="页脚导航：Events" className="transition hover:text-white">
             Events
           </Link>
-          <Link href="/records" className="transition hover:text-white">
+          <Link href="/records" aria-label="页脚导航：Records" className="transition hover:text-white">
             Records
           </Link>
-          <Link href="/blog" className="transition hover:text-white">
+          <Link href="/blog" aria-label="页脚导航：Journal" className="transition hover:text-white">
             Journal
           </Link>
-          <Link href="/join" className="transition hover:text-white">
+          <Link href="/join" aria-label="页脚导航：Join" className="transition hover:text-white">
             Join
           </Link>
-          <a href={`mailto:${siteLinks.contactEmail}`} className="transition hover:text-white">
+          <Link href="/manage" aria-label="页脚导航：Manage" className="transition hover:text-white">
+            Manage
+          </Link>
+          <a
+            href={`mailto:${siteLinks.contactEmail}`}
+            aria-label="页脚导航：联系邮箱"
+            className="transition hover:text-white"
+          >
             {siteLinks.contactEmail}
           </a>
           <p className="pt-2 text-xs uppercase text-white/34">

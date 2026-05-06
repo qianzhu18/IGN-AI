@@ -1,0 +1,835 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - link "NotionNext NotionNext帮助手册" [ref=e9] [cursor=pointer]:
+            - /url: /about
+            - img "NotionNext" [ref=e10]
+            - text: NotionNext帮助手册
+          - generic [ref=e11]:
+            - listitem [ref=e12] [cursor=pointer]:
+              - generic [ref=e14]:
+                - generic [ref=e15]: 
+                - text: Language
+                - generic [ref=e16]: 
+            - listitem [ref=e17] [cursor=pointer]:
+              - generic [ref=e19]:
+                - generic [ref=e20]: 
+                - text: 更多
+                - generic [ref=e21]: 
+        - generic [ref=e22]:
+          - button "Sign In" [ref=e23] [cursor=pointer]
+          - img [ref=e26] [cursor=pointer]
+          - generic [ref=e28]:
+            - generic [ref=e30] [cursor=pointer]: 
+            - textbox "Search" [ref=e31]
+            - generic [ref=e32]: Ctrl+K
+          - text: 
+      - text:   E     N
+    - main [ref=e33]:
+      - generic [ref=e35]:
+        - generic [ref=e37]:
+          - link "Notion开源、免费、快速建站" [ref=e38] [cursor=pointer]:
+            - /url: /about
+            - generic [ref=e40]: Notion开源、免费、快速建站
+          - generic [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: ✨ 更新日志
+            - generic:
+              - generic: 
+          - generic:
+            - link "NotionNext-升级教程" [ref=e44] [cursor=pointer]:
+              - /url: /article/how-to-update-notionnext
+              - generic [ref=e46]: NotionNext-升级教程
+            - link "V4.9.5.2 - Latest" [ref=e48] [cursor=pointer]:
+              - /url: /article/latest
+              - generic [ref=e50]: V4.9.5.2 - Latest
+            - link "V4.0 → V4.9.0" [ref=e52] [cursor=pointer]:
+              - /url: /article/v4.0
+              - generic [ref=e54]: V4.0 → V4.9.0
+            - link "V3.0 → V3.16.3" [ref=e56] [cursor=pointer]:
+              - /url: /article/v3.0
+              - generic [ref=e58]: V3.0 → V3.16.3
+            - link "V2.0 → V2.9.1" [ref=e60] [cursor=pointer]:
+              - /url: /article/V2.0
+              - generic [ref=e62]: V2.0 → V2.9.1
+            - link "V1.0 → V1.5.0" [ref=e64] [cursor=pointer]:
+              - /url: /article/v1.0
+              - generic [ref=e66]: V1.0 → V1.5.0
+          - generic [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]: 🚀 安装部署
+            - generic:
+              - generic: 
+          - generic:
+            - link "Vercel部署NotionNext" [ref=e73] [cursor=pointer]:
+              - /url: /article/vercel-deploy-notion-next
+              - generic [ref=e75]: Vercel部署NotionNext
+            - link "Vercel绑定自定义域名" [ref=e80] [cursor=pointer]:
+              - /url: /article/vercel-domain
+              - generic [ref=e82]: Vercel绑定自定义域名
+            - link "Vercel域名加速" [ref=e84] [cursor=pointer]:
+              - /url: /article/vercel-accelerate
+              - generic [ref=e86]: Vercel域名加速
+            - link "NotionNext项目运行原理" [ref=e88] [cursor=pointer]:
+              - /url: /article/vercel-notionnext-notion
+              - generic [ref=e90]: NotionNext项目运行原理
+            - link "Vercel部署多个Github网站" [ref=e92] [cursor=pointer]:
+              - /url: /article/vercel-multi-sites
+              - generic [ref=e94]: Vercel部署多个Github网站
+            - link "Vercel静态部署NotionNext" [ref=e96] [cursor=pointer]:
+              - /url: /article/vercel-deploy-notion-next-static
+              - generic [ref=e98]: Vercel静态部署NotionNext
+            - link "Vercel快速重新部署项目" [ref=e100] [cursor=pointer]:
+              - /url: /article/vercel-redploy
+              - generic [ref=e102]: Vercel快速重新部署项目
+            - link "CloudFlarePage静态部署" [ref=e104] [cursor=pointer]:
+              - /url: /article/notion-next-cloud-flare
+              - generic [ref=e106]: CloudFlarePage静态部署
+            - link "Netlify云函数部署" [ref=e111] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-with-netlify
+              - generic [ref=e113]: Netlify云函数部署
+            - link "EdgeOne部署NotionNext" [ref=e118] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-with-edge-one
+              - generic [ref=e120]: EdgeOne部署NotionNext
+            - link "VPS本地服务器" [ref=e125] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-on-vps
+              - generic [ref=e127]: VPS本地服务器
+            - link "4EverLand部署NotionNext-Web3.0方案" [ref=e129] [cursor=pointer]:
+              - /url: /article/notionnext-deploy-web3.0-4everland
+              - generic [ref=e131]: 4EverLand部署NotionNext-Web3.0方案
+            - link "Zeabur云部署" [ref=e133] [cursor=pointer]:
+              - /url: /article/deploy-notion-next-with-zeabur
+              - generic [ref=e135]: Zeabur云部署
+          - generic [ref=e136] [cursor=pointer]:
+            - generic [ref=e137]: ✒ Notion教程
+            - generic:
+              - generic: 
+          - generic:
+            - link "Notion文章示例" [ref=e139] [cursor=pointer]:
+              - /url: /article/example-1
+              - generic [ref=e141]: Notion文章示例
+            - link "Notion数据备份" [ref=e143] [cursor=pointer]:
+              - /url: /article/notion-backup
+              - generic [ref=e145]: Notion数据备份
+            - link "Notion数据库的使用" [ref=e147] [cursor=pointer]:
+              - /url: /article/start-to-write
+              - generic [ref=e149]: Notion数据库的使用
+            - link "Notion模板的使用" [ref=e151] [cursor=pointer]:
+              - /url: /article/notion-template
+              - generic [ref=e153]: Notion模板的使用
+            - link "Notion嵌入B站视频" [ref=e155] [cursor=pointer]:
+              - /url: /article/notionnext-video
+              - generic [ref=e157]: Notion嵌入B站视频
+            - link "Notion快捷键大全" [ref=e159] [cursor=pointer]:
+              - /url: /article/notion-short-key
+              - generic [ref=e161]: Notion快捷键大全
+            - link "Notion-faster加速Notion" [ref=e163] [cursor=pointer]:
+              - /url: /article/notion-faster
+              - generic [ref=e165]: Notion-faster加速Notion
+            - link "Notion文字添加超链接" [ref=e167] [cursor=pointer]:
+              - /url: /article/how-to-add-link-for-text-in-notion
+              - generic [ref=e169]: Notion文字添加超链接
+            - link "NotionNext将单页隐藏" [ref=e171] [cursor=pointer]:
+              - /url: /article/notionnext-hidden-page
+              - generic [ref=e173]: NotionNext将单页隐藏
+            - link "NotionNext定时发布文章" [ref=e175] [cursor=pointer]:
+              - /url: /article/notionnext-scheduled-article-release
+              - generic [ref=e177]: NotionNext定时发布文章
+            - link "📓 Notion进阶教程" [ref=e179] [cursor=pointer]:
+              - /url: /article/notion-tutorial
+              - generic [ref=e181]: 📓 Notion进阶教程
+          - generic [ref=e182] [cursor=pointer]:
+            - generic [ref=e183]: 🛠 站点配置
+            - generic:
+              - generic: 
+          - generic [ref=e184]:
+            - link "关于站点缓存" [ref=e186] [cursor=pointer]:
+              - /url: /article/cache-of-notion-next
+              - generic [ref=e188]: 关于站点缓存
+            - link "如何配置站点" [ref=e190] [cursor=pointer]:
+              - /url: /article/how-to-config-notion-next
+              - generic [ref=e192]: 如何配置站点
+            - link "批量配置 INLINE_CONFIG" [ref=e197] [cursor=pointer]:
+              - /url: /article/notion-next-inline-config
+              - generic [ref=e199]: 批量配置 INLINE_CONFIG
+            - link "基础信息" [ref=e201] [cursor=pointer]:
+              - /url: /article/notion-next-guide
+              - generic [ref=e203]: 基础信息
+            - link "图片/封面管理" [ref=e205] [cursor=pointer]:
+              - /url: /article/notion-next-image-cover
+              - generic [ref=e207]: 图片/封面管理
+            - link "站点图标favicon与Github图床" [ref=e209] [cursor=pointer]:
+              - /url: /article/use-github-as-image-hosting-service
+              - generic [ref=e211]: 站点图标favicon与Github图床
+            - link "URL风格自定义" [ref=e213] [cursor=pointer]:
+              - /url: /article/notion-next-url-customize
+              - generic [ref=e215]: URL风格自定义
+            - link "网站公告" [ref=e217] [cursor=pointer]:
+              - /url: /article/notionnext-notice
+              - generic [ref=e219]: 网站公告
+            - link "菜单管理-二级菜单" [ref=e221] [cursor=pointer]:
+              - /url: /article/notion-next-secondary-menu
+              - generic [ref=e223]: 菜单管理-二级菜单
+            - link "字体字号" [ref=e225] [cursor=pointer]:
+              - /url: /article/notion-next-web-font
+              - generic [ref=e227]: 字体字号
+            - link "图标库-FontAwesome" [ref=e229] [cursor=pointer]:
+              - /url: /article/notion-next-font-awesome
+              - generic [ref=e231]: 图标库-FontAwesome
+            - link "图标库-IconFont" [ref=e233] [cursor=pointer]:
+              - /url: /article/notion-next-iconfont
+              - generic [ref=e235]: 图标库-IconFont
+            - link "代码块风格" [ref=e237] [cursor=pointer]:
+              - /url: /article/notion-next-code-style
+              - generic [ref=e239]: 代码块风格
+            - link "自定义数据库表头" [ref=e241] [cursor=pointer]:
+              - /url: /article/notion-next-custom-properties
+              - generic [ref=e243]: 自定义数据库表头
+            - link "多数据库：多语言/多板块" [ref=e245] [cursor=pointer]:
+              - /url: /article/notion-next-mulity-languages
+              - generic [ref=e247]: 多数据库：多语言/多板块
+            - link "站点组合" [ref=e249] [cursor=pointer]:
+              - /url: /article/notion-next-site-combine
+              - generic [ref=e251]: 站点组合
+            - link "API_BASE_URL" [ref=e253] [cursor=pointer]:
+              - /url: /article/notion-next-api_base_url
+              - generic [ref=e255]: API_BASE_URL
+          - generic [ref=e256] [cursor=pointer]:
+            - generic [ref=e257]: ⭐ 主题参数
+            - generic:
+              - generic: 
+          - generic:
+            - link "主题功能说明" [ref=e259] [cursor=pointer]:
+              - /url: /article/notion-next-themes
+              - generic [ref=e261]: 主题功能说明
+            - link "Typography主题" [ref=e263] [cursor=pointer]:
+              - /url: /article/notion-next-typography
+              - generic [ref=e265]: Typography主题
+            - link "Magzine主题" [ref=e267] [cursor=pointer]:
+              - /url: /article/notion-next-magzine
+              - generic [ref=e269]: Magzine主题
+            - link "Proxio主题" [ref=e271] [cursor=pointer]:
+              - /url: /article/notion-next-proxio
+              - generic [ref=e273]: Proxio主题
+            - link "Simple主题" [ref=e275] [cursor=pointer]:
+              - /url: /article/notionnext-simple
+              - generic [ref=e277]: Simple主题
+            - link "Hexo/Matery主题" [ref=e279] [cursor=pointer]:
+              - /url: /article/notion-next-greetings
+              - generic [ref=e281]: Hexo/Matery主题
+            - link "Gitbook主题" [ref=e283] [cursor=pointer]:
+              - /url: /article/notionnext-gitbook
+              - generic [ref=e285]: Gitbook主题
+            - link "HEO主题" [ref=e287] [cursor=pointer]:
+              - /url: /article/notionnext-heo
+              - generic [ref=e289]: HEO主题
+            - link "Starter主题" [ref=e291] [cursor=pointer]:
+              - /url: /article/notionnext-starter
+              - generic [ref=e293]: Starter主题
+            - link "Movie主题" [ref=e295] [cursor=pointer]:
+              - /url: /article/notionnext-movie
+              - generic [ref=e297]: Movie主题
+            - link "Game主题" [ref=e299] [cursor=pointer]:
+              - /url: /article/notionnext-game
+              - generic [ref=e301]: Game主题
+            - link "Commerce主题" [ref=e303] [cursor=pointer]:
+              - /url: /article/notionnext-commerce
+              - generic [ref=e305]: Commerce主题
+          - generic [ref=e306] [cursor=pointer]:
+            - generic [ref=e307]: 📊 网站统计
+            - generic:
+              - generic: 
+          - generic:
+            - link "站点统计相关" [ref=e309] [cursor=pointer]:
+              - /url: /article/notion-next-analytics
+              - generic [ref=e311]: 站点统计相关
+            - link "UMAMI统计" [ref=e313] [cursor=pointer]:
+              - /url: /article/notion-next-umami
+              - generic [ref=e315]: UMAMI统计
+            - link "搜索引擎收录" [ref=e317] [cursor=pointer]:
+              - /url: /article/notion-next-search-engine-index
+              - generic [ref=e319]: 搜索引擎收录
+            - link "Clarity站点统计" [ref=e321] [cursor=pointer]:
+              - /url: /article/notion-next-clarity
+              - generic [ref=e323]: Clarity站点统计
+            - link "51LA站点统计" [ref=e325] [cursor=pointer]:
+              - /url: /article/notion-next-51-la
+              - generic [ref=e327]: 51LA站点统计
+            - link "Ackee站点统计" [ref=e329] [cursor=pointer]:
+              - /url: /article/notion-next-ackee
+              - generic [ref=e331]: Ackee站点统计
+          - generic [ref=e332] [cursor=pointer]:
+            - generic [ref=e333]: 📩 评论插件
+            - generic:
+              - generic: 
+          - generic:
+            - link "评论插件说明" [ref=e335] [cursor=pointer]:
+              - /url: /article/notion-next-comment-plugin
+              - generic [ref=e337]: 评论插件说明
+            - link "Cusdis" [ref=e339] [cursor=pointer]:
+              - /url: /article/notion-next-cusdis
+              - generic [ref=e341]: Cusdis
+            - link "Utterance" [ref=e343] [cursor=pointer]:
+              - /url: /article/notion-next-utterance
+              - generic [ref=e345]: Utterance
+            - link "Giscus" [ref=e347] [cursor=pointer]:
+              - /url: /article/notion-next-giscus
+              - generic [ref=e349]: Giscus
+            - link "Twikoo" [ref=e351] [cursor=pointer]:
+              - /url: /article/notionnext-twikoo
+              - generic [ref=e353]: Twikoo
+            - link "Artalk" [ref=e355] [cursor=pointer]:
+              - /url: /article/notion-next-artalk
+              - generic [ref=e357]: Artalk
+            - link "Gitalk" [ref=e359] [cursor=pointer]:
+              - /url: /article/notion-next-gitalk
+              - generic [ref=e361]: Gitalk
+            - link "Valine" [ref=e363] [cursor=pointer]:
+              - /url: /article/notionnext-valine
+              - generic [ref=e365]: Valine
+            - link "Waline" [ref=e367] [cursor=pointer]:
+              - /url: /article/notion-next-waline
+              - generic [ref=e369]: Waline
+          - generic [ref=e370] [cursor=pointer]:
+            - generic [ref=e371]: 🧷 外部扩展
+            - generic:
+              - generic: 
+          - generic:
+            - link "外部插件说明" [ref=e373] [cursor=pointer]:
+              - /url: /article/notion-next-plugins
+              - generic [ref=e375]: 外部插件说明
+            - link "音乐播放器" [ref=e377] [cursor=pointer]:
+              - /url: /article/notion-next-plugin-music-player
+              - generic [ref=e379]: 音乐播放器
+            - link "Live2D宠物插件" [ref=e381] [cursor=pointer]:
+              - /url: /article/notion-next-plugin-live2d
+              - generic [ref=e383]: Live2D宠物插件
+            - link "Algolia搜索引擎" [ref=e385] [cursor=pointer]:
+              - /url: /article/notion-next-algolia
+              - generic [ref=e387]: Algolia搜索引擎
+            - link "AI聊天机器人-Coze" [ref=e389] [cursor=pointer]:
+              - /url: /article/notion-next-coze
+              - generic [ref=e391]: AI聊天机器人-Coze
+            - link "AI聊天机器人-ChatBase" [ref=e393] [cursor=pointer]:
+              - /url: /article/notion-next-chat-base
+              - generic [ref=e395]: AI聊天机器人-ChatBase
+            - link "Facebook聊天插件[已失效]" [ref=e397] [cursor=pointer]:
+              - /url: /article/notion-next-facebook-chat-plugn
+              - generic [ref=e399]: Facebook聊天插件[已失效]
+            - link "SaleSmartly聊天插件" [ref=e401] [cursor=pointer]:
+              - /url: /article/notion-next-salesmatly-pulgin
+              - generic [ref=e403]: SaleSmartly聊天插件
+            - link "TIDIO聊天插件" [ref=e405] [cursor=pointer]:
+              - /url: /article/notion-next-tidio
+              - generic [ref=e407]: TIDIO聊天插件
+            - link "Google广告营收插件" [ref=e409] [cursor=pointer]:
+              - /url: /article/notion-next-google-adsense
+              - generic [ref=e411]: Google广告营收插件
+          - generic [ref=e412] [cursor=pointer]:
+            - generic [ref=e413]: ⌨ 开发教程
+            - generic:
+              - generic: 
+          - generic:
+            - link "小白学习-前端开发入门到精通" [ref=e418] [cursor=pointer]:
+              - /url: /article/frontend-development-tutorial
+              - generic [ref=e420]: 小白学习-前端开发入门到精通
+            - link "NotionNext开发先导" [ref=e422] [cursor=pointer]:
+              - /url: /article/how-to-develop-with-notion-next
+              - generic [ref=e424]: NotionNext开发先导
+            - link "NotionNext用配置调整样式" [ref=e426] [cursor=pointer]:
+              - /url: /article/custom-your-style
+              - generic [ref=e428]: NotionNext用配置调整样式
+            - link "NotionNext自建主题" [ref=e430] [cursor=pointer]:
+              - /url: /article/your-own-theme
+              - generic [ref=e432]: NotionNext自建主题
+            - link "实操案例-自定义鼠标特效" [ref=e434] [cursor=pointer]:
+              - /url: /article/notion-next-click-effect
+              - generic [ref=e436]: 实操案例-自定义鼠标特效
+            - link "借助AI开发NotionNext" [ref=e438] [cursor=pointer]:
+              - /url: /article/notion-next-develop-with-ai
+              - generic [ref=e440]: 借助AI开发NotionNext
+            - link "基础教程-简单理解React和JSX" [ref=e445] [cursor=pointer]:
+              - /url: /article/react-jsx
+              - generic [ref=e447]: 基础教程-简单理解React和JSX
+            - link "基础教程-NextJs是什么" [ref=e449] [cursor=pointer]:
+              - /url: /article/next-js
+              - generic [ref=e451]: 基础教程-NextJs是什么
+            - link "基础教程-Tailwind CSS" [ref=e453] [cursor=pointer]:
+              - /url: /article/about-tailwindcss
+              - generic [ref=e455]: 基础教程-Tailwind CSS
+            - link "基础教程-如何用Git提交代码" [ref=e457] [cursor=pointer]:
+              - /url: /article/notionnext-how-to-pr
+              - generic [ref=e459]: 基础教程-如何用Git提交代码
+          - generic [ref=e460] [cursor=pointer]:
+            - generic [ref=e461]: 🔊 运营教程
+            - generic:
+              - generic: 
+          - generic:
+            - link "🏫 网站SEO推广" [ref=e463] [cursor=pointer]:
+              - /url: /article/seo-course
+              - generic [ref=e465]: 🏫 网站SEO推广
+            - link "💬 验证码解锁文章OpenWrite/TechGrow" [ref=e467] [cursor=pointer]:
+              - /url: /article/wechat-offical-account
+              - generic [ref=e469]: 💬 验证码解锁文章OpenWrite/TechGrow
+            - link "✉️ Mailchimp邮件订阅" [ref=e471] [cursor=pointer]:
+              - /url: /article/notion-next-mailchimp
+              - generic [ref=e473]: ✉️ Mailchimp邮件订阅
+          - generic [ref=e474] [cursor=pointer]:
+            - generic [ref=e475]: 👨‍👦‍👦 获取帮助
+            - generic:
+              - generic: 
+          - generic:
+            - link "1.社群守则" [ref=e477] [cursor=pointer]:
+              - /url: /article/how-to-question
+              - generic [ref=e479]: 1.社群守则
+            - link "2.留言反馈" [ref=e481] [cursor=pointer]:
+              - /url: /article/about-author
+              - generic [ref=e483]: 2.留言反馈
+            - link "3.社群讨论" [ref=e485] [cursor=pointer]:
+              - /url: /article/chat-community
+              - generic [ref=e487]: 3.社群讨论
+            - link "4.付费求助" [ref=e489] [cursor=pointer]:
+              - /url: /article/my-service
+              - generic [ref=e491]: 4.付费求助
+          - generic [ref=e492] [cursor=pointer]:
+            - generic [ref=e493]: 💪 支持我们
+            - generic:
+              - generic: 
+          - generic:
+            - link "👋 支持NotionNext" [ref=e495] [cursor=pointer]:
+              - /url: /article/support-notion-next
+              - generic [ref=e497]: 👋 支持NotionNext
+            - link "💴 Waiting List" [ref=e499] [cursor=pointer]:
+              - /url: /article/crowdfunding
+              - generic [ref=e501]: 💴 Waiting List
+        - generic [ref=e502]:
+          - generic [ref=e504]:
+            - generic "email" [ref=e505] [cursor=pointer]:
+              - generic [ref=e506]: 
+            - link "" [ref=e507] [cursor=pointer]:
+              - /url: /rss/feed.xml
+              - generic [ref=e508]: 
+          - generic [ref=e509]:
+            - generic [ref=e510]:
+              - generic [ref=e511]: 
+              - link "NotionNext" [ref=e512] [cursor=pointer]:
+                - /url: https://docs.tangly1024.com
+              - text: .
+            - text: © 2021-2026
+          - generic [ref=e513]:
+            - generic [ref=e514]: 
+            - text: "1240128"
+          - generic [ref=e515]:
+            - generic [ref=e516]: 
+            - text: "229879"
+          - generic [ref=e517]:
+            - text: Powered By
+            - link "NotionNext 4.9.5.2" [ref=e518] [cursor=pointer]:
+              - /url: https://github.com/tangly1024/NotionNext
+      - generic [ref=e519]:
+        - generic [ref=e520]:
+          - generic [ref=e521]:
+            - link "万维广告联盟" [ref=e522] [cursor=pointer]:
+              - /url: https://wwads.cn/click/bundle?code=xjbtKGoPqs8wnsTdVeEILFV3h2xZfY
+              - img "万维广告联盟" [ref=e523]
+            - generic [ref=e524]:
+              - link "🔥码云GVP开源项目 16k star Uniapp + ElementUI 功能强大 支持多语言、二开方便" [ref=e525] [cursor=pointer]:
+                - /url: https://wwads.cn/click/bundle?code=xjbtKGoPqs8wnsTdVeEILFV3h2xZfY
+              - link "广告" [ref=e526] [cursor=pointer]:
+                - /url: https://wwads.cn/?utm_source=property-322&utm_medium=footer
+                - img [ref=e527]
+                - generic [ref=e528]: 广告
+            - generic "隐藏广告" [ref=e529] [cursor=pointer]:
+              - img [ref=e530]
+          - generic [ref=e531]:
+            - heading "多数据库：多语言/多板块" [level=1] [ref=e532]
+            - generic [ref=e533]:
+              - main [ref=e536]:
+                - heading "使用原理" [level=2] [ref=e537]:
+                  - generic [ref=e538]:
+                    - link "使用原理" [ref=e539] [cursor=pointer]:
+                      - /url: "#981db09f45914a25acd30db074f25fd0"
+                      - img [ref=e540]
+                    - text: 使用原理
+                - generic [ref=e542]: 一个站点域名支持绑定多个数据库，每个数据库有自己的内容和主题配置信息。
+                - generic [ref=e543]: 原先NOTION_PAGE_ID 只能有一个，新版本中支持一个站点配置多个数据源，借此可以实现多语言、或多板块的功能。
+                - list [ref=e544]:
+                  - listitem [ref=e545]: 旧版NOTION_PAGE_ID
+                  - list [ref=e546]:
+                    - generic [ref=e547]:
+                      - code [ref=e549]: xxxxxxx
+                      - generic [ref=e550]:
+                        - generic [ref=e551]: JavaScript
+                        - button "Copy" [ref=e553] [cursor=pointer]
+                - list [ref=e558]:
+                  - listitem [ref=e559]: 新版NOTION_PAGE_ID
+                  - list [ref=e560]:
+                    - generic [ref=e561]:
+                      - code [ref=e563]: xxxxxxx,en:xxxxx,zh:xxxxx,blog:xxxxxx,product:xxxxx,docs:xxxxxx
+                      - generic [ref=e564]:
+                        - generic [ref=e565]: JavaScript
+                        - button "Copy" [ref=e567] [cursor=pointer]
+                - heading "适用场景" [level=2] [ref=e572]:
+                  - generic [ref=e573]:
+                    - link "适用场景" [ref=e574] [cursor=pointer]:
+                      - /url: "#ff03422bdacc463588bc928451ad416a"
+                      - img [ref=e575]
+                    - text: 适用场景
+                - generic [ref=e577]: 有两种用法：
+                - list [ref=e578]:
+                  - listitem [ref=e579]: 需要向不同语言的用户展现完全不同内容，例如项目官网，品牌官网等。
+                - list [ref=e580]:
+                  - listitem [ref=e581]: 需要将一个站点切分成多个子版块，根据路径区分访问哪个版块的数据。
+                - heading "效果预览" [level=3] [ref=e582]:
+                  - generic [ref=e583]:
+                    - link "效果预览" [ref=e584] [cursor=pointer]:
+                      - /url: "#346448997dda4e20b00966779a9f95cc"
+                      - img [ref=e585]
+                    - text: 效果预览
+                - list [ref=e587]:
+                  - listitem [ref=e588]:
+                    - text: 根据url路径不同访问到不同的数据库；例如
+                    - link "https://preview.tangly1024.com/" [ref=e589] [cursor=pointer]:
+                      - /url: https://preview.tangly1024.com/
+                    - text: 是中文站；
+                    - link "https://preview.tangly1024.com/en" [ref=e590] [cursor=pointer]:
+                      - /url: https://preview.tangly1024.com/en#google_vignette
+                    - text: 是英文站 ， 两个站点的数据库是独立隔离的。
+                  - list [ref=e591]:
+                    - figure [ref=e592]:
+                      - img "notion image" [ref=e594]
+                    - figure [ref=e595]:
+                      - img "notion image" [ref=e597]
+                - list [ref=e598]:
+                  - listitem [ref=e599]: 自动化多语言跳转：
+                  - list [ref=e600]:
+                    - generic [ref=e601]:
+                      - img "💡" [ref=e603]
+                      - generic [ref=e604]:
+                        - text: 最新版中默认关闭。如需开启请在NOTION_CONFIG 中添加
+                        - code [ref=e605]: REDIRECT_LANG
+                        - text: =
+                        - code [ref=e606]: "true"
+                        - text: 。
+                    - generic [ref=e607]: 访问首页时，会检测用户的默认语言进行自动跳转。
+                    - blockquote [ref=e608]:
+                      - generic [ref=e609]:
+                        - text: 默认语言取自用户浏览器中的偏好语言(
+                        - code [ref=e610]: window.navigator.language
+                        - text: )
+                    - generic [ref=e611]: 例如用户的浏览器默认语言如果是英文 ， 则会跳转到 /en目录；否则就不会自动跳转，当然用户可以选择从菜单栏自行选择切换语言。
+                    - figure [ref=e612]:
+                      - img "notion image" [ref=e614]
+                - list [ref=e616]:
+                  - listitem [ref=e617]: 理论上可以配置无数种语言。
+                - heading "使用方法" [level=2] [ref=e618]:
+                  - generic [ref=e619]:
+                    - link "使用方法" [ref=e620] [cursor=pointer]:
+                      - /url: "#885bb8e8764f426481a7a02b3d5e51fc"
+                      - img [ref=e621]
+                    - text: 使用方法
+                - generic [ref=e623]:
+                  - img "⚠️" [ref=e625]
+                  - generic [ref=e626]:
+                    - text: 注意：多语言功能不支持
+                    - code [ref=e627]: 静态导出
+                    - text: 的部署方案：例如 yarn export，cloudflarePage、4Everland等都不支持多种语言。 若要用静态导出方案，可以用多域名站点解决：例如创建多个不同的域名：
+                    - code [ref=e628]: xxx.cn
+                    - code [ref=e630]: xxx.en
+                    - text: ","
+                    - code [ref=e631]: xxx.jp
+                    - text: 等； 或者用二级域名
+                    - code [ref=e632]: cn.xxx.com
+                    - text: ","
+                    - code [ref=e633]: jp.xxx.com
+                    - text: ", cn.xxx.com"
+                - heading "1. 网站准备多个数据库" [level=3] [ref=e634]:
+                  - generic [ref=e635]:
+                    - link "1. 网站准备多个数据库" [ref=e636] [cursor=pointer]:
+                      - /url: "#fad0119628a8481dbe075b950e359588"
+                      - img [ref=e637]
+                    - text: 1. 网站准备多个数据库
+                - generic [ref=e639]: 一种语言一个数据库。例如我准备两个演示数据库
+                - link "Notion Blog - EN | Notion NotionNext Blog Notion Blog - EN | Notion https://tanghh.notion.site/7c1d570661754c8fbc568e00a01fd70e Notion Blog - EN | Notion" [ref=e641] [cursor=pointer]:
+                  - /url: https://tanghh.notion.site/7c1d570661754c8fbc568e00a01fd70e
+                  - generic [ref=e642]:
+                    - generic [ref=e643]: Notion Blog - EN | Notion
+                    - generic [ref=e644]: NotionNext Blog
+                    - generic [ref=e645]:
+                      - img "Notion Blog - EN | Notion" [ref=e647]
+                      - generic [ref=e648]: https://tanghh.notion.site/7c1d570661754c8fbc568e00a01fd70e
+                  - img "Notion Blog - EN | Notion" [ref=e650]
+                - link "Notion Blog | Notion 一个NotionNext搭建的博客 Notion Blog | Notion https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5?v=b7eb215720224ca5827bfaa5ef82cf2d Notion Blog | Notion" [ref=e652] [cursor=pointer]:
+                  - /url: https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5?v=b7eb215720224ca5827bfaa5ef82cf2d
+                  - generic [ref=e653]:
+                    - generic [ref=e654]: Notion Blog | Notion
+                    - generic [ref=e655]: 一个NotionNext搭建的博客
+                    - generic [ref=e656]:
+                      - img "Notion Blog | Notion" [ref=e658]
+                      - generic [ref=e659]: https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5?v=b7eb215720224ca5827bfaa5ef82cf2d
+                  - img "Notion Blog | Notion" [ref=e661]
+                - heading "2. 配置NOTION_PAGE_ID。" [level=3] [ref=e662]:
+                  - generic [ref=e663]:
+                    - link "2. 配置NOTION_PAGE_ID。" [ref=e664] [cursor=pointer]:
+                      - /url: "#927acfbaf8234988b996e17dbc0982e8"
+                      - img [ref=e665]
+                    - generic [ref=e667]:
+                      - text: 2. 配置
+                      - code [ref=e668]: NOTION_PAGE_ID
+                      - text: 。
+                - generic [ref=e669]:
+                  - text: 在
+                  - code [ref=e670]: blog.config.js
+                  - text: 中将NOTION_PAGE_ID设置成多个（用英文逗号隔开）： 示例：'
+                  - code [ref=e671]: 02ab3b8678004aa69e9e415905ef32a5
+                  - code [ref=e673]: en:7c1d570661754c8fbc568e00a01fd70e
+                  - text: ’
+                - figure [ref=e674]:
+                  - img "notion image" [ref=e676]
+                - generic [ref=e677]:
+                  - text: 其中第一个
+                  - code [ref=e678]: PAGE_ID
+                  - text: 视作默认主语言，与以往旧版的NotionNext使用方式无异。
+                - generic [ref=e679]:
+                  - text: 而逗号后面的ID要以
+                  - code [ref=e680]: 语言名
+                  - text: 开头且ID中间用
+                  - code [ref=e681]: "英文冒号:"
+                  - text: 隔开。例如缩写
+                  - code [ref=e682]: en:xxxx
+                  - text: 表示英文站点使用
+                  - code [ref=e683]: xxxx
+                  - text: 这个数据库，访问站点的
+                  - code [ref=e684]: "[domain.com]/en"
+                  - text: 读取的站点数据来自
+                  - code [ref=e685]: xxxx
+                  - text: 这个数据库。
+                - heading "3. 路径与数据库映射" [level=3] [ref=e686]:
+                  - generic [ref=e687]:
+                    - link "3. 路径与数据库映射" [ref=e688] [cursor=pointer]:
+                      - /url: "#0062f266cee14ae4a6eee674e4c19819"
+                      - img [ref=e689]
+                    - text: 3. 路径与数据库映射
+                - heading "多语言示例" [level=3] [ref=e691]:
+                  - generic [ref=e692]:
+                    - link "多语言示例" [ref=e693] [cursor=pointer]:
+                      - /url: "#d6011eb531f0467f8b760f890be519af"
+                      - img [ref=e694]
+                    - text: 多语言示例
+                - generic [ref=e696]: 按照上面的规律我们可以创建更多语言
+                - generic [ref=e697]: 假设我要创建支持4种语言的站点，默认语言是日文，然后支持切换中文、英文、西班牙文，该如何设置呢？
+                - generic [ref=e698]: "先准备好对应的四个数据库，如下:"
+                - table [ref=e699]:
+                  - rowgroup [ref=e700]:
+                    - row "路径名 数据库ID(示例) 说明" [ref=e701]:
+                      - cell "路径名" [ref=e702]:
+                        - generic [ref=e703]: 路径名
+                      - cell "数据库ID(示例)" [ref=e704]:
+                        - generic [ref=e705]: 数据库ID(示例)
+                      - cell "说明" [ref=e706]:
+                        - generic [ref=e707]: 说明
+                    - row "jp xxJPxx 日文优先" [ref=e708]:
+                      - cell "jp" [ref=e709]:
+                        - generic [ref=e710]: jp
+                      - cell "xxJPxx" [ref=e711]:
+                        - code [ref=e713]: xxJPxx
+                      - cell "日文优先" [ref=e714]:
+                        - generic [ref=e715]: 日文优先
+                    - row "en xxENxx 英文" [ref=e716]:
+                      - cell "en" [ref=e717]:
+                        - generic [ref=e718]: en
+                      - cell "xxENxx" [ref=e719]:
+                        - code [ref=e721]: xxENxx
+                      - cell "英文" [ref=e722]:
+                        - generic [ref=e723]: 英文
+                    - row "zh xxZHxx 中文" [ref=e724]:
+                      - cell "zh" [ref=e725]:
+                        - generic [ref=e726]: zh
+                      - cell "xxZHxx" [ref=e727]:
+                        - code [ref=e729]: xxZHxx
+                      - cell "中文" [ref=e730]:
+                        - generic [ref=e731]: 中文
+                    - row "es xxesxx 西班牙文" [ref=e732]:
+                      - cell "es" [ref=e733]:
+                        - generic [ref=e734]: es
+                      - cell "xxesxx" [ref=e735]:
+                        - code [ref=e737]: xxesxx
+                      - cell "西班牙文" [ref=e738]:
+                        - generic [ref=e739]: 西班牙文
+                - generic [ref=e741]: 然后将他们配置到NOTION_PAGE_ID中：
+                - generic [ref=e742]:
+                  - code [ref=e744]: NOTION_PAGE_ID = 'xxJPxx,en:xxENxx,zh:xxZHxx,es:xxESxx'
+                  - generic [ref=e745]:
+                    - generic [ref=e746]: JavaScript
+                    - button "Copy" [ref=e748] [cursor=pointer]
+                - generic [ref=e753]: 至此大功告成。
+                - heading "子版块用法" [level=3] [ref=e755]:
+                  - generic [ref=e756]:
+                    - link "子版块用法" [ref=e757] [cursor=pointer]:
+                      - /url: "#d4413ca0828345858b32566d440f6c51"
+                      - img [ref=e758]
+                    - generic [ref=e760]: 子版块用法
+                - generic [ref=e761]: 这里的路径名，可以不是标准语言名，而是任意英文，这样可以用来区分子版块业务。 例如
+                - table [ref=e762]:
+                  - rowgroup [ref=e763]:
+                    - row "路径名 数据库ID(示例) 说明" [ref=e764]:
+                      - cell "路径名" [ref=e765]:
+                        - generic [ref=e766]: 路径名
+                      - cell "数据库ID(示例)" [ref=e767]:
+                        - generic [ref=e768]: 数据库ID(示例)
+                      - cell "说明" [ref=e769]:
+                        - generic [ref=e770]: 说明
+                    - row "blog xxblogxx 绑定一个数据库，专门写博客" [ref=e771]:
+                      - cell "blog" [ref=e772]:
+                        - generic [ref=e773]: blog
+                      - cell "xxblogxx" [ref=e774]:
+                        - code [ref=e776]: xxblogxx
+                      - cell "绑定一个数据库，专门写博客" [ref=e777]:
+                        - generic [ref=e778]: 绑定一个数据库，专门写博客
+                    - row "products xxProductxx 绑定一个数据库，专门介绍产品" [ref=e779]:
+                      - cell "products" [ref=e780]:
+                        - generic [ref=e781]: products
+                      - cell "xxProductxx" [ref=e782]:
+                        - code [ref=e784]: xxProductxx
+                      - cell "绑定一个数据库，专门介绍产品" [ref=e785]:
+                        - generic [ref=e786]: 绑定一个数据库，专门介绍产品
+                    - row "movie xxMoviex 影视板块的数据库" [ref=e787]:
+                      - cell "movie" [ref=e788]:
+                        - generic [ref=e789]: movie
+                      - cell "xxMoviex" [ref=e790]:
+                        - code [ref=e792]: xxMoviex
+                      - cell "影视板块的数据库" [ref=e793]:
+                        - generic [ref=e794]: 影视板块的数据库
+                    - row "docs xxDocsxx 文档板块" [ref=e795]:
+                      - cell "docs" [ref=e796]:
+                        - generic [ref=e797]: docs
+                      - cell "xxDocsxx" [ref=e798]:
+                        - code [ref=e800]: xxDocsxx
+                      - cell "文档板块" [ref=e801]:
+                        - generic [ref=e802]: 文档板块
+                - generic [ref=e803]:
+                  - text: 结合
+                  - link "Notion_CONFIG" [ref=e804] [cursor=pointer]:
+                    - /url: https://docs.tangly1024.com/article/how-to-config-notion-next#3edb6a42a64247b689ef89cceadb83dd
+                  - text: 的功能，你可以为每个版块配置不同的主题。
+                - heading "4. 切换语言" [level=3] [ref=e805]:
+                  - generic [ref=e806]:
+                    - link "4. 切换语言" [ref=e807] [cursor=pointer]:
+                      - /url: "#42598bfec1e5417ca835bc6ec6728161"
+                      - img [ref=e808]
+                    - text: 4. 切换语言
+                - generic [ref=e810]:
+                  - text: 只要让用户跳转到对应的语言路径即可，例如我的默认语言是中文，设置一个菜单让用户点击后切换到英文路径
+                  - code [ref=e811]: /en
+                  - text: 即可。
+                - generic [ref=e813]: 但是多语言的菜单处理会比较特殊，不能使用相对路径，例如 /en , /zh , /jp 这种作为菜单的slug，而是要用全路径。
+                - generic [ref=e815]:
+                  - text: 例如默认中文主页是
+                  - link "https://preview.tangly1024.com/" [ref=e816] [cursor=pointer]:
+                    - /url: https://preview.tangly1024.com/
+                  - text: ， 则要切换成英文，则需要创建一个菜单，slug是
+                  - link "https://preview.tangly1024.com/en" [ref=e817] [cursor=pointer]:
+                    - /url: https://preview.tangly1024.com/en
+                  - text: 。 否则会切换异常。
+                - heading "其它" [level=2] [ref=e819]:
+                  - generic [ref=e820]:
+                    - link "其它" [ref=e821] [cursor=pointer]:
+                      - /url: "#d17c47275a20477ea51dd150d919ef6b"
+                      - img [ref=e822]
+                    - text: 其它
+                - heading "为什么用这种多数据库的方案实现？" [level=4] [ref=e824]:
+                  - generic [ref=e825]:
+                    - link "为什么用这种多数据库的方案实现？" [ref=e826] [cursor=pointer]:
+                      - /url: "#c70501c1b8754a1b8de4c814c4bd463d"
+                      - img [ref=e827]
+                    - text: 为什么用这种多数据库的方案实现？
+                - generic [ref=e829]: 考虑到网站中所有的按钮菜单、提示语和文章内容都要设置不同语言的版本，有两种方案：
+                - list [ref=e830]:
+                  - listitem [ref=e831]:
+                    - text: 通过在数据库添加字段区分语言的方案，例如为一条数据打上标签
+                    - code [ref=e832]: English
+                - list [ref=e833]:
+                  - listitem [ref=e834]: 允许一个站点绑定多个数据库，即多数据源方案。
+                - generic [ref=e835]: 方案一，势必会导致单个Notion数据库模板的庞大复杂，从而难以维护。
+                - generic [ref=e836]: 我决定使用“多数据源”的方案， 即一个NotionNext网站支持绑定多个Notion数据库，根据用户的语言地区或者所选语言自动切换展示对应数据库的内容。这样的好处有：
+                - list [ref=e837]:
+                  - listitem [ref=e838]: 差异化运营：针对不同人群，显示的菜单数量和内容、文章内容和数量都可完全不同的，便于不同地区定制化运营。
+                - list [ref=e839]:
+                  - listitem [ref=e840]: 各数据库独立，使单个数据库的内容更少更易于维护，并且不会在原来的数据库中新增一个”语言”字段，对于不需要多语言的用户来说体验更加无缝。
+                - list [ref=e841]:
+                  - listitem [ref=e842]:
+                    - text: 此方案理论上，允许一个站点配置无数种语言。从而使网站有了更强的扩展性，一个站点可以接入多套数据带来更多可能性。多语言的路径除了
+                    - code [ref=e843]: /en/article/test.html
+                    - text: 、
+                    - code [ref=e844]: /zh
+                    - text: 、
+                    - code [ref=e845]: /jp
+                    - text: 这类语言前缀，也可以是其它丰富的格式，甚至可以借此开发出多个子板块，每个板块定制不同的主题、配置、功能等等。当然，你也可以多建几个二级域名的网站。
+              - generic [ref=e847]:
+                - button "link" [ref=e848] [cursor=pointer]:
+                  - generic [ref=e850]: 
+                - button "wechat" [ref=e851] [cursor=pointer]:
+                  - generic [ref=e853]: 
+                - button "Share by QQ" [ref=e854] [cursor=pointer]:
+                  - link "Share by QQ" [ref=e855]:
+                    - /url: http://connect.qq.com/widget/shareqq/index.html?url=https://docs.tangly1024.com/article/notion-next-mulity-languages&sharesource=qzone&title=多数据库：多语言/多板块&desc=多数据库：多语言/多板块 | 多数据库：多语言/多板块 https://docs.tangly1024.com/article/notion-next-mulity-languages undefined
+                    - generic [ref=e856]: 
+                - button "weibo" [ref=e857] [cursor=pointer]:
+                  - generic [ref=e858]: 
+                - button "email" [ref=e859] [cursor=pointer]:
+                  - generic [ref=e860]: 
+                - button "facebook" [ref=e861] [cursor=pointer]:
+                  - generic [ref=e862]: 
+                - button "twitter" [ref=e863] [cursor=pointer]
+                - button "telegram" [ref=e864] [cursor=pointer]:
+                  - generic [ref=e865]: 
+                - button "messenger" [ref=e866] [cursor=pointer]:
+                  - generic [ref=e867]: 
+                - button "line" [ref=e868] [cursor=pointer]:
+                  - generic [ref=e869]: 
+                - button "reddit" [ref=e870] [cursor=pointer]:
+                  - generic [ref=e871]: 
+                - button "whatsapp" [ref=e872] [cursor=pointer]:
+                  - generic [ref=e873]: 
+                - button "linkedin" [ref=e874] [cursor=pointer]:
+                  - generic [ref=e875]: 
+                - button "csdn" [ref=e876] [cursor=pointer]:
+                  - img "CSDN" [ref=e878]
+                - button "juejin" [ref=e879] [cursor=pointer]:
+                  - img "掘金" [ref=e881]
+              - generic [ref=e882]:
+                - link " Prev 自定义数据库表头" [ref=e883] [cursor=pointer]:
+                  - /url: /article/notion-next-custom-properties
+                  - generic [ref=e884]: 
+                  - generic [ref=e885]:
+                    - generic [ref=e886]: Prev
+                    - generic [ref=e887]: 自定义数据库表头
+                - link "Next 站点组合 " [ref=e888] [cursor=pointer]:
+                  - /url: /article/notion-next-site-combine
+                  - generic [ref=e889]:
+                    - generic [ref=e890]: Next
+                    - generic [ref=e891]: 站点组合
+                  - generic [ref=e892]: 
+              - generic [ref=e894]:
+                - text: Loading...
+                - generic [ref=e895]: 
+            - text: 
+          - insertion
+          - generic [ref=e896]:
+            - link "万维广告联盟" [ref=e897] [cursor=pointer]:
+              - /url: https://wwads.cn/click/bundle?code=xjbtKGoPqs8wnsTdVeEILFV3h2xZfY
+              - img "万维广告联盟" [ref=e898]
+            - generic [ref=e899]:
+              - link "🔥码云GVP开源项目 16k star Uniapp + ElementUI 功能强大 支持多语言、二开方便" [ref=e900] [cursor=pointer]:
+                - /url: https://wwads.cn/click/bundle?code=xjbtKGoPqs8wnsTdVeEILFV3h2xZfY
+              - link "广告" [ref=e901] [cursor=pointer]:
+                - /url: https://wwads.cn/?utm_source=property-322&utm_medium=footer
+                - img [ref=e902]
+                - generic [ref=e903]: 广告
+            - generic "隐藏广告" [ref=e904] [cursor=pointer]:
+              - img [ref=e905]
+        - text:     
+      - text: 
+    - generic [ref=e907] [cursor=pointer]: 
+    - text:               
+  - alert [ref=e908]

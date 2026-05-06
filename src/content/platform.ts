@@ -1,6 +1,7 @@
 export type ContentType = "article" | "event" | "story" | "resource";
 
 export type CommunityContentItem = {
+  slug: string;
   type: ContentType;
   eyebrow: string;
   title: string;
@@ -11,6 +12,10 @@ export type CommunityContentItem = {
   actionLabel?: string;
   href: string;
   tags: string[];
+  content?: Array<{
+    heading: string;
+    body: string;
+  }>;
 };
 
 export type CommunityProject = {
@@ -46,6 +51,7 @@ export const platformContent = {
 
 export const fallbackContentItems: CommunityContentItem[] = [
   {
+    slug: "why-ignite-builders-first",
     type: "article",
     eyebrow: "Article",
     title: "AI 社区为什么要先点燃行动者",
@@ -54,10 +60,28 @@ export const fallbackContentItems: CommunityContentItem[] = [
     date: "2026-05-02",
     coverImage: "/images/generated/local-global-embers.png",
     actionLabel: "阅读文章",
-    href: "/blog",
+    href: "/blog/why-ignite-builders-first",
     tags: ["观点", "社区"],
+    content: [
+      {
+        heading: "为什么不是先做一个热闹的群",
+        body:
+          "一个社区最稀缺的不是人数，而是愿意真的表达、试错和协作的人。IGNAI 想先接住的是这批行动者，而不是先把表面上的热闹堆起来。",
+      },
+      {
+        heading: "为什么是现在",
+        body:
+          "AI 工具已经足够普及，但真实的本地连接、长期内容沉淀和协作关系仍然稀缺。越是这种时候，越需要一个能把人与项目重新组织起来的社区容器。",
+      },
+      {
+        heading: "我们想要形成什么飞轮",
+        body:
+          "表达带来连接，连接带来共创，共创产出新的内容与项目，新的内容再把更多行动者吸引进来。这比单纯做活动清单更接近一个活的社区。",
+      },
+    ],
   },
   {
+    slug: "changsha-ai-builder-night-feed",
     type: "event",
     eyebrow: "Event",
     title: "长沙 AI Builder 夜谈",
@@ -71,6 +95,7 @@ export const fallbackContentItems: CommunityContentItem[] = [
     tags: ["线下聚会", "长沙"],
   },
   {
+    slug: "ai-workflow-workshop-feed",
     type: "event",
     eyebrow: "Co-build",
     title: "AI Workflow 共创工作坊",
@@ -84,6 +109,7 @@ export const fallbackContentItems: CommunityContentItem[] = [
     tags: ["工作流", "共创"],
   },
   {
+    slug: "from-chat-to-demo-story",
     type: "story",
     eyebrow: "Story",
     title: "一个项目从群聊走到 Demo",
@@ -92,10 +118,28 @@ export const fallbackContentItems: CommunityContentItem[] = [
     date: "Draft",
     coverImage: "/images/generated/ignite-core.png",
     actionLabel: "阅读故事",
-    href: "/stories",
+    href: "/stories/from-chat-to-demo-story",
     tags: ["成员故事", "项目"],
+    content: [
+      {
+        heading: "起点不是商业计划，而是一句真实表达",
+        body:
+          "很多项目都不是从完整 roadmap 开始，而是从一次群聊里具体的问题、一次想展示点什么的冲动开始。关键不是准备得多完整，而是有人先把它拿出来。",
+      },
+      {
+        heading: "社区提供的不是替你做，而是让你更容易迈出下一步",
+        body:
+          "当有人愿意给出第一轮反馈、介绍合适的人、一起梳理表达方式，想法就更容易从聊天走向 demo。这个过程本身就是社区价值的一部分。",
+      },
+      {
+        heading: "被看见之后，项目才真正进入增长循环",
+        body:
+          "一个 demo 被看见，才会有反馈、协作和新的迭代目标。故事页的意义，也是把这种成长路径留成下一位行动者可以参考的记录。",
+      },
+    ],
   },
   {
+    slug: "ai-tools-and-workflow-stack",
     type: "resource",
     eyebrow: "Resource",
     title: "AI 工具与工作流清单",
@@ -104,8 +148,20 @@ export const fallbackContentItems: CommunityContentItem[] = [
     date: "Updating",
     coverImage: "/images/generated/collaboration-threads.png",
     actionLabel: "查看资源",
-    href: "/blog",
+    href: "/blog/ai-tools-and-workflow-stack",
     tags: ["资源", "工作流"],
+    content: [
+      {
+        heading: "为什么资源页重要",
+        body:
+          "资源页不是为了堆工具名，而是为了留下那些在真实工作里反复被验证、能解释适用场景、并且能被后来者直接复用的方法和模板。",
+      },
+      {
+        heading: "这类内容应该如何维护",
+        body:
+          "最适合的做法是先从社区里已经有人在用的工作流开始，每次只增加少量、但有明确上下文的工具和模板，而不是维护一张越来越泛的万能清单。",
+      },
+    ],
   },
 ];
 

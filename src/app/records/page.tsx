@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { RecordCard } from "@/components/cards/RecordCard";
+import { ContentAdminPanel } from "@/components/content/ContentAdminPanel";
 import { PageShell } from "@/components/layout/PageShell";
 import { PageHero } from "@/components/ui/PageHero";
 import { getAllRecords } from "@/lib/records";
@@ -23,6 +24,8 @@ export default async function RecordsPage() {
               title="Community records."
               description="这里记录 IGNAI 的线下活动、主题共创、成员项目和社区产出，让社区真实发生过的事情被继续阅读。"
             />
+
+            <ContentAdminPanel type="records" />
 
             <div className="grid gap-5 lg:grid-cols-3">
               {records.map((record, index) => (

@@ -127,6 +127,22 @@ export const event = defineType({
       description: "可以填站内 /join，也可以填飞书、问卷星、Notion Form 等外部链接。",
     }),
     defineField({
+      name: "registrationQrImage",
+      title: "报名二维码",
+      type: "image",
+      group: "media",
+      options: { hotspot: true },
+      description: "如果这场活动更适合扫码报名，可以在详情页展示这张二维码。",
+      fields: [
+        defineField({
+          name: "alt",
+          title: "二维码描述",
+          type: "string",
+          description: "例如：活动报名二维码。",
+        }),
+      ],
+    }),
+    defineField({
       name: "audience",
       title: "适合谁参加",
       type: "array",
