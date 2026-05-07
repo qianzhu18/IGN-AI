@@ -6,8 +6,15 @@ import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
+import { CalendarDays, MapPin, Sparkles } from 'lucide-react'
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform
+} from 'framer-motion'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
 import { Footer } from './components/Footer'
@@ -59,6 +66,29 @@ const roleCards = [
   }
 ]
 
+const MOTION_EASE = [0.22, 1, 0.36, 1]
+const MOTION_VIEWPORT = { once: true, amount: 0.18 }
+
+function Reveal({
+  children,
+  className = '',
+  delay = 0,
+  duration = 0.8,
+  y = 28
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y, filter: 'brightness(0.72) contrast(0.92)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'brightness(1) contrast(1)' }}
+      viewport={MOTION_VIEWPORT}
+      transition={{ duration, delay, ease: MOTION_EASE }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
 /**
  * IGNAI 布局框架
  * 基于 proxio 骨架，爆改为 IGNAI 品牌社区官网
@@ -73,7 +103,8 @@ const LayoutBase = props => {
   return (
     <div
       id='theme-proxio'
-      className={`${siteConfig('FONT_STYLE')} min-h-screen flex-col flex dark:bg-dark scroll-smooth`}>
+      className={`${siteConfig('FONT_STYLE')} min-h-screen flex-col flex dark:bg-dark scroll-smooth`}
+    >
       <Style />
       <Header {...props} />
       <div id='main-wrapper' className='grow'>
@@ -163,7 +194,11 @@ const LayoutSearch = props => {
 /**
  * 文章归档
  */
-const LayoutArchive = props => <><Blog {...props} /></>
+const LayoutArchive = props => (
+  <>
+    <Blog {...props} />
+  </>
+)
 
 /**
  * 404页面
@@ -183,9 +218,7 @@ const Layout404 = props => {
             <p className='mb-8 text-base text-white/56'>
               {siteConfig('IGNAI_404_TEXT')}
             </p>
-            <SmartLink
-              href='/'
-              className='ignai-cta-primary'>
+            <SmartLink href='/' className='ignai-cta-primary'>
               {siteConfig('IGNAI_404_BACK')}
             </SmartLink>
           </div>
@@ -246,7 +279,8 @@ const LayoutPostList = props => {
                   <h3>
                     <SmartLink
                       href={item?.href}
-                      className='mb-4 inline-block text-xl font-semibold text-white hover:text-[#FF7A18] sm:text-2xl lg:text-xl xl:text-2xl'>
+                      className='mb-4 inline-block text-xl font-semibold text-white hover:text-[#FF7A18] sm:text-2xl lg:text-xl xl:text-2xl'
+                    >
                       {item.title}
                     </SmartLink>
                   </h3>
@@ -275,9 +309,17 @@ const LayoutCategoryIndex = props => {
         <span className='ignai-badge mb-4 inline-flex justify-center items-center w-full'>
           {locale.COMMON.CATEGORY}
         </span>
-        <div id='category-list' className='duration-200 flex flex-wrap justify-center items-center'>
+        <div
+          id='category-list'
+          className='duration-200 flex flex-wrap justify-center items-center'
+        >
           {categoryOptions?.map(category => (
-            <SmartLink key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
+            <SmartLink
+              key={category.name}
+              href={`/category/${category.name}`}
+              passHref
+              legacyBehavior
+            >
               <h2 className='hover:text-[#FF7A18] text-2xl font-semibold text-white/72 sm:text-4xl md:text-[40px] md:leading-[1.2] px-5 cursor-pointer py-2 hover:bg-white/4 rounded-lg'>
                 <i className='mr-4 fas fa-folder' />
                 {category.name}({category.count})
@@ -302,14 +344,18 @@ const LayoutTagIndex = props => {
         <span className='ignai-badge mb-4 inline-flex justify-center items-center w-full'>
           {locale.COMMON.TAGS}
         </span>
-        <div id='tags-list' className='duration-200 flex flex-wrap justify-center items-center'>
+        <div
+          id='tags-list'
+          className='duration-200 flex flex-wrap justify-center items-center'
+        >
           {tagOptions.map(tag => (
             <div key={tag.name} className='p-2'>
               <SmartLink
                 key={tag}
                 href={`/tag/${encodeURIComponent(tag.name)}`}
                 passHref
-                className='cursor-pointer inline-block rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/56 hover:border-[#FF7A18]/24 hover:text-[#FF7A18] duration-200'>
+                className='cursor-pointer inline-block rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/56 hover:border-[#FF7A18]/24 hover:text-[#FF7A18] duration-200'
+              >
                 <div className='font-light'>
                   <i className='mr-1 fas fa-tag' />
                   {tag.name + (tag.count ? `(${tag.count})` : '')}
@@ -324,16 +370,50 @@ const LayoutTagIndex = props => {
 }
 
 function HeroSection() {
+  const ref = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start start', 'end end']
+  })
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 0.68],
+    [0, shouldReduceMotion ? 0 : -44]
+  )
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.75, 1],
+    [1, 1, shouldReduceMotion ? 1 : 0.38]
+  )
+  const imageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, shouldReduceMotion ? 0 : 56]
+  )
+  const imageScale = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [1.015, shouldReduceMotion ? 1.015 : 1.08]
+  )
+
   return (
-    <section className='ignai-hero-section'>
+    <section ref={ref} className='ignai-hero-section'>
       <div className='ignai-home-container section-grid ignai-hero-grid'>
-        <div className='ignai-home-copy'>
+        <motion.div
+          style={{ y: contentY, opacity: contentOpacity }}
+          className='ignai-home-copy'
+        >
           <div className='eyebrow-label'>
-            <span className='ignai-dot' />
+            <Sparkles className='h-[14px] w-[14px]' />
             {siteContent.eyebrow}
           </div>
-          <p className='section-eyebrow mt-8 text-[#f0d48d]/84'>{siteContent.name}</p>
-          <h1 className='display-title mt-4 max-w-[14ch]'>{siteContent.slogan}</h1>
+          <p className='section-eyebrow mt-8 text-[#f0d48d]/84'>
+            {siteContent.name}
+          </p>
+          <h1 className='display-title mt-4 max-w-[14ch]'>
+            {siteContent.slogan}
+          </h1>
           <p className='section-lead mt-7 max-w-[17ch] font-medium'>
             在 AGI 到来之前，
             <br />
@@ -352,10 +432,13 @@ function HeroSection() {
               查看近期活动
             </SmartLink>
           </div>
-        </div>
+        </motion.div>
 
-        <div className='ignai-home-visual'>
-          <div className='surface-card-strong overflow-hidden p-4 sm:p-5'>
+        <motion.div
+          style={{ y: imageY, scale: imageScale }}
+          className='ignai-home-visual'
+        >
+          <div className='surface-card-strong ignai-unified-panel overflow-hidden p-4 sm:p-5'>
             <div className='relative overflow-hidden rounded-lg border border-white/10 bg-black/50'>
               <img
                 src='/images/generated/local-global-embers.png'
@@ -363,7 +446,9 @@ function HeroSection() {
                 className='ignai-hero-image'
               />
               <div className='ignai-hero-image-overlay' />
-              <div className='ignai-hero-badge'>Local roots / Global signal</div>
+              <div className='ignai-hero-badge'>
+                Local roots / Global signal
+              </div>
               <div className='ignai-hero-caption'>
                 让本地土壤和全球信号，
                 <br />
@@ -373,7 +458,7 @@ function HeroSection() {
 
             <div className='ignai-signal-grid mt-6'>
               {siteContent.heroSignals.map((signal, index) => (
-                <div key={signal.title}>
+                <div key={signal.title} className='ignai-signal-item'>
                   <p
                     className={`text-[0.7rem] font-medium uppercase ${
                       index === 1 ? 'text-[#9aceff]' : 'text-[#f0c78e]/84'
@@ -391,7 +476,7 @@ function HeroSection() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
@@ -401,7 +486,7 @@ function WhatIsSection() {
   return (
     <section id='what-is-ignai' className='ignai-home-section'>
       <div className='ignai-home-container section-grid-start'>
-        <div className='section-copy'>
+        <Reveal className='section-copy'>
           <p className='section-eyebrow'>01 / What is IGNAI</p>
           <h2 className='display-title mt-6 max-w-[12ch]'>
             What is
@@ -414,23 +499,27 @@ function WhatIsSection() {
             {whatIsContent.definitionLines[1]}
           </p>
           <p className='section-body mt-5'>{whatIsContent.support}</p>
-        </div>
+        </Reveal>
 
         <div>
-          <p className='section-eyebrow mb-5'>Community Members</p>
+          <Reveal>
+            <p className='section-eyebrow mb-5'>Community Members</p>
+          </Reveal>
           <div className='open-grid'>
             {whatIsContent.memberCards.map((card, index) => (
-              <div key={card.title} className='open-grid-item'>
-                <p
-                  className={`card-eyebrow ${
-                    index % 2 === 1 ? 'text-[#9aceff]' : 'text-[#F0CB8A]/72'
-                  }`}
-                >
-                  0{index + 1} / {card.eyebrow}
-                </p>
-                <h3 className='card-title'>{card.title}</h3>
-                <p className='card-body'>{card.description}</p>
-              </div>
+              <Reveal key={card.title} delay={index * 0.08}>
+                <div className='open-grid-item ignai-unified-card'>
+                  <p
+                    className={`card-eyebrow ${
+                      index % 2 === 1 ? 'text-[#9aceff]' : 'text-[#F0CB8A]/72'
+                    }`}
+                  >
+                    0{index + 1} / {card.eyebrow}
+                  </p>
+                  <h3 className='card-title'>{card.title}</h3>
+                  <p className='card-body'>{card.description}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -443,24 +532,28 @@ function CultureSection() {
   return (
     <section id='culture' className='ignai-home-section'>
       <div className='ignai-home-container section-grid-start'>
-        <div className='section-copy'>
+        <Reveal className='section-copy'>
           <p className='section-eyebrow'>03 / Culture</p>
           <h2 className='section-title mt-6 max-w-[11ch]'>
             {cultureContent.titleLines[0]}
             <br />
             {cultureContent.titleLines[1]}
           </h2>
-          <p className='section-lead mt-6 max-w-[18ch] font-medium'>{cultureContent.support}</p>
+          <p className='section-lead mt-6 max-w-[18ch] font-medium'>
+            {cultureContent.support}
+          </p>
           <p className='section-body mt-5'>{cultureContent.paragraph}</p>
-        </div>
+        </Reveal>
 
         <div className='open-grid'>
-          {cultureContent.cards.map(card => (
-            <div key={card.title} className='open-grid-item presence-card'>
-              <p className='card-eyebrow text-[#F0CB8A]/72'>{card.eyebrow}</p>
-              <h3 className='card-title'>{card.title}</h3>
-              <p className='card-body'>{card.description}</p>
-            </div>
+          {cultureContent.cards.map((card, index) => (
+            <Reveal key={card.title} delay={index * 0.08}>
+              <div className='open-grid-item ignai-unified-card presence-card'>
+                <p className='card-eyebrow text-[#F0CB8A]/72'>{card.eyebrow}</p>
+                <h3 className='card-title'>{card.title}</h3>
+                <p className='card-body'>{card.description}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -470,9 +563,12 @@ function CultureSection() {
 
 function UpcomingEventsSection() {
   return (
-    <section id='upcoming-events' className='ignai-home-section border-t border-white/8'>
+    <section
+      id='upcoming-events'
+      className='ignai-home-section border-t border-white/8'
+    >
       <div className='ignai-home-container'>
-        <div className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
+        <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
           <div>
             <p className='section-eyebrow'>Upcoming Events</p>
             <h2 className='section-title mt-6 max-w-[13ch]'>
@@ -489,55 +585,64 @@ function UpcomingEventsSection() {
               查看全部活动
             </SmartLink>
           </div>
-        </div>
+        </Reveal>
 
         <div className='mt-16 grid items-stretch gap-6 lg:grid-cols-3'>
-          {events.slice(0, 3).map(event => (
-            <SmartLink
-              key={event.slug}
-              href={`/events/${event.slug}`}
-              className='group flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg border border-white/10 bg-[#080d14]/72 transition duration-300 hover:-translate-y-1 hover:border-[#ffb879]/28 hover:bg-[#0a1018]/82 lg:min-h-0'
-            >
-              <div className='relative overflow-hidden'>
-                <img
-                  src={event.cover}
-                  alt=''
-                  className='aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]'
-                />
-                <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
-                <div className='absolute left-4 top-4 rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
-                  {eventStatusLabel[event.status]}
-                </div>
-              </div>
-
-              <div className='flex flex-1 flex-col p-5 sm:p-6'>
-                <div className='flex flex-wrap gap-3 text-sm text-white/56'>
-                  <span>{event.dateText}</span>
-                  <span>
-                    {event.location} · {eventFormatLabel[event.format]}
-                  </span>
+          {events.slice(0, 3).map((event, index) => (
+            <Reveal key={event.slug} delay={index * 0.08}>
+              <SmartLink
+                href={`/events/${event.slug}`}
+                className='group ignai-unified-card ignai-event-card flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg lg:min-h-0'
+              >
+                <div className='relative overflow-hidden'>
+                  <img
+                    src={event.cover}
+                    alt=''
+                    className='aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]'
+                  />
+                  <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
+                  <div className='absolute left-4 top-4 rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
+                    {eventStatusLabel[event.status]}
+                  </div>
                 </div>
 
-                <h3 className='mt-4 min-h-[3.7rem] text-[1.45rem] font-semibold leading-[1.26] text-white transition group-hover:text-[#ffd09a]'>
-                  {event.title}
-                </h3>
-                {event.subtitle ? (
-                  <p className='mt-2 min-h-5 text-sm text-white/42'>{event.subtitle}</p>
-                ) : null}
-                <p className='mt-4 line-clamp-2 text-sm leading-7 text-white/62'>{event.excerpt}</p>
-
-                <div className='mt-auto flex flex-wrap gap-2 pt-5'>
-                  {event.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'
-                    >
-                      {tag}
+                <div className='flex flex-1 flex-col p-5 sm:p-6'>
+                  <div className='flex flex-wrap gap-3 text-sm text-white/56'>
+                    <span className='inline-flex items-center gap-2'>
+                      <CalendarDays className='h-4 w-4 text-[#F0CB8A]/78' />
+                      {event.dateText}
                     </span>
-                  ))}
+                    <span className='inline-flex items-center gap-2'>
+                      <MapPin className='h-4 w-4 text-[#9aceff]' />
+                      {event.location} · {eventFormatLabel[event.format]}
+                    </span>
+                  </div>
+
+                  <h3 className='mt-4 min-h-[3.7rem] text-[1.45rem] font-semibold leading-[1.26] text-white transition group-hover:text-[#ffd09a]'>
+                    {event.title}
+                  </h3>
+                  {event.subtitle ? (
+                    <p className='mt-2 min-h-5 text-sm text-white/42'>
+                      {event.subtitle}
+                    </p>
+                  ) : null}
+                  <p className='mt-4 line-clamp-2 text-sm leading-7 text-white/62'>
+                    {event.excerpt}
+                  </p>
+
+                  <div className='mt-auto flex flex-wrap gap-2 pt-5'>
+                    {event.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </SmartLink>
+              </SmartLink>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -547,9 +652,12 @@ function UpcomingEventsSection() {
 
 function FieldNotesSection() {
   return (
-    <section id='field-notes' className='ignai-home-section border-t border-white/8'>
+    <section
+      id='field-notes'
+      className='ignai-home-section border-t border-white/8'
+    >
       <div className='ignai-home-container'>
-        <div className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
+        <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
           <div>
             <p className='section-eyebrow'>Field Notes</p>
             <h2 className='section-title mt-6 max-w-[13ch]'>
@@ -564,58 +672,66 @@ function FieldNotesSection() {
           <SmartLink href='/records' className='ignai-cta-secondary'>
             查看现场记录
           </SmartLink>
-        </div>
+        </Reveal>
 
         <div className='mt-16 grid gap-6 lg:grid-cols-3'>
           {records.slice(0, 3).map((record, index) => (
-            <SmartLink
-              key={record.slug}
-              href={`/records/${record.slug}`}
-              className={`group block overflow-hidden rounded-lg border border-white/10 bg-[#080d14]/68 transition duration-300 hover:-translate-y-1 hover:border-[#7cc8ff]/24 hover:bg-[#0a1018]/78 ${
-                index === 0 ? 'lg:col-span-2' : ''
-              }`}
-            >
-              <div className='p-5 sm:p-6'>
-                <div className='flex flex-wrap items-center justify-between gap-3'>
-                  <div>
-                    <p className='text-sm font-semibold text-white'>IGNAI Field Notes</p>
-                    <p className='mt-1 text-xs text-white/42'>
-                      {record.dateText}
-                      {record.location ? ` · ${record.location}` : ''}
-                    </p>
-                  </div>
-                  <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
-                    {recordTypeLabel[record.type]}
-                  </span>
-                </div>
-
-                <h3 className='mt-6 text-[1.55rem] font-semibold leading-[1.28] text-white transition group-hover:text-[#d4ecff]'>
-                  {record.title}
-                </h3>
-                <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/58'>{record.excerpt}</p>
-              </div>
-
-              <div className='px-5 sm:px-6'>
-                <img
-                  src={record.cover}
-                  alt=''
-                  className='aspect-[2.05] w-full rounded-lg border border-white/8 object-cover'
-                />
-              </div>
-
-              <div className='mt-5 border-t border-white/8 px-5 py-4 sm:px-6'>
-                <div className='flex flex-wrap gap-2'>
-                  {(record.outcomes?.length ? record.outcomes : record.tags).map(item => (
-                    <span
-                      key={item}
-                      className='rounded-full border border-[#7cc8ff]/12 bg-[#08131e]/80 px-3 py-1.5 text-xs text-[#c7e6ff]'
-                    >
-                      {item}
+            <Reveal key={record.slug} delay={index * 0.08}>
+              <SmartLink
+                href={`/records/${record.slug}`}
+                className={`group ignai-unified-card ignai-record-card block overflow-hidden rounded-lg ${
+                  index === 0 ? 'lg:col-span-2' : ''
+                }`}
+              >
+                <div className='p-5 sm:p-6'>
+                  <div className='flex flex-wrap items-center justify-between gap-3'>
+                    <div>
+                      <p className='text-sm font-semibold text-white'>
+                        IGNAI Field Notes
+                      </p>
+                      <p className='mt-1 text-xs text-white/42'>
+                        {record.dateText}
+                        {record.location ? ` · ${record.location}` : ''}
+                      </p>
+                    </div>
+                    <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
+                      {recordTypeLabel[record.type]}
                     </span>
-                  ))}
+                  </div>
+
+                  <h3 className='mt-6 text-[1.55rem] font-semibold leading-[1.28] text-white transition group-hover:text-[#d4ecff]'>
+                    {record.title}
+                  </h3>
+                  <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/58'>
+                    {record.excerpt}
+                  </p>
                 </div>
-              </div>
-            </SmartLink>
+
+                <div className='px-5 sm:px-6'>
+                  <img
+                    src={record.cover}
+                    alt=''
+                    className='aspect-[2.05] w-full rounded-lg border border-white/8 object-cover transition duration-500 group-hover:scale-[1.015]'
+                  />
+                </div>
+
+                <div className='mt-5 border-t border-white/8 px-5 py-4 sm:px-6'>
+                  <div className='flex flex-wrap gap-2'>
+                    {(record.outcomes?.length
+                      ? record.outcomes
+                      : record.tags
+                    ).map(item => (
+                      <span
+                        key={item}
+                        className='rounded-full border border-[#7cc8ff]/12 bg-[#08131e]/80 px-3 py-1.5 text-xs text-[#c7e6ff]'
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </SmartLink>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -625,23 +741,29 @@ function FieldNotesSection() {
 
 function CommunityRolesSection() {
   return (
-    <section id='community-roles' className='ignai-home-section border-t border-white/8'>
+    <section
+      id='community-roles'
+      className='ignai-home-section border-t border-white/8'
+    >
       <div className='ignai-home-container section-grid-start'>
-        <div className='section-copy'>
+        <Reveal className='section-copy'>
           <p className='section-eyebrow'>Community Roles</p>
           <h2 className='section-title mt-6 max-w-[11ch]'>这里有谁？</h2>
           <p className='section-body mt-6'>
-            IGNAI 聚集了一群关注 AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。
+            IGNAI 聚集了一群关注
+            AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。
           </p>
-        </div>
+        </Reveal>
 
         <div className='open-grid'>
           {roleCards.map((role, index) => (
-            <div key={role.title} className='open-grid-item'>
-              <p className='card-eyebrow'>0{index + 1}</p>
-              <h3 className='card-title'>{role.title}</h3>
-              <p className='card-body'>{role.description}</p>
-            </div>
+            <Reveal key={role.title} delay={index * 0.08}>
+              <div className='open-grid-item ignai-unified-card'>
+                <p className='card-eyebrow'>0{index + 1}</p>
+                <h3 className='card-title'>{role.title}</h3>
+                <p className='card-body'>{role.description}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -655,17 +777,42 @@ function JoinSection() {
       <div className='ignai-home-container'>
         <div className='relative overflow-hidden border-y border-white/10 py-10 sm:py-12 lg:py-16'>
           <div className='converge-field'>
-            <span className='converge-ray' style={{ '--ray-y': '20%', '--ray-rotate': '6deg', '--ray-delay': '0s' }} />
-            <span className='converge-ray' style={{ '--ray-y': '42%', '--ray-rotate': '-3deg', '--ray-delay': '1.4s' }} />
-            <span className='converge-ray' style={{ '--ray-y': '66%', '--ray-rotate': '4deg', '--ray-delay': '2.8s' }} />
+            <span
+              className='converge-ray'
+              style={{
+                '--ray-y': '20%',
+                '--ray-rotate': '6deg',
+                '--ray-delay': '0s'
+              }}
+            />
+            <span
+              className='converge-ray'
+              style={{
+                '--ray-y': '42%',
+                '--ray-rotate': '-3deg',
+                '--ray-delay': '1.4s'
+              }}
+            />
+            <span
+              className='converge-ray'
+              style={{
+                '--ray-y': '66%',
+                '--ray-rotate': '4deg',
+                '--ray-delay': '2.8s'
+              }}
+            />
           </div>
 
           <div className='relative grid gap-10 xl:grid-cols-2 xl:items-center xl:gap-[72px]'>
-            <div>
+            <Reveal>
               <p className='section-eyebrow'>06 / Join</p>
               <h2 className='display-title mt-6 max-w-[20ch]'>
-                <span className='block sm:whitespace-nowrap'>Join the fire.</span>
-                <span className='block sm:whitespace-nowrap'>Bring your signal.</span>
+                <span className='block sm:whitespace-nowrap'>
+                  Join the fire.
+                </span>
+                <span className='block sm:whitespace-nowrap'>
+                  Bring your signal.
+                </span>
               </h2>
               <p className='section-body mt-6'>{joinContent.support}</p>
 
@@ -691,9 +838,9 @@ function JoinSection() {
                   查看社区内容
                 </SmartLink>
               </div>
-            </div>
+            </Reveal>
 
-            <div className='relative overflow-hidden'>
+            <Reveal className='relative overflow-hidden' delay={0.1}>
               <div className='relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]'>
                 <img
                   src='/images/generated/collaboration-threads.png'
@@ -712,7 +859,7 @@ function JoinSection() {
                   </p>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>
