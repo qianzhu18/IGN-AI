@@ -14,6 +14,7 @@ import {
   useTransform
 } from 'framer-motion'
 import { useRouter } from 'next/router'
+import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
@@ -46,6 +47,11 @@ import {
   events
 } from '@/src/content/events'
 import { recordTypeLabel, records } from '@/src/content/records'
+
+const BackgroundFX = dynamic(
+  () => import('./components/BackgroundFX').then(mod => mod.BackgroundFX),
+  { ssr: false }
+)
 
 const roleCards = [
   {
@@ -113,6 +119,7 @@ const LayoutBase = props => {
       className={`${siteConfig('FONT_STYLE')} min-h-screen flex-col flex dark:bg-dark scroll-smooth`}
     >
       <Style />
+      <BackgroundFX />
       <Header {...props} />
       <div id='main-wrapper' className='grow'>
         {children}
