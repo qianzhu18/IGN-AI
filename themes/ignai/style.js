@@ -423,6 +423,162 @@ const Style = () => {
         }
       }
 
+      /* ========== v1.0.0 动效迁移：关键帧动画库 ========== */
+
+      @keyframes ignai-pulse-glow {
+        0%,
+        100% {
+          opacity: 0.55;
+          transform: scale(0.98);
+        }
+        50% {
+          opacity: 0.9;
+          transform: scale(1.04);
+        }
+      }
+
+      @keyframes ignai-drift-x {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+        50% {
+          transform: translate3d(24px, -6px, 0);
+        }
+      }
+
+      @keyframes ignai-drift-rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes ignai-ambient-fade {
+        0%,
+        100% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      @keyframes ignai-ignite-breathe {
+        0%,
+        100% {
+          opacity: 0.48;
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        45% {
+          opacity: 0.78;
+          transform: translate3d(1.4rem, -0.8rem, 0) scale(1.04);
+        }
+      }
+
+      @keyframes ignai-ignite-ring {
+        0% {
+          opacity: 0;
+          transform: scale(0.55);
+        }
+        16% {
+          opacity: 0.55;
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.55);
+        }
+      }
+
+      @keyframes ignai-energy-border-flow {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 260% 50%;
+        }
+      }
+
+      @keyframes ignai-card-energy-pulse {
+        0%,
+        100% {
+          filter: brightness(0.96) contrast(1);
+        }
+        46% {
+          filter: brightness(1.06) contrast(1.03);
+        }
+      }
+
+      @keyframes ignai-presence-hold {
+        0%,
+        100% {
+          filter: brightness(0.98);
+        }
+        50% {
+          filter: brightness(1.04);
+        }
+      }
+
+      @keyframes ignai-cta-heat {
+        0%,
+        100% {
+          filter: brightness(1);
+          box-shadow: 0 20px 48px rgba(255, 122, 24, 0.28);
+        }
+        48% {
+          filter: brightness(1.08);
+          box-shadow: 0 24px 68px rgba(255, 122, 24, 0.42);
+        }
+      }
+
+      /* ========== 动效 Utility Classes ========== */
+
+      #theme-proxio .ignai-float-slow {
+        animation: ignai-float 9s ease-in-out infinite;
+      }
+      #theme-proxio .ignai-float-delayed {
+        animation: ignai-float 11s ease-in-out 1.4s infinite;
+      }
+      #theme-proxio .ignai-pulse-glow {
+        animation: ignai-pulse-glow 7s ease-in-out infinite;
+      }
+      #theme-proxio .ignai-drift-x {
+        animation: ignai-drift-x 18s ease-in-out infinite;
+      }
+      #theme-proxio .ignai-drift-rotate {
+        animation: ignai-drift-rotate 24s linear infinite;
+      }
+      #theme-proxio .ignai-ambient-fade {
+        animation: ignai-ambient-fade 12s ease-in-out infinite;
+      }
+      #theme-proxio .ignai-motion-cta {
+        animation: ignai-cta-heat 7s ease-in-out infinite;
+      }
+      #theme-proxio .ignai-ignite-field {
+        pointer-events: none;
+        position: absolute;
+        opacity: 0.48;
+        background:
+          radial-gradient(ellipse at 24% 48%, rgba(255, 122, 24, 0.16), transparent 28%),
+          radial-gradient(ellipse at 72% 44%, rgba(124, 200, 255, 0.1), transparent 24%);
+        mix-blend-mode: screen;
+        animation: ignai-ignite-breathe 14s ease-in-out infinite;
+      }
+
+      /* ========== prefers-reduced-motion 全局禁用 ========== */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
       /* Eyebrow 标签 */
       #theme-proxio .ignai-eyebrow {
         display: inline-flex;
