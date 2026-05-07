@@ -625,7 +625,7 @@ function CultureSection() {
         <motion.div style={{ y: mediaY }} className='open-grid'>
           {cultureContent.cards.map((card, index) => (
             <Reveal key={card.title} delay={index * 0.08}>
-              <div className='open-grid-item ignai-unified-card presence-card'>
+              <div className='open-grid-item ignai-unified-card'>
                 <p className='card-eyebrow text-[#F0CB8A]/72'>{card.eyebrow}</p>
                 <h3 className='card-title'>{card.title}</h3>
                 <p className='card-body'>{card.description}</p>

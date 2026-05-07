@@ -1,19 +1,25 @@
 # IGNAI v2.0.0 开发路线图
 
-> 架构：NotionNext 二开（heo 暗色主题）
+> 架构：NotionNext 二开（ignai 自定义主题）
 > 分支：`notionnext-v2`
-> 最后更新：2026-05-06
+> 最后更新：2026-05-07
 > 旧版存档：`v1.0.0` tag（Sanity + Supabase 自建架构）
 
 ---
 
 ## 当前状态
 
-v2.0.0 架构已完成基础搭建：
-- NotionNext 源码已 clone 到项目
-- `blog.config.js` 已适配 IGNAI 品牌（heo 主题、暗色模式、中文）
-- `doc/` 目录完整保留（架构文档、设计规范、需求文档）
-- 品牌资产已保留（`public/brand/`, `public/contact/`）
+v2.0.0 架构已完成基础搭建 + v1.0.0 UI 动效迁移：
+
+- [x] NotionNext 源码集成
+- [x] `blog.config.js` IGNAI 品牌适配
+- [x] ignai 自定义主题创建（基于 heo 骨架，复刻 v1.0.0 UI）
+- [x] **动效迁移 P0**：11 个 CSS @keyframes + utility classes + CTA 扫光 + Reveal blur
+- [x] **动效迁移 P1**：Canvas BackgroundFX（76/42 粒子 + 流线 + 脉冲）+ 92px 网格 + SVG 噪点 + 光晕
+- [x] **动效迁移 P2**：滚动视差（WhatIs / Culture）+ Join 品牌图浮动
+- [x] **卡片特效清理**：移除 presence-card / energy-card / ignai-card 多余效果
+- [x] 品牌资产保留（`public/brand/`, `public/contact/`）
+- [x] 设计文档完善（`doc/design/09-动效迁移设计文档`、TODO-animation-migration）
 
 **当前卡点**：需要创建 IGNAI 的 Notion Database 并配置 `NOTION_PAGE_ID`，否则网站无法显示内容。
 
@@ -57,31 +63,24 @@ v2.0.0 架构已完成基础搭建：
   - 首页、文章列表、文章详情、分类、标签
   - 确认 ISR 缓存正常（60 秒更新）
 
-## Phase 3：外观定制（2-3 天）
+## Phase 3：外观定制（已完成）
 
 > 目标：让网站看起来是 IGNAI，不是 NotionNext 默认
 
-- [ ] **P3-01** heo 主题品牌色调整
-  - 主色调：Heat #FF7A18（IGNAI 品牌橙）
-  - 辅助色：Signal #5DA9FF
-  - 背景：#07080C（IGNAI 暗色）
-  - 文件：`themes/heo/config.js` 和 `themes/heo/style.js`
-- [ ] **P3-02** 首页 Hero 区域定制
-  - 替换默认 banner 为 IGNAI 社区主题图
-  - 修改欢迎语和社区简介
-  - 参考 `doc/design/design-详细设计.md` 的视觉规范
-- [ ] **P3-03** 导航栏定制
-  - 菜单项：首页、活动、记录、成员、加入
-  - Logo → IGNAI brand lockup
-  - 参考 `doc/design/design-开发文档.md` 的导航规范
-- [ ] **P3-04** 字体适配
-  - 主字体：Noto Sans SC
-  - 标题字体：按 IGNAI 品牌规范
-  - 文件：`conf/font.config.js`
-- [ ] **P3-05** 页脚定制
-  - IGNAI 社区信息
-  - 社交链接（微信公众号、GitHub）
-  - 备案信息（如有）
+- [x] **P3-01** ignai 自定义主题创建（基于 heo 骨架）
+- [x] **P3-02** 首页 Hero 区域定制（品牌色、渐变背景、ignite field 粒子）
+- [x] **P3-03** 导航栏定制（BrandLockup + IGNAI 导航）
+- [x] **P3-04** 页脚定制（IGNAI 社区信息、社交链接）
+- [x] **P3-05** v1.0.0 动效迁移 P0（CSS keyframes + 按钮扫光 + Reveal blur）
+- [x] **P3-06** v1.0.0 动效迁移 P1（Canvas BackgroundFX + Grid + Noise + Glow）
+- [x] **P3-07** v1.0.0 动效迁移 P2（滚动视差 + Join 浮动）
+- [x] **P3-08** 卡片特效清理（移除多余动画效果）
+
+### 待微调
+
+- [ ] **P3-09** 移动端适配检查（卡片网格在小屏幕的响应式表现）
+- [ ] **P3-10** 字体精确匹配（确认 Cormorant Garamond 和 Noto Sans SC 加载正确）
+- [ ] **P3-11** 间距打磨（对照 v1.0.0 微调 padding/margin）
 
 ## Phase 4：功能二开（2-3 天）
 
@@ -167,7 +166,7 @@ v2 架构下数据全部在 Notion 管理：
 ## 注意事项
 
 1. **包管理器用 yarn**，不用 npm（NotionNext 官方推荐）
-2. **主题修改在 `themes/heo/` 目录下**，不要改 `components/` 的共享组件
+2. **主题修改在 `themes/ignai/` 目录下**，不要改 `components/` 的共享组件
 3. **配置修改优先用环境变量**，其次改 `blog.config.js`，最后改 `conf/` 下的分配置
 4. **每次重大修改后运行 `yarn build`** 验证构建通过
 5. **Notion Database 的表头名** 默认是英文（title, status, type...），可以在 `conf/notion.config.js` 里映射中文列名

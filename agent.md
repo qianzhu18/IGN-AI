@@ -1,7 +1,7 @@
 # agent.md — AI 开发指引
 
 > 本文件指导 Codex App 和 Claude Code 完成后续开发。
-> 最后更新：2026-05-06 | 架构版本：v2.0.0 (NotionNext 二开)
+> 最后更新：2026-05-07 | 架构版本：v2.0.0 (NotionNext 二开)
 
 ---
 
@@ -42,11 +42,12 @@
 
 1. `themes/ignai/config.js` — IGNAI 主题配置（品牌文案、导航、Hero、Footer）
 2. `themes/ignai/style.js` — IGNAI 主题的 CSS（v1 design tokens、动画、品牌色）
-3. `themes/ignai/components/` — IGNAI 主题组件（复刻自 v1.0.0）
-4. `src/` — v1.0.0 原始 UI 参考（设计稿源头，复刻时对照）
-5. `conf/font.config.js` — 字体配置
-6. `conf/image.config.js` — 图片相关配置
-7. `conf/animation.config.js` — 动效配置
+3. `themes/ignai/index.js` — 主题入口（LayoutBase, LayoutIndex, 所有 Section 组件）
+4. `themes/ignai/components/` — IGNAI 主题组件（复刻自 v1.0.0）
+5. `src/` — v1.0.0 原始 UI 参考（设计稿源头，复刻时对照）
+6. `conf/font.config.js` — 字体配置
+7. `conf/image.config.js` — 图片相关配置
+8. `conf/animation.config.js` — 动效配置
 
 **IGNAI 品牌规范（参考 `doc/design/` 目录）：**
 
@@ -250,17 +251,87 @@ IGN AI 官网/
 
 ---
 
-## 4. 开发工作流
+## 4. 前端 UI 同步工作流（v1.0.0 → NotionNext）
+
+> 将 v1.0.0 原版 UI 逐步复刻到 NotionNext ignai 主题。
+
+### 对照流程
+
+每次同步一个 UI 细节时，按此流程操作：
+
+```
+1. 开发服务器确认
+   - 端口 3003：NotionNext（ignai 主题，目标）
+   - 端口 3004：v1.0.0 原版（参考源头）
+   - 确保 `yarn dev` 两个都跑着
+
+2. 截图对比
+   - 同一滚动位置截图 3003 和 3004
+   - 使用 UI diff 工具或人工对比
+   - 记录差异点（颜色、间距、动画、卡片特效等）
+
+3. 定位差异源头
+   - 3004 的样式 → 查 `src/styles/globals.css`、`src/components/`
+   - 3003 的样式 → 查 `themes/ignai/style.js`、`themes/ignai/index.js`
+
+4. 复刻修改
+   - 在 `themes/ignai/style.js` 添加/修改 CSS
+   - 在 `themes/ignai/index.js` 或 `components/` 修改组件
+   - 每次只改一个维度（如：只改 keyframes、只改卡片、只改按钮）
+   - 移除 v1.0.0 没有的多余效果
+
+5. 验证 & 提交
+   - 刷新 3003 确认效果
+   - `yarn build` 验证构建（已知 adminConfig.ts 类型错误可忽略）
+   - git commit：`feat(动效/UI): 描述变更`
+```
+
+### 关键文件对照表
+
+| v1.0.0（端口 3004） | NotionNext（端口 3003） | 用途 |
+|---------------------|------------------------|------|
+| `src/styles/globals.css` | `themes/ignai/style.js` | CSS 变量、keyframes、组件样式 |
+| `src/components/motion/BackgroundFX.tsx` | `themes/ignai/components/BackgroundFX.js` | Canvas 粒子背景 |
+| `src/components/sections/*.tsx` | `themes/ignai/index.js` (内联 Section) | 首页各区块组件 |
+| `src/components/ui/*.tsx` | `themes/ignai/components/*.js` | UI 组件（Header、Footer 等） |
+| `src/styles/tokens.css` | `themes/ignai/style.js`（:root） | 设计 token（颜色、字体） |
+
+### 动效迁移状态
+
+| 层级 | 内容 | 状态 |
+|------|------|------|
+| P0 CSS Keyframes | 11 个 @keyframes + utility classes | ✅ 已完成 |
+| P0 Button Shine | CTA 按钮 ::after 扫光 | ✅ 已完成 |
+| P0 Reveal Blur | 入场 blur(10px)→blur(0) | ✅ 已完成 |
+| P1 Canvas BackgroundFX | 76/42 粒子 + 流线 + 脉冲 | ✅ 已完成 |
+| P1 Grid + Noise + Glow | 92px 网格、SVG 噪点、径向光晕 | ✅ 已完成 |
+| P2 Scroll Parallax | WhatIs / Culture 视差偏移 | ✅ 已完成 |
+| P2 Join Float | 品牌图无限浮动 | ✅ 已完成 |
+| P3 卡片特效清理 | 移除 presence-card / energy-card | ✅ 已完成 |
+
+### 设计文档索引
+
+| 文档 | 位置 |
+|------|------|
+| 动效迁移设计文档 | `doc/design/09-动效迁移设计文档-v1到NotionNext.md` |
+| 动效迁移 TODO | `doc/TO DO/TODO-animation-migration.md` |
+| 品牌视觉方向 | `doc/design/04-品牌视觉方向与色彩系统.md` |
+| 动画样式体系 | `doc/design/05-动画样式体系全景(参考百科).md` |
+| 文字排布规范 | `doc/design/06-文字排布与布局规范.md` |
+
+---
+
+## 5. 开发工作流
 
 ### 修改前
 
 1. 读取 `doc/TO DO/TODO.md`，确认任务对应哪个 Phase 和任务 ID
 2. 读取相关配置文件（参考上方按场景读取）
-3. 如果涉及主题修改，先读 `themes/heo/config.js` 和对应组件
+3. 如果涉及主题修改，先读 `themes/ignai/config.js` 和对应组件
 
 ### 修改中
 
-1. **只改 `themes/heo/` 下的文件** — 不要动 `components/` 共享组件或其他主题
+1. **只改 `themes/ignai/` 下的文件** — 不要动 `components/` 共享组件或其他主题
 2. **配置优先用环境变量**，其次 `blog.config.js`，最后 `conf/` 分配置
 3. **保持 yarn 一致** — 不要混用 npm
 
@@ -272,25 +343,29 @@ IGN AI 官网/
 
 ---
 
-## 5. IGNAI 定制清单
+## 6. IGNAI 定制清单
 
 以下是 v2.0.0 的主要定制方向（详见 `doc/TO DO/TODO.md`）：
 
 ### 已完成
 - [x] NotionNext 源码集成
 - [x] `blog.config.js` IGNAI 品牌适配
-- [x] heo 暗色主题选定
+- [x] ignai 自定义主题创建（基于 heo 骨架）
+- [x] v1.0.0 动效迁移 P0（CSS keyframes + 按钮扫光 + Reveal blur）
+- [x] v1.0.0 动效迁移 P1（Canvas BackgroundFX + 网格 + 噪点 + 光晕）
+- [x] v1.0.0 动效迁移 P2（滚动视差 + Join 浮动动画）
+- [x] 卡片特效清理（移除 presence-card / energy-card 等多余效果）
 
 ### 待完成（按优先级）
 1. **Phase 1** — 创建 Notion Database，配置 `NOTION_PAGE_ID`，让网站跑起来
 2. **Phase 2** — 从 v1.0.0 迁移内容到 Notion
-3. **Phase 3** — heo 主题品牌色/首页 Hero/导航栏/字体定制
+3. **Phase 3** — UI 细节微调（移动端适配、字体精确匹配、间距打磨）
 4. **Phase 4** — /members 成员页、活动详情模板、评论系统
 5. **Phase 5** — SEO、性能、域名绑定、上线
 
 ---
 
-## 6. 关键约束
+## 7. 关键约束
 
 1. **包管理器用 yarn**，不用 npm
 2. **主题修改只在 `themes/ignai/`**，不动共享组件、heo 或其他主题
@@ -303,7 +378,7 @@ IGN AI 官网/
 
 ---
 
-## 7. 参考资源
+## 8. 参考资源
 
 | 资源 | 位置 |
 |------|------|

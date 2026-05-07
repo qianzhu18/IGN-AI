@@ -187,9 +187,6 @@ const Style = () => {
         }
       }
 
-      #theme-proxio .presence-card {
-        animation: ignai-presence 9s ease-in-out infinite;
-      }
 
       #theme-proxio .converge-field {
         position: absolute;
@@ -413,16 +410,6 @@ const Style = () => {
         }
       }
 
-      @keyframes ignai-presence {
-        0%,
-        100% {
-          filter: brightness(1) contrast(1);
-        }
-        50% {
-          filter: brightness(1.06) contrast(1.02);
-        }
-      }
-
       /* ========== v1.0.0 动效迁移：关键帧动画库 ========== */
 
       @keyframes ignai-pulse-glow {
@@ -489,35 +476,6 @@ const Style = () => {
         100% {
           opacity: 0;
           transform: scale(1.55);
-        }
-      }
-
-      @keyframes ignai-energy-border-flow {
-        0% {
-          background-position: 0% 50%;
-        }
-        100% {
-          background-position: 260% 50%;
-        }
-      }
-
-      @keyframes ignai-card-energy-pulse {
-        0%,
-        100% {
-          filter: brightness(0.96) contrast(1);
-        }
-        46% {
-          filter: brightness(1.06) contrast(1.03);
-        }
-      }
-
-      @keyframes ignai-presence-hold {
-        0%,
-        100% {
-          filter: brightness(0.98);
-        }
-        50% {
-          filter: brightness(1.04);
         }
       }
 
@@ -790,61 +748,6 @@ const Style = () => {
         );
       }
 
-      /* ========== IGNAI 卡片 ========== */
-      #theme-proxio .ignai-card {
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        background: rgba(13, 14, 20, 0.8);
-        padding: 24px;
-        transition:
-          border-color 0.3s,
-          transform 0.3s;
-      }
-      #theme-proxio .ignai-card:hover {
-        border-color: rgba(255, 122, 24, 0.24);
-        transform: translateY(-2px);
-      }
-
-      /* ========== Energy Panel — 旋转渐变流光边框 ========== */
-      #theme-proxio .energy-panel {
-        position: relative;
-      }
-      #theme-proxio .energy-panel::before {
-        content: '';
-        position: absolute;
-        inset: -1px;
-        z-index: -1;
-        border-radius: inherit;
-        background: linear-gradient(
-          115deg,
-          rgba(255, 122, 24, 0.35),
-          rgba(255, 197, 107, 0.08),
-          rgba(124, 200, 255, 0.28),
-          rgba(255, 122, 24, 0.35)
-        );
-        background-size: 260% 260%;
-        opacity: 0.55;
-        animation: ignai-energy-border-flow 16s linear infinite;
-      }
-
-      /* ========== Energy Card — 高能脉冲悬停 ========== */
-      #theme-proxio .energy-card {
-        transition:
-          filter 0.45s ease,
-          transform 0.45s ease,
-          border-color 0.45s ease,
-          box-shadow 0.45s ease;
-        animation: ignai-card-energy-pulse 10s ease-in-out infinite;
-      }
-      #theme-proxio .energy-card:hover {
-        filter: brightness(1.08) contrast(1.04);
-        transform: translateY(-4px);
-        border-color: rgba(255, 184, 121, 0.22);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.06),
-          0 30px 90px rgba(0, 0, 0, 0.52),
-          0 0 42px rgba(255, 122, 24, 0.12);
-      }
 
       /* ========== IGNAI CTA 按钮 ========== */
       #theme-proxio .ignai-cta-primary {
