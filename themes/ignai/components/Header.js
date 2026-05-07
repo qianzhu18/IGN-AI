@@ -1,195 +1,99 @@
-import { siteConfig } from '@/lib/config'
-import { isBrowser } from '@/lib/utils'
-import throttle from 'lodash.throttle'
-import { useRouter } from 'next/router'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import DarkModeButton from './DarkModeButton'
-import Logo from './Logo'
-import { MenuListTop } from './MenuListTop'
-import RandomPostButton from './RandomPostButton'
-import ReadingProgress from './ReadingProgress'
-import SearchButton from './SearchButton'
-import SlideOver from './SlideOver'
-
 /**
- * 页头：顶部导航
- * @param {*} param0
- * @returns
+ * IGNAI Header — 品牌导航栏
+ * 暗色毛玻璃风格，IGNAI 品牌 Logo + 导航
  */
-const Header = props => {
-  const [fixedNav, setFixedNav] = useState(false)
-  const [textWhite, setTextWhite] = useState(false)
-  const [navBgWhite, setBgWhite] = useState(false)
-  const [activeIndex, setActiveIndex] = useState(0)
+import SmartLink from '@/components/SmartLink'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import CONFIG from '../config'
 
+export const Header = props => {
   const router = useRouter()
-  const slideOverRef = useRef()
+  const navItems = CONFIG.IGNAI_NAV_ITEMS || []
 
-  const toggleMenuOpen = () => {
-    slideOverRef?.current?.toggleSlideOvers()
-  }
+  // 移动端菜单状态
+  const [showMenu, setShowMenu] = useState(false)
 
-  /**
-   * 根据滚动条，切换导航栏样式
-   */
-  const scrollTrigger = useCallback(
-    throttle(() => {
-      const scrollS = window.scrollY
-      // 导航栏设置 白色背景
-      if (scrollS <= 1) {
-        setFixedNav(false)
-        setBgWhite(false)
-        setTextWhite(false)
-
-        // 文章详情页特殊处理
-        if (document?.querySelector('#post-bg')) {
-          setFixedNav(true)
-          setTextWhite(true)
-        }
-      } else {
-        // 向下滚动后的导航样式
-        setFixedNav(true)
-        setTextWhite(false)
-        setBgWhite(true)
-      }
-    }, 100)
-  )
   useEffect(() => {
-    scrollTrigger()
+    setShowMenu(false)
   }, [router])
-
-  // 监听滚动
-  useEffect(() => {
-    window.addEventListener('scroll', scrollTrigger)
-    return () => {
-      window.removeEventListener('scroll', scrollTrigger)
-    }
-  }, [])
-
-  // 导航栏根据滚动轮播菜单内容
-  useEffect(() => {
-    let prevScrollY = 0
-    let ticking = false
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const currentScrollY = window.scrollY
-          if (currentScrollY > prevScrollY) {
-            setActiveIndex(1) // 向下滚动时设置activeIndex为1
-          } else {
-            setActiveIndex(0) // 向上滚动时设置activeIndex为0
-          }
-          prevScrollY = currentScrollY
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    if (isBrowser) {
-      window.addEventListener('scroll', handleScroll)
-    }
-
-    return () => {
-      if (isBrowser) {
-        window.removeEventListener('scroll', handleScroll)
-      }
-    }
-  }, [])
 
   return (
     <>
-      <style jsx>{`
-        @keyframes fade-in-down {
-          0% {
-            opacity: 0.5;
-            transform: translateY(-30%);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+      <div className='ud-header left-0 top-0 z-40 flex w-full items-center'>
+        <div className='container'>
+          <div className='relative -mx-4 flex items-center justify-between ignai-header-shell'>
 
-        @keyframes fade-in-up {
-          0% {
-            opacity: 0.5;
-            transform: translateY(30%);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .fade-in-down {
-          animation: fade-in-down 0.3s ease-in-out;
-        }
-
-        .fade-in-up {
-          animation: fade-in-up 0.3s ease-in-out;
-        }
-      `}</style>
-
-      {/* fixed时留白高度 */}
-      {fixedNav && !document?.querySelector('#post-bg') && (
-        <div className='h-16'></div>
-      )}
-
-      {/* 顶部导航菜单栏 */}
-      <nav
-        id='nav'
-        className={`z-20 h-16 top-0 w-full duration-300 transition-all
-            ${fixedNav ? 'fixed' : 'relative bg-transparent'} 
-            ${textWhite ? 'text-white ' : 'text-black dark:text-white'}  
-            ${navBgWhite ? 'bg-white dark:bg-[#18171d] shadow' : 'bg-transparent'}`}>
-        <div className='flex h-full mx-auto justify-between items-center max-w-[86rem] px-6'>
-          {/* 左侧logo */}
-          <Logo {...props} />
-
-          {/* 中间菜单 */}
-          <div
-            id='nav-bar-swipe'
-            className={`hidden lg:flex flex-grow flex-col items-center justify-center h-full relative w-full`}>
-            <div
-              className={`absolute transition-all duration-700 ${activeIndex === 0 ? 'opacity-100 mt-0' : '-mt-20 opacity-0 invisible'}`}>
-              <MenuListTop {...props} />
-            </div>
-            <div
-              className={`absolute transition-all duration-700 ${activeIndex === 1 ? 'opacity-100 mb-0' : '-mb-20 opacity-0 invisible'}`}>
-              <h1 className='font-bold text-center text-light-400 dark:text-gray-400'>
-                {siteConfig('AUTHOR') || siteConfig('TITLE')}{' '}
-                {siteConfig('BIO') && <>|</>} {siteConfig('BIO')}
-              </h1>
-            </div>
-          </div>
-
-          {/* 右侧固定 */}
-          <div className='flex flex-shrink-0 justify-end items-center w-48'>
-            <RandomPostButton {...props} />
-            <SearchButton {...props} />
-            {!JSON.parse(siteConfig('THEME_SWITCH')) && (
-              <div className='hidden md:block'>
-                <DarkModeButton {...props} />
+            {/* Logo */}
+            <div className='max-w-full px-4'>
+              <div className='navbar-logo flex items-center w-full py-5 cursor-pointer gap-3'>
+                <img
+                  src='/brand/ignai-logo-transparent.png'
+                  alt='IGNAI'
+                  className='ignai-header-logo'
+                  onClick={() => router.push('/')}
+                />
+                <span
+                  onClick={() => router.push('/')}
+                  className='text-white/46 text-xs sm:text-sm mt-0.5 hidden min-[440px]:inline'>
+                  Ignite before AGI
+                </span>
               </div>
-            )}
-            <ReadingProgress />
+            </div>
+
+            {/* 桌面端导航 */}
+            <div className='hidden md:flex items-center gap-6'>
+              {navItems.map((item, index) => (
+                <SmartLink
+                  key={item.label || index}
+                  href={item.href}
+                  className='text-sm text-white/68 hover:text-white transition duration-200'>
+                  {item.label}
+                </SmartLink>
+              ))}
+              <SmartLink
+                href='/join'
+                className='ml-4 inline-flex items-center px-5 py-2 rounded-lg text-sm font-medium text-white transition duration-200'
+                style={{ background: 'linear-gradient(135deg, rgba(255,122,24,0.9), rgba(255,154,60,0.85))' }}>
+                加入社区
+              </SmartLink>
+            </div>
 
             {/* 移动端菜单按钮 */}
-            <div
-              onClick={toggleMenuOpen}
-              className='flex lg:hidden w-8 justify-center items-center h-8 cursor-pointer'>
-              <i className='fas fa-bars' />
-            </div>
-          </div>
+            <button
+              onClick={() => setShowMenu(!showMenu)}
+              className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 md:hidden ${showMenu ? 'navbarTogglerActive' : ''}`}>
+              <span className='relative my-[6px] block h-[2px] w-[30px] bg-white duration-200 transition-all'></span>
+              <span className='relative my-[6px] block h-[2px] w-[30px] bg-white duration-200 transition-all'></span>
+              <span className='relative my-[6px] block h-[2px] w-[30px] bg-white duration-200 transition-all'></span>
+            </button>
 
-          {/* 右边侧拉抽屉 */}
-          <SlideOver cRef={slideOverRef} {...props} />
+            {/* 移动端菜单 */}
+            <nav className={`absolute right-4 top-full w-full max-w-[250px] rounded-lg py-5 md:hidden ${showMenu ? 'block' : 'hidden'}`}
+              style={{ background: 'rgba(13,14,20,0.95)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <ul className='block'>
+                {navItems.map((item, index) => (
+                  <li key={item.label || index}>
+                    <SmartLink
+                      href={item.href}
+                      className='block px-6 py-3 text-sm text-white/72 hover:text-white hover:bg-white/4 transition'>
+                      {item.label}
+                    </SmartLink>
+                  </li>
+                ))}
+                <li>
+                  <SmartLink
+                    href='/join'
+                    className='block px-6 py-3 text-sm font-medium text-[#FF7A18] hover:bg-white/4 transition'>
+                    加入社区
+                  </SmartLink>
+                </li>
+              </ul>
+            </nav>
+
+          </div>
         </div>
-      </nav>
+      </div>
     </>
   )
 }
-
-export default Header

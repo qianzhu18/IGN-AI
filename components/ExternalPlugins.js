@@ -23,7 +23,11 @@ const ExternalPlugin = props => {
   const { NOTION_CONFIG } = props
   const { lang } = useGlobal()
   const DISABLE_PLUGIN = siteConfig('DISABLE_PLUGIN', null, NOTION_CONFIG)
-  const THEME_SWITCH = siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
+  const CURRENT_THEME = siteConfig('THEME', null, NOTION_CONFIG)
+  const THEME_SWITCH =
+    CURRENT_THEME === 'ignai'
+      ? false
+      : siteConfig('THEME_SWITCH', null, NOTION_CONFIG)
   const DEBUG = siteConfig('DEBUG', null, NOTION_CONFIG)
   const ANALYTICS_ACKEE_TRACKER = siteConfig(
     'ANALYTICS_ACKEE_TRACKER',

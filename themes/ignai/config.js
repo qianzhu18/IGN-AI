@@ -1,127 +1,147 @@
 /**
  * IGNAI 主题配置
- * 基于 heo 主题，适配 IGNAI 社区品牌
- * 颜色系统：Heat #FF7A18, Signal #5DA9FF, 背景 #07080C
+ * 基于 proxio 骨架，爆改为 IGNAI 品牌社区官网
  */
 const CONFIG = {
-  IGNAI_LOADING_COVER: true, // 页面加载遮罩动画
+  // ========== 首页区块开关 ==========
+  IGNAI_HERO_ENABLE: true,
+  IGNAI_BLOG_ENABLE: true,
+  IGNAI_BLOG_COUNT: 4,
+  IGNAI_ANNOUNCEMENT_ENABLE: false,
+  IGNAI_ABOUT_ENABLE: true,
+  IGNAI_BRANDS_ENABLE: true,
+  IGNAI_CAREER_ENABLE: false,
+  IGNAI_FEATURE_ENABLE: true,
+  IGNAI_TESTIMONIALS_ENABLE: false,
+  IGNAI_FAQ_ENABLE: false,
+  IGNAI_CTA_ENABLE: true,
+  IGNAI_WELCOME_COVER_ENABLE: false,
 
-  // 建站日期
-  IGNAI_SITE_CREATE_TIME: '2025-01-01',
-
-  // 首页通知条
-  IGNAI_NOTICE_BAR: [
-    { title: 'IGNAI — 长沙 AI 社区，连接创造者，点燃可能性', url: '/' },
-  ],
-
-  // 英雄区
+  // ========== Hero 区块 ==========
   IGNAI_HERO_EYEBROW: 'Living AI Community',
   IGNAI_HERO_NAME: 'IGNAI',
   IGNAI_HERO_SLOGAN: 'Ignite before AGI.',
   IGNAI_HERO_SUMMARY: 'IGNAI 是一个 base 长沙、连接本地、面向全球的 AI 社区。',
   IGNAI_HERO_DESCRIPTION: '关注 AI、Agent、Product、Startup 与真实行动。',
-  IGNAI_HERO_LEAD: '在 AGI 到来之前，先点燃一群真实行动的人。',
-  IGNAI_HERO_CTA_JOIN: '加入社区',
-  IGNAI_HERO_CTA_EVENTS: '查看近期活动',
-  IGNAI_HERO_JOIN_URL: '/join',
-  IGNAI_HERO_EVENTS_URL: '#upcoming-events',
-  IGNAI_HERO_COVER_IMAGE: '/images/generated/local-global-embers.png',
-  IGNAI_HERO_COVER_BADGE: 'Local roots / Global signal',
-  IGNAI_HERO_COVER_TEXT: '让本地土壤和全球信号，同时亮起来。',
-
-  // Hero Signals
+  IGNAI_HERO_CTA_1: '加入社区',
+  IGNAI_HERO_CTA_1_URL: '/join',
+  IGNAI_HERO_CTA_2: '查看近期活动',
+  IGNAI_HERO_CTA_2_URL: '#blog',
+  IGNAI_HERO_BANNER_IMAGE: '',
+  IGNAI_HERO_BANNER_IFRAME_URL: '',
+  // Hero 信号卡片
   IGNAI_HERO_SIGNALS: [
     { eyebrow: 'Local roots', title: '本地连接', description: '连接长沙、高校、开发者与行动者。' },
     { eyebrow: 'Global signal', title: '国际信号', description: '保持开放，吸收全球 AI 趋势。' },
-    { eyebrow: 'Human warmth', title: '真实温度', description: '让连接发生在真实的人之间。' },
+    { eyebrow: 'Human warmth', title: '真实温度', description: '让连接发生在真实的人之间。' }
   ],
 
-  // 导航菜单
-  IGNAI_NAV_ITEMS: [
-    { label: 'What', href: '#what-is-ignai' },
-    { label: 'Culture', href: '#culture' },
-    { label: 'Events', href: '#upcoming-events' },
-    { label: 'Records', href: '#field-notes' },
-    { label: 'Join', href: '/join' },
+  // ========== Blog 区块 ==========
+  IGNAI_BLOG_TITLE: '近期活动',
+  IGNAI_BLOG_TEXT_1: '活动、分享与行动记录',
+
+  // ========== Features 区块 (What is IGNAI) ==========
+  IGNAI_FEATURE_TITLE: 'What is IGNAI',
+  IGNAI_FEATURE_TEXT_1: '一个从长沙出发，连接真实行动者的 AI 社区。',
+  IGNAI_FEATURE_TEXT_2: '我们关注 AI、Agent、Product、Startup 与内容表达。',
+  IGNAI_FEATURE_CARDS: [
+    { eyebrow: 'AI Learners', title: 'AI 学习者', description: '正在学习 AI、工具和未来工作方式的人。', icon: 'fa-solid fa-graduation-cap' },
+    { eyebrow: 'Builders', title: '项目行动者', description: '做产品、Agent、工具和真实项目的人。', icon: 'fa-solid fa-hammer' },
+    { eyebrow: 'Storytellers', title: '表达者', description: '愿意分享观点、记录实践、传播信号的人。', icon: 'fa-solid fa-pen-nib' },
+    { eyebrow: 'Connectors', title: '连接者', description: '连接本地资源、全球趋势和更多行动机会的人。', icon: 'fa-solid fa-link' }
+  ],
+  IGNAI_FEATURE_BUTTON_TEXT: '了解更多',
+  IGNAI_FEATURE_BUTTON_URL: '#about',
+
+  // ========== About (Team) 区块 ==========
+  IGNAI_ABOUT_TITLE: '关于社区',
+  IGNAI_ABOUT_TEXT_1: '有技术密度，也有人的温度。',
+  IGNAI_ABOUT_TEXT_2: 'IGNAI 是面向全球的 AI 社区表达，洋来社是我们更本地、更亲近的内部名字。我们希望它既能承载技术讨论，也能承载真实连接、长期行动和人的温度。',
+  IGNAI_ABOUT_PHOTO_URL: '/brand/ignai-logo.svg',
+  IGNAI_ABOUT_KEY_1: '成立年份',
+  IGNAI_ABOUT_VAL_1: '2025',
+  IGNAI_ABOUT_KEY_2: '核心成员',
+  IGNAI_ABOUT_VAL_2: '20+',
+  IGNAI_ABOUT_KEY_3: '线下活动',
+  IGNAI_ABOUT_VAL_3: '10+',
+  IGNAI_ABOUT_KEY_4: '覆盖城市',
+  IGNAI_ABOUT_VAL_4: '长沙',
+  IGNAI_ABOUT_BUTTON_URL: '/join',
+  IGNAI_ABOUT_BUTTON_TEXT: '加入我们',
+
+  // ========== 横向滚动品牌词 ==========
+  IGNAI_BRANDS: [
+    'AI Learners',
+    'Builders',
+    'Storytellers',
+    'Connectors',
+    'Agent',
+    'Product',
+    'Startup',
+    'Content'
   ],
 
-  // 页脚
-  IGNAI_FOOTER_LINES: ['Ignite before AGI.', '俗名：洋来社'],
+  // ========== CTA 区块 (Join) ==========
+  IGNAI_CTA_TITLE: 'Join the fire.',
+  IGNAI_CTA_TITLE_2: 'Bring your signal.',
+  IGNAI_CTA_DESCRIPTION: '加入一个鼓励表达、持续行动、彼此点燃的 AI 社区。',
+  IGNAI_CTA_BUTTON: true,
+  IGNAI_CTA_BUTTON_URL: '/join',
+  IGNAI_CTA_BUTTON_TEXT: '加入社区',
+  IGNAI_CTA_BENEFITS: [
+    '参与线下交流',
+    '加入主题共创',
+    '分享项目与观点',
+    '连接长沙与全球 AI 信号'
+  ],
+
+  // ========== Footer ==========
+  IGNAI_FOOTER_SLOGAN: 'Ignite before AGI.',
+  IGNAI_FOOTER_SUBTITLE: '俗名：洋来社',
   IGNAI_FOOTER_LOCATION: 'Based in Changsha, connected to the world.',
-  IGNAI_FOOTER_NAV: [
-    { label: 'What is IGNAI', href: '/#what-is-ignai' },
+  IGNAI_FOOTER_LINKS: [
+    {
+      name: '导航',
+      menus: [
+        { title: 'What is IGNAI', href: '/#what-is-ignai' },
+        { title: 'Culture', href: '/#culture' },
+        { title: '近期活动', href: '/#upcoming-events' },
+        { title: '加入社区', href: '/join' }
+      ]
+    },
+    {
+      name: '更多',
+      menus: [
+        { title: 'Events', href: '/events' },
+        { title: 'Records', href: '/records' },
+        { title: 'Journal', href: '/archive' }
+      ]
+    }
+  ],
+  IGNAI_FOOTER_PRIVACY_POLICY_TEXT: '',
+  IGNAI_FOOTER_PRIVACY_POLICY_URL: '',
+  IGNAI_FOOTER_PRIVACY_LEGAL_NOTICE_TEXT: '',
+  IGNAI_FOOTER_PRIVACY_LEGAL_NOTICE_URL: '',
+  IGNAI_FOOTER_PRIVACY_TERMS_OF_SERVICE_TEXT: '',
+  IGNAI_FOOTER_PRIVACY_TERMS_OF_SERVICE_URL: '',
+
+  // ========== 404 ==========
+  IGNAI_404_TITLE: '页面走丢了',
+  IGNAI_404_TEXT: '抱歉，您要查找的页面不存在。',
+  IGNAI_404_BACK: '回到主页',
+
+  // ========== 导航菜单 ==========
+  IGNAI_NAV_ITEMS: [
+    { label: 'What', href: '/#what-is-ignai' },
     { label: 'Culture', href: '/#culture' },
-    { label: 'Events', href: '/events' },
-    { label: 'Records', href: '/records' },
-    { label: 'Journal', href: '/blog' },
-    { label: 'Join', href: '/join' },
+    { label: 'Events', href: '/#upcoming-events' },
+    { label: 'Records', href: '/#field-notes' },
+    { label: 'Join', href: '/join' }
   ],
-  IGNAI_FOOTER_EMAIL: 'hello@ignai.community',
 
-  // 博客列表
-  IGNAI_HOME_POST_TWO_COLS: true,
-  IGNAI_POST_LIST_COVER: true,
-  IGNAI_POST_LIST_SUMMARY: true,
-  IGNAI_POST_LIST_IMG_CROSSOVER: true,
-
-  // 文章详情
-  IGNAI_ARTICLE_ADJACENT: true,
-  IGNAI_ARTICLE_COPYRIGHT: true,
-  IGNAI_ARTICLE_RECOMMEND: true,
-
-  // 保留 heo 兼容的配置键名（部分 heo 组件内部引用这些键）
-  HEO_HOME_POST_TWO_COLS: true,
-  HEO_LOADING_COVER: true,
-  HEO_HOME_BANNER_ENABLE: true,
-  HEO_HERO_REVERSE: false,
-  HEO_HERO_BODY_REVERSE: false,
-  HEO_POST_LIST_COVER: true,
-  HEO_POST_LIST_COVER_HOVER_ENLARGE: false,
-  HEO_POST_LIST_COVER_DEFAULT: true,
-  HEO_POST_LIST_SUMMARY: true,
-  HEO_POST_LIST_PREVIEW: false,
-  HEO_POST_LIST_IMG_CROSSOVER: true,
-  HEO_ARTICLE_ADJACENT: true,
-  HEO_ARTICLE_COPYRIGHT: true,
-  HEO_ARTICLE_NOT_BY_AI: false,
-  HEO_ARTICLE_RECOMMEND: true,
-  HEO_WIDGET_LATEST_POSTS: true,
-  HEO_WIDGET_ANALYTICS: false,
-  HEO_WIDGET_TO_TOP: true,
-  HEO_WIDGET_TO_COMMENT: true,
-  HEO_WIDGET_DARK_MODE: true,
-  HEO_WIDGET_TOC: true,
-  HEO_MENU_INDEX: true,
-  HEO_MENU_CATEGORY: true,
-  HEO_MENU_TAG: true,
-  HEO_MENU_ARCHIVE: true,
-  HEO_MENU_SEARCH: true,
-  HEO_SOCIAL_CARD: true,
-  HEO_SOCIAL_CARD_TITLE_1: '加入社区',
-  HEO_SOCIAL_CARD_TITLE_2: '加入 IGNAI 社区讨论分享',
-  HEO_SOCIAL_CARD_TITLE_3: '点击加入',
-  HEO_SOCIAL_CARD_URL: '/join',
-  HEO_HERO_RECOMMEND_POST_TAG: '',
-  HEO_HERO_RECOMMEND_POST_SORT_BY_UPDATE_TIME: false,
-  HEO_HERO_RECOMMEND_COVER_ENABLE: false,
-  HEO_NOTICE_BAR: [],
-  HEO_INFOCARD_GREETINGS: [
-    '你好！IGNAI',
-    '长沙 AI 社区',
-    '连接创造者',
-    '点燃可能性',
-  ],
-  HEO_INFO_CARD_URL1: '/join',
-  HEO_INFO_CARD_ICON1: 'fas fa-users',
-  HEO_INFO_CARD_URL2: 'https://github.com/qianzhu18',
-  HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: '/join',
-  HEO_INFO_CARD_TEXT3: '加入社区',
-  HEO_GROUP_ICONS: [],
-  HEO_POST_COUNT_TITLE: '文章数:',
-  HEO_SITE_TIME_TITLE: '建站天数:',
-  HEO_SITE_VISIT_TITLE: '访问量:',
-  HEO_SITE_VISITOR_TITLE: '访客数:',
-  HEO_SITE_CREATE_TIME: '2025-01-01',
+  PROXIO_POST_REDIRECT_ENABLE: false,
+  PROXIO_POST_REDIRECT_URL: '',
+  PROXIO_NEWSLETTER: false
 }
+
 export default CONFIG

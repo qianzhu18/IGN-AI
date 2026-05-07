@@ -73,7 +73,7 @@ const Style = () => {
       position: relative;
       min-height: 100vh;
       overflow: hidden;
-      padding-top: 72px;
+      padding-top: 28px;
       padding-bottom: 64px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
@@ -81,12 +81,12 @@ const Style = () => {
     @media (min-width: 1024px) {
       #theme-proxio .ignai-hero-section {
         min-height: 880px;
-        padding-top: 96px;
+        padding-top: 44px;
       }
     }
 
     #theme-proxio .ignai-hero-grid {
-      min-height: calc(100vh - 72px);
+      min-height: calc(100vh - 112px);
       align-items: center;
     }
 
@@ -183,6 +183,23 @@ const Style = () => {
     }
     #theme-proxio .ud-header.sticky {
       background: rgba(7,8,12,0.92);
+    }
+
+    #theme-proxio .ignai-header-shell {
+      min-height: 92px;
+    }
+
+    #theme-proxio .ignai-header-logo {
+      display: block;
+      width: auto;
+      height: 26px;
+      object-fit: contain;
+    }
+
+    @media (min-width: 640px) {
+      #theme-proxio .ignai-header-logo {
+        height: 30px;
+      }
     }
 
     /* ========== IGNAI Hero ========== */
