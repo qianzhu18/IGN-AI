@@ -536,8 +536,20 @@ function HeroSection() {
 }
 
 function WhatIsSection() {
+  const ref = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start']
+  })
+  const mediaY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, shouldReduceMotion ? 0 : 36]
+  )
+
   return (
-    <section id='what-is-ignai' className='ignai-home-section'>
+    <section id='what-is-ignai' className='ignai-home-section' ref={ref}>
       <div className='ignai-home-container section-grid-start'>
         <Reveal className='section-copy'>
           <p className='section-eyebrow'>01 / What is IGNAI</p>
@@ -554,7 +566,7 @@ function WhatIsSection() {
           <p className='section-body mt-5'>{whatIsContent.support}</p>
         </Reveal>
 
-        <div>
+        <motion.div style={{ y: mediaY }}>
           <Reveal>
             <p className='section-eyebrow mb-5'>Community Members</p>
           </Reveal>
@@ -575,15 +587,27 @@ function WhatIsSection() {
               </Reveal>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
 }
 
 function CultureSection() {
+  const ref = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start']
+  })
+  const mediaY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, shouldReduceMotion ? 0 : 28]
+  )
+
   return (
-    <section id='culture' className='ignai-home-section'>
+    <section id='culture' className='ignai-home-section' ref={ref}>
       <div className='ignai-home-container section-grid-start'>
         <Reveal className='section-copy'>
           <p className='section-eyebrow'>03 / Culture</p>
@@ -598,7 +622,7 @@ function CultureSection() {
           <p className='section-body mt-5'>{cultureContent.paragraph}</p>
         </Reveal>
 
-        <div className='open-grid'>
+        <motion.div style={{ y: mediaY }} className='open-grid'>
           {cultureContent.cards.map((card, index) => (
             <Reveal key={card.title} delay={index * 0.08}>
               <div className='open-grid-item ignai-unified-card presence-card'>
@@ -608,7 +632,7 @@ function CultureSection() {
               </div>
             </Reveal>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
@@ -894,7 +918,11 @@ function JoinSection() {
             </Reveal>
 
             <Reveal className='relative overflow-hidden' delay={0.1}>
-              <div className='relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]'>
+              <motion.div
+                animate={{ x: [0, -14, 0], y: [0, 10, 0] }}
+                transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+                className='relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]'
+              >
                 <img
                   src='/images/generated/collaboration-threads.png'
                   alt='Warm collaboration threads and blue signal lines'
@@ -911,7 +939,7 @@ function JoinSection() {
                     带进这团火里。
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </Reveal>
           </div>
         </div>
