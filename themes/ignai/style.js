@@ -805,8 +805,50 @@ const Style = () => {
         transform: translateY(-2px);
       }
 
+      /* ========== Energy Panel — 旋转渐变流光边框 ========== */
+      #theme-proxio .energy-panel {
+        position: relative;
+      }
+      #theme-proxio .energy-panel::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        z-index: -1;
+        border-radius: inherit;
+        background: linear-gradient(
+          115deg,
+          rgba(255, 122, 24, 0.35),
+          rgba(255, 197, 107, 0.08),
+          rgba(124, 200, 255, 0.28),
+          rgba(255, 122, 24, 0.35)
+        );
+        background-size: 260% 260%;
+        opacity: 0.55;
+        animation: ignai-energy-border-flow 16s linear infinite;
+      }
+
+      /* ========== Energy Card — 高能脉冲悬停 ========== */
+      #theme-proxio .energy-card {
+        transition:
+          filter 0.45s ease,
+          transform 0.45s ease,
+          border-color 0.45s ease,
+          box-shadow 0.45s ease;
+        animation: ignai-card-energy-pulse 10s ease-in-out infinite;
+      }
+      #theme-proxio .energy-card:hover {
+        filter: brightness(1.08) contrast(1.04);
+        transform: translateY(-4px);
+        border-color: rgba(255, 184, 121, 0.22);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.06),
+          0 30px 90px rgba(0, 0, 0, 0.52),
+          0 0 42px rgba(255, 122, 24, 0.12);
+      }
+
       /* ========== IGNAI CTA 按钮 ========== */
       #theme-proxio .ignai-cta-primary {
+        position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -820,14 +862,33 @@ const Style = () => {
         color: #fff;
         font-weight: 600;
         font-size: 0.9375rem;
+        overflow: hidden;
         transition:
           transform 0.2s,
           box-shadow 0.2s;
         box-shadow: 0 8px 32px rgba(255, 122, 24, 0.2);
       }
+      #theme-proxio .ignai-cta-primary::after {
+        content: '';
+        position: absolute;
+        inset: -25% auto -25% -32%;
+        width: 28%;
+        transform: skewX(-24deg);
+        background: linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.08) 20%,
+          rgba(255, 255, 255, 0.46) 50%,
+          transparent 100%
+        );
+        transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      }
       #theme-proxio .ignai-cta-primary:hover {
         transform: translateY(-1px);
         box-shadow: 0 12px 40px rgba(255, 122, 24, 0.32);
+      }
+      #theme-proxio .ignai-cta-primary:hover::after {
+        transform: translateX(360%) skewX(-24deg);
       }
 
       #theme-proxio .ignai-cta-secondary {
