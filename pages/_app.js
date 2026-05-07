@@ -38,13 +38,21 @@ const MyApp = ({ Component, pageProps }) => {
   const notionTheme = pageProps?.NOTION_CONFIG?.THEME
   const configTheme = BLOG.THEME
   const theme = useMemo(() => {
-    return queryTheme || notionTheme || configTheme
+    if (queryTheme) {
+      return queryTheme
+    }
+    if (configTheme === 'ignai') {
+      return configTheme
+    }
+    return notionTheme || configTheme
   }, [queryTheme, notionTheme, configTheme])
 
   useEffect(() => {
     const source = queryTheme
       ? 'url:theme'
-      : notionTheme
+      : configTheme === 'ignai'
+        ? 'blog/env:config-forced'
+        : notionTheme
         ? 'notion:config'
         : 'blog/env:config'
     console.log(

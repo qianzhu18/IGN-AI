@@ -1,179 +1,138 @@
-/**
- *   HEO 主题说明
- *  > 主题设计者 [张洪](https://zhheo.com/)
- *  > 主题开发者 [tangly1024](https://github.com/tangly1024)
- *  1. 开启方式 在blog.config.js 将主题配置为 `HEO`
- *  2. 更多说明参考此[文档](https://docs.tangly1024.com/article/notionnext-heo)
- */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @next/next/no-img-element */
 
-import Comment from '@/components/Comment'
-import { AdSlot } from '@/components/GoogleAdsense'
-import { HashTag } from '@/components/HeroIcons'
-import LazyImage from '@/components/LazyImage'
-import LoadingCover from '@/components/LoadingCover'
-import replaceSearchResult from '@/components/Mark'
+'use client'
+import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
-import ShareBar from '@/components/ShareBar'
-import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
-import { useGlobal } from '@/lib/global'
-import { loadWowJS } from '@/lib/plugins/wow'
 import { isBrowser } from '@/lib/utils'
-import { Transition } from '@headlessui/react'
-import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import BlogPostArchive from './components/BlogPostArchive'
-import BlogPostListPage from './components/BlogPostListPage'
-import BlogPostListScroll from './components/BlogPostListScroll'
-import CategoryBar from './components/CategoryBar'
-import FloatTocButton from './components/FloatTocButton'
-import Footer from './components/Footer'
-import Header from './components/Header'
-import Hero from './components/Hero'
-import LatestPostsGroup from './components/LatestPostsGroup'
-import { NoticeBar } from './components/NoticeBar'
-import PostAdjacent from './components/PostAdjacent'
-import PostCopyright from './components/PostCopyright'
-import PostHeader from './components/PostHeader'
-import { PostLock } from './components/PostLock'
-import PostRecommend from './components/PostRecommend'
-import SearchNav from './components/SearchNav'
-import SideRight from './components/SideRight'
+import { useEffect } from 'react'
+import { BackToTopButton } from './components/BackToTopButton'
+import { Blog } from './components/Blog'
+import { Footer } from './components/Footer'
+import { Header } from './components/Header'
 import CONFIG from './config'
 import { Style } from './style'
-import AISummary from '@/components/AISummary'
-import ArticleExpirationNotice from '@/components/ArticleExpirationNotice'
+import Comment from '@/components/Comment'
+import replaceSearchResult from '@/components/Mark'
+import ShareBar from '@/components/ShareBar'
+import { useGlobal } from '@/lib/global'
+import { loadWowJS } from '@/lib/plugins/wow'
+import SmartLink from '@/components/SmartLink'
+import { Banner } from './components/Banner'
+import { CTA } from './components/CTA'
+import SearchInput from './components/SearchInput'
+import { SVG404 } from './components/svg/SVG404'
+import Lenis from '@/components/Lenis'
+import CursorDot from '@/components/CursorDot'
+import { ArticleLock } from './components/ArticleLock'
+import { siteContent } from '@/src/content/site'
+import {
+  cultureContent,
+  joinContent,
+  whatIsContent
+} from '@/src/content/community'
+import {
+  eventFormatLabel,
+  eventStatusLabel,
+  events
+} from '@/src/content/events'
+import { recordTypeLabel, records } from '@/src/content/records'
+
+const roleCards = [
+  {
+    title: 'AI Builders',
+    description: '做 Agent、产品原型和自动化流程的人。'
+  },
+  {
+    title: 'Product Explorers',
+    description: '从用户、场景和痛点出发，探索 AI 产品机会的人。'
+  },
+  {
+    title: 'Storytellers',
+    description: '用文章、视频和社区记录传播高质量信号的人。'
+  },
+  {
+    title: 'Local Connectors',
+    description: '连接长沙高校、开发者、创业者和线下空间的人。'
+  }
+]
 
 /**
- * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
- * @param props
- * @returns {JSX.Element}
- * @constructor
+ * IGNAI 布局框架
+ * 基于 proxio 骨架，爆改为 IGNAI 品牌社区官网
  */
 const LayoutBase = props => {
-  const { children, slotTop, className } = props
+  const { children } = props
 
-  // 全屏模式下的最大宽度
-  const { fullWidth, isDarkMode } = useGlobal()
-  const router = useRouter()
-
-  const headerSlot = (
-    <header>
-      {/* 顶部导航 */}
-      <Header {...props} />
-
-      {/* 通知横幅 */}
-      {router.route === '/' ? (
-        <>
-          <NoticeBar />
-          <Hero {...props} />
-        </>
-      ) : null}
-      {fullWidth ? null : <PostHeader {...props} isDarkMode={isDarkMode} />}
-    </header>
-  )
-
-  // 右侧栏 用户信息+标签列表
-  const slotRight =
-    router.route === '/404' || fullWidth ? null : <SideRight {...props} />
-
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
-
-  const HEO_HERO_BODY_REVERSE = siteConfig(
-    'HEO_HERO_BODY_REVERSE',
-    false,
-    CONFIG
-  )
-  const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
-
-  // 加载wow动画
   useEffect(() => {
     loadWowJS()
   }, [])
 
   return (
     <div
-      id='theme-heo'
-      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      id='theme-proxio'
+      className={`${siteConfig('FONT_STYLE')} min-h-screen flex-col flex dark:bg-dark scroll-smooth`}>
       <Style />
-
-      {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
-      {headerSlot}
-
-      {/* 主区块 */}
-      <main
-        id='wrapper-outer'
-        className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5`}>
-        <div
-          id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} w-full mx-auto lg:flex justify-center relative z-10`}>
-          <div className={`w-full h-auto ${className || ''}`}>
-            {/* 主区上部嵌入 */}
-            {slotTop}
-            {children}
-          </div>
-
-          <div className='lg:px-2'></div>
-
-          <div className='hidden xl:block'>
-            {/* 主区快右侧 */}
-            {slotRight}
-          </div>
-        </div>
-      </main>
-
-      {/* 页脚 */}
-      <Footer />
-
-      {HEO_LOADING_COVER && <LoadingCover />}
+      <Header {...props} />
+      <div id='main-wrapper' className='grow'>
+        {children}
+      </div>
+      <Footer {...props} />
+      <BackToTopButton />
+      <Lenis />
+      <CursorDot />
     </div>
   )
 }
 
 /**
- * 首页
- * 是一个博客列表，嵌入一个Hero大图
- * @param {*} props
- * @returns
+ * 首页布局 — IGNAI 品牌社区
  */
 const LayoutIndex = props => {
   return (
-    <div id='post-outer-wrapper' className='px-5 md:px-0'>
-      {/* 文章分类条 */}
-      <CategoryBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogPostListPage {...props} />
-      ) : (
-        <BlogPostListScroll {...props} />
-      )}
-    </div>
+    <main className='ignai-home-shell'>
+      <HeroSection />
+      <WhatIsSection />
+      <CultureSection />
+      <UpcomingEventsSection />
+      <FieldNotesSection />
+      <CommunityRolesSection />
+      <JoinSection />
+    </main>
   )
 }
 
 /**
- * 博客列表
- * @param {*} props
- * @returns
+ * 文章详情页布局
  */
-const LayoutPostList = props => {
+const LayoutSlug = props => {
+  const { post, lock, validPassword } = props
+
   return (
-    <div id='post-outer-wrapper' className='px-5  md:px-0'>
-      {/* 文章分类条 */}
-      <CategoryBar {...props} />
-      {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogPostListPage {...props} />
-      ) : (
-        <BlogPostListScroll {...props} />
-      )}
-    </div>
+    <>
+      <Banner title={post?.title} description={post?.summary} />
+      <div className='container grow'>
+        <div className='flex flex-wrap justify-center -mx-4'>
+          <div id='container-inner' className='w-full p-4'>
+            {lock && <ArticleLock validPassword={validPassword} />}
+            {!lock && post && (
+              <div id='article-wrapper' className='mx-auto'>
+                <NotionPage {...props} />
+                <Comment frontMatter={post} />
+                <ShareBar post={post} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
 /**
  * 搜索
- * @param {*} props
- * @returns
  */
 const LayoutSearch = props => {
   const { keyword } = props
@@ -181,322 +140,583 @@ const LayoutSearch = props => {
   const currentSearch = keyword || router?.query?.s
 
   useEffect(() => {
-    // 高亮搜索结果
-    if (currentSearch) {
-      setTimeout(() => {
-        replaceSearchResult({
-          doms: document.getElementsByClassName('replace'),
-          search: currentSearch,
-          target: {
-            element: 'span',
-            className: 'text-red-500 border-b border-dashed'
-          }
-        })
-      }, 100)
+    if (isBrowser) {
+      replaceSearchResult({
+        doms: document.getElementById('posts-wrapper'),
+        search: keyword,
+        target: {
+          element: 'span',
+          className: 'text-red-500 border-b border-dashed'
+        }
+      })
     }
   }, [])
+
   return (
-    <div currentSearch={currentSearch}>
-      <div id='post-outer-wrapper' className='px-5  md:px-0'>
-        {!currentSearch ? (
-          <SearchNav {...props} />
-        ) : (
-          <div id='posts-wrapper'>
-            {siteConfig('POST_LIST_STYLE') === 'page' ? (
-              <BlogPostListPage {...props} />
-            ) : (
-              <BlogPostListScroll {...props} />
-            )}
-          </div>
-        )}
-      </div>
-    </div>
+    <section className='max-w-7xl mx-auto bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
+      <SearchInput {...props} />
+      {currentSearch && <Blog {...props} />}
+    </section>
   )
 }
 
 /**
- * 归档
- * @param {*} props
- * @returns
+ * 文章归档
  */
-const LayoutArchive = props => {
-  const { archivePosts } = props
-
-  // 归档页顶部显示条，如果是默认归档则不显示。分类详情页显示分类列表，标签详情页显示当前标签
-
-  return (
-    <div className='p-5 rounded-xl border dark:border-gray-600 max-w-6xl w-full bg-white dark:bg-[#1e1e1e]'>
-      {/* 文章分类条 */}
-      <CategoryBar {...props} border={false} />
-
-      <div className='px-3'>
-        {Object.keys(archivePosts).map(archiveTitle => (
-          <BlogPostArchive
-            key={archiveTitle}
-            posts={archivePosts[archiveTitle]}
-            archiveTitle={archiveTitle}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
+const LayoutArchive = props => <><Blog {...props} /></>
 
 /**
- * 文章详情
- * @param {*} props
- * @returns
- */
-const LayoutSlug = props => {
-  const { post, lock, validPassword } = props
-  const { locale, fullWidth } = useGlobal()
-
-  const [hasCode, setHasCode] = useState(false)
-
-  useEffect(() => {
-    const hasCode = document.querySelectorAll('[class^="language-"]').length > 0
-    setHasCode(hasCode)
-  }, [])
-
-  const commentEnable =
-    siteConfig('COMMENT_TWIKOO_ENV_ID') ||
-    siteConfig('COMMENT_WALINE_SERVER_URL') ||
-    siteConfig('COMMENT_VALINE_APP_ID') ||
-    siteConfig('COMMENT_GISCUS_REPO') ||
-    siteConfig('COMMENT_CUSDIS_APP_ID') ||
-    siteConfig('COMMENT_UTTERRANCES_REPO') ||
-    siteConfig('COMMENT_GITALK_CLIENT_ID') ||
-    siteConfig('COMMENT_WEBMENTION_ENABLE')
-
-  const router = useRouter()
-  const waiting404 = siteConfig('POST_WAITING_TIME_FOR_404') * 1000
-  useEffect(() => {
-    // 404
-    if (!post) {
-      setTimeout(
-        () => {
-          if (isBrowser) {
-            const article = document.querySelector(
-              '#article-wrapper #notion-article'
-            )
-            if (!article) {
-              router.push('/404').then(() => {
-                console.warn('找不到页面', router.asPath)
-              })
-            }
-          }
-        },
-        waiting404
-      )
-    }
-  }, [post])
-  return (
-    <>
-      <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
-        {/* 文章锁 */}
-        {lock && <PostLock validPassword={validPassword} />}
-
-        {!lock && post && (
-          <div className='mx-auto md:w-full md:px-5'>
-            {/* 文章主体 */}
-            <article
-              id='article-wrapper'
-              itemScope
-              itemType='https://schema.org/Movie'>
-              {/* Notion文章主体 */}
-              <section
-                className='wow fadeInUp p-5 justify-center mx-auto'
-                data-wow-delay='.2s'>
-                <ArticleExpirationNotice post={post} />
-                <AISummary aiSummary={post.aiSummary} />
-                <WWAds orientation='horizontal' className='w-full' />
-                {post && <NotionPage post={post} />}
-                <WWAds orientation='horizontal' className='w-full' />
-              </section>
-
-              {/* 上一篇\下一篇文章 */}
-              <PostAdjacent {...props} />
-
-              {/* 分享 */}
-              <ShareBar post={post} />
-              {post?.type === 'Post' && (
-                <div className='px-5'>
-                  {/* 版权 */}
-                  <PostCopyright {...props} />
-                  {/* 文章推荐 */}
-                  <PostRecommend {...props} />
-                </div>
-              )}
-            </article>
-
-            {/* 评论区 */}
-            {fullWidth ? null : (
-              <div className={`${commentEnable && post ? '' : 'hidden'}`}>
-                <hr className='my-4 border-dashed' />
-                {/* 评论区上方广告 */}
-                <div className='py-2'>
-                  <AdSlot />
-                </div>
-                {/* 评论互动 */}
-                <div className='duration-200 overflow-x-auto px-5'>
-                  <div className='text-2xl dark:text-white'>
-                    <i className='fas fa-comment mr-1' />
-                    {locale.COMMON.COMMENTS}
-                  </div>
-                  <Comment frontMatter={post} className='' />
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      <FloatTocButton {...props} />
-    </>
-  )
-}
-
-/**
- * 404
- * @param {*} props
- * @returns
+ * 404页面
  */
 const Layout404 = props => {
-  // const { meta, siteInfo } = props
-  const { onLoading, fullWidth } = useGlobal()
   return (
-    <>
-      {/* 主区块 */}
-      <main
-        id='wrapper-outer'
-        className={`flex-grow ${fullWidth ? '' : 'max-w-4xl'} w-screen mx-auto px-5`}>
-        <div id='error-wrapper' className={'w-full mx-auto justify-center'}>
-          <Transition
-            show={!onLoading}
-            appear={true}
-            enter='transition ease-in-out duration-700 transform order-first'
-            enterFrom='opacity-0 translate-y-16'
-            enterTo='opacity-100'
-            leave='transition ease-in-out duration-300 transform'
-            leaveFrom='opacity-100 translate-y-0'
-            leaveTo='opacity-0 -translate-y-16'
-            unmount={false}>
-            {/* 404卡牌 */}
-            <div className='error-content flex flex-col md:flex-row w-full mt-12 h-[30rem] md:h-96 justify-center items-center bg-white dark:bg-[#1B1C20] border dark:border-gray-800 rounded-3xl'>
-              {/* 左侧动图 */}
-              <LazyImage
-                className='error-img h-60 md:h-full p-4'
-                src={
-                  'https://bu.dusays.com/2023/03/03/6401a7906aa4a.gif'
-                }></LazyImage>
+    <section className='py-20 lg:py-[110px]'>
+      <div className='container mx-auto'>
+        <div className='flex flex-wrap items-center -mx-4'>
+          <div className='w-full px-4 text-center'>
+            <div className='mb-8'>
+              <SVG404 />
+            </div>
+            <h3 className='mb-5 text-2xl font-semibold text-white'>
+              {siteConfig('IGNAI_404_TITLE')}
+            </h3>
+            <p className='mb-8 text-base text-white/56'>
+              {siteConfig('IGNAI_404_TEXT')}
+            </p>
+            <SmartLink
+              href='/'
+              className='ignai-cta-primary'>
+              {siteConfig('IGNAI_404_BACK')}
+            </SmartLink>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
-              {/* 右侧文字 */}
-              <div className='error-info flex-1 flex flex-col justify-center items-center space-y-4'>
-                <h1 className='error-title font-extrabold md:text-9xl text-7xl dark:text-white'>
-                  404
-                </h1>
-                <div className='dark:text-white'>请尝试站内搜索寻找文章</div>
-                <SmartLink href='/'>
-                  <button className='bg-blue-500 py-2 px-4 text-white shadow rounded-lg hover:bg-blue-600 hover:shadow-md duration-200 transition-all'>
-                    回到主页
-                  </button>
-                </SmartLink>
+/**
+ * 博客列表
+ */
+const LayoutPostList = props => {
+  const { posts, category, tag } = props
+  const slotTitle = category || tag
+
+  return (
+    <section className='pb-10 pt-20 lg:pb-20 lg:pt-[120px]'>
+      <div className='container mx-auto'>
+        <div className='-mx-4 flex flex-wrap justify-center'>
+          <div className='w-full px-4'>
+            <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
+              {slotTitle && (
+                <h2 className='mb-4 text-3xl font-bold text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
+                  {slotTitle}
+                </h2>
+              )}
+              {!slotTitle && (
+                <>
+                  <span className='ignai-badge mb-4 inline-block'>
+                    {siteConfig('IGNAI_BLOG_TITLE')}
+                  </span>
+                  <h2 className='mb-4 text-3xl font-bold text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
+                    {siteConfig('IGNAI_BLOG_TEXT_1')}
+                  </h2>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className='-mx-4 flex flex-wrap'>
+          {posts?.map((item, index) => (
+            <div key={index} className='w-full px-4 md:w-1/2 lg:w-1/3'>
+              <div className='wow fadeInUp group mb-10' data-wow-delay='.1s'>
+                <div className='mb-8 overflow-hidden rounded-[8px] border border-white/8'>
+                  <SmartLink href={item?.href} className='block'>
+                    <img
+                      src={item.pageCoverThumbnail}
+                      alt={item.title}
+                      className='w-full transition group-hover:scale-105 duration-300'
+                    />
+                  </SmartLink>
+                </div>
+                <div>
+                  <span className='ignai-badge mb-4 inline-block'>
+                    {item.publishDay}
+                  </span>
+                  <h3>
+                    <SmartLink
+                      href={item?.href}
+                      className='mb-4 inline-block text-xl font-semibold text-white hover:text-[#FF7A18] sm:text-2xl lg:text-xl xl:text-2xl'>
+                      {item.title}
+                    </SmartLink>
+                  </h3>
+                  <p className='max-w-[370px] text-base text-white/56'>
+                    {item.summary}
+                  </p>
+                </div>
               </div>
             </div>
-
-            {/* 404页面底部显示最新文章 */}
-            <div className='mt-12'>
-              <LatestPostsGroup {...props} />
-            </div>
-          </Transition>
+          ))}
         </div>
-      </main>
-    </>
+      </div>
+    </section>
   )
 }
 
 /**
  * 分类列表
- * @param {*} props
- * @returns
  */
 const LayoutCategoryIndex = props => {
   const { categoryOptions } = props
   const { locale } = useGlobal()
-
   return (
-    <div id='category-outer-wrapper' className='mt-8 px-5 md:px-0'>
-      <div className='text-4xl font-extrabold dark:text-gray-200 mb-5'>
-        {locale.COMMON.CATEGORY}
-      </div>
-      <div
-        id='category-list'
-        className='duration-200 flex flex-wrap m-10 justify-center'>
-        {categoryOptions?.map(category => {
-          return (
-            <SmartLink
-              key={category.name}
-              href={`/category/${category.name}`}
-              passHref
-              legacyBehavior>
-              <div
-                className={
-                  'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
-                }>
-                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
-                {category.name}
-                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
-                  {category.count}
-                </div>
-              </div>
+    <section className='pb-10 pt-20 lg:pb-20 lg:pt-[120px]'>
+      <div className='container mx-auto min-h-96'>
+        <span className='ignai-badge mb-4 inline-flex justify-center items-center w-full'>
+          {locale.COMMON.CATEGORY}
+        </span>
+        <div id='category-list' className='duration-200 flex flex-wrap justify-center items-center'>
+          {categoryOptions?.map(category => (
+            <SmartLink key={category.name} href={`/category/${category.name}`} passHref legacyBehavior>
+              <h2 className='hover:text-[#FF7A18] text-2xl font-semibold text-white/72 sm:text-4xl md:text-[40px] md:leading-[1.2] px-5 cursor-pointer py-2 hover:bg-white/4 rounded-lg'>
+                <i className='mr-4 fas fa-folder' />
+                {category.name}({category.count})
+              </h2>
             </SmartLink>
-          )
-        })}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   )
 }
 
 /**
  * 标签列表
- * @param {*} props
- * @returns
  */
 const LayoutTagIndex = props => {
   const { tagOptions } = props
   const { locale } = useGlobal()
-
   return (
-    <div id='tag-outer-wrapper' className='px-5 mt-8 md:px-0'>
-      <div className='text-4xl font-extrabold dark:text-gray-200 mb-5'>
-        {locale.COMMON.TAGS}
+    <section className='pb-10 pt-20 lg:pb-20 lg:pt-[120px]'>
+      <div className='container mx-auto min-h-96'>
+        <span className='ignai-badge mb-4 inline-flex justify-center items-center w-full'>
+          {locale.COMMON.TAGS}
+        </span>
+        <div id='tags-list' className='duration-200 flex flex-wrap justify-center items-center'>
+          {tagOptions.map(tag => (
+            <div key={tag.name} className='p-2'>
+              <SmartLink
+                key={tag}
+                href={`/tag/${encodeURIComponent(tag.name)}`}
+                passHref
+                className='cursor-pointer inline-block rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-white/56 hover:border-[#FF7A18]/24 hover:text-[#FF7A18] duration-200'>
+                <div className='font-light'>
+                  <i className='mr-1 fas fa-tag' />
+                  {tag.name + (tag.count ? `(${tag.count})` : '')}
+                </div>
+              </SmartLink>
+            </div>
+          ))}
+        </div>
       </div>
-      <div
-        id='tag-list'
-        className='duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center'>
-        {tagOptions.map(tag => {
-          return (
+    </section>
+  )
+}
+
+function HeroSection() {
+  return (
+    <section className='ignai-hero-section'>
+      <div className='ignai-home-container section-grid ignai-hero-grid'>
+        <div className='ignai-home-copy'>
+          <div className='eyebrow-label'>
+            <span className='ignai-dot' />
+            {siteContent.eyebrow}
+          </div>
+          <p className='section-eyebrow mt-8 text-[#f0d48d]/84'>{siteContent.name}</p>
+          <h1 className='display-title mt-4 max-w-[14ch]'>{siteContent.slogan}</h1>
+          <p className='section-lead mt-7 max-w-[17ch] font-medium'>
+            在 AGI 到来之前，
+            <br />
+            先点燃一群真实行动的人。
+          </p>
+          <p className='section-body mt-6'>
+            {siteContent.heroSummary}
+            <br />
+            <span className='text-white/56'>{siteContent.heroDescription}</span>
+          </p>
+          <div className='mt-10 flex flex-col gap-4 sm:flex-row'>
+            <SmartLink href='/join' className='ignai-cta-primary'>
+              加入社区
+            </SmartLink>
+            <SmartLink href='#upcoming-events' className='ignai-cta-secondary'>
+              查看近期活动
+            </SmartLink>
+          </div>
+        </div>
+
+        <div className='ignai-home-visual'>
+          <div className='surface-card-strong overflow-hidden p-4 sm:p-5'>
+            <div className='relative overflow-hidden rounded-lg border border-white/10 bg-black/50'>
+              <img
+                src='/images/generated/local-global-embers.png'
+                alt='Warm local embers and blue signal lines'
+                className='ignai-hero-image'
+              />
+              <div className='ignai-hero-image-overlay' />
+              <div className='ignai-hero-badge'>Local roots / Global signal</div>
+              <div className='ignai-hero-caption'>
+                让本地土壤和全球信号，
+                <br />
+                同时亮起来。
+              </div>
+            </div>
+
+            <div className='ignai-signal-grid mt-6'>
+              {siteContent.heroSignals.map((signal, index) => (
+                <div key={signal.title}>
+                  <p
+                    className={`text-[0.7rem] font-medium uppercase ${
+                      index === 1 ? 'text-[#9aceff]' : 'text-[#f0c78e]/84'
+                    }`}
+                  >
+                    {signal.eyebrow}
+                  </p>
+                  <h3 className='mt-3 text-base font-semibold leading-[1.32] text-white'>
+                    {signal.title}
+                  </h3>
+                  <p className='mt-2 text-sm leading-6 text-white/64'>
+                    {signal.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function WhatIsSection() {
+  return (
+    <section id='what-is-ignai' className='ignai-home-section'>
+      <div className='ignai-home-container section-grid-start'>
+        <div className='section-copy'>
+          <p className='section-eyebrow'>01 / What is IGNAI</p>
+          <h2 className='display-title mt-6 max-w-[12ch]'>
+            What is
+            <br />
+            IGNAI?
+          </h2>
+          <p className='section-lead mt-6 max-w-[15ch] font-medium'>
+            {whatIsContent.definitionLines[0]}
+            <br />
+            {whatIsContent.definitionLines[1]}
+          </p>
+          <p className='section-body mt-5'>{whatIsContent.support}</p>
+        </div>
+
+        <div>
+          <p className='section-eyebrow mb-5'>Community Members</p>
+          <div className='open-grid'>
+            {whatIsContent.memberCards.map((card, index) => (
+              <div key={card.title} className='open-grid-item'>
+                <p
+                  className={`card-eyebrow ${
+                    index % 2 === 1 ? 'text-[#9aceff]' : 'text-[#F0CB8A]/72'
+                  }`}
+                >
+                  0{index + 1} / {card.eyebrow}
+                </p>
+                <h3 className='card-title'>{card.title}</h3>
+                <p className='card-body'>{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CultureSection() {
+  return (
+    <section id='culture' className='ignai-home-section'>
+      <div className='ignai-home-container section-grid-start'>
+        <div className='section-copy'>
+          <p className='section-eyebrow'>03 / Culture</p>
+          <h2 className='section-title mt-6 max-w-[11ch]'>
+            {cultureContent.titleLines[0]}
+            <br />
+            {cultureContent.titleLines[1]}
+          </h2>
+          <p className='section-lead mt-6 max-w-[18ch] font-medium'>{cultureContent.support}</p>
+          <p className='section-body mt-5'>{cultureContent.paragraph}</p>
+        </div>
+
+        <div className='open-grid'>
+          {cultureContent.cards.map(card => (
+            <div key={card.title} className='open-grid-item presence-card'>
+              <p className='card-eyebrow text-[#F0CB8A]/72'>{card.eyebrow}</p>
+              <h3 className='card-title'>{card.title}</h3>
+              <p className='card-body'>{card.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function UpcomingEventsSection() {
+  return (
+    <section id='upcoming-events' className='ignai-home-section border-t border-white/8'>
+      <div className='ignai-home-container'>
+        <div className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
+          <div>
+            <p className='section-eyebrow'>Upcoming Events</p>
+            <h2 className='section-title mt-6 max-w-[13ch]'>
+              近期活动，
+              <br />
+              真实发生。
+            </h2>
+            <p className='section-body mt-6'>
+              线下聚会、主题共创、工作坊和社区实验，都会在这里持续更新。
+            </p>
+          </div>
+          <div className='flex gap-4'>
+            <SmartLink href='/events' className='ignai-cta-primary'>
+              查看全部活动
+            </SmartLink>
+          </div>
+        </div>
+
+        <div className='mt-16 grid items-stretch gap-6 lg:grid-cols-3'>
+          {events.slice(0, 3).map(event => (
             <SmartLink
-              key={tag.name}
-              href={`/tag/${tag.name}`}
-              passHref
-              legacyBehavior>
-              <div
-                className={
-                  'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
-                }>
-                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
-                {tag.name}
-                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
-                  {tag.count}
+              key={event.slug}
+              href={`/events/${event.slug}`}
+              className='group flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg border border-white/10 bg-[#080d14]/72 transition duration-300 hover:-translate-y-1 hover:border-[#ffb879]/28 hover:bg-[#0a1018]/82 lg:min-h-0'
+            >
+              <div className='relative overflow-hidden'>
+                <img
+                  src={event.cover}
+                  alt=''
+                  className='aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]'
+                />
+                <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
+                <div className='absolute left-4 top-4 rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
+                  {eventStatusLabel[event.status]}
+                </div>
+              </div>
+
+              <div className='flex flex-1 flex-col p-5 sm:p-6'>
+                <div className='flex flex-wrap gap-3 text-sm text-white/56'>
+                  <span>{event.dateText}</span>
+                  <span>
+                    {event.location} · {eventFormatLabel[event.format]}
+                  </span>
+                </div>
+
+                <h3 className='mt-4 min-h-[3.7rem] text-[1.45rem] font-semibold leading-[1.26] text-white transition group-hover:text-[#ffd09a]'>
+                  {event.title}
+                </h3>
+                {event.subtitle ? (
+                  <p className='mt-2 min-h-5 text-sm text-white/42'>{event.subtitle}</p>
+                ) : null}
+                <p className='mt-4 line-clamp-2 text-sm leading-7 text-white/62'>{event.excerpt}</p>
+
+                <div className='mt-auto flex flex-wrap gap-2 pt-5'>
+                  {event.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
             </SmartLink>
-          )
-        })}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
+  )
+}
+
+function FieldNotesSection() {
+  return (
+    <section id='field-notes' className='ignai-home-section border-t border-white/8'>
+      <div className='ignai-home-container'>
+        <div className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
+          <div>
+            <p className='section-eyebrow'>Field Notes</p>
+            <h2 className='section-title mt-6 max-w-[13ch]'>
+              社区现场，
+              <br />
+              沉淀成记录。
+            </h2>
+            <p className='section-body mt-6'>
+              把活动、项目、思考和成员故事沉淀成可以被继续阅读和传播的内容资产。
+            </p>
+          </div>
+          <SmartLink href='/records' className='ignai-cta-secondary'>
+            查看现场记录
+          </SmartLink>
+        </div>
+
+        <div className='mt-16 grid gap-6 lg:grid-cols-3'>
+          {records.slice(0, 3).map((record, index) => (
+            <SmartLink
+              key={record.slug}
+              href={`/records/${record.slug}`}
+              className={`group block overflow-hidden rounded-lg border border-white/10 bg-[#080d14]/68 transition duration-300 hover:-translate-y-1 hover:border-[#7cc8ff]/24 hover:bg-[#0a1018]/78 ${
+                index === 0 ? 'lg:col-span-2' : ''
+              }`}
+            >
+              <div className='p-5 sm:p-6'>
+                <div className='flex flex-wrap items-center justify-between gap-3'>
+                  <div>
+                    <p className='text-sm font-semibold text-white'>IGNAI Field Notes</p>
+                    <p className='mt-1 text-xs text-white/42'>
+                      {record.dateText}
+                      {record.location ? ` · ${record.location}` : ''}
+                    </p>
+                  </div>
+                  <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
+                    {recordTypeLabel[record.type]}
+                  </span>
+                </div>
+
+                <h3 className='mt-6 text-[1.55rem] font-semibold leading-[1.28] text-white transition group-hover:text-[#d4ecff]'>
+                  {record.title}
+                </h3>
+                <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/58'>{record.excerpt}</p>
+              </div>
+
+              <div className='px-5 sm:px-6'>
+                <img
+                  src={record.cover}
+                  alt=''
+                  className='aspect-[2.05] w-full rounded-lg border border-white/8 object-cover'
+                />
+              </div>
+
+              <div className='mt-5 border-t border-white/8 px-5 py-4 sm:px-6'>
+                <div className='flex flex-wrap gap-2'>
+                  {(record.outcomes?.length ? record.outcomes : record.tags).map(item => (
+                    <span
+                      key={item}
+                      className='rounded-full border border-[#7cc8ff]/12 bg-[#08131e]/80 px-3 py-1.5 text-xs text-[#c7e6ff]'
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </SmartLink>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CommunityRolesSection() {
+  return (
+    <section id='community-roles' className='ignai-home-section border-t border-white/8'>
+      <div className='ignai-home-container section-grid-start'>
+        <div className='section-copy'>
+          <p className='section-eyebrow'>Community Roles</p>
+          <h2 className='section-title mt-6 max-w-[11ch]'>这里有谁？</h2>
+          <p className='section-body mt-6'>
+            IGNAI 聚集了一群关注 AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。
+          </p>
+        </div>
+
+        <div className='open-grid'>
+          {roleCards.map((role, index) => (
+            <div key={role.title} className='open-grid-item'>
+              <p className='card-eyebrow'>0{index + 1}</p>
+              <h3 className='card-title'>{role.title}</h3>
+              <p className='card-body'>{role.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function JoinSection() {
+  return (
+    <section id='join' className='ignai-home-section pb-8'>
+      <div className='ignai-home-container'>
+        <div className='relative overflow-hidden border-y border-white/10 py-10 sm:py-12 lg:py-16'>
+          <div className='converge-field'>
+            <span className='converge-ray' style={{ '--ray-y': '20%', '--ray-rotate': '6deg', '--ray-delay': '0s' }} />
+            <span className='converge-ray' style={{ '--ray-y': '42%', '--ray-rotate': '-3deg', '--ray-delay': '1.4s' }} />
+            <span className='converge-ray' style={{ '--ray-y': '66%', '--ray-rotate': '4deg', '--ray-delay': '2.8s' }} />
+          </div>
+
+          <div className='relative grid gap-10 xl:grid-cols-2 xl:items-center xl:gap-[72px]'>
+            <div>
+              <p className='section-eyebrow'>06 / Join</p>
+              <h2 className='display-title mt-6 max-w-[20ch]'>
+                <span className='block sm:whitespace-nowrap'>Join the fire.</span>
+                <span className='block sm:whitespace-nowrap'>Bring your signal.</span>
+              </h2>
+              <p className='section-body mt-6'>{joinContent.support}</p>
+
+              <div className='mt-8 grid max-w-[520px] gap-x-6 border-y border-white/10 sm:grid-cols-2'>
+                {joinContent.benefits.map((benefit, index) => (
+                  <div
+                    key={benefit}
+                    className='flex min-h-12 items-center gap-3 border-t border-white/10 py-3 text-sm leading-6 text-white/72 sm:[&:nth-child(-n+2)]:border-t-0'
+                  >
+                    <span className='flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/20 bg-[#ff9a3c]/10 text-[#f2c892]'>
+                      {index + 1}
+                    </span>
+                    <span>{benefit}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className='mt-10 flex flex-col gap-4 sm:flex-row'>
+                <SmartLink href='/join' className='ignai-cta-primary'>
+                  加入社区
+                </SmartLink>
+                <SmartLink href='/archive' className='ignai-cta-secondary'>
+                  查看社区内容
+                </SmartLink>
+              </div>
+            </div>
+
+            <div className='relative overflow-hidden'>
+              <div className='relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]'>
+                <img
+                  src='/images/generated/collaboration-threads.png'
+                  alt='Warm collaboration threads and blue signal lines'
+                  className='aspect-[1.45] w-full object-cover opacity-90'
+                />
+                <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.14)_0%,rgba(4,6,10,0.1)_30%,rgba(4,6,10,0.88)_100%)]' />
+                <div className='absolute left-4 top-4 rounded-full border border-[#7cc8ff]/20 bg-[#08131e]/72 px-3 py-1.5 text-[0.68rem] uppercase text-[#9aceff]'>
+                  Signal threads
+                </div>
+                <div className='absolute bottom-0 left-0 right-0 p-5'>
+                  <p className='max-w-[16ch] text-xl font-semibold leading-[1.35] text-white'>
+                    把你的表达、行动和信号，
+                    <br />
+                    带进这团火里。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
