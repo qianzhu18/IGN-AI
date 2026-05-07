@@ -120,6 +120,45 @@ const LayoutBase = props => {
     >
       <Style />
       <BackgroundFX />
+
+      {/* Grid Lines — 92px grid pattern */}
+      <div
+        aria-hidden='true'
+        className='pointer-events-none fixed inset-0 z-0 opacity-[0.035]'
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
+          backgroundSize: '92px 92px'
+        }}
+      />
+
+      {/* Noise Overlay — SVG feTurbulence */}
+      <svg
+        aria-hidden='true'
+        className='pointer-events-none fixed inset-0 z-0 h-full w-full opacity-[0.05]'
+        style={{ mixBlendMode: 'overlay' }}
+      >
+        <filter id='ignai-noise'>
+          <feTurbulence
+            type='fractalNoise'
+            baseFrequency='0.75'
+            numOctaves='4'
+            stitchTiles='stitch'
+          />
+        </filter>
+        <rect width='100%' height='100%' filter='url(#ignai-noise)' />
+      </svg>
+
+      {/* Glow Orbs */}
+      <div
+        aria-hidden='true'
+        className='pointer-events-none fixed inset-0 z-0'
+        style={{
+          background:
+            'radial-gradient(ellipse at 16% 10%, rgba(255,122,24,0.14), transparent 32%), radial-gradient(ellipse at 84% 16%, rgba(93,169,255,0.08), transparent 28%)'
+        }}
+      />
+
       <Header {...props} />
       <div id='main-wrapper' className='grow'>
         {children}
