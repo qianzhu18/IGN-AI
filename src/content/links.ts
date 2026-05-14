@@ -1,7 +1,8 @@
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3003";
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://ignai.community";
 const joinUrl =
-  process.env.NEXT_PUBLIC_COMMUNITY_JOIN_URL?.trim() || "#join";
+  process.env.NEXT_PUBLIC_COMMUNITY_JOIN_URL?.trim() || "/join";
+const joinFormUrl = process.env.NEXT_PUBLIC_JOIN_FORM_URL?.trim() || "";
 const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@ignai.community";
 const xiaohongshuUrl = process.env.NEXT_PUBLIC_XIAOHONGSHU_URL?.trim() || "";
@@ -21,12 +22,14 @@ const buildSlot = (
   configured: boolean,
 ): LinkSlot => ({
   label,
-  href: configured ? href : "#join",
+  href: configured ? href : "/join",
   configured,
 });
 
 export const siteLinks = {
   siteUrl,
+  joinFormUrl,
+  joinFormConfigured: Boolean(joinFormUrl),
   contactEmail,
   contactEmailHref: `mailto:${contactEmail}`,
 };

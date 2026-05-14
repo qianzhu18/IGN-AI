@@ -29,7 +29,7 @@ export function AnimatedHeading({
       )}
     >
       <motion.p
-        className="text-xs font-medium uppercase tracking-[0.36em] text-[#F5FF65]/80"
+        className="text-xs font-medium uppercase text-[#F5FF65]/80"
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={viewport}
@@ -60,4 +60,3 @@ export function AnimatedHeading({
     </div>
   );
 }
-

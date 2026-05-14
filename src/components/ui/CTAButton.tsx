@@ -11,6 +11,8 @@ type CTAButtonProps = {
   children: ReactNode;
   variant?: "primary" | "secondary" | "ghost";
   className?: string;
+  ariaLabel?: string;
+  testId?: string;
 };
 
 export function CTAButton({
@@ -18,6 +20,8 @@ export function CTAButton({
   children,
   variant = "primary",
   className,
+  ariaLabel,
+  testId,
 }: CTAButtonProps) {
   const isExternal =
     href.startsWith("http://") ||
@@ -29,6 +33,8 @@ export function CTAButton({
       href={href}
       target={isExternal ? "_blank" : undefined}
       rel={isExternal ? "noreferrer" : undefined}
+      aria-label={ariaLabel}
+      data-testid={testId}
       className={cn(
         "button-shine group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border px-5 py-3 text-sm font-medium transition duration-300",
         variant === "primary" &&

@@ -1,0 +1,285 @@
+# IGNAI 社区官网 V1 架构
+
+## V1 定位
+
+第一版先做成可上线、可维护、可持续更新活动内容的社区官网 MVP：
+
+```text
+IGNAI / 洋来社的社区门面
+可以介绍社区、展示近期活动、沉淀往期记录、引导用户加入
+```
+
+成员系统先进入排期，不作为当前已交付功能。V1 最重要的是让用户感受到：
+
+```text
+这个社区有主张
+有现场
+有记录
+有下一步参与入口
+```
+
+## V1 页面结构
+
+```text
+/                      首页
+/events                近期活动列表
+/events/[slug]         活动详情页
+/records               社区现场记录
+/records/[slug]        记录详情页
+/join                  加入社区入口
+```
+
+保留但不作为 V1 主线：
+
+```text
+/blog                  后续社区文章入口
+/stories               后续成员故事入口
+```
+
+## 首页结构
+
+```text
+01 Hero
+品牌主张 + 加入社区 CTA
+
+02 What is IGNAI
+社区介绍 + 角色组成
+
+03 Culture
+社区文化
+
+04 Upcoming Events
+近期活动图文卡
+
+05 Field Notes
+往期活动记录 / 项目记录
+
+06 Community Roles
+成员角色预览
+
+07 Join
+加入社区 / 联系合作
+```
+
+这一版已经把 `Why Now`、`Identity`、`Traits` 从首页主流程里移除，避免首页过长。
+
+## 内容管理方式
+
+当前版本已经从纯 TypeScript 内容数据升级为 Sanity Studio 内容后台：
+
+```text
+/studio
+```
+
+Sanity 负责：
+
+```text
+近期活动 event
+现场记录 record
+```
+
+待办中的成员展示也建议先进入 Sanity，而不是一开始就上 Supabase。详见：
+
+```text
+doc/成员管理需求评估.md
+```
+
+本地内容仍然保留为兜底：
+
+```text
+src/content/events.ts
+src/content/records.ts
+```
+
+这样上线更稳：Sanity 里有已发布内容时读取 Sanity；Sanity 为空或临时不可用时，页面不会空白。
+
+## 活动数据模型
+
+```ts
+export type EventItem = {
+  slug: string
+  title: string
+  subtitle?: string
+  status: 'open' | 'planning' | 'closed' | 'finished'
+  dateText: string
+  location: string
+  format: 'offline' | 'online' | 'hybrid'
+  cover: string
+  excerpt: string
+  tags: string[]
+  registrationUrl?: string
+  audience: string[]
+  agenda: string[]
+  hosts: string[]
+  notes: string[]
+  content: Array<{ heading: string; body: string }>
+}
+```
+
+活动更新方式：
+
+```text
+1. 打开 /studio
+2. 在「近期活动」中新建或编辑活动
+3. Publish
+4. 官网页面按 60 秒 revalidate 更新
+```
+
+## 记录数据模型
+
+```ts
+export type RecordItem = {
+  slug: string
+  title: string
+  type: 'recap' | 'story' | 'resource' | 'project'
+  dateText: string
+  location?: string
+  cover: string
+  excerpt: string
+  outcomes?: string[]
+  tags: string[]
+  content: Array<{ heading: string; body: string }>
+}
+```
+
+记录更新方式：
+
+```text
+1. 打开 /studio
+2. 在「现场记录」中新建或编辑记录
+3. Publish
+4. 官网页面按 60 秒 revalidate 更新
+```
+
+## Vercel 部署
+
+第一版部署只需要：
+
+```text
+GitHub repo
+Vercel project
+NEXT_PUBLIC_SITE_URL
+NEXT_PUBLIC_CONTACT_EMAIL
+```
+
+这一版已经补齐：
+
+```text
+vercel.json
+.nvmrc
+src/app/sitemap.ts
+src/app/robots.ts
+src/app/not-found.tsx
+```
+
+建议 Vercel 配置：
+
+```text
+Framework Preset: Next.js
+Build Command: npm run build
+Install Command: npm install
+Output Directory: .next
+Node.js Version: 22.x
+```
+
+## 环境变量
+
+V1 必需：
+
+```text
+NEXT_PUBLIC_SITE_URL
+NEXT_PUBLIC_CONTACT_EMAIL
+```
+
+V1 可选：
+
+```text
+NEXT_PUBLIC_COMMUNITY_JOIN_URL
+NEXT_PUBLIC_JOIN_FORM_URL
+NEXT_PUBLIC_WECHAT_URL
+NEXT_PUBLIC_FEISHU_URL
+NEXT_PUBLIC_TELEGRAM_URL
+NEXT_PUBLIC_XIAOHONGSHU_URL
+```
+
+`/join` 页面现在采用 V1 兜底策略：
+
+```text
+配置 NEXT_PUBLIC_JOIN_FORM_URL -> 跳转外部表单
+没有外部表单、没有 Supabase -> 展示 Email 联系入口
+配置 Supabase -> 展示站内申请表单并写入 join_applications
+```
+
+Sanity 必需：
+
+```text
+NEXT_PUBLIC_SANITY_PROJECT_ID
+NEXT_PUBLIC_SANITY_DATASET
+NEXT_PUBLIC_SANITY_API_VERSION
+```
+
+如果 Sanity dataset 改成私有读取，再启用：
+
+```text
+SANITY_API_READ_TOKEN
+```
+
+V2 再启用：
+
+```text
+SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY
+```
+
+## 后续 V2
+
+V2 再做：
+
+```text
+Supabase 报名系统
+成员展示页
+活动日历
+小红书 / 公众号内容同步
+邮件订阅
+活动照片墙
+```
+
+## TODO：成员管理
+
+成员管理已列入排期，但暂不立即实现。
+
+当前判断：
+
+```text
+Sanity 适合第一版公开成员展示
+Supabase 适合第二阶段成员身份、权限、申请、报名和私密数据
+```
+
+推荐排期：
+
+```text
+P0 2026-05-03 - 2026-05-05：确认公开字段、授权规则和首页位置
+P1 2026-05-06 - 2026-05-08：新增 Sanity member schema 和 Studio 成员编辑
+P2 2026-05-09 - 2026-05-12：完成首页成员预览、/members、/members/[slug]
+P3 2026-05-13 - 2026-05-17：按需接入 Supabase 成员业务数据
+```
+
+详细需求评估见：
+
+```text
+doc/成员管理需求评估.md
+```
+
+## V1 验收标准
+
+```text
+1. 首页能清楚介绍 IGNAI
+2. 用户能看到近期活动
+3. 用户能点击活动进入详情页
+4. 用户能看到往期活动记录
+5. 用户能点击记录进入详情页
+6. 用户能通过 CTA 加入社区
+7. 移动端阅读正常
+8. 内容可以通过本地数据快速更新
+9. Vercel 构建通过
+```
