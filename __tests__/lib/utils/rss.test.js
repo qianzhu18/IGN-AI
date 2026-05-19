@@ -110,7 +110,36 @@ describe('generateRss', () => {
         content: '<div>rss-content</div>'
       })
     )
-    expect(fs.writeFileSync).toHaveBeenCalledTimes(3)
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(4)
+    expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+      1,
+      './public/rss/feed.xml',
+      '<rss>ok</rss>'
+    )
+    expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+      2,
+      './public/rss.xml',
+      '<rss>ok</rss>'
+    )
+  })
+
+  it('skips regeneration when the feed file is fresh', async () => {
+    jest.spyOn(fs, 'statSync').mockReturnValue({
+      mtime: new Date()
+    })
+
+    await generateRss({
+      NOTION_CONFIG: {},
+      siteInfo: {
+        title: 'site',
+        description: 'desc',
+        link: 'https://example.com'
+      },
+      latestPosts: []
+    })
+
+    expect(addItemMock).not.toHaveBeenCalled()
+    expect(fs.mkdirSync).not.toHaveBeenCalled()
+    expect(fs.writeFileSync).not.toHaveBeenCalled()
   })
 })
-

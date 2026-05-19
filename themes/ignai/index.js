@@ -18,7 +18,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
-import { Footer } from './components/Footer'
+import Footer from './components/Footer'
 import { Header } from './components/Header'
 import CONFIG from './config'
 import { Style } from './style'
@@ -464,7 +464,7 @@ function HeroSection() {
           <p className='section-eyebrow mt-8 text-[#f0d48d]/84'>
             {siteContent.name}
           </p>
-          <h1 className='display-title mt-4 max-w-[14ch]'>
+          <h1 className='display-title ignai-gradient-title mt-4 max-w-[14ch]'>
             {siteContent.slogan}
           </h1>
           <p className='section-lead mt-7 max-w-[17ch] font-medium'>
@@ -478,7 +478,7 @@ function HeroSection() {
             <span className='text-white/56'>{siteContent.heroDescription}</span>
           </p>
           <div className='mt-10 flex flex-col gap-4 sm:flex-row'>
-            <SmartLink href='/join' className='ignai-cta-primary'>
+            <SmartLink href='/join' className='ignai-cta-primary ignai-motion-cta'>
               加入社区
             </SmartLink>
             <SmartLink href='#upcoming-events' className='ignai-cta-secondary'>
@@ -530,6 +530,16 @@ function HeroSection() {
             </div>
           </div>
         </motion.div>
+      </div>
+
+      {/* Ambient decorative orbs */}
+      <div aria-hidden='true' className='ignai-ambient-orb ignai-orb-heat' style={{ width: 320, height: 320, top: '12%', left: '-4%' }} />
+      <div aria-hidden='true' className='ignai-ambient-orb ignai-orb-signal' style={{ width: 240, height: 240, bottom: '18%', right: '-2%' }} />
+
+      {/* Scroll hint */}
+      <div className='ignai-scroll-hint'>
+        <span>Scroll</span>
+        <svg viewBox='0 0 24 24'><path d='M12 5v14M5 12l7 7 7-7' /></svg>
       </div>
     </section>
   )
@@ -640,10 +650,9 @@ function CultureSection() {
 
 function UpcomingEventsSection() {
   return (
-    <section
-      id='upcoming-events'
-      className='ignai-home-section border-t border-white/8'
-    >
+    <section id='upcoming-events' className='ignai-home-section'>
+      <div className='ignai-section-divider' />
+      <div className='ignai-section-atmosphere' />
       <div className='ignai-home-container'>
         <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
           <div>
@@ -729,10 +738,9 @@ function UpcomingEventsSection() {
 
 function FieldNotesSection() {
   return (
-    <section
-      id='field-notes'
-      className='ignai-home-section border-t border-white/8'
-    >
+    <section id='field-notes' className='ignai-home-section'>
+      <div className='ignai-section-divider' />
+      <div className='ignai-section-atmosphere' />
       <div className='ignai-home-container'>
         <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
           <div>
@@ -818,10 +826,9 @@ function FieldNotesSection() {
 
 function CommunityRolesSection() {
   return (
-    <section
-      id='community-roles'
-      className='ignai-home-section border-t border-white/8'
-    >
+    <section id='community-roles' className='ignai-home-section'>
+      <div className='ignai-section-divider' />
+      <div className='ignai-section-atmosphere' />
       <div className='ignai-home-container section-grid-start'>
         <Reveal className='section-copy'>
           <p className='section-eyebrow'>Community Roles</p>

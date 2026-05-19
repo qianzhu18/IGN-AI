@@ -525,6 +525,245 @@ const Style = () => {
         animation: ignai-ignite-breathe 14s ease-in-out infinite;
       }
 
+      /* ========== v1.0.0 动效迁移：渐变标题 ========== */
+
+      @keyframes ignai-gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      #theme-proxio .ignai-gradient-title {
+        background: linear-gradient(
+          120deg,
+          #fff 0%,
+          #ffd09a 25%,
+          #fff 50%,
+          #9aceff 75%,
+          #fff 100%
+        );
+        background-size: 300% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: ignai-gradient-shift 8s ease-in-out infinite;
+      }
+
+      /* ========== 卡片边框发光动画 ========== */
+
+      @keyframes ignai-card-border-glow {
+        0% {
+          border-image-source: linear-gradient(
+            135deg,
+            rgba(255, 184, 121, 0) 0%,
+            rgba(255, 122, 24, 0.3) 50%,
+            rgba(93, 169, 255, 0) 100%
+          );
+        }
+        50% {
+          border-image-source: linear-gradient(
+            135deg,
+            rgba(93, 169, 255, 0) 0%,
+            rgba(93, 169, 255, 0.3) 50%,
+            rgba(255, 184, 121, 0) 100%
+          );
+        }
+        100% {
+          border-image-source: linear-gradient(
+            135deg,
+            rgba(255, 184, 121, 0) 0%,
+            rgba(255, 122, 24, 0.3) 50%,
+            rgba(93, 169, 255, 0) 100%
+          );
+        }
+      }
+
+      /* ========== 浮动装饰球体 ========== */
+
+      @keyframes ignai-orb-drift-1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(30px, -40px) scale(1.1); }
+        50% { transform: translate(-20px, -60px) scale(0.95); }
+        75% { transform: translate(-40px, -20px) scale(1.05); }
+      }
+
+      @keyframes ignai-orb-drift-2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(-25px, 35px) scale(1.05); }
+        50% { transform: translate(35px, 15px) scale(0.9); }
+        75% { transform: translate(15px, -25px) scale(1.1); }
+      }
+
+      #theme-proxio .ignai-ambient-orb {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        filter: blur(60px);
+        mix-blend-mode: screen;
+      }
+
+      #theme-proxio .ignai-orb-heat {
+        background: radial-gradient(circle, rgba(255, 122, 24, 0.18), transparent 70%);
+        animation: ignai-orb-drift-1 20s ease-in-out infinite;
+      }
+
+      #theme-proxio .ignai-orb-signal {
+        background: radial-gradient(circle, rgba(93, 169, 255, 0.12), transparent 70%);
+        animation: ignai-orb-drift-2 24s ease-in-out infinite;
+      }
+
+      /* ========== Section 动态分割线 ========== */
+
+      @keyframes ignai-divider-flow {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+
+      #theme-proxio .ignai-section-divider {
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 122, 24, 0.2) 20%,
+          rgba(255, 184, 121, 0.4) 50%,
+          rgba(93, 169, 255, 0.2) 80%,
+          transparent 100%
+        );
+        background-size: 200% 100%;
+        animation: ignai-divider-flow 6s linear infinite;
+      }
+
+      /* ========== 卡片 hover 增强发光 ========== */
+
+      #theme-proxio .ignai-unified-card:hover,
+      #theme-proxio .open-grid-item:hover {
+        transform: translateY(-6px) scale(1.01);
+        border-color: rgba(255, 184, 121, 0.24);
+        background: linear-gradient(
+          180deg,
+          rgba(16, 20, 28, 0.96) 0%,
+          rgba(12, 15, 22, 0.94) 100%
+        );
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.04),
+          0 0 40px rgba(255, 122, 24, 0.08),
+          0 32px 100px rgba(0, 0, 0, 0.44);
+      }
+
+      /* ========== Eyebrow 脉冲发光 ========== */
+
+      @keyframes ignai-eyebrow-pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 0 rgba(255, 154, 60, 0);
+        }
+        50% {
+          box-shadow: 0 0 16px 2px rgba(255, 154, 60, 0.12);
+        }
+      }
+
+      #theme-proxio .eyebrow-label {
+        animation: ignai-eyebrow-pulse 5s ease-in-out infinite;
+      }
+
+      /* ========== Section 背景氛围层 ========== */
+
+      #theme-proxio .ignai-section-atmosphere {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      #theme-proxio .ignai-section-atmosphere::before {
+        content: '';
+        position: absolute;
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        left: -10%;
+        background:
+          radial-gradient(ellipse at 30% 50%, rgba(255, 122, 24, 0.04), transparent 50%),
+          radial-gradient(ellipse at 70% 50%, rgba(93, 169, 255, 0.03), transparent 50%);
+        animation: ignai-drift-x 30s ease-in-out infinite;
+      }
+
+      /* ========== 标题逐字渐显 ========== */
+
+      @keyframes ignai-char-reveal {
+        0% {
+          opacity: 0;
+          transform: translateY(8px);
+          filter: blur(4px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+        }
+      }
+
+      #theme-proxio .ignai-char-animate span {
+        display: inline-block;
+        opacity: 0;
+        animation: ignai-char-reveal 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      /* ========== 图片缩放 hover 增强 ========== */
+
+      #theme-proxio .ignai-event-card img,
+      #theme-proxio .ignai-record-card img {
+        transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      #theme-proxio .ignai-event-card:hover img,
+      #theme-proxio .ignai-record-card:hover img {
+        transform: scale(1.06);
+      }
+
+      /* ========== 品牌标签 hover 发光 ========== */
+
+      #theme-proxio .ignai-badge {
+        transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+      }
+
+      #theme-proxio .ignai-badge:hover {
+        border-color: rgba(255, 183, 121, 0.32);
+        background: rgba(255, 154, 60, 0.12);
+        box-shadow: 0 0 20px rgba(255, 154, 60, 0.08);
+      }
+
+      /* ========== Scroll indicator ========== */
+
+      @keyframes ignai-scroll-bounce {
+        0%, 100% { transform: translateY(0); opacity: 0.6; }
+        50% { transform: translateY(8px); opacity: 1; }
+      }
+
+      #theme-proxio .ignai-scroll-hint {
+        position: absolute;
+        bottom: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        animation: ignai-scroll-bounce 2.5s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      #theme-proxio .ignai-scroll-hint svg {
+        width: 16px;
+        height: 16px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 2;
+      }
+
       /* ========== prefers-reduced-motion 全局禁用 ========== */
       @media (prefers-reduced-motion: reduce) {
         *,

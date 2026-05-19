@@ -208,6 +208,11 @@ const nextConfig = {
           source: '/feed',
           destination: '/rss/feed.xml',
           permanent: true
+        },
+        {
+          source: '/rss.xml',
+          destination: '/rss/feed.xml',
+          permanent: true
         }
       ]
     },
