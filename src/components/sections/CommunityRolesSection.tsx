@@ -1,4 +1,4 @@
-import { Reveal } from "@/components/motion/Reveal";
+import { Reveal } from "@/src/components/motion/Reveal";
 
 const roles = [
   {

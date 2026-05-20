@@ -20,6 +20,7 @@
     "dev": "next dev",
     "build": "cross-env BUILD_MODE=true next build",
     "start": "next start",
+    "notion:members:smoke": "node scripts/notion-member-api-smoke.js",
     "post-build": "next-sitemap --config next-sitemap.config.js",
     "export": "cross-env BUILD_MODE=true EXPORT=true next build && next-sitemap --config next-sitemap.config.js",
     "bundle-report": "cross-env ANALYZE=true next build",

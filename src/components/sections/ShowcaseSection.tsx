@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import { Reveal } from "@/components/motion/Reveal";
-import { CompactContentRow, EventListCard } from "@/components/ui/ContentCard";
-import { CTAButton } from "@/components/ui/CTAButton";
-import { platformContent } from "@/content/platform";
+import { Reveal } from "@/src/components/motion/Reveal";
+import { CompactContentRow, EventListCard } from "@/src/components/ui/ContentCard";
+import { CTAButton } from "@/src/components/ui/CTAButton";
+import { platformContent } from "@/src/content/platform";
 import { getCommunityContentItems } from "@/lib/sanity";
 
 export async function ShowcaseSection() {

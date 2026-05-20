@@ -1,6 +1,6 @@
-import { Reveal } from "@/components/motion/Reveal";
-import { EventCard } from "@/components/cards/EventCard";
-import { CTAButton } from "@/components/ui/CTAButton";
+import { Reveal } from "@/src/components/motion/Reveal";
+import { EventCard } from "@/src/components/cards/EventCard";
+import { CTAButton } from "@/src/components/ui/CTAButton";
 import { getUpcomingEvents } from "@/lib/events";
 
 export async function UpcomingEventsSection() {

@@ -5,10 +5,10 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { Sparkles } from "lucide-react";
 import { useRef } from "react";
 
-import { BrandLockup } from "@/components/layout/BrandLockup";
-import { CTAButton } from "@/components/ui/CTAButton";
-import { primaryLinks } from "@/content/links";
-import { siteContent } from "@/content/site";
+import { BrandLockup } from "@/src/components/layout/BrandLockup";
+import { CTAButton } from "@/src/components/ui/CTAButton";
+import { primaryLinks } from "@/src/content/links";
+import { siteContent } from "@/src/content/site";
 
 export function HeroSection() {
   const ref = useRef<HTMLElement | null>(null);

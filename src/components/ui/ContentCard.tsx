@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import type { CommunityContentItem } from "@/content/platform";
+import type { CommunityContentItem } from "@/src/content/platform";
 
 type ContentCardProps = {
   item: CommunityContentItem;

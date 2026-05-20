@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 
-import { PageBackdrop } from "@/components/layout/PageBackdrop";
-import { SiteHeader } from "@/components/layout/SiteHeader";
-import { BackgroundFX } from "@/components/motion/BackgroundFX";
-import { Footer } from "@/components/sections/Footer";
+import { PageBackdrop } from "@/src/components/layout/PageBackdrop";
+import { SiteHeader } from "@/src/components/layout/SiteHeader";
+import { BackgroundFX } from "@/src/components/motion/BackgroundFX";
+import { Footer } from "@/src/components/sections/Footer";
 
 type PageShellProps = {
   children: ReactNode;

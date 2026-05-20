@@ -4,9 +4,9 @@ import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-import { Reveal } from "@/components/motion/Reveal";
-import { SectionContainer } from "@/components/ui/SectionContainer";
-import { whyNowContent } from "@/content/community";
+import { Reveal } from "@/src/components/motion/Reveal";
+import { SectionContainer } from "@/src/components/ui/SectionContainer";
+import { whyNowContent } from "@/src/content/community";
 
 export function WhyNowSection() {
   const ref = useRef<HTMLElement | null>(null);
@@ -90,13 +90,13 @@ export function WhyNowSection() {
                 <motion.div
                   className="surface-card energy-card relative h-full overflow-hidden p-6 sm:p-7"
                   style={{ animationDelay: `${index * 0.85}s` }}
-                  whileInView={
-                    shouldReduceMotion
-                      ? undefined
-                      : {
+                  {...(!shouldReduceMotion
+                    ? {
+                        whileInView: {
                           filter: ["brightness(0.78)", "brightness(1.12)", "brightness(1)"],
-                        }
-                  }
+                        },
+                      }
+                    : {})}
                   viewport={{ once: true, amount: 0.45 }}
                   transition={{ duration: 1.6, delay: index * 0.16, ease: [0.22, 1, 0.36, 1] }}
                 >

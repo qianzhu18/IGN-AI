@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowUpRight, ShieldCheck } from "lucide-react";
 
-import { PageShell } from "@/components/layout/PageShell";
+import { PageShell } from "@/src/components/layout/PageShell";
 
 export type AdminNavItem = {
   href: string;

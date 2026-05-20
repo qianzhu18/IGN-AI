@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { BrandLockup } from "@/components/layout/BrandLockup";
+import { BrandLockup } from "@/src/components/layout/BrandLockup";
 
 const navItems = [
   { label: "Home", href: "/" },

@@ -1,6 +1,6 @@
-import { Reveal } from "@/components/motion/Reveal";
-import { RecordCard } from "@/components/cards/RecordCard";
-import { CTAButton } from "@/components/ui/CTAButton";
+import { Reveal } from "@/src/components/motion/Reveal";
+import { RecordCard } from "@/src/components/cards/RecordCard";
+import { CTAButton } from "@/src/components/ui/CTAButton";
 import { getFeaturedRecords } from "@/lib/records";
 
 export async function FieldNotesSection() {

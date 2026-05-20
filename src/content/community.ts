@@ -84,6 +84,52 @@ export const cultureContent = {
   ],
 };
 
+export const codexGoalsContent = {
+  eyebrow: "02 / Codex Features",
+  titleLines: ["让功能不是摆设，", "而是推动目标。"],
+  intro:
+    "社区里的工具、内容和协作方式，应该帮助成员更快进入真实行动，而不是只停留在展示层。",
+  featureCards: [
+    {
+      title: "Member Identity",
+      description: "成员页、角色信息和公开身份，让人被看见，也更容易被连接。",
+      goals: ["建立个人存在感", "形成可信第一印象"],
+    },
+    {
+      title: "Content Pathways",
+      description: "文章、记录和成员关系打通，让表达可以自然沉淀为长期资产。",
+      goals: ["把实践写出来", "让内容服务协作"],
+    },
+    {
+      title: "Events and Follow-up",
+      description: "活动、报名和后续连接逐步形成闭环，不让每次见面都只停在当下。",
+      goals: ["从活动走向项目", "把连接变成持续关系"],
+    },
+  ],
+  goalRows: [
+    {
+      goal: "被看见",
+      feature: "成员目录 + 详情页",
+      outcome: "新人能快速理解你是谁、在做什么、想连接什么。",
+    },
+    {
+      goal: "被理解",
+      feature: "相关文章与实践记录",
+      outcome: "别人不只看到头像，也能看到你的判断、作品和推进方式。",
+    },
+    {
+      goal: "被连接",
+      feature: "活动与组织表达",
+      outcome: "合适的人能顺着内容、角色和场景找到彼此。",
+    },
+    {
+      goal: "被放大",
+      feature: "社区信息流与持续更新",
+      outcome: "一次表达不会很快消失，而是进入社区的长期记忆。",
+    },
+  ],
+};
+
 export const identityContent = {
   titleLines: ["有技术密度，", "也有人的温度。"],
   support:

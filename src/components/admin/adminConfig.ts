@@ -1,4 +1,4 @@
-import type { AdminNavItem } from "@/components/admin/AdminShell";
+import type { AdminNavItem } from "@/src/components/admin/AdminShell";
 
 export const adminNavItems: AdminNavItem[] = [
   {

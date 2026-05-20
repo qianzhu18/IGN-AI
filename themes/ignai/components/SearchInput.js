@@ -1,14 +1,18 @@
+import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
-import { useGlobal } from '@/lib/global'
+
 let lock = false
 
-const SearchInput = props => {
-  const { currentSearch, cRef, className } = props
-  const [onLoading, setLoadingState] = useState(false)
-  const router = useRouter()
-  const searchInputRef = useRef()
+/**
+ * 搜索输入框
+ * @param {*} param0
+ * @returns
+ */
+const SearchInput = ({ currentTag, keyword, cRef }) => {
   const { locale } = useGlobal()
+  const router = useRouter()
+  const searchInputRef = useRef(null)
   useImperativeHandle(cRef, () => {
     return {
       focus: () => {
@@ -16,15 +20,10 @@ const SearchInput = props => {
       }
     }
   })
-
   const handleSearch = () => {
     const key = searchInputRef.current.value
     if (key && key !== '') {
-      setLoadingState(true)
-      router.push({ pathname: '/search/' + key }).then(r => {
-        setLoadingState(false)
-      })
-      // location.href = '/search/' + key
+      router.push({ pathname: '/search/' + key }).then(r => {})
     } else {
       router.push({ pathname: '/' }).then(r => {})
     }
@@ -40,66 +39,68 @@ const SearchInput = props => {
   }
   const cleanSearch = () => {
     searchInputRef.current.value = ''
+    setShowClean(false)
+  }
+  function lockSearchInput() {
+    lock = true
   }
 
+  function unLockSearchInput() {
+    lock = false
+  }
   const [showClean, setShowClean] = useState(false)
   const updateSearchKey = val => {
     if (lock) {
       return
     }
     searchInputRef.current.value = val
-
     if (val) {
       setShowClean(true)
     } else {
       setShowClean(false)
     }
   }
-  function lockSearchInput () {
-    lock = true
-  }
-
-  function unLockSearchInput () {
-    lock = false
-  }
 
   return (
-    <div className={'flex w-full rounded-lg ' + className}>
+    <section className='flex w-full bg-gray-100'>
       <input
         ref={searchInputRef}
-        type="text"
+        type='text'
+        placeholder={
+          currentTag
+            ? `${locale.SEARCH.TAGS} #${currentTag}`
+            : `${locale.SEARCH.ARTICLES}`
+        }
         className={
-          'outline-none w-full text-sm pl-5 rounded-lg transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-white dark:bg-gray-500'
+          'outline-none w-full text-sm pl-4 transition focus:shadow-lg font-light leading-10 text-black bg-gray-100 dark:bg-gray-900 dark:text-white'
         }
         onKeyUp={handleKeyUp}
         onCompositionStart={lockSearchInput}
         onCompositionUpdate={lockSearchInput}
         onCompositionEnd={unLockSearchInput}
-        placeholder={locale.SEARCH.ARTICLES}
         onChange={e => updateSearchKey(e.target.value)}
-        defaultValue={currentSearch || ''}
+        defaultValue={keyword || ''}
       />
 
       <div
-        className="-ml-8 cursor-pointer  float-right items-center justify-center py-2"
-        onClick={handleSearch}
-      >
+        className='-ml-8 cursor-pointer float-right items-center justify-center py-2'
+        onClick={handleSearch}>
         <i
-          className={`hover:text-black transform duration-200 text-gray-500 dark:text-gray-200 cursor-pointer fas ${
-            onLoading ? 'fa-spinner animate-spin' : 'fa-search'
-          }`}
+          className={
+            'hover:text-black transform duration-200  text-gray-500 cursor-pointer fas fa-search'
+          }
         />
       </div>
 
       {showClean && (
-        <div className="-ml-12 cursor-pointer float-right items-center justify-center py-2">
+        <div className='-ml-12 cursor-pointer dark:bg-gray-600 dark:hover:bg-gray-800 float-right items-center justify-center py-2'>
           <i
-            className="hover:text-black transform duration-200 text-gray-400 dark:text-gray-300 cursor-pointer fas fa-times"
+            className='hover:text-black transform duration-200 text-gray-400 cursor-pointer fas fa-times'
             onClick={cleanSearch}
           />
         </div>
       )}
-    </div>
+    </section>
   )
 }
 

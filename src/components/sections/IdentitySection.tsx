@@ -4,9 +4,9 @@ import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-import { Reveal } from "@/components/motion/Reveal";
-import { SectionContainer } from "@/components/ui/SectionContainer";
-import { identityContent } from "@/content/community";
+import { Reveal } from "@/src/components/motion/Reveal";
+import { SectionContainer } from "@/src/components/ui/SectionContainer";
+import { identityContent } from "@/src/content/community";
 
 export function IdentitySection() {
   const ref = useRef<HTMLElement | null>(null);

@@ -27,6 +27,7 @@ import replaceSearchResult from '@/components/Mark'
 import ShareBar from '@/components/ShareBar'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
+import Link from 'next/link'
 import SmartLink from '@/components/SmartLink'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
@@ -47,6 +48,11 @@ import {
   events
 } from '@/src/content/events'
 import { recordTypeLabel, records } from '@/src/content/records'
+import {
+  isFeaturedMember,
+  getMemberQuote,
+  getMemberJoinedAtText
+} from '@/lib/utils/member'
 
 const BackgroundFX = dynamic(
   () => import('./components/BackgroundFX').then(mod => mod.BackgroundFX),
@@ -182,7 +188,7 @@ const LayoutIndex = props => {
       <CultureSection />
       <UpcomingEventsSection />
       <FieldNotesSection />
-      <CommunityRolesSection />
+      <CommunityRolesSection allMembers={props.allMembers || []} />
       <JoinSection />
     </main>
   )
@@ -824,32 +830,90 @@ function FieldNotesSection() {
   )
 }
 
-function CommunityRolesSection() {
+function CommunityRolesSection({ allMembers = [] }) {
+  const hasMembers = Array.isArray(allMembers) && allMembers.length > 0
+  const displayMembers = allMembers.slice(0, 8)
+
   return (
     <section id='community-roles' className='ignai-home-section'>
       <div className='ignai-section-divider' />
       <div className='ignai-section-atmosphere' />
       <div className='ignai-home-container section-grid-start'>
         <Reveal className='section-copy'>
-          <p className='section-eyebrow'>Community Roles</p>
+          <p className='section-eyebrow'>Community Members</p>
           <h2 className='section-title mt-6 max-w-[11ch]'>这里有谁？</h2>
           <p className='section-body mt-6'>
-            IGNAI 聚集了一群关注
-            AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。
+            {hasMembers
+              ? 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。'
+              : 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。'}
           </p>
         </Reveal>
 
-        <div className='open-grid'>
-          {roleCards.map((role, index) => (
-            <Reveal key={role.title} delay={index * 0.08}>
-              <div className='open-grid-item ignai-unified-card'>
-                <p className='card-eyebrow'>0{index + 1}</p>
-                <h3 className='card-title'>{role.title}</h3>
-                <p className='card-body'>{role.description}</p>
-              </div>
+        {hasMembers ? (
+          <div className='open-grid'>
+            {displayMembers.map((member, index) => {
+              const slug = member?.slug || member?.id || ''
+              const path = String(slug).replace(/^\/+/, '')
+              const href = path.startsWith('members/') ? `/${path}` : `/members/${path.split('/').filter(Boolean).pop()}`
+              const avatar = member?.avatar || member?.pageIcon || '/avatar.svg'
+              const quote = getMemberQuote(member)
+              const joined = getMemberJoinedAtText(member)
+
+              return (
+                <Reveal key={member.id || member.slug} delay={index * 0.08}>
+                  <Link href={href} className='open-grid-item ignai-unified-card block no-underline'>
+                    <div className='flex items-center gap-3 mb-3'>
+                      <img
+                        src={avatar}
+                        alt={member.title}
+                        className='h-10 w-10 rounded-full object-cover ring-1 ring-white/10'
+                      />
+                      <div className='min-w-0 flex-1'>
+                        <h3 className='card-title !mb-0 text-base'>{member.title}</h3>
+                        <div className='flex flex-wrap items-center gap-x-2 text-xs text-neutral-400 mt-0.5'>
+                          {member.role && <span>{member.role}</span>}
+                          {joined && <span>Joined {joined}</span>}
+                        </div>
+                      </div>
+                    </div>
+                    <p className='card-body text-sm'>
+                      {member.bio || member.summary || ''}
+                    </p>
+                    {quote && (
+                      <p className='mt-2 text-xs italic text-neutral-400 line-clamp-2'>
+                        &ldquo;{quote}&rdquo;
+                      </p>
+                    )}
+                    {isFeaturedMember(member) && (
+                      <span className='mt-2 inline-block rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] text-emerald-200'>
+                        Featured
+                      </span>
+                    )}
+                  </Link>
+                </Reveal>
+              )
+            })}
+            <Reveal delay={displayMembers.length * 0.08}>
+              <Link href='/members' className='open-grid-item ignai-unified-card flex items-center justify-center no-underline'>
+                <span className='text-sm text-neutral-300 hover:text-white transition'>
+                  View all members &rarr;
+                </span>
+              </Link>
             </Reveal>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div className='open-grid'>
+            {roleCards.map((role, index) => (
+              <Reveal key={role.title} delay={index * 0.08}>
+                <div className='open-grid-item ignai-unified-card'>
+                  <p className='card-eyebrow'>0{index + 1}</p>
+                  <h3 className='card-title'>{role.title}</h3>
+                  <p className='card-body'>{role.description}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

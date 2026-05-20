@@ -43,9 +43,10 @@ export function JoinSubmissionsPanel({ initialItems }: JoinSubmissionsPanelProps
 
     const payload = (await response.json()) as { data?: JoinApplicationRecord };
 
-    if (payload.data) {
+    const updatedItem = payload.data;
+    if (updatedItem) {
       setItems((current) =>
-        current.map((item) => (item.id === id ? payload.data! : item)),
+        current.map((item) => (item.id === id ? updatedItem : item)),
       );
     }
 
@@ -97,12 +98,21 @@ export function JoinSubmissionsPanel({ initialItems }: JoinSubmissionsPanelProps
       <div className="space-y-4">
         {visibleItems.map((item) => (
           <div key={item.id} className="surface-card-strong p-5 sm:p-6">
+            {(() => {
+              const memberProfile = item.metadata?.member_profile;
+              const profileLinks: Array<{ label: string; href: string }> = [
+                { label: "Website", href: memberProfile?.website || "" },
+                { label: "GitHub", href: memberProfile?.github || "" },
+                { label: "小红书", href: memberProfile?.xiaohongshu || "" },
+              ].filter((entry) => entry.href.trim());
+
+              return (
             <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-3">
                   <h3 className="text-[1.15rem] font-semibold text-white">{item.name}</h3>
                   <span className="rounded-full border border-[#ffb879]/16 bg-[#0d1118]/88 px-3 py-1 text-xs text-[#ffd09a]">
-                    {joinStatusLabel[item.status as JoinApplicationStatus]}
+                    {joinStatusLabel[item.status]}
                   </span>
                   {item.metadata?.is_test ? (
                     <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/52">
@@ -132,6 +142,34 @@ export function JoinSubmissionsPanel({ initialItems }: JoinSubmissionsPanelProps
                 <div className="mt-4 rounded-[18px] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm leading-7 text-white/72">
                   {item.message || "暂无附加说明。"}
                 </div>
+
+                {memberProfile ? (
+                  <div className="mt-4 rounded-[18px] border border-[#7cc8ff]/12 bg-[#09111b]/82 px-4 py-4">
+                    <p className="card-eyebrow">Member draft</p>
+                    <div className="mt-3 grid gap-3 text-sm text-white/66 sm:grid-cols-2">
+                      <p>头像链接：{memberProfile.avatarUrl || "未填写"}</p>
+                      <p>一句话：{memberProfile.headline || "未填写"}</p>
+                    </div>
+
+                    {profileLinks.length > 0 ? (
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {profileLinks.map((link) => (
+                          <a
+                            key={`${item.id}-${link.label}`}
+                            href={link.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-white/72 transition hover:border-white/18 hover:text-white"
+                          >
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="mt-4 text-sm text-white/44">还没有可展示的外部链接。</p>
+                    )}
+                  </div>
+                ) : null}
               </div>
 
               <div className="w-full lg:max-w-[280px]">
@@ -139,7 +177,7 @@ export function JoinSubmissionsPanel({ initialItems }: JoinSubmissionsPanelProps
                 <select
                   value={item.status}
                   onChange={(event) =>
-                    handleStatusChange(item.id, event.target.value as JoinApplicationStatus)
+                    void handleStatusChange(item.id, event.target.value as JoinApplicationStatus)
                   }
                   className="mt-3 w-full rounded-[18px] border border-white/10 bg-[#0b1018] px-4 py-3 text-sm text-white outline-none transition focus:border-[#ffb879]/36"
                 >
@@ -161,6 +199,8 @@ export function JoinSubmissionsPanel({ initialItems }: JoinSubmissionsPanelProps
                 </p>
               </div>
             </div>
+              );
+            })()}
           </div>
         ))}
 

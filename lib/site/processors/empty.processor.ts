@@ -13,6 +13,7 @@ export function EmptyData(pageId?: string): SiteData {
     },
     notice: null,
     allPages: [],
+    allMembers: [],
     allNavPages: [],
     latestPosts: [],
     categoryOptions: [],

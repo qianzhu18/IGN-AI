@@ -6,6 +6,23 @@
 
 暂时不立即开发成员管理功能，先进入 TODO 和排期。
 
+如果后续希望把成员管理中的“公开展示部分”反向沉淀到 NotionNext 上游，请同时参考：
+
+```text
+doc/requirements/req-NotionNext社区能力提案.md
+```
+
+这份文档会把：
+
+```text
+成员头像预览
+bio 展示
+成员目录
+活动与内容分流
+```
+
+拆成更适合提 issue / PR 的上游能力，而不是直接把完整社区运营系统整体上推。
+
 当前项目已经接入 Sanity Studio，用于活动和现场记录编辑。Supabase 目前还没有真正接入生产数据，只保留了加入申请写入的服务端适配代码；只有配置 `SUPABASE_URL` 和 `SUPABASE_SERVICE_ROLE_KEY` 后才会启用。
 
 成员管理第一阶段建议先用 Sanity 做公开成员资料编辑，不急着上 Supabase。

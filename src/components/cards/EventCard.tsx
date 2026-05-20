@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CalendarDays, MapPin } from "lucide-react";
 
-import { eventFormatLabel, eventStatusLabel, type EventItem } from "@/content/events";
+import { eventFormatLabel, eventStatusLabel, type EventItem } from "@/src/content/events";
 
 type EventCardProps = {
   event: EventItem;

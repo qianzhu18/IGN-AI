@@ -6,11 +6,13 @@ import { CircleAlert, Database, ExternalLink, Inbox, Mail } from "lucide-react";
 import type { JoinExperienceMode } from "@/lib/join";
 
 const interestOptions = ["线下交流", "主题共创", "项目展示", "内容分享", "合作咨询"];
+const draftFieldClassName =
+  "mt-3 w-full rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/32 focus:border-[#ffb879]/36";
 
 type JoinApplicationFormProps = {
   experienceMode: JoinExperienceMode;
   contactEmailHref: string;
-  externalFormUrl?: string;
+  externalFormUrl: string;
 };
 
 type SubmitState = {
@@ -31,7 +33,7 @@ function JoinFallbackPanel({
   experienceMode,
 }: {
   contactEmailHref: string;
-  externalFormUrl?: string;
+  externalFormUrl: string;
   experienceMode: JoinExperienceMode;
 }) {
   const primaryHref = externalFormUrl || joinEmailHref(contactEmailHref);
@@ -150,6 +152,13 @@ export function JoinApplicationForm({
           role: formData.get("role"),
           message: formData.get("message"),
           interests,
+          memberProfile: {
+            avatarUrl: formData.get("avatarUrl"),
+            headline: formData.get("headline"),
+            website: formData.get("website"),
+            github: formData.get("github"),
+            xiaohongshu: formData.get("xiaohongshu"),
+          },
         }),
       });
 
@@ -173,7 +182,7 @@ export function JoinApplicationForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="surface-card-strong p-5 sm:p-6">
+    <form onSubmit={(event) => void handleSubmit(event)} className="surface-card-strong p-5 sm:p-6">
       <div className="mb-5 flex items-start gap-4 rounded-[22px] border border-[#ffb879]/16 bg-[#0d1219]/92 px-4 py-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/22 bg-[#ff9a3c]/10 text-[#ffd09a]">
           <modeNotice.Icon className="h-4.5 w-4.5" />
@@ -191,7 +200,7 @@ export function JoinApplicationForm({
             name="name"
             required
             placeholder="你的名字"
-            className="mt-3 w-full rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/32 focus:border-[#ffb879]/36"
+            className={draftFieldClassName}
           />
         </label>
 
@@ -201,7 +210,7 @@ export function JoinApplicationForm({
             name="contact"
             required
             placeholder="微信 / Email / Telegram"
-            className="mt-3 w-full rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/32 focus:border-[#ffb879]/36"
+            className={draftFieldClassName}
           />
         </label>
       </div>
@@ -212,9 +221,66 @@ export function JoinApplicationForm({
           name="role"
           required
           placeholder="开发者 / 产品 / 创作者 / 学生 / 创业者..."
-          className="mt-3 w-full rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/32 focus:border-[#ffb879]/36"
+          className={draftFieldClassName}
         />
       </label>
+
+      <div className="mt-6 rounded-[22px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+        <div className="max-w-[720px]">
+          <p className="card-eyebrow">Member draft</p>
+          <h3 className="mt-3 text-lg font-medium text-white">顺手留下成员页草稿</h3>
+          <p className="mt-2 text-sm leading-7 text-white/58">
+            这些都不是必填。你可以先留头像链接、一句话和想展示的外部链接，后续审核通过后会更容易整理成成员页。
+          </p>
+        </div>
+
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <label className="block">
+            <span className="card-eyebrow">Avatar URL</span>
+            <input
+              name="avatarUrl"
+              placeholder="https://..."
+              className={draftFieldClassName}
+            />
+          </label>
+
+          <label className="block">
+            <span className="card-eyebrow">Headline</span>
+            <input
+              name="headline"
+              placeholder="一句你想让成员页先看到的话"
+              className={draftFieldClassName}
+            />
+          </label>
+
+          <label className="block">
+            <span className="card-eyebrow">Website</span>
+            <input
+              name="website"
+              placeholder="个人网站 / 项目主页"
+              className={draftFieldClassName}
+            />
+          </label>
+
+          <label className="block">
+            <span className="card-eyebrow">GitHub</span>
+            <input
+              name="github"
+              placeholder="github.com/your-name"
+              className={draftFieldClassName}
+            />
+          </label>
+        </div>
+
+        <label className="mt-4 block md:max-w-[calc(50%-0.5rem)]">
+          <span className="card-eyebrow">Xiaohongshu</span>
+          <input
+            name="xiaohongshu"
+            placeholder="小红书主页链接"
+            className={draftFieldClassName}
+          />
+        </label>
+      </div>
 
       <fieldset className="mt-5">
         <legend className="card-eyebrow">Interests</legend>

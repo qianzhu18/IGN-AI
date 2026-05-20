@@ -1,5 +1,5 @@
-import { GridLines } from "@/components/ui/GridLines";
-import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
+import { GridLines } from "@/src/components/ui/GridLines";
+import { NoiseOverlay } from "@/src/components/ui/NoiseOverlay";
 
 export function PageBackdrop() {
   return (

@@ -1,8 +1,8 @@
 "use client";
 
-import { Reveal } from "@/components/motion/Reveal";
-import { SectionContainer } from "@/components/ui/SectionContainer";
-import { cultureContent } from "@/content/community";
+import { Reveal } from "@/src/components/motion/Reveal";
+import { SectionContainer } from "@/src/components/ui/SectionContainer";
+import { cultureContent } from "@/src/content/community";
 
 export function CultureSection() {
   return (

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MessageCircleMore, ShieldCheck, Sparkles } from "lucide-react";
 
-import { siteLinks } from "@/content/links";
+import { siteLinks } from "@/src/content/links";
 
 const quickSteps = [
   "扫码添加社区管理者",

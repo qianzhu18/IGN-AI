@@ -1,5 +1,5 @@
-import { EventListCard, PublicationFeedCard } from "@/components/ui/ContentCard";
-import type { CommunityContentItem, ContentType } from "@/content/platform";
+import { EventListCard, PublicationFeedCard } from "@/src/components/ui/ContentCard";
+import type { CommunityContentItem, ContentType } from "@/src/content/platform";
 
 type ContentCollectionPageProps = {
   eyebrow: string;

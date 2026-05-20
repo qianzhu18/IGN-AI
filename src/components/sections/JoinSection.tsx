@@ -5,11 +5,11 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Check } from "lucide-react";
 import type { CSSProperties } from "react";
 
-import { Reveal } from "@/components/motion/Reveal";
-import { CTAButton } from "@/components/ui/CTAButton";
-import { SectionContainer } from "@/components/ui/SectionContainer";
-import { joinContent } from "@/content/community";
-import { primaryLinks, socialLinkSlots } from "@/content/links";
+import { Reveal } from "@/src/components/motion/Reveal";
+import { CTAButton } from "@/src/components/ui/CTAButton";
+import { SectionContainer } from "@/src/components/ui/SectionContainer";
+import { joinContent } from "@/src/content/community";
+import { primaryLinks, socialLinkSlots } from "@/src/content/links";
 
 export function JoinSection() {
   const shouldReduceMotion = useReducedMotion();
@@ -80,14 +80,14 @@ export function JoinSection() {
               <div className="relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]">
                 <motion.div
                   className="absolute inset-0"
-                  animate={
-                    shouldReduceMotion
-                      ? undefined
-                      : {
+                  {...(!shouldReduceMotion
+                    ? {
+                        animate: {
                           x: [0, -14, 0],
                           y: [0, 10, 0],
-                        }
-                  }
+                        },
+                      }
+                    : {})}
                   transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <Image

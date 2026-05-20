@@ -10,6 +10,7 @@ export function handleDataBeforeReturn(db: SiteData): SiteData {
 
   db.allNavPages = cleanPages(db.allNavPages, db.tagOptions)
   db.allPages = cleanPages(db.allPages, db.tagOptions)
+  db.allMembers = cleanPages(db.allMembers, db.tagOptions)
   db.latestPosts = cleanPages(db.latestPosts, db.tagOptions)
 
   delete db.block

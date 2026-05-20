@@ -106,6 +106,7 @@ const CONFIG = {
         { title: 'What is IGNAI', href: '/#what-is-ignai' },
         { title: 'Culture', href: '/#culture' },
         { title: '近期活动', href: '/#upcoming-events' },
+        { title: 'Members', href: '/members' },
         { title: '加入社区', href: '/join' }
       ]
     },
@@ -113,6 +114,7 @@ const CONFIG = {
       name: '更多',
       menus: [
         { title: 'Events', href: '/events' },
+        { title: 'Members', href: '/members' },
         { title: 'Records', href: '/records' },
         { title: 'Journal', href: '/archive' }
       ]
@@ -134,6 +136,7 @@ const CONFIG = {
   IGNAI_NAV_ITEMS: [
     { label: 'What', href: '/#what-is-ignai' },
     { label: 'Culture', href: '/#culture' },
+    { label: 'Members', href: '/members' },
     { label: 'Events', href: '/#upcoming-events' },
     { label: 'Records', href: '/#field-notes' },
     { label: 'Join', href: '/join' }

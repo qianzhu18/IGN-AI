@@ -27,6 +27,7 @@ export const siteContent = {
   ],
   navItems: [
     { label: "What", href: "#what-is-ignai" },
+    { label: "Goals", href: "#codex-goals" },
     { label: "Culture", href: "#culture" },
     { label: "Events", href: "#upcoming-events" },
     { label: "Records", href: "#field-notes" },

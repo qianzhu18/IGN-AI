@@ -13,7 +13,7 @@ export interface SiteInfo {
 }
 
 export type PageStatus = 'Published' | 'Invisible'
-export type PageType = 'Post' | 'Page' | 'Notice' | 'Menu' | 'SubMenu'
+export type PageType = 'Post' | 'Page' | 'Notice' | 'Menu' | 'SubMenu' | 'Member'
 
 export interface PageDate {
   start_date?: string
@@ -26,6 +26,15 @@ export interface PageDate {
 
 export interface TagItem {
   name: string
+}
+
+export interface ResolvedAuthor {
+  id?: string
+  title: string
+  slug?: string
+  href?: string
+  role?: string
+  avatar?: string
 }
 
 export interface BasePage {
@@ -44,6 +53,7 @@ export interface BasePage {
   pageCoverThumbnail?: string
   pageIcon?: string
   href?: string
+  authors?: ResolvedAuthor[]
   ext?: Record<string, any>
 }
 
@@ -78,6 +88,7 @@ export interface SiteData {
   notice: BasePage | null
 
   allPages: BasePage[]
+  allMembers: BasePage[]
   allNavPages: NavPage[]
   latestPosts: BasePage[]
 

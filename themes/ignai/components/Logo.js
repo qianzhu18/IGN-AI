@@ -1,30 +1,65 @@
-import { Home } from '@/components/HeroIcons'
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-html-link-for-pages */
 import LazyImage from '@/components/LazyImage'
 import { siteConfig } from '@/lib/config'
-import SmartLink from '@/components/SmartLink'
+import { useGlobal } from '@/lib/global'
+import throttle from 'lodash.throttle'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
-const Logo = props => {
-  const { siteInfo } = props
+/**
+ * 站点图标
+ * @returns
+ */
+export const Logo = props => {
+  const { siteInfo, white } = props
+  const router = useRouter()
+
+  const { isDarkMode } = useGlobal()
+  const [logoTextColor, setLogoTextColor] = useState('text-white')
+
+  useEffect(() => {
+    // 滚动监听
+    const throttleMs = 200
+    const navBarScrollListener = throttle(() => {
+      const scrollY = window.scrollY
+      // 何时显示浅色或白底的logo
+      const homePageNavBar = router.route === '/' && scrollY < 10 // 在首页并且视窗在页面顶部
+
+      if (white || isDarkMode || homePageNavBar) {
+        setLogoTextColor('text-white')
+      } else {
+        setLogoTextColor('text-black')
+      }
+    }, throttleMs)
+
+    navBarScrollListener()
+    window.addEventListener('scroll', navBarScrollListener)
+    return () => {
+      window.removeEventListener('scroll', navBarScrollListener)
+    }
+  }, [isDarkMode, router])
+
   return (
-    <SmartLink href='/' passHref legacyBehavior>
-      <div className='flex flex-nowrap items-center cursor-pointer font-extrabold'>
+    <div className='w-60 max-w-full px-4'>
+      <div className='navbar-logo flex items-center w-full py-5 cursor-pointer'>
         <LazyImage
+          priority
           src={siteInfo?.icon}
           width={24}
-          height={24}
+          height={20}
           alt={siteConfig('AUTHOR')}
-          className='mr-4 hidden md:block'
+          className='mr-2 hidden md:inline-block'
         />
-        <div id='logo-text' className='group rounded-2xl flex-none relative'>
-          <div className='logo group-hover:opacity-0 opacity-100 visible group-hover:invisible text-lg my-auto rounded dark:border-white duration-200'>
-            {siteConfig('TITLE')}
-          </div>
-          <div className='flex justify-center rounded-2xl group-hover:bg-indigo-600 w-full group-hover:opacity-100 opacity-0 invisible group-hover:visible absolute top-0 py-1 duration-200'>
-            <Home className={'w-6 h-6 stroke-white stroke-2 '} />
-          </div>
-        </div>
+        {/* logo文字 */}
+        <span
+          onClick={() => {
+            router.push('/')
+          }}
+          className={`${logoTextColor} logo dark:text-white py-1.5 header-logo-text whitespace-nowrap font-semibold`}>
+          {siteConfig('TITLE')}
+        </span>
       </div>
-    </SmartLink>
+    </div>
   )
 }
-export default Logo

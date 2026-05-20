@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ExternalLink, FilePenLine, QrCode, Sparkles } from "lucide-react";
 
 type ContentAdminPanelProps = {
@@ -55,20 +56,20 @@ export function ContentAdminPanel({ type }: ContentAdminPanelProps) {
       </div>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-        <a
+        <Link
           href="/studio"
           className="button-shine inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5"
         >
           <span>打开内容后台</span>
           <Sparkles className="h-4 w-4" />
-        </a>
-        <a
-          href="/ops/join"
+        </Link>
+        <Link
+          href="/manage/join"
           className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm text-white/70 transition hover:border-white/18 hover:text-white"
         >
           <span>查看申请池</span>
           <ExternalLink className="h-4 w-4" />
-        </a>
+        </Link>
       </div>
     </section>
   );

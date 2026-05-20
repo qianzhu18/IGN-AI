@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import { footerLines } from "@/content/community";
-import { siteLinks } from "@/content/links";
-import { siteContent } from "@/content/site";
+import { footerLines } from "@/src/content/community";
+import { siteLinks } from "@/src/content/links";
+import { siteContent } from "@/src/content/site";
 
 export function Footer() {
   return (
