@@ -191,7 +191,7 @@ export function JoinApplicationForm({
         </div>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="space-y-4">
         <label className="block">
           <span className="join-card-eyebrow">Name</span>
           <input
@@ -232,7 +232,7 @@ export function JoinApplicationForm({
           </p>
         </div>
 
-        <div className="mt-6 grid gap-5 md:grid-cols-2">
+        <div className="mt-6 space-y-4">
           <label className="block">
             <span className="join-card-eyebrow">Avatar URL</span>
             <input
@@ -270,7 +270,7 @@ export function JoinApplicationForm({
           </label>
         </div>
 
-        <label className="mt-5 block md:max-w-[calc(50%-0.5rem)]">
+        <label className="mt-5 block">
           <span className="join-card-eyebrow">Xiaohongshu</span>
           <input
             name="xiaohongshu"

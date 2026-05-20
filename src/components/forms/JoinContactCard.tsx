@@ -29,7 +29,7 @@ export function JoinContactCard() {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+      <div className="mt-6 space-y-6">
         <div className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.02)_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-5">
           <div className="relative overflow-hidden rounded-[22px] border border-[#7cc8ff]/10 bg-[#f7f7f4] p-3 shadow-[0_22px_56px_rgba(0,0,0,0.24)] sm:p-4">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(255,161,75,0.08),transparent_26%),radial-gradient(circle_at_82%_24%,rgba(98,180,255,0.08),transparent_24%)]" />
