@@ -11,10 +11,10 @@ const quickSteps = [
 
 export function JoinContactCard() {
   return (
-    <section className="surface-card-strong overflow-hidden p-5 sm:p-6">
+    <section className="join-surface-card-strong overflow-hidden p-6 sm:p-8">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="card-eyebrow">Direct contact</p>
+          <p className="join-card-eyebrow">Direct contact</p>
           <h2 className="mt-4 text-[1.6rem] font-semibold leading-[1.22] text-white">
             直接加社区管理者，
             <br />

@@ -6,8 +6,6 @@ import { CircleAlert, Database, ExternalLink, Inbox, Mail } from "lucide-react";
 import type { JoinExperienceMode } from "@/lib/join";
 
 const interestOptions = ["线下交流", "主题共创", "项目展示", "内容分享", "合作咨询"];
-const draftFieldClassName =
-  "mt-3 w-full rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/32 focus:border-[#ffb879]/36";
 
 type JoinApplicationFormProps = {
   experienceMode: JoinExperienceMode;
@@ -45,8 +43,8 @@ function JoinFallbackPanel({
       : "当前还没有可写入的申请后端，所以先保留 Email 作为最轻量的兜底入口。";
 
   return (
-    <div className="surface-card-strong p-5 sm:p-6">
-      <p className="card-eyebrow">Join entry</p>
+    <div className="join-surface-card-strong p-6 sm:p-8">
+      <p className="join-card-eyebrow">Join entry</p>
       <h2 className="mt-4 text-[1.7rem] font-semibold leading-[1.22] text-white">
         先用一个稳定入口，
         <br />
@@ -72,7 +70,7 @@ function JoinFallbackPanel({
           href={primaryHref}
           target={externalFormUrl ? "_blank" : undefined}
           rel={externalFormUrl ? "noreferrer" : undefined}
-          className="button-shine inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5"
+          className="inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5"
         >
           <span>{primaryLabel}</span>
           <PrimaryIcon className="h-4 w-4" />
@@ -182,10 +180,10 @@ export function JoinApplicationForm({
   };
 
   return (
-    <form onSubmit={(event) => void handleSubmit(event)} className="surface-card-strong p-5 sm:p-6">
-      <div className="mb-5 flex items-start gap-4 rounded-[22px] border border-[#ffb879]/16 bg-[#0d1219]/92 px-4 py-4">
+    <form onSubmit={(event) => void handleSubmit(event)} className="join-surface-card-strong p-6 sm:p-8">
+      <div className="mb-6 flex items-start gap-4 rounded-2xl border border-[#ffb879]/16 bg-[#0d1219]/92 px-5 py-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/22 bg-[#ff9a3c]/10 text-[#ffd09a]">
-          <modeNotice.Icon className="h-4.5 w-4.5" />
+          <modeNotice.Icon className="h-5 w-5" />
         </div>
         <div>
           <p className="text-sm font-medium text-white">{modeNotice.title}</p>
@@ -193,97 +191,97 @@ export function JoinApplicationForm({
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-2">
         <label className="block">
-          <span className="card-eyebrow">Name</span>
+          <span className="join-card-eyebrow">Name</span>
           <input
             name="name"
             required
             placeholder="你的名字"
-            className={draftFieldClassName}
+            className="join-field"
           />
         </label>
 
         <label className="block">
-          <span className="card-eyebrow">Contact</span>
+          <span className="join-card-eyebrow">Contact</span>
           <input
             name="contact"
             required
             placeholder="微信 / Email / Telegram"
-            className={draftFieldClassName}
+            className="join-field"
           />
         </label>
       </div>
 
-      <label className="mt-5 block">
-        <span className="card-eyebrow">Role</span>
+      <label className="mt-6 block">
+        <span className="join-card-eyebrow">Role</span>
         <input
           name="role"
           required
           placeholder="开发者 / 产品 / 创作者 / 学生 / 创业者..."
-          className={draftFieldClassName}
+          className="join-field"
         />
       </label>
 
-      <div className="mt-6 rounded-[22px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
-        <div className="max-w-[720px]">
-          <p className="card-eyebrow">Member draft</p>
+      <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+        <div>
+          <p className="join-card-eyebrow">Member draft</p>
           <h3 className="mt-3 text-lg font-medium text-white">顺手留下成员页草稿</h3>
           <p className="mt-2 text-sm leading-7 text-white/58">
             这些都不是必填。你可以先留头像链接、一句话和想展示的外部链接，后续审核通过后会更容易整理成成员页。
           </p>
         </div>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-2">
+        <div className="mt-6 grid gap-5 md:grid-cols-2">
           <label className="block">
-            <span className="card-eyebrow">Avatar URL</span>
+            <span className="join-card-eyebrow">Avatar URL</span>
             <input
               name="avatarUrl"
               placeholder="https://..."
-              className={draftFieldClassName}
+              className="join-field"
             />
           </label>
 
           <label className="block">
-            <span className="card-eyebrow">Headline</span>
+            <span className="join-card-eyebrow">Headline</span>
             <input
               name="headline"
               placeholder="一句你想让成员页先看到的话"
-              className={draftFieldClassName}
+              className="join-field"
             />
           </label>
 
           <label className="block">
-            <span className="card-eyebrow">Website</span>
+            <span className="join-card-eyebrow">Website</span>
             <input
               name="website"
               placeholder="个人网站 / 项目主页"
-              className={draftFieldClassName}
+              className="join-field"
             />
           </label>
 
           <label className="block">
-            <span className="card-eyebrow">GitHub</span>
+            <span className="join-card-eyebrow">GitHub</span>
             <input
               name="github"
               placeholder="github.com/your-name"
-              className={draftFieldClassName}
+              className="join-field"
             />
           </label>
         </div>
 
-        <label className="mt-4 block md:max-w-[calc(50%-0.5rem)]">
-          <span className="card-eyebrow">Xiaohongshu</span>
+        <label className="mt-5 block md:max-w-[calc(50%-0.5rem)]">
+          <span className="join-card-eyebrow">Xiaohongshu</span>
           <input
             name="xiaohongshu"
             placeholder="小红书主页链接"
-            className={draftFieldClassName}
+            className="join-field"
           />
         </label>
       </div>
 
-      <fieldset className="mt-5">
-        <legend className="card-eyebrow">Interests</legend>
+      <fieldset className="mt-6">
+        <legend className="join-card-eyebrow">Interests</legend>
         <div className="mt-3 flex flex-wrap gap-3">
           {interestOptions.map((interest) => {
             const selected = interests.includes(interest);
@@ -305,21 +303,21 @@ export function JoinApplicationForm({
         </div>
       </fieldset>
 
-      <label className="mt-5 block">
-        <span className="card-eyebrow">Signal</span>
+      <label className="mt-6 block">
+        <span className="join-card-eyebrow">Signal</span>
         <textarea
           name="message"
           rows={5}
           placeholder="你希望在社区里交流、发起或共同完成什么？"
-          className="mt-3 w-full resize-none rounded-[18px] border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-7 text-white outline-none transition placeholder:text-white/32 focus:border-[#ffb879]/36"
+          className="join-textarea"
         />
       </label>
 
-      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
         <button
           type="submit"
           disabled={state.status === "submitting"}
-          className="button-shine relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+          className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-7 py-3.5 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {state.status === "submitting" ? "提交中" : "提交申请"}
         </button>
@@ -338,7 +336,7 @@ export function JoinApplicationForm({
             <p>
               {experienceMode === "database"
                 ? "联系方式会写入社区后台，用于后续邀请和沟通。"
-                : "当前处于本地收件箱模式，适合联调和流程验收；切到 Supabase 后会进入正式申请池。"}
+                : "当前处于本地收件箱模式，适合联调和流程验收。"}
             </p>
           </div>
         )}
