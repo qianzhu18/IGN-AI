@@ -17,11 +17,13 @@ const BLOG = {
   APPEARANCE: process.env.NEXT_PUBLIC_APPEARANCE || 'dark', // IGNAI 默认暗色模式
   APPEARANCE_DARK_TIME: process.env.NEXT_PUBLIC_APPEARANCE_DARK_TIME || [18, 6], // 夜间模式起至时间，false时关闭根据时间自动切换夜间模式
 
+  TITLE: process.env.NEXT_PUBLIC_TITLE || 'IGNAI', // 站点标题（优先于 Notion 数据库标题）
+  DESCRIPTION: process.env.NEXT_PUBLIC_DESCRIPTION || '长沙 AI 社区 — 连接创造者，点燃可能性', // 站点描述
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'IGNAI', // 社区名称
   BIO: process.env.NEXT_PUBLIC_BIO || '长沙 AI 社区 — 连接创造者，点燃可能性', // 社区简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://ignai.community', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'IGNAI, AI社区, 长沙, 人工智能, 科技社区', // 网站关键词
-  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.ico', // blog favicon 配置, 默认使用 /public/favicon.ico，支持在线图片，如 https://img.imesong.com/favicon.png
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.png', // IGNAI favicon
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
   BEI_AN_GONGAN: process.env.NEXT_PUBLIC_BEI_AN_GONGAN || '', // 公安备案号，例如 '浙公网安备3xxxxxxxx8号'
