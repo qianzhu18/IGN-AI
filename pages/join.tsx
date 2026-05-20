@@ -79,8 +79,8 @@ export default function JoinPage({
         `}</style>
       </Head>
       <PageShell>
-        <section className="relative z-10">
-          <div className="mx-auto w-full max-w-[720px] px-6 py-20 sm:px-8 lg:py-28">
+        <section className="relative z-10 flex min-h-screen items-start justify-center px-6 py-20 sm:px-10 lg:px-16 lg:py-28">
+          <div className="w-full max-w-[60vw] 2xl:max-w-[900px]">
             <div className="border-b border-white/10 pb-10">
               <p className="join-card-eyebrow">Join IGNAI</p>
               <h1 className="mt-5 text-[2.4rem] font-semibold leading-[1.1] text-white sm:text-[3.2rem]">
