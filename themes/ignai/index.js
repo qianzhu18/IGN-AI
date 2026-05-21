@@ -184,13 +184,13 @@ const LayoutBase = props => {
 const LayoutIndex = props => {
   return (
     <main className='ignai-home-shell'>
-      <HeroSection />
-      <WhatIsSection />
-      <CultureSection />
-      <UpcomingEventsSection notionEvents={props.allEvents || []} />
-      <FieldNotesSection />
-      <CommunityRolesSection allMembers={props.allMembers || []} />
-      <JoinSection />
+      {siteConfig('IGNAI_HERO_ENABLE', CONFIG.IGNAI_HERO_ENABLE) && <HeroSection />}
+      {siteConfig('IGNAI_WHATIS_ENABLE', CONFIG.IGNAI_WHATIS_ENABLE) && <WhatIsSection />}
+      {siteConfig('IGNAI_CULTURE_ENABLE', CONFIG.IGNAI_CULTURE_ENABLE) && <CultureSection />}
+      {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
+      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection />}
+      {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
+      {siteConfig('IGNAI_JOIN_ENABLE', CONFIG.IGNAI_JOIN_ENABLE) && <JoinSection />}
     </main>
   )
 }
