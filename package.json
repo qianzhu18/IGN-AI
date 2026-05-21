@@ -38,6 +38,7 @@
     "deps:install": "yarn install --frozen-lockfile",
     "deps:check-lockfile": "yarn install --frozen-lockfile && git diff --exit-code yarn.lock",
     "clean": "node scripts/dev-tools.js clean",
+    "cache:clear": "rm -rf .next/cache/notion/data && echo 'Notion cache cleared'",
     "docs": "node scripts/dev-tools.js docs",
     "check-updates": "node scripts/dev-tools.js check-updates",
     "setup-hooks": "node scripts/setup-git-hooks.js install",
