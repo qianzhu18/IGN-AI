@@ -187,7 +187,7 @@ const LayoutIndex = props => {
       <HeroSection />
       <WhatIsSection />
       <CultureSection />
-      <UpcomingEventsSection />
+      <UpcomingEventsSection notionEvents={props.allEvents || []} />
       <FieldNotesSection />
       <CommunityRolesSection allMembers={props.allMembers || []} />
       <JoinSection />
@@ -653,7 +653,23 @@ function CultureSection() {
   )
 }
 
-function UpcomingEventsSection() {
+function UpcomingEventsSection({ notionEvents = [] }) {
+  // Merge Notion events with static events; Notion events take priority
+  const mergedEvents = notionEvents.length > 0
+    ? notionEvents.map(e => ({
+        slug: e.slug || e.id,
+        title: e.title,
+        subtitle: e.summary || '',
+        status: e.ext?.status || 'planning',
+        dateText: e.date?.start_date || e.ext?.dateText || '待定',
+        location: e.ext?.location || '待定',
+        format: e.ext?.format || 'offline',
+        cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/ignite-core.png',
+        excerpt: e.summary || '',
+        tags: e.tags || [],
+      }))
+    : events
+
   return (
     <section id='upcoming-events' className='ignai-home-section'>
       <div className='ignai-section-divider' />
@@ -679,7 +695,7 @@ function UpcomingEventsSection() {
         </Reveal>
 
         <div className='mt-16 flex flex-col gap-4'>
-          {events.slice(0, 3).map((event, index) => (
+          {mergedEvents.slice(0, 3).map((event, index) => (
             <Reveal key={event.slug} delay={index * 0.06}>
               <SmartLink
                 href={`/events/${event.slug}`}

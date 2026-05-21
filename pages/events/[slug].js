@@ -1,0 +1,181 @@
+import Head from 'next/head'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
+import {
+  events as staticEvents,
+  eventStatusLabel,
+  eventFormatLabel
+} from '@/src/content/events'
+import Link from 'next/link'
+import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
+
+const EventDetailPage = ({ event, pageTitle }) => {
+  if (!event) {
+    return (
+      <div className='min-h-screen bg-[#07080C] text-white flex items-center justify-center'>
+        <p className='text-white/40'>活动未找到</p>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <Head>
+        <title>{pageTitle}</title>
+        <meta name='description' content={event.excerpt} />
+      </Head>
+      <div className='min-h-screen bg-[#07080C] text-white'>
+        <div className='mx-auto max-w-3xl px-6 py-20'>
+          <Link
+            href='/events'
+            className='inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition no-underline mb-8'
+          >
+            <ArrowLeft className='h-4 w-4' />
+            返回活动列表
+          </Link>
+
+          {event.cover && (
+            <img
+              src={event.cover}
+              alt=''
+              className='w-full rounded-lg object-cover aspect-[16/9] mb-8'
+            />
+          )}
+
+          <div className='flex flex-wrap gap-3 text-sm text-white/50 mb-4'>
+            <span className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
+              event.status === 'open'
+                ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
+                : 'border-white/10 bg-white/5 text-white/50'
+            }`}>
+              {eventStatusLabel[event.status] || event.status}
+            </span>
+            <span className='inline-flex items-center gap-1.5'>
+              <CalendarDays className='h-4 w-4 text-[#F0CB8A]/60' />
+              {event.dateText}
+            </span>
+            <span className='inline-flex items-center gap-1.5'>
+              <MapPin className='h-4 w-4 text-[#9aceff]/60' />
+              {event.location} · {eventFormatLabel[event.format] || event.format}
+            </span>
+          </div>
+
+          <h1 className='text-3xl font-bold mb-2'>{event.title}</h1>
+          {event.subtitle && (
+            <p className='text-lg text-white/50 mb-8'>{event.subtitle}</p>
+          )}
+
+          <p className='text-white/60 leading-relaxed mb-8'>{event.excerpt}</p>
+
+          {event.tags?.length > 0 && (
+            <div className='flex flex-wrap gap-2 mb-8'>
+              {event.tags.map(tag => (
+                <span
+                  key={tag}
+                  className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/50'
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {event.content?.length > 0 && (
+            <div className='space-y-8 mb-12'>
+              {event.content.map((block, i) => (
+                <div key={i}>
+                  <h2 className='text-xl font-semibold mb-3'>{block.heading}</h2>
+                  <p className='text-white/55 leading-relaxed'>{block.body}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {event.agenda?.length > 0 && (
+            <div className='mb-8'>
+              <h2 className='text-xl font-semibold mb-4'>议程</h2>
+              <ul className='space-y-2'>
+                {event.agenda.map((item, i) => (
+                  <li key={i} className='text-white/50 text-sm flex items-start gap-2'>
+                    <span className='text-[#F0CB8A]/60 mt-0.5'>-</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {event.registrationUrl && (
+            <Link
+              href={event.registrationUrl}
+              className='inline-block rounded-full bg-[#FF7A18] px-6 py-3 text-sm font-medium text-white no-underline hover:bg-[#ff8c3a] transition'
+            >
+              报名参加
+            </Link>
+          )}
+        </div>
+      </div>
+    </>
+  )
+}
+
+export async function getStaticPaths() {
+  // Static event slugs
+  const paths = staticEvents.map(e => ({ params: { slug: e.slug } }))
+  return { paths, fallback: 'blocking' }
+}
+
+export async function getStaticProps({ params, locale }) {
+  const { slug } = params
+  const from = 'event-detail'
+  const props = await fetchGlobalAllData({ from, locale })
+
+  // Try Notion events first, then static
+  const notionEvent = (props.allEvents || []).find(
+    e => e.slug === slug || e.id === slug
+  )
+
+  let event
+  if (notionEvent) {
+    event = {
+      slug: notionEvent.slug || notionEvent.id,
+      title: notionEvent.title,
+      subtitle: notionEvent.summary || '',
+      status: notionEvent.ext?.status || 'planning',
+      dateText: notionEvent.date?.start_date || notionEvent.ext?.dateText || '待定',
+      location: notionEvent.ext?.location || '待定',
+      format: notionEvent.ext?.format || 'offline',
+      cover: notionEvent.pageCoverThumbnail || notionEvent.ext?.cover || '',
+      excerpt: notionEvent.summary || '',
+      tags: notionEvent.tags || [],
+      content: notionEvent.ext?.content || [],
+      agenda: notionEvent.ext?.agenda || [],
+      registrationUrl: notionEvent.ext?.registrationUrl || ''
+    }
+  } else {
+    event = staticEvents.find(e => e.slug === slug) || null
+  }
+
+  if (!event) {
+    return { notFound: true }
+  }
+
+  const pageTitle = `${event.title} - ${props.siteInfo?.title || 'IGNAI'}`
+
+  return {
+    props: {
+      event,
+      pageTitle
+    },
+    revalidate: process.env.EXPORT
+      ? undefined
+      : siteConfig(
+          'NEXT_REVALIDATE_SECOND',
+          BLOG.NEXT_REVALIDATE_SECOND,
+          props.NOTION_CONFIG
+        )
+  }
+}
+
+export default EventDetailPage
