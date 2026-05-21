@@ -186,7 +186,7 @@ const LayoutIndex = props => {
       {siteConfig('IGNAI_WHATIS_ENABLE', CONFIG.IGNAI_WHATIS_ENABLE) && <WhatIsSection />}
       {siteConfig('IGNAI_CULTURE_ENABLE', CONFIG.IGNAI_CULTURE_ENABLE) && <CultureSection />}
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
-      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection />}
+      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection notionEvents={props.allEvents || []} />}
       {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
       {siteConfig('IGNAI_JOIN_ENABLE', CONFIG.IGNAI_JOIN_ENABLE) && <JoinSection />}
     </main>
@@ -757,7 +757,25 @@ function UpcomingEventsSection({ notionEvents = [] }) {
   )
 }
 
-function FieldNotesSection() {
+function FieldNotesSection({ notionEvents = [] }) {
+  // Completed Notion events become field notes; fallback to static records
+  const finishedEvents = notionEvents.filter(
+    e => e.ext?.status === 'finished' || e.status === 'finished'
+  )
+  const displayItems = finishedEvents.length > 0
+    ? finishedEvents.slice(0, 3).map(e => ({
+        slug: e.slug || e.id,
+        title: e.title,
+        type: 'recap',
+        dateText: e.date?.start_date || e.ext?.dateText || '',
+        location: e.ext?.location || '',
+        cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/human-energy-scene.png',
+        excerpt: e.summary || '',
+        outcomes: e.ext?.outcomes || [],
+        tags: e.tags || [],
+        href: `/events/${e.slug || e.id}`,
+      }))
+    : records.slice(0, 3).map(r => ({ ...r, href: `/records/${r.slug}` }))
   return (
     <section id='field-notes' className='ignai-home-section'>
       <div className='ignai-section-divider' />
@@ -775,16 +793,16 @@ function FieldNotesSection() {
               把活动、项目、思考和成员故事沉淀成可以被继续阅读和传播的内容资产。
             </p>
           </div>
-          <SmartLink href='/records' className='ignai-cta-secondary'>
+          <SmartLink href='/events' className='ignai-cta-secondary'>
             查看现场记录
           </SmartLink>
         </Reveal>
 
         <div className='mt-16 grid gap-6 lg:grid-cols-3'>
-          {records.slice(0, 3).map((record, index) => (
-            <Reveal key={record.slug} delay={index * 0.08}>
+          {displayItems.map((item, index) => (
+            <Reveal key={item.slug} delay={index * 0.08}>
               <SmartLink
-                href={`/records/${record.slug}`}
+                href={item.href}
                 className={`group ignai-unified-card ignai-record-card block overflow-hidden rounded-lg ${
                   index === 0 ? 'lg:col-span-2' : ''
                 }`}
@@ -796,26 +814,26 @@ function FieldNotesSection() {
                         IGNAI Field Notes
                       </p>
                       <p className='mt-1 text-xs text-white/42'>
-                        {record.dateText}
-                        {record.location ? ` · ${record.location}` : ''}
+                        {item.dateText}
+                        {item.location ? ` · ${item.location}` : ''}
                       </p>
                     </div>
                     <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
-                      {recordTypeLabel[record.type]}
+                      {recordTypeLabel[item.type] || '活动复盘'}
                     </span>
                   </div>
 
                   <h3 className='mt-6 text-[1.55rem] font-semibold leading-[1.28] text-white transition group-hover:text-[#d4ecff]'>
-                    {record.title}
+                    {item.title}
                   </h3>
                   <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/58'>
-                    {record.excerpt}
+                    {item.excerpt}
                   </p>
                 </div>
 
                 <div className='px-5 sm:px-6'>
                   <img
-                    src={record.cover}
+                    src={item.cover}
                     alt=''
                     className='aspect-[2.05] w-full rounded-lg border border-white/8 object-cover transition duration-500 group-hover:scale-[1.015]'
                   />
@@ -823,12 +841,12 @@ function FieldNotesSection() {
 
                 <div className='mt-5 border-t border-white/8 px-5 py-4 sm:px-6'>
                   <div className='flex flex-wrap gap-2'>
-                    {(record.outcomes?.length ? record.outcomes : record.tags).map(item => (
+                    {(item.outcomes?.length ? item.outcomes : item.tags).map(tag => (
                       <span
-                        key={item}
+                        key={tag}
                         className='rounded-full border border-[#7cc8ff]/12 bg-[#08131e]/80 px-3 py-1.5 text-xs text-[#c7e6ff]'
                       >
-                        {item}
+                        {tag}
                       </span>
                     ))}
                   </div>
