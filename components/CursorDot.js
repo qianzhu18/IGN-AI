@@ -89,16 +89,10 @@ const CursorDot = () => {
             }
 
             .cursor-dot-hover {
-                border: 1px solid rgba(167, 167, 167, 0.14); /* 鼠标悬停时的深灰色边框，厚度为1px */
-                width: 60px; /* 放大 */
-                height: 60px; /* 放大 */
-                background: hsla(0, 0%, 100%, 0.04); /* 半透明背景 */
-                -webkit-backdrop-filter: blur(5px); /* 毛玻璃效果 */
-                backdrop-filter: blur(5px);
-            }
-
-            .dark .cursor-dot-hover {
-                border: 1px solid rgba(66, 66, 66, 0.66); /* 鼠标悬停时的深灰色边框，厚度为1px */
+                width: 36px;
+                height: 36px;
+                background: transparent;
+                border: 1px solid rgba(255, 255, 255, 0.32);
             }
         `}</style>
     );

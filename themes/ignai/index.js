@@ -887,21 +887,67 @@ function CommunityRolesSection({ allMembers = [] }) {
 function AvatarRing({ members }) {
   const count = members.length
   const [hoveredIndex, setHoveredIndex] = useState(null)
+  const [rotation, setRotation] = useState(0)
+  const [dragging, setDragging] = useState(false)
   const containerRef = useRef(null)
+  const rotationRef = useRef(0)
+  const lastAngleRef = useRef(null)
+  const isDragging = useRef(false)
+  const dragMoved = useRef(false)
 
-  // Dynamic sizing based on member count
   const avatarSize = count <= 6 ? 72 : count <= 10 ? 60 : 52
   const ringRadius = count <= 4 ? 120 : count <= 6 ? 160 : count <= 8 ? 200 : count <= 10 ? 240 : 260
+  const containerSize = ringRadius * 2 + avatarSize + 40
+
+  const getAngle = (e) => {
+    const rect = containerRef.current.getBoundingClientRect()
+    const cx = rect.left + rect.width / 2
+    const cy = rect.top + rect.height / 2
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY
+    return Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI)
+  }
+
+  const handlePointerDown = (e) => {
+    isDragging.current = true
+    dragMoved.current = false
+    lastAngleRef.current = getAngle(e)
+    setDragging(true)
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+
+  const handlePointerMove = (e) => {
+    if (!isDragging.current) return
+    dragMoved.current = true
+    const angle = getAngle(e)
+    let delta = angle - lastAngleRef.current
+    if (delta > 180) delta -= 360
+    if (delta < -180) delta += 360
+    rotationRef.current += delta
+    setRotation(rotationRef.current)
+    lastAngleRef.current = angle
+  }
+
+  const handlePointerUp = () => {
+    isDragging.current = false
+    lastAngleRef.current = null
+    setDragging(false)
+  }
 
   return (
     <div className='avatar-ring-container'>
       <div
         ref={containerRef}
         className='avatar-ring'
-        style={{ width: ringRadius * 2 + avatarSize + 40, height: ringRadius * 2 + avatarSize + 40 }}
+        style={{ width: containerSize, height: containerSize, cursor: dragging ? 'grabbing' : 'grab' }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
       >
         {members.map((member, index) => {
-          const angle = (360 / count) * index - 90
+          const baseAngle = (360 / count) * index - 90
+          const angle = baseAngle + rotation
           const rad = (angle * Math.PI) / 180
           const x = Math.cos(rad) * ringRadius
           const y = Math.sin(rad) * ringRadius
@@ -911,7 +957,7 @@ function AvatarRing({ members }) {
           const href = path.startsWith('members/') ? `/${path}` : `/members/${path.split('/').filter(Boolean).pop()}`
           const bio = member?.bio || member?.summary || ''
           const quote = getMemberQuote(member)
-          const isHovered = hoveredIndex === index
+          const isHovered = hoveredIndex === index && !dragging
 
           return (
             <motion.div
@@ -925,20 +971,22 @@ function AvatarRing({ members }) {
                 marginLeft: -avatarSize / 2,
                 marginTop: -avatarSize / 2,
               }}
-              animate={{
-                scale: isHovered ? 1.6 : 1,
-                zIndex: isHovered ? 20 : 1,
-              }}
+              animate={{ scale: isHovered ? 1.6 : 1, zIndex: isHovered ? 20 : 1 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseEnter={() => !dragging && setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <Link href={href} className='block no-underline'>
+              <Link
+                href={href}
+                className='block no-underline'
+                onClick={e => { if (dragMoved.current) e.preventDefault() }}
+              >
                 <img
                   src={avatar}
                   alt={member.title}
                   className='avatar-ring-img'
                   style={{ width: avatarSize, height: avatarSize }}
+                  draggable={false}
                 />
               </Link>
 
@@ -952,15 +1000,9 @@ function AvatarRing({ members }) {
                     transition={{ duration: 0.2 }}
                   >
                     <p className='avatar-ring-tooltip-name'>{member.title}</p>
-                    {member.role && (
-                      <p className='avatar-ring-tooltip-role'>{member.role}</p>
-                    )}
-                    {bio && (
-                      <p className='avatar-ring-tooltip-bio'>{bio}</p>
-                    )}
-                    {quote && (
-                      <p className='avatar-ring-tooltip-quote'>&ldquo;{quote}&rdquo;</p>
-                    )}
+                    {member.role && <p className='avatar-ring-tooltip-role'>{member.role}</p>}
+                    {bio && <p className='avatar-ring-tooltip-bio'>{bio}</p>}
+                    {quote && <p className='avatar-ring-tooltip-quote'>&ldquo;{quote}&rdquo;</p>}
                   </motion.div>
                 )}
               </AnimatePresence>
