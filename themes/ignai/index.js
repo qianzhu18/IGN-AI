@@ -888,14 +888,16 @@ function AvatarRing({ members }) {
   const count = members.length
   const [hoveredIndex, setHoveredIndex] = useState(null)
   const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 })
-  const [dragOffset, setDragOffset] = useState(0)
   const containerRef = useRef(null)
   const isDragging = useRef(false)
   const dragMoved = useRef(false)
   const lastAngleRef = useRef(null)
-  const dragOffsetRef = useRef(0)
+  const dragOffsetRef = useRef([0, 0, 0])
+  const rafRef = useRef(null)
+  const ringAnglesRef = useRef([0, 0, 0])
+  const ringElemsRef = useRef([])
+  const itemElemsRef = useRef([])
 
-  // Distribute members across rings
   const rings = useMemo(() => {
     if (count <= 3) return [members]
     if (count <= 7) return [members.slice(0, 2), members.slice(2)]
@@ -903,10 +905,45 @@ function AvatarRing({ members }) {
   }, [members, count])
 
   const ringConfig = [
-    { radius: 110, duration: 28, direction: 1 },
-    { radius: 195, duration: 42, direction: -1 },
-    { radius: 275, duration: 60, direction: 1 },
+    { radius: 110, speed: 0.4, direction: 1 },
+    { radius: 190, speed: 0.25, direction: -1 },
+    { radius: 270, speed: 0.18, direction: 1 },
   ]
+
+  // rAF animation loop — pure DOM manipulation, no CSS animation
+  useEffect(() => {
+    let last = performance.now()
+    const tick = (now) => {
+      const dt = (now - last) / 1000
+      last = now
+
+      rings.forEach((ringMembers, ri) => {
+        const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
+        if (!isDragging.current) {
+          ringAnglesRef.current[ri] += cfg.speed * cfg.direction * dt * 20
+        }
+        const totalAngle = ringAnglesRef.current[ri] + dragOffsetRef.current[ri]
+
+        // position each avatar item
+        ringMembers.forEach((_, mi) => {
+          const baseAngle = (360 / ringMembers.length) * mi
+          const rad = ((baseAngle + totalAngle) * Math.PI) / 180
+          const x = Math.cos(rad) * cfg.radius
+          const y = Math.sin(rad) * cfg.radius
+          const key = `${ri}-${mi}`
+          const el = itemElemsRef.current[key]
+          if (el) {
+            el.style.left = `calc(50% + ${x}px)`
+            el.style.top = `calc(50% + ${y}px)`
+          }
+        })
+      })
+
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [rings])
 
   const getContainerAngle = (e) => {
     const rect = containerRef.current.getBoundingClientRect()
@@ -931,8 +968,10 @@ function AvatarRing({ members }) {
     let delta = angle - lastAngleRef.current
     if (delta > 180) delta -= 360
     if (delta < -180) delta += 360
-    dragOffsetRef.current += delta
-    setDragOffset(dragOffsetRef.current)
+    rings.forEach((_, ri) => {
+      const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
+      dragOffsetRef.current[ri] += delta * cfg.direction
+    })
     lastAngleRef.current = angle
   }
 
@@ -962,8 +1001,20 @@ function AvatarRing({ members }) {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
-      style={{ cursor: isDragging.current ? 'grabbing' : 'grab' }}
+      style={{ cursor: 'grab' }}
     >
+      {/* Orbit track circles */}
+      {rings.map((_, ri) => {
+        const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
+        return (
+          <div
+            key={`track-${ri}`}
+            className='avatar-orbit-track'
+            style={{ width: cfg.radius * 2, height: cfg.radius * 2 }}
+          />
+        )
+      })}
+
       {/* Center orb */}
       <div className='avatar-orbital-center'>
         <div className='avatar-orbital-center-inner'>
@@ -971,60 +1022,46 @@ function AvatarRing({ members }) {
         </div>
       </div>
 
-      {/* Rings */}
-      {rings.map((ringMembers, ringIdx) => {
-        const cfg = ringConfig[ringIdx] || ringConfig[ringConfig.length - 1]
-        const ringGlobalStart = globalIndex
-        globalIndex += ringMembers.length
+      {/* Avatar items — positioned by rAF */}
+      {rings.map((ringMembers, ri) => {
+        const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
+        return ringMembers.map((member, mi) => {
+          const myGlobalIndex = globalIndex++
+          const avatar = member?.avatar || member?.pageIcon ||
+            `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(member.title || member.id)}`
+          const isHovered = hoveredIndex === myGlobalIndex
 
-        return (
-          <div
-            key={ringIdx}
-            className='avatar-orbit-ring'
-            style={{
-              width: cfg.radius * 2,
-              height: cfg.radius * 2,
-              animationDuration: `${cfg.duration}s`,
-              animationDirection: cfg.direction === -1 ? 'reverse' : 'normal',
-              transform: `translate(-50%, -50%) rotate(${dragOffset * cfg.direction}deg)`,
-            }}
-          >
-            {ringMembers.map((member, memberIdx) => {
-              const myGlobalIndex = ringGlobalStart + memberIdx
-              const angle = (360 / ringMembers.length) * memberIdx
-              const avatar = member?.avatar || member?.pageIcon ||
-                `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(member.title || member.id)}`
-              const isHovered = hoveredIndex === myGlobalIndex
-
-              return (
-                <motion.div
-                  key={member.id || member.slug}
-                  className='avatar-orbit-item'
-                  style={{
-                    transform: `rotate(${angle}deg) translateX(${cfg.radius}px) rotate(${-(angle + dragOffset * cfg.direction)}deg)`,
-                  }}
-                  animate={{ scale: isHovered ? 1.8 : 1 }}
-                  transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-                  onMouseEnter={(e) => handleAvatarHover(e, myGlobalIndex)}
-                  onMouseLeave={() => setHoveredIndex(null)}
-                >
-                  <Link
-                    href={`/members/${String(member.slug || member.id).split('/').pop()}`}
-                    className='block no-underline'
-                    onClick={e => { if (dragMoved.current) e.preventDefault() }}
-                  >
-                    <img
-                      src={avatar}
-                      alt={member.title}
-                      className={`avatar-orbit-img ${isHovered ? 'avatar-orbit-img--hovered' : ''}`}
-                      draggable={false}
-                    />
-                  </Link>
-                </motion.div>
-              )
-            })}
-          </div>
-        )
+          return (
+            <motion.div
+              key={member.id || member.slug || myGlobalIndex}
+              ref={el => { itemElemsRef.current[`${ri}-${mi}`] = el }}
+              className='avatar-orbit-item'
+              style={{
+                width: 52,
+                height: 52,
+                marginLeft: -26,
+                marginTop: -26,
+              }}
+              animate={{ scale: isHovered ? 1.8 : 1, zIndex: isHovered ? 40 : 2 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+              onMouseEnter={(e) => handleAvatarHover(e, myGlobalIndex)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <Link
+                href={`/members/${String(member.slug || member.id).split('/').pop()}`}
+                className='block no-underline'
+                onClick={e => { if (dragMoved.current) e.preventDefault() }}
+              >
+                <img
+                  src={avatar}
+                  alt={member.title}
+                  className={`avatar-orbit-img ${isHovered ? 'avatar-orbit-img--hovered' : ''}`}
+                  draggable={false}
+                />
+              </Link>
+            </motion.div>
+          )
+        })
       })}
 
       {/* Hover card */}
@@ -1033,14 +1070,14 @@ function AvatarRing({ members }) {
           <motion.div
             className='avatar-orbit-card'
             style={{
-              left: Math.min(Math.max(hoverPos.x - 110, 0), 380),
-              top: hoverPos.y - 8,
+              left: Math.min(Math.max(hoverPos.x - 110, 4), 376),
+              top: hoverPos.y - 12,
               transform: 'translateY(-100%)',
             }}
-            initial={{ opacity: 0, y: 10, scale: 0.92 }}
+            initial={{ opacity: 0, y: 8, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.92 }}
-            transition={{ duration: 0.18 }}
+            exit={{ opacity: 0, y: 8, scale: 0.92 }}
+            transition={{ duration: 0.16 }}
           >
             <p className='avatar-orbit-card-name'>{members[hoveredIndex].title}</p>
             {members[hoveredIndex].role && (

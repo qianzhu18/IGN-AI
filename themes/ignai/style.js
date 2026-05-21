@@ -1185,6 +1185,17 @@ const Style = () => {
         max-width: 100%;
         margin: 0 auto;
         user-select: none;
+        overflow: visible;
+      }
+
+      .avatar-orbit-track {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.05);
+        pointer-events: none;
       }
 
       .avatar-orbital-center {
@@ -1193,6 +1204,7 @@ const Style = () => {
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 10;
+        pointer-events: none;
       }
 
       .avatar-orbital-center-inner {
@@ -1221,29 +1233,10 @@ const Style = () => {
         50% { box-shadow: 0 0 48px rgba(255,122,24,0.32), 0 0 96px rgba(255,122,24,0.14); }
       }
 
-      .avatar-orbit-ring {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border-radius: 50%;
-        border: 1px solid rgba(255,255,255,0.04);
-        animation: orbit-spin linear infinite;
-        will-change: transform;
-      }
-
-      @keyframes orbit-spin {
-        from { transform: translate(-50%, -50%) rotate(0deg); }
-        to   { transform: translate(-50%, -50%) rotate(360deg); }
-      }
-
       .avatar-orbit-item {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 52px;
-        height: 52px;
-        margin: -26px 0 0 -26px;
-        transform-origin: center center;
+        cursor: pointer;
+        will-change: transform;
       }
 
       .avatar-orbit-img {
@@ -1251,14 +1244,15 @@ const Style = () => {
         height: 52px;
         border-radius: 50%;
         object-fit: cover;
-        border: 1.5px solid rgba(255,255,255,0.12);
+        border: 1.5px solid rgba(255,255,255,0.14);
         transition: border-color 0.25s ease, box-shadow 0.25s ease;
         background: #0d0e14;
+        display: block;
       }
 
       .avatar-orbit-img--hovered {
         border-color: #ff7a18;
-        box-shadow: 0 0 18px rgba(255,122,24,0.45), 0 0 36px rgba(255,122,24,0.18);
+        box-shadow: 0 0 18px rgba(255,122,24,0.5), 0 0 36px rgba(255,122,24,0.2);
       }
 
       .avatar-orbit-card {
