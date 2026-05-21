@@ -13,7 +13,7 @@ export interface SiteInfo {
 }
 
 export type PageStatus = 'Published' | 'Invisible'
-export type PageType = 'Post' | 'Page' | 'Notice' | 'Menu' | 'SubMenu' | 'Member'
+export type PageType = 'Post' | 'Page' | 'Notice' | 'Menu' | 'SubMenu' | 'Member' | 'Event'
 
 export interface PageDate {
   start_date?: string
@@ -89,6 +89,7 @@ export interface SiteData {
 
   allPages: BasePage[]
   allMembers: BasePage[]
+  allEvents: BasePage[]
   allNavPages: NavPage[]
   latestPosts: BasePage[]
 

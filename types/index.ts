@@ -32,7 +32,7 @@ export interface NotionPage {
   title: string
   slug: string
   status: 'Published' | 'Draft' | 'Archived'
-  type: 'Post' | 'Page' | 'Menu'
+  type: 'Post' | 'Page' | 'Menu' | 'Member' | 'Event' | 'Notice' | 'SubMenu'
   category?: string
   tags?: string[]
   summary?: string
