@@ -35,7 +35,6 @@ import { CTA } from './components/CTA'
 import SearchInput from './components/SearchInput'
 import { SVG404 } from './components/svg/SVG404'
 import Lenis from '@/components/Lenis'
-import CursorDot from '@/components/CursorDot'
 import { ArticleLock } from './components/ArticleLock'
 import { siteContent } from '@/src/content/site'
 import {
@@ -173,7 +172,6 @@ const LayoutBase = props => {
       <Footer {...props} />
       <BackToTopButton />
       <Lenis />
-      <CursorDot />
     </div>
   )
 }
