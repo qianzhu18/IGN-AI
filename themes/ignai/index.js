@@ -583,19 +583,21 @@ function WhatIsSection() {
 
         <motion.div style={{ y: mediaY }}>
           <Reveal>
-            <p className='section-eyebrow mb-8'>Community Members</p>
+            <p className='section-eyebrow mb-5'>Community Members</p>
           </Reveal>
-          <div className='flex flex-col gap-6'>
+          <div className='open-grid'>
             {whatIsContent.memberCards.map((card, index) => (
-              <Reveal key={card.title} delay={index * 0.06}>
-                <div className='flex items-baseline gap-4'>
-                  <span className={`text-xs font-medium tracking-wider uppercase ${
-                    index % 2 === 1 ? 'text-[#9aceff]' : 'text-[#F0CB8A]/72'
-                  }`}>
-                    {card.eyebrow}
-                  </span>
-                  <span className='text-white/90 font-medium'>{card.title}</span>
-                  <span className='text-white/40 text-sm'>{card.description}</span>
+              <Reveal key={card.title} delay={index * 0.08}>
+                <div className='open-grid-item ignai-unified-card'>
+                  <p
+                    className={`card-eyebrow ${
+                      index % 2 === 1 ? 'text-[#9aceff]' : 'text-[#F0CB8A]/72'
+                    }`}
+                  >
+                    0{index + 1} / {card.eyebrow}
+                  </p>
+                  <h3 className='card-title'>{card.title}</h3>
+                  <p className='card-body'>{card.description}</p>
                 </div>
               </Reveal>
             ))}
@@ -635,13 +637,13 @@ function CultureSection() {
           <p className='section-body mt-5'>{cultureContent.paragraph}</p>
         </Reveal>
 
-        <motion.div style={{ y: mediaY }} className='flex flex-col gap-5'>
+        <motion.div style={{ y: mediaY }} className='open-grid'>
           {cultureContent.cards.map((card, index) => (
-            <Reveal key={card.title} delay={index * 0.06}>
-              <div className='flex items-baseline gap-4'>
-                <span className='text-xs font-medium tracking-wider text-[#F0CB8A]/72'>{card.eyebrow}</span>
-                <span className='text-white/90 font-medium'>{card.title}</span>
-                <span className='text-white/40 text-sm'>{card.description}</span>
+            <Reveal key={card.title} delay={index * 0.08}>
+              <div className='open-grid-item ignai-unified-card'>
+                <p className='card-eyebrow text-[#F0CB8A]/72'>{card.eyebrow}</p>
+                <h3 className='card-title'>{card.title}</h3>
+                <p className='card-body'>{card.description}</p>
               </div>
             </Reveal>
           ))}
@@ -692,60 +694,59 @@ function UpcomingEventsSection({ notionEvents = [] }) {
           </div>
         </Reveal>
 
-        <div className='mt-16 flex flex-col gap-4'>
+        <div className='mt-16 grid items-stretch gap-6 lg:grid-cols-3'>
           {mergedEvents.slice(0, 3).map((event, index) => (
-            <Reveal key={event.slug} delay={index * 0.06}>
+            <Reveal key={event.slug} delay={index * 0.08}>
               <SmartLink
                 href={`/events/${event.slug}`}
-                className='group flex items-center gap-6 rounded-lg border border-white/[0.06] bg-white/[0.02] px-6 py-5 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline'
+                className='group ignai-unified-card ignai-event-card flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg lg:min-h-0'
               >
-                <div className='flex-shrink-0 w-16 text-center'>
-                  <span className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
-                    event.status === 'open'
-                      ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
-                      : 'border-white/10 bg-white/5 text-white/50'
-                  }`}>
-                    {eventStatusLabel[event.status]}
-                  </span>
-                </div>
-
-                <div className='flex-shrink-0 hidden sm:block'>
+                <div className='relative overflow-hidden'>
                   <img
                     src={event.cover}
                     alt=''
-                    className='h-16 w-24 rounded object-cover'
+                    className='aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]'
                   />
-                </div>
-
-                <div className='flex-1 min-w-0'>
-                  <h3 className='text-base font-semibold text-white truncate transition group-hover:text-[#ffd09a]'>
-                    {event.title}
-                  </h3>
-                  <div className='flex flex-wrap gap-4 mt-1.5 text-xs text-white/45'>
-                    <span className='inline-flex items-center gap-1.5'>
-                      <CalendarDays className='h-3.5 w-3.5 text-[#F0CB8A]/60' />
-                      {event.dateText}
-                    </span>
-                    <span className='inline-flex items-center gap-1.5'>
-                      <MapPin className='h-3.5 w-3.5 text-[#9aceff]/60' />
-                      {event.location} · {eventFormatLabel[event.format]}
-                    </span>
+                  <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
+                  <div className='absolute left-4 top-4 rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
+                    {eventStatusLabel[event.status]}
                   </div>
                 </div>
 
-                <div className='flex-shrink-0 hidden md:flex flex-wrap gap-1.5 max-w-[200px]'>
-                  {event.tags.slice(0, 2).map(tag => (
-                    <span
-                      key={tag}
-                      className='rounded-full border border-white/8 px-2.5 py-1 text-[11px] text-white/40'
-                    >
-                      {tag}
+                <div className='flex flex-1 flex-col p-5 sm:p-6'>
+                  <div className='flex flex-wrap gap-3 text-sm text-white/56'>
+                    <span className='inline-flex items-center gap-2'>
+                      <CalendarDays className='h-4 w-4 text-[#F0CB8A]/78' />
+                      {event.dateText}
                     </span>
-                  ))}
-                </div>
+                    <span className='inline-flex items-center gap-2'>
+                      <MapPin className='h-4 w-4 text-[#9aceff]' />
+                      {event.location} · {eventFormatLabel[event.format]}
+                    </span>
+                  </div>
 
-                <div className='flex-shrink-0 text-white/30 group-hover:text-white/60 transition'>
-                  <span className='text-sm'>&rarr;</span>
+                  <h3 className='mt-4 min-h-[3.7rem] text-[1.45rem] font-semibold leading-[1.26] text-white transition group-hover:text-[#ffd09a]'>
+                    {event.title}
+                  </h3>
+                  {event.subtitle ? (
+                    <p className='mt-2 min-h-5 text-sm text-white/42'>
+                      {event.subtitle}
+                    </p>
+                  ) : null}
+                  <p className='mt-4 line-clamp-2 text-sm leading-7 text-white/62'>
+                    {event.excerpt}
+                  </p>
+
+                  <div className='mt-auto flex flex-wrap gap-2 pt-5'>
+                    {event.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </SmartLink>
             </Reveal>
@@ -779,52 +780,58 @@ function FieldNotesSection() {
           </SmartLink>
         </Reveal>
 
-        <div className='mt-16 flex flex-col gap-4'>
+        <div className='mt-16 grid gap-6 lg:grid-cols-3'>
           {records.slice(0, 3).map((record, index) => (
-            <Reveal key={record.slug} delay={index * 0.06}>
+            <Reveal key={record.slug} delay={index * 0.08}>
               <SmartLink
                 href={`/records/${record.slug}`}
-                className='group flex items-center gap-6 rounded-lg border border-white/[0.06] bg-white/[0.02] px-6 py-5 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline'
+                className={`group ignai-unified-card ignai-record-card block overflow-hidden rounded-lg ${
+                  index === 0 ? 'lg:col-span-2' : ''
+                }`}
               >
-                <div className='flex-shrink-0 hidden sm:block'>
-                  <img
-                    src={record.cover}
-                    alt=''
-                    className='h-16 w-24 rounded object-cover'
-                  />
-                </div>
-
-                <div className='flex-1 min-w-0'>
-                  <div className='flex items-center gap-3 mb-1.5'>
-                    <span className='text-xs text-white/30'>{record.dateText}</span>
-                    {record.location && (
-                      <span className='text-xs text-white/20'>· {record.location}</span>
-                    )}
-                    <span className='rounded-full border border-white/8 px-2 py-0.5 text-[11px] text-white/40'>
+                <div className='p-5 sm:p-6'>
+                  <div className='flex flex-wrap items-center justify-between gap-3'>
+                    <div>
+                      <p className='text-sm font-semibold text-white'>
+                        IGNAI Field Notes
+                      </p>
+                      <p className='mt-1 text-xs text-white/42'>
+                        {record.dateText}
+                        {record.location ? ` · ${record.location}` : ''}
+                      </p>
+                    </div>
+                    <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
                       {recordTypeLabel[record.type]}
                     </span>
                   </div>
-                  <h3 className='text-base font-semibold text-white truncate transition group-hover:text-[#d4ecff]'>
+
+                  <h3 className='mt-6 text-[1.55rem] font-semibold leading-[1.28] text-white transition group-hover:text-[#d4ecff]'>
                     {record.title}
                   </h3>
-                  <p className='mt-1 text-sm text-white/40 line-clamp-1'>
+                  <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/58'>
                     {record.excerpt}
                   </p>
                 </div>
 
-                <div className='flex-shrink-0 hidden md:flex flex-wrap gap-1.5 max-w-[160px]'>
-                  {(record.outcomes?.length ? record.outcomes : record.tags).slice(0, 2).map(item => (
-                    <span
-                      key={item}
-                      className='rounded-full border border-[#7cc8ff]/10 px-2.5 py-1 text-[11px] text-[#c7e6ff]/60'
-                    >
-                      {item}
-                    </span>
-                  ))}
+                <div className='px-5 sm:px-6'>
+                  <img
+                    src={record.cover}
+                    alt=''
+                    className='aspect-[2.05] w-full rounded-lg border border-white/8 object-cover transition duration-500 group-hover:scale-[1.015]'
+                  />
                 </div>
 
-                <div className='flex-shrink-0 text-white/30 group-hover:text-white/60 transition'>
-                  <span className='text-sm'>&rarr;</span>
+                <div className='mt-5 border-t border-white/8 px-5 py-4 sm:px-6'>
+                  <div className='flex flex-wrap gap-2'>
+                    {(record.outcomes?.length ? record.outcomes : record.tags).map(item => (
+                      <span
+                        key={item}
+                        className='rounded-full border border-[#7cc8ff]/12 bg-[#08131e]/80 px-3 py-1.5 text-xs text-[#c7e6ff]'
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </SmartLink>
             </Reveal>
