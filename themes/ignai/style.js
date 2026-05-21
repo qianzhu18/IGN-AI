@@ -1178,110 +1178,65 @@ const Style = () => {
       }
 
       /* ========== 轨道成员环 ========== */
-      .avatar-orbital-container {
+      .avatar-scatter-container {
         position: relative;
-        width: 600px;
-        height: 600px;
         max-width: 100%;
         margin: 0 auto;
         user-select: none;
         overflow: visible;
       }
 
-      .avatar-orbit-track {
+      .avatar-scatter-item {
         position: absolute;
-        top: 50%;
-        left: 50%;
         transform: translate(-50%, -50%);
-        border-radius: 50%;
-        border: 1px solid rgba(255,255,255,0.05);
-        pointer-events: none;
-      }
-
-      .avatar-orbital-center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 10;
-        pointer-events: none;
-      }
-
-      .avatar-orbital-center-inner {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: radial-gradient(circle at 40% 35%, rgba(255,122,24,0.28), rgba(93,169,255,0.12) 60%, transparent);
-        border: 1.5px solid rgba(255,122,24,0.3);
-        box-shadow: 0 0 32px rgba(255,122,24,0.18), 0 0 64px rgba(255,122,24,0.08);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: orb-pulse 3s ease-in-out infinite;
-      }
-
-      .avatar-orbital-center-label {
-        font-size: 0.6rem;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        color: rgba(255,200,140,0.9);
-        text-transform: uppercase;
-      }
-
-      @keyframes orb-pulse {
-        0%, 100% { box-shadow: 0 0 32px rgba(255,122,24,0.18), 0 0 64px rgba(255,122,24,0.08); }
-        50% { box-shadow: 0 0 48px rgba(255,122,24,0.32), 0 0 96px rgba(255,122,24,0.14); }
-      }
-
-      .avatar-orbit-item {
-        position: absolute;
         cursor: pointer;
         will-change: transform;
       }
 
-      .avatar-orbit-img {
-        width: 52px;
-        height: 52px;
+      .avatar-scatter-img {
+        width: 46px;
+        height: 46px;
         border-radius: 50%;
         object-fit: cover;
-        border: 1.5px solid rgba(255,255,255,0.14);
-        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        border: 1.5px solid rgba(255,255,255,0.12);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
         background: #0d0e14;
         display: block;
       }
 
-      .avatar-orbit-img--hovered {
+      .avatar-scatter-img--hovered {
         border-color: #ff7a18;
-        box-shadow: 0 0 18px rgba(255,122,24,0.5), 0 0 36px rgba(255,122,24,0.2);
+        box-shadow: 0 0 16px rgba(255,122,24,0.55), 0 0 32px rgba(255,122,24,0.22);
       }
 
-      .avatar-orbit-card {
+      .avatar-scatter-card {
         position: absolute;
+        transform: translate(-50%, calc(-100% - 28px));
         width: 220px;
         padding: 14px 16px;
         border-radius: 12px;
         border: 1px solid rgba(255,255,255,0.1);
         background: linear-gradient(160deg, rgba(16,20,30,0.98) 0%, rgba(10,13,20,0.96) 100%);
-        box-shadow: 0 16px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04);
-        z-index: 50;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+        z-index: 60;
         pointer-events: none;
       }
 
-      .avatar-orbit-card-name {
+      .avatar-scatter-card-name {
         font-size: 0.92rem;
         font-weight: 600;
         color: #fff;
         margin: 0 0 3px;
       }
 
-      .avatar-orbit-card-role {
+      .avatar-scatter-card-role {
         font-size: 0.72rem;
         color: #ff7a18;
         margin: 0 0 8px;
         font-weight: 500;
       }
 
-      .avatar-orbit-card-bio {
+      .avatar-scatter-card-bio {
         font-size: 0.78rem;
         color: rgba(255,255,255,0.58);
         line-height: 1.5;
@@ -1292,7 +1247,7 @@ const Style = () => {
         overflow: hidden;
       }
 
-      .avatar-orbit-card-quote {
+      .avatar-scatter-card-quote {
         font-size: 0.72rem;
         color: rgba(255,255,255,0.36);
         font-style: italic;
@@ -1305,9 +1260,9 @@ const Style = () => {
       }
 
       @media (max-width: 640px) {
-        .avatar-orbital-container {
-          width: 340px;
-          height: 340px;
+        .avatar-scatter-img {
+          width: 36px;
+          height: 36px;
         }
       }
     `}</style>

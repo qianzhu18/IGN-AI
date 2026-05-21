@@ -844,7 +844,7 @@ function FieldNotesSection() {
 
 function CommunityRolesSection({ allMembers = [] }) {
   const hasMembers = Array.isArray(allMembers) && allMembers.length > 0
-  const displayMembers = allMembers.slice(0, 12)
+  const displayMembers = allMembers.slice(0, 100)
 
   return (
     <section id='community-roles' className='ignai-home-section'>
@@ -889,213 +889,95 @@ function CommunityRolesSection({ allMembers = [] }) {
   )
 }
 
+const GOLDEN_ANGLE = 137.508 * (Math.PI / 180)
+const SCATTER_C = 26 // spacing constant — controls density
+
+function usePhyllotaxis(members) {
+  return useMemo(
+    () =>
+      members.map((_, i) => {
+        const r = SCATTER_C * Math.sqrt(i + 1)
+        const theta = i * GOLDEN_ANGLE
+        return { x: Math.round(r * Math.cos(theta)), y: Math.round(r * Math.sin(theta)) }
+      }),
+    [members]
+  )
+}
+
 function AvatarRing({ members }) {
-  const count = members.length
   const [hoveredIndex, setHoveredIndex] = useState(null)
-  const [hoverPos, setHoverPos] = useState({ x: 0, y: 0 })
-  const containerRef = useRef(null)
-  const isDragging = useRef(false)
-  const dragMoved = useRef(false)
-  const lastAngleRef = useRef(null)
-  const dragOffsetRef = useRef([0, 0, 0])
-  const rafRef = useRef(null)
-  const ringAnglesRef = useRef([0, 0, 0])
-  const ringElemsRef = useRef([])
-  const itemElemsRef = useRef([])
+  const positions = usePhyllotaxis(members)
 
-  const rings = useMemo(() => {
-    if (count <= 3) return [members]
-    if (count <= 7) return [members.slice(0, 2), members.slice(2)]
-    return [members.slice(0, 2), members.slice(2, 6), members.slice(6)]
-  }, [members, count])
+  const maxR = members.length > 0 ? SCATTER_C * Math.sqrt(members.length) : 120
+  const containerSize = Math.max(400, Math.min(660, (maxR + 40) * 2))
 
-  const ringConfig = [
-    { radius: 110, speed: 0.4, direction: 1 },
-    { radius: 190, speed: 0.25, direction: -1 },
-    { radius: 270, speed: 0.18, direction: 1 },
-  ]
-
-  // rAF animation loop — pure DOM manipulation, no CSS animation
-  useEffect(() => {
-    let last = performance.now()
-    const tick = (now) => {
-      const dt = (now - last) / 1000
-      last = now
-
-      rings.forEach((ringMembers, ri) => {
-        const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
-        if (!isDragging.current) {
-          ringAnglesRef.current[ri] += cfg.speed * cfg.direction * dt * 20
-        }
-        const totalAngle = ringAnglesRef.current[ri] + dragOffsetRef.current[ri]
-
-        // position each avatar item
-        ringMembers.forEach((_, mi) => {
-          const baseAngle = (360 / ringMembers.length) * mi
-          const rad = ((baseAngle + totalAngle) * Math.PI) / 180
-          const x = Math.cos(rad) * cfg.radius
-          const y = Math.sin(rad) * cfg.radius
-          const key = `${ri}-${mi}`
-          const el = itemElemsRef.current[key]
-          if (el) {
-            el.style.left = `calc(50% + ${x}px)`
-            el.style.top = `calc(50% + ${y}px)`
-          }
-        })
-      })
-
-      rafRef.current = requestAnimationFrame(tick)
-    }
-    rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
-  }, [rings])
-
-  const getContainerAngle = (e) => {
-    const rect = containerRef.current.getBoundingClientRect()
-    const cx = rect.left + rect.width / 2
-    const cy = rect.top + rect.height / 2
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY
-    return Math.atan2(clientY - cy, clientX - cx) * (180 / Math.PI)
-  }
-
-  const handlePointerDown = (e) => {
-    isDragging.current = true
-    dragMoved.current = false
-    lastAngleRef.current = getContainerAngle(e)
-    e.currentTarget.setPointerCapture(e.pointerId)
-  }
-
-  const handlePointerMove = (e) => {
-    if (!isDragging.current) return
-    dragMoved.current = true
-    const angle = getContainerAngle(e)
-    let delta = angle - lastAngleRef.current
-    if (delta > 180) delta -= 360
-    if (delta < -180) delta += 360
-    rings.forEach((_, ri) => {
-      const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
-      dragOffsetRef.current[ri] += delta * cfg.direction
-    })
-    lastAngleRef.current = angle
-  }
-
-  const handlePointerUp = () => {
-    isDragging.current = false
-    lastAngleRef.current = null
-  }
-
-  const handleAvatarHover = (e, globalIndex) => {
-    if (isDragging.current) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const containerRect = containerRef.current.getBoundingClientRect()
-    setHoverPos({
-      x: rect.left - containerRect.left + rect.width / 2,
-      y: rect.top - containerRect.top,
-    })
-    setHoveredIndex(globalIndex)
-  }
-
-  let globalIndex = 0
+  const hoveredMember = hoveredIndex !== null ? members[hoveredIndex] : null
+  const hoveredPos = hoveredIndex !== null ? positions[hoveredIndex] : null
 
   return (
     <div
-      ref={containerRef}
-      className='avatar-orbital-container'
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
-      style={{ cursor: 'grab' }}
+      className='avatar-scatter-container'
+      style={{ width: containerSize, height: containerSize }}
     >
-      {/* Orbit track circles */}
-      {rings.map((_, ri) => {
-        const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
+      {members.map((member, i) => {
+        const pos = positions[i]
+        const avatar =
+          member?.avatar ||
+          member?.pageIcon ||
+          `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(member.title || member.id)}`
+        const isHovered = hoveredIndex === i
+
         return (
-          <div
-            key={`track-${ri}`}
-            className='avatar-orbit-track'
-            style={{ width: cfg.radius * 2, height: cfg.radius * 2 }}
-          />
+          <motion.div
+            key={member.id || member.slug || i}
+            className='avatar-scatter-item'
+            style={{ left: `calc(50% + ${pos.x}px)`, top: `calc(50% + ${pos.y}px)` }}
+            animate={{ scale: isHovered ? 1.85 : 1, zIndex: isHovered ? 40 : 2 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 26 }}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <Link
+              href={`/members/${String(member.slug || member.id).split('/').pop()}`}
+              className='block no-underline'
+            >
+              <img
+                src={avatar}
+                alt={member.title}
+                className={`avatar-scatter-img${isHovered ? ' avatar-scatter-img--hovered' : ''}`}
+                draggable={false}
+              />
+            </Link>
+          </motion.div>
         )
       })}
 
-      {/* Center orb */}
-      <div className='avatar-orbital-center'>
-        <div className='avatar-orbital-center-inner'>
-          <span className='avatar-orbital-center-label'>IGNAI</span>
-        </div>
-      </div>
-
-      {/* Avatar items — positioned by rAF */}
-      {rings.map((ringMembers, ri) => {
-        const cfg = ringConfig[ri] || ringConfig[ringConfig.length - 1]
-        return ringMembers.map((member, mi) => {
-          const myGlobalIndex = globalIndex++
-          const avatar = member?.avatar || member?.pageIcon ||
-            `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(member.title || member.id)}`
-          const isHovered = hoveredIndex === myGlobalIndex
-
-          return (
-            <motion.div
-              key={member.id || member.slug || myGlobalIndex}
-              ref={el => { itemElemsRef.current[`${ri}-${mi}`] = el }}
-              className='avatar-orbit-item'
-              style={{
-                width: 52,
-                height: 52,
-                marginLeft: -26,
-                marginTop: -26,
-              }}
-              animate={{ scale: isHovered ? 1.8 : 1, zIndex: isHovered ? 40 : 2 }}
-              transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-              onMouseEnter={(e) => handleAvatarHover(e, myGlobalIndex)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <Link
-                href={`/members/${String(member.slug || member.id).split('/').pop()}`}
-                className='block no-underline'
-                onClick={e => { if (dragMoved.current) e.preventDefault() }}
-              >
-                <img
-                  src={avatar}
-                  alt={member.title}
-                  className={`avatar-orbit-img ${isHovered ? 'avatar-orbit-img--hovered' : ''}`}
-                  draggable={false}
-                />
-              </Link>
-            </motion.div>
-          )
-        })
-      })}
-
-      {/* Hover card */}
+      {/* Hover card — rendered outside scaled items so it stays at natural size */}
       <AnimatePresence>
-        {hoveredIndex !== null && members[hoveredIndex] && (
+        {hoveredMember && hoveredPos && (
           <motion.div
-            className='avatar-orbit-card'
+            className='avatar-scatter-card'
             style={{
-              left: Math.min(Math.max(hoverPos.x - 110, 4), 376),
-              top: hoverPos.y - 12,
-              transform: 'translateY(-100%)',
+              left: `calc(50% + ${hoveredPos.x}px)`,
+              top: `calc(50% + ${hoveredPos.y}px)`,
             }}
-            initial={{ opacity: 0, y: 8, scale: 0.92 }}
+            initial={{ opacity: 0, y: 6, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 8, scale: 0.92 }}
-            transition={{ duration: 0.16 }}
+            exit={{ opacity: 0, y: 6, scale: 0.9 }}
+            transition={{ duration: 0.15 }}
           >
-            <p className='avatar-orbit-card-name'>{members[hoveredIndex].title}</p>
-            {members[hoveredIndex].role && (
-              <p className='avatar-orbit-card-role'>{members[hoveredIndex].role}</p>
+            <p className='avatar-scatter-card-name'>{hoveredMember.title}</p>
+            {hoveredMember.role && (
+              <p className='avatar-scatter-card-role'>{hoveredMember.role}</p>
             )}
-            {(members[hoveredIndex].bio || members[hoveredIndex].summary) && (
-              <p className='avatar-orbit-card-bio'>
-                {members[hoveredIndex].bio || members[hoveredIndex].summary}
+            {(hoveredMember.bio || hoveredMember.summary) && (
+              <p className='avatar-scatter-card-bio'>
+                {hoveredMember.bio || hoveredMember.summary}
               </p>
             )}
-            {getMemberQuote(members[hoveredIndex]) && (
-              <p className='avatar-orbit-card-quote'>
-                &ldquo;{getMemberQuote(members[hoveredIndex])}&rdquo;
+            {getMemberQuote(hoveredMember) && (
+              <p className='avatar-scatter-card-quote'>
+                &ldquo;{getMemberQuote(hoveredMember)}&rdquo;
               </p>
             )}
           </motion.div>
