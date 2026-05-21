@@ -1177,100 +1177,130 @@ const Style = () => {
         display: inline-block;
       }
 
-      /* ========== 头像环形排列 ========== */
-      .avatar-ring-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 40px 0;
-      }
-
-      .avatar-ring {
+      /* ========== 轨道成员环 ========== */
+      .avatar-orbital-container {
         position: relative;
+        width: 600px;
+        height: 600px;
+        max-width: 100%;
         margin: 0 auto;
+        user-select: none;
       }
 
-      .avatar-ring-item {
+      .avatar-orbital-center {
         position: absolute;
-        cursor: pointer;
-        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
       }
 
-      .avatar-ring-img {
+      .avatar-orbital-center-inner {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 40% 35%, rgba(255,122,24,0.28), rgba(93,169,255,0.12) 60%, transparent);
+        border: 1.5px solid rgba(255,122,24,0.3);
+        box-shadow: 0 0 32px rgba(255,122,24,0.18), 0 0 64px rgba(255,122,24,0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: orb-pulse 3s ease-in-out infinite;
+      }
+
+      .avatar-orbital-center-label {
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: rgba(255,200,140,0.9);
+        text-transform: uppercase;
+      }
+
+      @keyframes orb-pulse {
+        0%, 100% { box-shadow: 0 0 32px rgba(255,122,24,0.18), 0 0 64px rgba(255,122,24,0.08); }
+        50% { box-shadow: 0 0 48px rgba(255,122,24,0.32), 0 0 96px rgba(255,122,24,0.14); }
+      }
+
+      .avatar-orbit-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.04);
+        animation: orbit-spin linear infinite;
+        will-change: transform;
+      }
+
+      @keyframes orbit-spin {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to   { transform: translate(-50%, -50%) rotate(360deg); }
+      }
+
+      .avatar-orbit-item {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 52px;
+        height: 52px;
+        margin: -26px 0 0 -26px;
+        transform-origin: center center;
+      }
+
+      .avatar-orbit-img {
+        width: 52px;
+        height: 52px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid rgba(255, 255, 255, 0.1);
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        border: 1.5px solid rgba(255,255,255,0.12);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        background: #0d0e14;
       }
 
-      .avatar-ring-item:hover .avatar-ring-img {
-        border-color: var(--ignai-heat, #ff7a18);
-        box-shadow:
-          0 0 20px rgba(255, 122, 24, 0.3),
-          0 0 40px rgba(255, 122, 24, 0.1);
+      .avatar-orbit-img--hovered {
+        border-color: #ff7a18;
+        box-shadow: 0 0 18px rgba(255,122,24,0.45), 0 0 36px rgba(255,122,24,0.18);
       }
 
-      .avatar-ring-tooltip {
+      .avatar-orbit-card {
         position: absolute;
-        top: calc(100% + 12px);
-        left: 50%;
-        transform: translateX(-50%);
         width: 220px;
         padding: 14px 16px;
-        border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: linear-gradient(
-          180deg,
-          rgba(14, 18, 26, 0.97) 0%,
-          rgba(10, 13, 20, 0.95) 100%
-        );
-        box-shadow:
-          0 12px 40px rgba(0, 0, 0, 0.5),
-          inset 0 1px 0 rgba(255, 255, 255, 0.04);
-        z-index: 30;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: linear-gradient(160deg, rgba(16,20,30,0.98) 0%, rgba(10,13,20,0.96) 100%);
+        box-shadow: 0 16px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04);
+        z-index: 50;
         pointer-events: none;
       }
 
-      .avatar-ring-tooltip::before {
-        content: '';
-        position: absolute;
-        top: -6px;
-        left: 50%;
-        transform: translateX(-50%) rotate(45deg);
-        width: 12px;
-        height: 12px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        border-left: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(14, 18, 26, 0.97);
-      }
-
-      .avatar-ring-tooltip-name {
-        font-size: 0.95rem;
+      .avatar-orbit-card-name {
+        font-size: 0.92rem;
         font-weight: 600;
         color: #fff;
-        margin: 0 0 4px;
+        margin: 0 0 3px;
       }
 
-      .avatar-ring-tooltip-role {
-        font-size: 0.75rem;
-        color: var(--ignai-heat, #ff7a18);
+      .avatar-orbit-card-role {
+        font-size: 0.72rem;
+        color: #ff7a18;
         margin: 0 0 8px;
+        font-weight: 500;
       }
 
-      .avatar-ring-tooltip-bio {
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.6);
+      .avatar-orbit-card-bio {
+        font-size: 0.78rem;
+        color: rgba(255,255,255,0.58);
         line-height: 1.5;
         margin: 0 0 6px;
         display: -webkit-box;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
 
-      .avatar-ring-tooltip-quote {
-        font-size: 0.75rem;
-        color: rgba(255, 255, 255, 0.4);
+      .avatar-orbit-card-quote {
+        font-size: 0.72rem;
+        color: rgba(255,255,255,0.36);
         font-style: italic;
         margin: 0;
         line-height: 1.4;
@@ -1281,13 +1311,9 @@ const Style = () => {
       }
 
       @media (max-width: 640px) {
-        .avatar-ring-container {
-          padding: 20px 0;
-          overflow-x: auto;
-        }
-        .avatar-ring-tooltip {
-          width: 180px;
-          padding: 10px 12px;
+        .avatar-orbital-container {
+          width: 340px;
+          height: 340px;
         }
       }
     `}</style>
