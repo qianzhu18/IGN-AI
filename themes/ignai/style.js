@@ -8,8 +8,6 @@
 const Style = () => {
   return (
     <style jsx global>{`
-      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
-
       /* ========== 基础底色 ========== */
       body {
         background-color: #07080c;
@@ -1177,6 +1175,120 @@ const Style = () => {
         color: #f0d48d;
         font-size: 0.8rem;
         display: inline-block;
+      }
+
+      /* ========== 头像环形排列 ========== */
+      .avatar-ring-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 0;
+      }
+
+      .avatar-ring {
+        position: relative;
+        margin: 0 auto;
+      }
+
+      .avatar-ring-item {
+        position: absolute;
+        cursor: pointer;
+        z-index: 1;
+      }
+
+      .avatar-ring-img {
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .avatar-ring-item:hover .avatar-ring-img {
+        border-color: var(--ignai-heat, #ff7a18);
+        box-shadow:
+          0 0 20px rgba(255, 122, 24, 0.3),
+          0 0 40px rgba(255, 122, 24, 0.1);
+      }
+
+      .avatar-ring-tooltip {
+        position: absolute;
+        top: calc(100% + 12px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 220px;
+        padding: 14px 16px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(
+          180deg,
+          rgba(14, 18, 26, 0.97) 0%,
+          rgba(10, 13, 20, 0.95) 100%
+        );
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.5),
+          inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        z-index: 30;
+        pointer-events: none;
+      }
+
+      .avatar-ring-tooltip::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+        width: 12px;
+        height: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(14, 18, 26, 0.97);
+      }
+
+      .avatar-ring-tooltip-name {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 0 0 4px;
+      }
+
+      .avatar-ring-tooltip-role {
+        font-size: 0.75rem;
+        color: var(--ignai-heat, #ff7a18);
+        margin: 0 0 8px;
+      }
+
+      .avatar-ring-tooltip-bio {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.5;
+        margin: 0 0 6px;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .avatar-ring-tooltip-quote {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-style: italic;
+        margin: 0;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      @media (max-width: 640px) {
+        .avatar-ring-container {
+          padding: 20px 0;
+          overflow-x: auto;
+        }
+        .avatar-ring-tooltip {
+          width: 180px;
+          padding: 10px 12px;
+        }
       }
     `}</style>
   )

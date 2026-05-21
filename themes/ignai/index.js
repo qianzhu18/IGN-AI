@@ -9,13 +9,14 @@ import { isBrowser } from '@/lib/utils'
 import { CalendarDays, MapPin, Sparkles } from 'lucide-react'
 import {
   motion,
+  AnimatePresence,
   useReducedMotion,
   useScroll,
   useTransform
 } from 'framer-motion'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
 import Footer from './components/Footer'
@@ -832,17 +833,17 @@ function FieldNotesSection() {
 
 function CommunityRolesSection({ allMembers = [] }) {
   const hasMembers = Array.isArray(allMembers) && allMembers.length > 0
-  const displayMembers = allMembers.slice(0, 8)
+  const displayMembers = allMembers.slice(0, 12)
 
   return (
     <section id='community-roles' className='ignai-home-section'>
       <div className='ignai-section-divider' />
       <div className='ignai-section-atmosphere' />
-      <div className='ignai-home-container section-grid-start'>
-        <Reveal className='section-copy'>
+      <div className='ignai-home-container'>
+        <Reveal className='text-center mb-16'>
           <p className='section-eyebrow'>Community Members</p>
-          <h2 className='section-title mt-6 max-w-[11ch]'>这里有谁？</h2>
-          <p className='section-body mt-6'>
+          <h2 className='section-title mt-6'>这里有谁？</h2>
+          <p className='section-body mt-6 max-w-lg mx-auto'>
             {hasMembers
               ? 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。'
               : 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。'}
@@ -850,72 +851,118 @@ function CommunityRolesSection({ allMembers = [] }) {
         </Reveal>
 
         {hasMembers ? (
-          <div className='open-grid'>
-            {displayMembers.map((member, index) => {
-              const slug = member?.slug || member?.id || ''
-              const path = String(slug).replace(/^\/+/, '')
-              const href = path.startsWith('members/') ? `/${path}` : `/members/${path.split('/').filter(Boolean).pop()}`
-              const avatar = member?.avatar || member?.pageIcon || '/avatar.svg'
-              const quote = getMemberQuote(member)
-              const joined = getMemberJoinedAtText(member)
-
-              return (
-                <Reveal key={member.id || member.slug} delay={index * 0.08}>
-                  <Link href={href} className='open-grid-item ignai-unified-card block no-underline'>
-                    <div className='flex items-center gap-3 mb-3'>
-                      <img
-                        src={avatar}
-                        alt={member.title}
-                        className='h-10 w-10 rounded-full object-cover ring-1 ring-white/10'
-                      />
-                      <div className='min-w-0 flex-1'>
-                        <h3 className='card-title !mb-0 text-base'>{member.title}</h3>
-                        <div className='flex flex-wrap items-center gap-x-2 text-xs text-neutral-400 mt-0.5'>
-                          {member.role && <span>{member.role}</span>}
-                          {joined && <span>Joined {joined}</span>}
-                        </div>
-                      </div>
-                    </div>
-                    <p className='card-body text-sm'>
-                      {member.bio || member.summary || ''}
-                    </p>
-                    {quote && (
-                      <p className='mt-2 text-xs italic text-neutral-400 line-clamp-2'>
-                        &ldquo;{quote}&rdquo;
-                      </p>
-                    )}
-                    {isFeaturedMember(member) && (
-                      <span className='mt-2 inline-block rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[10px] text-emerald-200'>
-                        Featured
-                      </span>
-                    )}
-                  </Link>
-                </Reveal>
-              )
-            })}
-            <Reveal delay={displayMembers.length * 0.08}>
-              <Link href='/members' className='open-grid-item ignai-unified-card flex items-center justify-center no-underline'>
-                <span className='text-sm text-neutral-300 hover:text-white transition'>
-                  View all members &rarr;
-                </span>
-              </Link>
-            </Reveal>
-          </div>
+          <Reveal>
+            <AvatarRing members={displayMembers} />
+          </Reveal>
         ) : (
-          <div className='open-grid'>
+          <div className='flex flex-wrap justify-center gap-4 max-w-2xl mx-auto'>
             {roleCards.map((role, index) => (
               <Reveal key={role.title} delay={index * 0.08}>
-                <div className='open-grid-item ignai-unified-card'>
-                  <p className='card-eyebrow'>0{index + 1}</p>
-                  <h3 className='card-title'>{role.title}</h3>
-                  <p className='card-body'>{role.description}</p>
+                <div className='rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm text-white/70 hover:text-white hover:border-white/25 transition-all duration-300'>
+                  {role.title}
                 </div>
               </Reveal>
             ))}
           </div>
         )}
+
+        {hasMembers && (
+          <Reveal className='text-center mt-12'>
+            <Link href='/members' className='text-sm text-neutral-400 hover:text-white transition no-underline'>
+              View all members &rarr;
+            </Link>
+          </Reveal>
+        )}
       </div>
     </section>
+  )
+}
+
+function AvatarRing({ members }) {
+  const count = members.length
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+  const containerRef = useRef(null)
+
+  // Dynamic sizing based on member count
+  const avatarSize = count <= 6 ? 72 : count <= 10 ? 60 : 52
+  const ringRadius = count <= 4 ? 120 : count <= 6 ? 160 : count <= 8 ? 200 : count <= 10 ? 240 : 260
+
+  return (
+    <div className='avatar-ring-container'>
+      <div
+        ref={containerRef}
+        className='avatar-ring'
+        style={{ width: ringRadius * 2 + avatarSize + 40, height: ringRadius * 2 + avatarSize + 40 }}
+      >
+        {members.map((member, index) => {
+          const angle = (360 / count) * index - 90
+          const rad = (angle * Math.PI) / 180
+          const x = Math.cos(rad) * ringRadius
+          const y = Math.sin(rad) * ringRadius
+          const avatar = member?.avatar || member?.pageIcon || '/avatar.svg'
+          const slug = member?.slug || member?.id || ''
+          const path = String(slug).replace(/^\/+/, '')
+          const href = path.startsWith('members/') ? `/${path}` : `/members/${path.split('/').filter(Boolean).pop()}`
+          const bio = member?.bio || member?.summary || ''
+          const quote = getMemberQuote(member)
+          const isHovered = hoveredIndex === index
+
+          return (
+            <motion.div
+              key={member.id || member.slug}
+              className='avatar-ring-item'
+              style={{
+                left: `calc(50% + ${x}px)`,
+                top: `calc(50% + ${y}px)`,
+                width: avatarSize,
+                height: avatarSize,
+                marginLeft: -avatarSize / 2,
+                marginTop: -avatarSize / 2,
+              }}
+              animate={{
+                scale: isHovered ? 1.6 : 1,
+                zIndex: isHovered ? 20 : 1,
+              }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              <Link href={href} className='block no-underline'>
+                <img
+                  src={avatar}
+                  alt={member.title}
+                  className='avatar-ring-img'
+                  style={{ width: avatarSize, height: avatarSize }}
+                />
+              </Link>
+
+              <AnimatePresence>
+                {isHovered && (
+                  <motion.div
+                    className='avatar-ring-tooltip'
+                    initial={{ opacity: 0, y: 8, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 8, scale: 0.9 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <p className='avatar-ring-tooltip-name'>{member.title}</p>
+                    {member.role && (
+                      <p className='avatar-ring-tooltip-role'>{member.role}</p>
+                    )}
+                    {bio && (
+                      <p className='avatar-ring-tooltip-bio'>{bio}</p>
+                    )}
+                    {quote && (
+                      <p className='avatar-ring-tooltip-quote'>&ldquo;{quote}&rdquo;</p>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 

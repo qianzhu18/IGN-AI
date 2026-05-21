@@ -18,6 +18,7 @@ export function normalizeNotionSite(
     notice: null,
     allPages: [],
     allMembers: [],
+    allEvents: [],
     allNavPages: [],
     latestPosts: [],
     categoryOptions: [],
