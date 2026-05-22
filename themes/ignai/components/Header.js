@@ -59,16 +59,20 @@ function DailyReportButton() {
   )
 }
 
+const HIDDEN_SLUGS = ['/en']
+
 function buildNavItems(customMenu, fallback) {
   if (!customMenu || customMenu.length === 0) return fallback
-  return customMenu.map(item => ({
-    label: item.title || item.name || '',
-    href: item.slug || item.href || '#',
-    subMenus: item.subMenus?.map(sub => ({
-      label: sub.title || sub.name || '',
-      href: sub.slug || sub.href || '#'
-    })) || []
-  }))
+  return customMenu
+    .filter(item => !HIDDEN_SLUGS.includes(item.slug || item.href))
+    .map(item => ({
+      label: item.title || item.name || '',
+      href: item.slug || item.href || '#',
+      subMenus: item.subMenus?.map(sub => ({
+        label: sub.title || sub.name || '',
+        href: sub.slug || sub.href || '#'
+      })) || []
+    }))
 }
 
 function DesktopNavItem({ item }) {
