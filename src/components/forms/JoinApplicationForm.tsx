@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { CircleAlert, Database, ExternalLink, Inbox, Mail } from "lucide-react";
 
+import { siteLinks } from "@/src/content/links";
 import type { JoinExperienceMode } from "@/lib/join";
 
 const interestOptions = ["线下交流", "主题共创", "项目展示", "内容分享", "合作咨询"];
@@ -43,7 +44,7 @@ function JoinFallbackPanel({
       : "当前还没有可写入的申请后端，所以先保留 Email 作为最轻量的兜底入口。";
 
   return (
-    <div className="join-surface-card-strong p-6 sm:p-8">
+    <div className="join-surface-card-strong mx-auto p-6 sm:p-8">
       <p className="join-card-eyebrow">Join entry</p>
       <h2 className="mt-4 text-[1.7rem] font-semibold leading-[1.22] text-white">
         先用一个稳定入口，
@@ -180,8 +181,11 @@ export function JoinApplicationForm({
   };
 
   return (
-    <form onSubmit={(event) => void handleSubmit(event)} className="join-surface-card-strong p-6 sm:p-8">
-      <div className="mb-6 flex items-start gap-4 rounded-2xl border border-[#ffb879]/16 bg-[#0d1219]/92 px-5 py-4">
+    <form
+      onSubmit={(event) => void handleSubmit(event)}
+      className="join-surface-card-strong mx-auto p-5 sm:p-7"
+    >
+      <div className="mb-7 flex items-start gap-4 rounded-2xl border border-[#ffb879]/16 bg-[#0d1219]/92 px-4 py-4 sm:px-5">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/22 bg-[#ff9a3c]/10 text-[#ffd09a]">
           <modeNotice.Icon className="h-5 w-5" />
         </div>
@@ -191,7 +195,7 @@ export function JoinApplicationForm({
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         <label className="block">
           <span className="join-card-eyebrow">Name</span>
           <input
@@ -213,7 +217,7 @@ export function JoinApplicationForm({
         </label>
       </div>
 
-      <label className="mt-6 block">
+      <label className="mt-5 block">
         <span className="join-card-eyebrow">Role</span>
         <input
           name="role"
@@ -223,7 +227,9 @@ export function JoinApplicationForm({
         />
       </label>
 
-      <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+      <div className="my-8 h-px bg-white/10" />
+
+      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
         <div>
           <p className="join-card-eyebrow">Member draft</p>
           <h3 className="mt-3 text-lg font-medium text-white">顺手留下成员页草稿</h3>
@@ -232,15 +238,29 @@ export function JoinApplicationForm({
           </p>
         </div>
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-6 space-y-5">
           <label className="block">
-            <span className="join-card-eyebrow">Avatar URL</span>
-            <input
-              name="avatarUrl"
-              placeholder="https://..."
-              className="join-field"
-            />
+            <div className="flex items-end justify-between gap-3">
+              <span className="join-card-eyebrow">Avatar URL</span>
+              {siteLinks.memberAvatarUploadConfigured ? (
+                <a
+                  href={siteLinks.memberAvatarUploadUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs text-[#9aceff] transition hover:text-white"
+                >
+                  打开图床上传
+                </a>
+              ) : null}
+            </div>
+            <input name="avatarUrl" placeholder="https://..." className="join-field" />
           </label>
+
+          {siteLinks.memberAvatarUploadConfigured ? (
+            <div className="rounded-2xl border border-[#9aceff]/14 bg-[#0f1720]/88 px-4 py-3 text-sm leading-6 text-white/58">
+              如果你已经上传头像，把图床链接贴到上面的 Avatar URL 即可。
+            </div>
+          ) : null}
 
           <label className="block">
             <span className="join-card-eyebrow">Headline</span>
@@ -280,7 +300,7 @@ export function JoinApplicationForm({
         </label>
       </div>
 
-      <fieldset className="mt-6">
+      <fieldset className="mt-7">
         <legend className="join-card-eyebrow">Interests</legend>
         <div className="mt-3 flex flex-wrap gap-3">
           {interestOptions.map((interest) => {
@@ -303,7 +323,7 @@ export function JoinApplicationForm({
         </div>
       </fieldset>
 
-      <label className="mt-6 block">
+      <label className="mt-7 block">
         <span className="join-card-eyebrow">Signal</span>
         <textarea
           name="message"
@@ -313,25 +333,25 @@ export function JoinApplicationForm({
         />
       </label>
 
-      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="submit"
           disabled={state.status === "submitting"}
-          className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-7 py-3.5 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+          className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-7 py-3.5 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[132px]"
         >
           {state.status === "submitting" ? "提交中" : "提交申请"}
         </button>
         {state.message ? (
           <p
             aria-live="polite"
-            className={`text-sm ${
+            className={`text-sm sm:text-right ${
               state.status === "success" ? "text-[#bdf0c8]" : "text-[#ffd09a]"
             }`}
           >
             {state.message}
           </p>
         ) : (
-          <div className="flex items-start gap-2 text-sm text-white/42">
+          <div className="flex max-w-[360px] items-start gap-2 text-sm text-white/42 sm:text-right">
             <CircleAlert className="mt-0.5 h-4 w-4 shrink-0" />
             <p>
               {experienceMode === "database"

@@ -40,10 +40,31 @@ class MyDocument extends Document {
   }
 
   render() {
+    const fontUrls = Array.isArray(BLOG.FONT_URL)
+      ? BLOG.FONT_URL.filter(Boolean)
+      : BLOG.FONT_URL
+        ? [BLOG.FONT_URL]
+        : []
     return (
       <Html lang={BLOG.LANG}>
         <Head>
-          {/* 预加载字体 */}
+          {/* 预连接与预加载字体资源 */}
+          <link rel='preconnect' href='https://fonts.googleapis.com' />
+          <link
+            rel='preconnect'
+            href='https://fonts.gstatic.com'
+            crossOrigin='anonymous'
+          />
+          {fontUrls.map(url => (
+            <link
+              key={url}
+              rel='preload'
+              href={url}
+              as='style'
+              crossOrigin='anonymous'
+              onLoad="this.onload=null;this.rel='stylesheet'"
+            />
+          ))}
           {BLOG.FONT_AWESOME && (
             <>
               <link
@@ -53,11 +74,20 @@ class MyDocument extends Document {
                 crossOrigin='anonymous'
               />
               <link
-                rel='stylesheet'
+                rel='preload'
                 href={BLOG.FONT_AWESOME}
+                as='style'
                 crossOrigin='anonymous'
-                referrerPolicy='no-referrer'
+                onLoad="this.onload=null;this.rel='stylesheet'"
               />
+              <noscript>
+                <link
+                  rel='stylesheet'
+                  href={BLOG.FONT_AWESOME}
+                  crossOrigin='anonymous'
+                  referrerPolicy='no-referrer'
+                />
+              </noscript>
             </>
           )}
 

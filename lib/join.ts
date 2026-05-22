@@ -154,6 +154,10 @@ function normalizeJoinApplicationRecord(row: unknown): JoinApplicationRecord {
 
 const NOTION_MEMBERS_DB_ID = 'a3ae45c4-da1e-821e-8e69-010ad0a42134';
 
+export function isJoinNotionEnabled(): boolean {
+  return Boolean(process.env.NOTION_API_TOKEN?.trim());
+}
+
 async function createNotionMemberApplication(
   input: JoinSubmissionInput,
 ): Promise<JoinApplicationRecord | null> {
@@ -209,8 +213,21 @@ async function createNotionMemberApplication(
       }),
     });
 
-    if (!response.ok) return null;
-    const page = await response.json();
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('[join:notion] page creation failed', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText.slice(0, 500),
+      });
+      return null;
+    }
+
+    const page = (await response.json()) as { id?: string };
+    if (!page?.id) {
+      console.warn('[join:notion] page creation succeeded but response id is missing');
+      return null;
+    }
 
     return {
       id: page.id,
@@ -223,9 +240,14 @@ async function createNotionMemberApplication(
       status: 'submitted',
       created_at: now,
       updated_at: now,
-      metadata: input.metadata,
+      metadata: {
+        ...input.metadata,
+        notion_page_id: page.id,
+        join_writeback_target: 'notion',
+      },
     };
-  } catch {
+  } catch (error) {
+    console.error('[join:notion] page creation threw', error);
     return null;
   }
 }
@@ -356,6 +378,7 @@ export function getJoinExperienceMode(): JoinExperienceMode {
     return forced;
   }
   if (configured) return "external";
+  if (isJoinNotionEnabled()) return "database";
   if (isJoinDatabaseEnabled()) return "database";
   return "local";
 }

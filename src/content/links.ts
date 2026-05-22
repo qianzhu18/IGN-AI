@@ -3,6 +3,8 @@ const siteUrl =
 const joinUrl =
   process.env.NEXT_PUBLIC_COMMUNITY_JOIN_URL?.trim() || "/join";
 const joinFormUrl = process.env.NEXT_PUBLIC_JOIN_FORM_URL?.trim() || "";
+const memberAvatarUploadUrl =
+  process.env.NEXT_PUBLIC_MEMBER_AVATAR_UPLOAD_URL?.trim() || "";
 const contactEmail =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@ignai.community";
 const xiaohongshuUrl = process.env.NEXT_PUBLIC_XIAOHONGSHU_URL?.trim() || "";
@@ -30,6 +32,8 @@ export const siteLinks = {
   siteUrl,
   joinFormUrl,
   joinFormConfigured: Boolean(joinFormUrl),
+  memberAvatarUploadUrl,
+  memberAvatarUploadConfigured: Boolean(memberAvatarUploadUrl),
   contactEmail,
   contactEmailHref: `mailto:${contactEmail}`,
 };
