@@ -37,11 +37,11 @@ import SearchInput from './components/SearchInput'
 import { SVG404 } from './components/svg/SVG404'
 import Lenis from '@/components/Lenis'
 import { ArticleLock } from './components/ArticleLock'
-import { siteContent } from '@/src/content/site'
+import { siteContent as siteContentFallback } from '@/src/content/site'
 import {
-  cultureContent,
-  joinContent,
-  whatIsContent
+  cultureContent as cultureContentFallback,
+  joinContent as joinContentFallback,
+  whatIsContent as whatIsContentFallback
 } from '@/src/content/community'
 import {
   eventFormatLabel,
@@ -54,6 +54,15 @@ import {
   getMemberQuote,
   getMemberJoinedAtText
 } from '@/lib/utils/member'
+
+/**
+ * 从 NOTION_CONFIG 解析 section 数据，回退到静态内容
+ * NOTION_CONFIG 中的 key 格式：IGNAI_SECTION_HERO, IGNAI_SECTION_WHATIS 等
+ */
+function resolveSection(notionConfig, sectionKey, fallback) {
+  const key = `IGNAI_SECTION_${sectionKey}`
+  return notionConfig?.[key] || fallback
+}
 
 const BackgroundFX = dynamic(
   () => import('./components/BackgroundFX').then(mod => mod.BackgroundFX),
@@ -181,15 +190,16 @@ const LayoutBase = props => {
  * 首页布局 — IGNAI 品牌社区
  */
 const LayoutIndex = props => {
+  const notionConfig = props?.NOTION_CONFIG
   return (
     <main className='ignai-home-shell'>
-      {siteConfig('IGNAI_HERO_ENABLE', CONFIG.IGNAI_HERO_ENABLE) && <HeroSection />}
-      {siteConfig('IGNAI_WHATIS_ENABLE', CONFIG.IGNAI_WHATIS_ENABLE) && <WhatIsSection />}
-      {siteConfig('IGNAI_CULTURE_ENABLE', CONFIG.IGNAI_CULTURE_ENABLE) && <CultureSection />}
+      {siteConfig('IGNAI_HERO_ENABLE', CONFIG.IGNAI_HERO_ENABLE) && <HeroSection notionConfig={notionConfig} />}
+      {siteConfig('IGNAI_WHATIS_ENABLE', CONFIG.IGNAI_WHATIS_ENABLE) && <WhatIsSection notionConfig={notionConfig} />}
+      {siteConfig('IGNAI_CULTURE_ENABLE', CONFIG.IGNAI_CULTURE_ENABLE) && <CultureSection notionConfig={notionConfig} />}
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
       {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection notionEvents={props.allEvents || []} />}
       {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
-      {siteConfig('IGNAI_JOIN_ENABLE', CONFIG.IGNAI_JOIN_ENABLE) && <JoinSection />}
+      {siteConfig('IGNAI_JOIN_ENABLE', CONFIG.IGNAI_JOIN_ENABLE) && <JoinSection notionConfig={notionConfig} />}
     </main>
   )
 }
@@ -428,7 +438,8 @@ const LayoutTagIndex = props => {
   )
 }
 
-function HeroSection() {
+function HeroSection({ notionConfig }) {
+  const siteContent = resolveSection(notionConfig, 'HERO', siteContentFallback)
   const ref = useRef(null)
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
@@ -555,7 +566,8 @@ function HeroSection() {
   )
 }
 
-function WhatIsSection() {
+function WhatIsSection({ notionConfig }) {
+  const whatIsContent = resolveSection(notionConfig, 'WHATIS', whatIsContentFallback)
   const ref = useRef(null)
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
@@ -613,7 +625,8 @@ function WhatIsSection() {
   )
 }
 
-function CultureSection() {
+function CultureSection({ notionConfig }) {
+  const cultureContent = resolveSection(notionConfig, 'CULTURE', cultureContentFallback)
   const ref = useRef(null)
   const shouldReduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
@@ -1018,7 +1031,8 @@ function AvatarRing({ members }) {
   )
 }
 
-function JoinSection() {
+function JoinSection({ notionConfig }) {
+  const joinContent = resolveSection(notionConfig, 'JOIN', joinContentFallback)
   return (
     <section id='join' className='ignai-home-section pb-8'>
       <div className='ignai-home-container'>
