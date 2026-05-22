@@ -6,10 +6,9 @@ import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
-import { CalendarDays, MapPin, Sparkles } from 'lucide-react'
+import { Sparkles } from 'lucide-react'
 import {
   motion,
-  AnimatePresence,
   useReducedMotion,
   useScroll,
   useTransform
@@ -17,7 +16,7 @@ import {
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
 import Footer from './components/Footer'
@@ -29,7 +28,6 @@ import replaceSearchResult from '@/components/Mark'
 import ShareBar from '@/components/ShareBar'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
-import Link from 'next/link'
 import SmartLink from '@/components/SmartLink'
 import { Banner } from './components/Banner'
 import { CTA } from './components/CTA'
@@ -40,20 +38,8 @@ import { ArticleLock } from './components/ArticleLock'
 import { siteContent as siteContentFallback } from '@/src/content/site'
 import {
   cultureContent as cultureContentFallback,
-  joinContent as joinContentFallback,
   whatIsContent as whatIsContentFallback
 } from '@/src/content/community'
-import {
-  eventFormatLabel,
-  eventStatusLabel,
-  events
-} from '@/src/content/events'
-import { recordTypeLabel, records } from '@/src/content/records'
-import {
-  isFeaturedMember,
-  getMemberQuote,
-  getMemberJoinedAtText
-} from '@/lib/utils/member'
 
 /**
  * 从 NOTION_CONFIG 解析 section 数据，回退到静态内容
@@ -66,6 +52,23 @@ function resolveSection(notionConfig, sectionKey, fallback) {
 
 const BackgroundFX = dynamic(
   () => import('./components/BackgroundFX').then(mod => mod.BackgroundFX),
+  { ssr: false }
+)
+
+const UpcomingEventsSection = dynamic(
+  () => import('./components/sections/UpcomingEventsSection').then(mod => mod.UpcomingEventsSection),
+  { ssr: false }
+)
+const FieldNotesSection = dynamic(
+  () => import('./components/sections/FieldNotesSection').then(mod => mod.FieldNotesSection),
+  { ssr: false }
+)
+const CommunityRolesSection = dynamic(
+  () => import('./components/sections/CommunityRolesSection').then(mod => mod.CommunityRolesSection),
+  { ssr: false }
+)
+const JoinSection = dynamic(
+  () => import('./components/sections/JoinSection').then(mod => mod.JoinSection),
   { ssr: false }
 )
 
@@ -671,469 +674,6 @@ function CultureSection({ notionConfig }) {
   )
 }
 
-function UpcomingEventsSection({ notionEvents = [] }) {
-  // Merge Notion events with static events; Notion events take priority
-  const mergedEvents = notionEvents.length > 0
-    ? notionEvents.map(e => ({
-        slug: e.slug || e.id,
-        title: e.title,
-        subtitle: e.summary || '',
-        status: e.ext?.status || 'planning',
-        dateText: e.date?.start_date || e.ext?.dateText || '待定',
-        location: e.ext?.location || '待定',
-        format: e.ext?.format || 'offline',
-        cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/ignite-core.png',
-        excerpt: e.summary || '',
-        tags: e.tags || [],
-      }))
-    : events
-
-  return (
-    <section id='upcoming-events' className='ignai-home-section'>
-      <div className='ignai-section-divider' />
-      <div className='ignai-section-atmosphere' />
-      <div className='ignai-home-container'>
-        <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
-          <div>
-            <p className='section-eyebrow'>Upcoming Events</p>
-            <h2 className='section-title mt-6 max-w-[13ch]'>
-              近期活动，
-              <br />
-              真实发生。
-            </h2>
-            <p className='section-body mt-6'>
-              线下聚会、主题共创、工作坊和社区实验，都会在这里持续更新。
-            </p>
-          </div>
-          <div className='flex gap-4'>
-            <SmartLink href='/events' className='ignai-cta-primary'>
-              查看全部活动
-            </SmartLink>
-          </div>
-        </Reveal>
-
-        <div className='mt-16 grid items-stretch gap-6 lg:grid-cols-3'>
-          {mergedEvents.slice(0, 3).map((event, index) => (
-            <Reveal key={event.slug} delay={index * 0.08}>
-              <SmartLink
-                href={`/events/${event.slug}`}
-                className='group ignai-unified-card ignai-event-card flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg lg:min-h-0'
-              >
-                <div className='relative overflow-hidden'>
-                <div className='relative aspect-[16/9] w-full overflow-hidden'>
-                  <Image
-                    src={event.cover}
-                    alt=''
-                    fill
-                    sizes='(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw'
-                    className='object-cover transition duration-500 group-hover:scale-[1.03]'
-                  />
-                </div>
-                  <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
-                  <div className='absolute left-4 top-4 rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
-                    {eventStatusLabel[event.status]}
-                  </div>
-                </div>
-
-                <div className='flex flex-1 flex-col p-5 sm:p-6'>
-                  <div className='flex flex-wrap gap-3 text-sm text-white/56'>
-                    <span className='inline-flex items-center gap-2'>
-                      <CalendarDays className='h-4 w-4 text-[#F0CB8A]/78' />
-                      {event.dateText}
-                    </span>
-                    <span className='inline-flex items-center gap-2'>
-                      <MapPin className='h-4 w-4 text-[#9aceff]' />
-                      {event.location} · {eventFormatLabel[event.format]}
-                    </span>
-                  </div>
-
-                  <h3 className='mt-4 min-h-[3.7rem] text-[1.45rem] font-semibold leading-[1.26] text-white transition group-hover:text-[#ffd09a]'>
-                    {event.title}
-                  </h3>
-                  {event.subtitle ? (
-                    <p className='mt-2 min-h-5 text-sm text-white/42'>
-                      {event.subtitle}
-                    </p>
-                  ) : null}
-                  <p className='mt-4 line-clamp-2 text-sm leading-7 text-white/62'>
-                    {event.excerpt}
-                  </p>
-
-                  <div className='mt-auto flex flex-wrap gap-2 pt-5'>
-                    {event.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </SmartLink>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function FieldNotesSection({ notionEvents = [] }) {
-  // Completed Notion events become field notes; fallback to static records
-  const finishedEvents = notionEvents.filter(
-    e => e.ext?.status === 'finished' || e.status === 'finished'
-  )
-  const displayItems = finishedEvents.length > 0
-    ? finishedEvents.slice(0, 3).map(e => ({
-        slug: e.slug || e.id,
-        title: e.title,
-        type: 'recap',
-        dateText: e.date?.start_date || e.ext?.dateText || '',
-        location: e.ext?.location || '',
-        cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/human-energy-scene.png',
-        excerpt: e.summary || '',
-        outcomes: e.ext?.outcomes || [],
-        tags: e.tags || [],
-        href: `/events/${e.slug || e.id}`,
-      }))
-    : records.slice(0, 3).map(r => ({ ...r, href: `/records/${r.slug}` }))
-  return (
-    <section id='field-notes' className='ignai-home-section'>
-      <div className='ignai-section-divider' />
-      <div className='ignai-section-atmosphere' />
-      <div className='ignai-home-container'>
-        <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
-          <div>
-            <p className='section-eyebrow'>Field Notes</p>
-            <h2 className='section-title mt-6 max-w-[13ch]'>
-              社区现场，
-              <br />
-              沉淀成记录。
-            </h2>
-            <p className='section-body mt-6'>
-              把活动、项目、思考和成员故事沉淀成可以被继续阅读和传播的内容资产。
-            </p>
-          </div>
-          <SmartLink href='/events' className='ignai-cta-secondary'>
-            查看现场记录
-          </SmartLink>
-        </Reveal>
-
-        <div className='mt-16 grid gap-6 lg:grid-cols-3'>
-          {displayItems.map((item, index) => (
-            <Reveal key={item.slug} delay={index * 0.08}>
-              <SmartLink
-                href={item.href}
-                className={`group ignai-unified-card ignai-record-card block overflow-hidden rounded-lg ${
-                  index === 0 ? 'lg:col-span-2' : ''
-                }`}
-              >
-                <div className='p-5 sm:p-6'>
-                  <div className='flex flex-wrap items-center justify-between gap-3'>
-                    <div>
-                      <p className='text-sm font-semibold text-white'>
-                        IGNAI Field Notes
-                      </p>
-                      <p className='mt-1 text-xs text-white/42'>
-                        {item.dateText}
-                        {item.location ? ` · ${item.location}` : ''}
-                      </p>
-                    </div>
-                    <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
-                      {recordTypeLabel[item.type] || '活动复盘'}
-                    </span>
-                  </div>
-
-                  <h3 className='mt-6 text-[1.55rem] font-semibold leading-[1.28] text-white transition group-hover:text-[#d4ecff]'>
-                    {item.title}
-                  </h3>
-                  <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/58'>
-                    {item.excerpt}
-                  </p>
-                </div>
-
-                <div className='px-5 sm:px-6'>
-                  <div className='relative aspect-[2.05] w-full overflow-hidden rounded-lg border border-white/8'>
-                    <Image
-                      src={item.cover}
-                      alt=''
-                      fill
-                      sizes='(max-width: 1024px) 100vw, 50vw'
-                      className='object-cover transition duration-500 group-hover:scale-[1.015]'
-                    />
-                  </div>
-                </div>
-
-                <div className='mt-5 border-t border-white/8 px-5 py-4 sm:px-6'>
-                  <div className='flex flex-wrap gap-2'>
-                    {(item.outcomes?.length ? item.outcomes : item.tags).map(tag => (
-                      <span
-                        key={tag}
-                        className='rounded-full border border-[#7cc8ff]/12 bg-[#08131e]/80 px-3 py-1.5 text-xs text-[#c7e6ff]'
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </SmartLink>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function CommunityRolesSection({ allMembers = [] }) {
-  const hasMembers = Array.isArray(allMembers) && allMembers.length > 0
-  const displayMembers = allMembers.slice(0, 100)
-
-  return (
-    <section id='community-roles' className='ignai-home-section'>
-      <div className='ignai-section-divider' />
-      <div className='ignai-section-atmosphere' />
-      <div className='ignai-home-container'>
-        <Reveal className='text-center mb-16'>
-          <p className='section-eyebrow'>Community Members</p>
-          <h2 className='section-title mt-6'>这里有谁？</h2>
-          <p className='section-body mt-6 max-w-lg mx-auto'>
-            {hasMembers
-              ? 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。'
-              : 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。'}
-          </p>
-        </Reveal>
-
-        {hasMembers ? (
-          <Reveal>
-            <AvatarRing members={displayMembers} />
-          </Reveal>
-        ) : (
-          <div className='flex flex-wrap justify-center gap-4 max-w-2xl mx-auto'>
-            {roleCards.map((role, index) => (
-              <Reveal key={role.title} delay={index * 0.08}>
-                <div className='rounded-full border border-white/10 bg-white/[0.03] px-6 py-3 text-sm text-white/70 hover:text-white hover:border-white/25 transition-all duration-300'>
-                  {role.title}
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        )}
-
-        {hasMembers && (
-          <Reveal className='text-center mt-12'>
-            <Link href='/members' className='text-sm text-neutral-400 hover:text-white transition no-underline'>
-              View all members &rarr;
-            </Link>
-          </Reveal>
-        )}
-      </div>
-    </section>
-  )
-}
-
-const GOLDEN_ANGLE = 137.508 * (Math.PI / 180)
-const SCATTER_C = 26 // spacing constant — controls density
-
-function usePhyllotaxis(members) {
-  return useMemo(
-    () =>
-      members.map((_, i) => {
-        const r = SCATTER_C * Math.sqrt(i + 1)
-        const theta = i * GOLDEN_ANGLE
-        return { x: Math.round(r * Math.cos(theta)), y: Math.round(r * Math.sin(theta)) }
-      }),
-    [members]
-  )
-}
-
-function AvatarRing({ members }) {
-  const [hoveredIndex, setHoveredIndex] = useState(null)
-  const positions = usePhyllotaxis(members)
-
-  const maxR = members.length > 0 ? SCATTER_C * Math.sqrt(members.length) : 120
-  const containerSize = Math.max(400, Math.min(660, (maxR + 40) * 2))
-
-  const hoveredMember = hoveredIndex !== null ? members[hoveredIndex] : null
-  const hoveredPos = hoveredIndex !== null ? positions[hoveredIndex] : null
-
-  return (
-    <div
-      className='avatar-scatter-container'
-      style={{ width: containerSize, height: containerSize }}
-    >
-      {members.map((member, i) => {
-        const pos = positions[i]
-        const avatar =
-          member?.avatar ||
-          member?.pageIcon ||
-          `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(member.title || member.id)}`
-        const isHovered = hoveredIndex === i
-
-        return (
-          <motion.div
-            key={member.id || member.slug || i}
-            className='avatar-scatter-item'
-            style={{ left: `calc(50% + ${pos.x}px)`, top: `calc(50% + ${pos.y}px)` }}
-            animate={{ scale: isHovered ? 1.85 : 1, zIndex: isHovered ? 40 : 2 }}
-            transition={{ type: 'spring', stiffness: 380, damping: 26 }}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <Link
-              href={`/members/${String(member.slug || member.id).split('/').pop()}`}
-              className='block no-underline'
-            >
-              <img
-                src={avatar}
-                alt={member.title}
-                className={`avatar-scatter-img${isHovered ? ' avatar-scatter-img--hovered' : ''}`}
-                draggable={false}
-              />
-            </Link>
-          </motion.div>
-        )
-      })}
-
-      {/* Hover card — rendered outside scaled items so it stays at natural size */}
-      <AnimatePresence>
-        {hoveredMember && hoveredPos && (
-          <motion.div
-            className='avatar-scatter-card'
-            style={{
-              left: `calc(50% + ${hoveredPos.x}px)`,
-              top: `calc(50% + ${hoveredPos.y}px)`,
-            }}
-            initial={{ opacity: 0, y: 6, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 6, scale: 0.9 }}
-            transition={{ duration: 0.15 }}
-          >
-            <p className='avatar-scatter-card-name'>{hoveredMember.title}</p>
-            {hoveredMember.role && (
-              <p className='avatar-scatter-card-role'>{hoveredMember.role}</p>
-            )}
-            {(hoveredMember.bio || hoveredMember.summary) && (
-              <p className='avatar-scatter-card-bio'>
-                {hoveredMember.bio || hoveredMember.summary}
-              </p>
-            )}
-            {getMemberQuote(hoveredMember) && (
-              <p className='avatar-scatter-card-quote'>
-                &ldquo;{getMemberQuote(hoveredMember)}&rdquo;
-              </p>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  )
-}
-
-function JoinSection({ notionConfig }) {
-  const joinContent = resolveSection(notionConfig, 'JOIN', joinContentFallback)
-  return (
-    <section id='join' className='ignai-home-section pb-8'>
-      <div className='ignai-home-container'>
-        <div className='relative overflow-hidden border-y border-white/10 py-10 sm:py-12 lg:py-16'>
-          <div className='converge-field'>
-            <span
-              className='converge-ray'
-              style={{
-                '--ray-y': '20%',
-                '--ray-rotate': '6deg',
-                '--ray-delay': '0s'
-              }}
-            />
-            <span
-              className='converge-ray'
-              style={{
-                '--ray-y': '42%',
-                '--ray-rotate': '-3deg',
-                '--ray-delay': '1.4s'
-              }}
-            />
-            <span
-              className='converge-ray'
-              style={{
-                '--ray-y': '66%',
-                '--ray-rotate': '4deg',
-                '--ray-delay': '2.8s'
-              }}
-            />
-          </div>
-
-          <div className='relative grid gap-10 xl:grid-cols-2 xl:items-center xl:gap-[72px]'>
-            <Reveal>
-              <p className='section-eyebrow'>06 / Join</p>
-              <h2 className='display-title mt-6 max-w-[20ch]'>
-                <span className='block sm:whitespace-nowrap'>
-                  Join the fire.
-                </span>
-                <span className='block sm:whitespace-nowrap'>
-                  Bring your signal.
-                </span>
-              </h2>
-              <p className='section-body mt-6'>{joinContent.support}</p>
-
-              <div className='mt-8 grid max-w-[520px] gap-x-6 border-y border-white/10 sm:grid-cols-2'>
-                {joinContent.benefits.map((benefit, index) => (
-                  <div
-                    key={benefit}
-                    className='flex min-h-12 items-center gap-3 border-t border-white/10 py-3 text-sm leading-6 text-white/72 sm:[&:nth-child(-n+2)]:border-t-0'
-                  >
-                    <span className='flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/20 bg-[#ff9a3c]/10 text-[#f2c892]'>
-                      {index + 1}
-                    </span>
-                    <span>{benefit}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className='mt-10 flex flex-col gap-4 sm:flex-row'>
-                <SmartLink href='/join' className='ignai-cta-primary'>
-                  加入社区
-                </SmartLink>
-                <SmartLink href='/archive' className='ignai-cta-secondary'>
-                  查看社区内容
-                </SmartLink>
-              </div>
-            </Reveal>
-
-            <Reveal className='relative overflow-hidden' delay={0.1}>
-              <motion.div
-                animate={{ x: [0, -14, 0], y: [0, 10, 0] }}
-                transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-                className='relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]'
-              >
-                <Image
-                  src='/images/generated/collaboration-threads.png'
-                  alt='Warm collaboration threads and blue signal lines'
-                  width={1376}
-                  height={768}
-                  sizes='(max-width: 1024px) 100vw, 50vw'
-                  className='aspect-[1.45] w-full object-cover opacity-90'
-                />
-                <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.14)_0%,rgba(4,6,10,0.1)_30%,rgba(4,6,10,0.88)_100%)]' />
-                <div className='absolute left-4 top-4 rounded-full border border-[#7cc8ff]/20 bg-[#08131e]/72 px-3 py-1.5 text-[0.68rem] uppercase text-[#9aceff]'>
-                  Signal threads
-                </div>
-                <div className='absolute bottom-0 left-0 right-0 p-5'>
-                  <p className='max-w-[16ch] text-xl font-semibold leading-[1.35] text-white'>
-                    把你的表达、行动和信号，
-                    <br />
-                    带进这团火里。
-                  </p>
-                </div>
-              </motion.div>
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 export {
   Layout404,
