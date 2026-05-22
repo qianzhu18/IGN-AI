@@ -1,26 +1,27 @@
 import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
-import { recordTypeLabel, records } from '@/src/content/records'
+import { recordTypeLabel } from '@/src/content/records'
 import { Reveal } from '../Reveal'
 
 export function FieldNotesSection({ notionEvents = [] }) {
   const finishedEvents = notionEvents.filter(
     e => e.ext?.status === 'finished' || e.status === 'finished'
   )
-  const displayItems = finishedEvents.length > 0
-    ? finishedEvents.slice(0, 3).map(e => ({
-        slug: e.slug || e.id,
-        title: e.title,
-        type: 'recap',
-        dateText: e.date?.start_date || e.ext?.dateText || '',
-        location: e.ext?.location || '',
-        cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/human-energy-scene.png',
-        excerpt: e.summary || '',
-        outcomes: e.ext?.outcomes || [],
-        tags: e.tags || [],
-        href: `/events/${e.slug || e.id}`,
-      }))
-    : records.slice(0, 3).map(r => ({ ...r, href: `/records/${r.slug}` }))
+  const displayItems = finishedEvents.slice(0, 3).map(e => ({
+    slug: e.slug || e.id,
+    title: e.title,
+    type: 'recap',
+    dateText: e.date?.start_date || e.ext?.dateText || '',
+    location: e.ext?.location || '',
+    cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/human-energy-scene.png',
+    excerpt: e.summary || '',
+    outcomes: e.ext?.outcomes || [],
+    tags: e.tags || [],
+    href: `/events/${e.slug || e.id}`,
+  }))
+
+  if (displayItems.length === 0) return null
+
   return (
     <section id='field-notes' className='ignai-home-section'>
       <div className='ignai-section-divider' />

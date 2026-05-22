@@ -1,24 +1,24 @@
 import { CalendarDays, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
-import { eventFormatLabel, eventStatusLabel, events } from '@/src/content/events'
+import { eventFormatLabel, eventStatusLabel } from '@/src/content/events'
 import { Reveal } from '../Reveal'
 
 export function UpcomingEventsSection({ notionEvents = [] }) {
-  const mergedEvents = notionEvents.length > 0
-    ? notionEvents.map(e => ({
-        slug: e.slug || e.id,
-        title: e.title,
-        subtitle: e.summary || '',
-        status: e.ext?.status || 'planning',
-        dateText: e.date?.start_date || e.ext?.dateText || '待定',
-        location: e.ext?.location || '待定',
-        format: e.ext?.format || 'offline',
-        cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/ignite-core.png',
-        excerpt: e.summary || '',
-        tags: e.tags || [],
-      }))
-    : events
+  const mergedEvents = notionEvents.map(e => ({
+    slug: e.slug || e.id,
+    title: e.title,
+    subtitle: e.summary || '',
+    status: e.ext?.status || 'planning',
+    dateText: e.date?.start_date || e.ext?.dateText || '待定',
+    location: e.ext?.location || '待定',
+    format: e.ext?.format || 'offline',
+    cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/ignite-core.png',
+    excerpt: e.summary || '',
+    tags: e.tags || [],
+  }))
+
+  if (mergedEvents.length === 0) return null
 
   return (
     <section id='upcoming-events' className='ignai-home-section'>
