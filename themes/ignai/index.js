@@ -16,6 +16,7 @@ import {
 } from 'framer-motion'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { BackToTopButton } from './components/BackToTopButton'
 import { Blog } from './components/Blog'
@@ -498,9 +499,13 @@ function HeroSection() {
         >
           <div className='surface-card-strong ignai-unified-panel overflow-hidden p-4 sm:p-5'>
             <div className='relative overflow-hidden rounded-lg border border-white/10 bg-black/50'>
-              <img
+              <Image
                 src='/images/generated/local-global-embers.png'
                 alt='Warm local embers and blue signal lines'
+                width={1376}
+                height={768}
+                priority
+                sizes='(max-width: 768px) 100vw, 50vw'
                 className='ignai-hero-image'
               />
               <div className='ignai-hero-image-overlay' />
@@ -702,11 +707,15 @@ function UpcomingEventsSection({ notionEvents = [] }) {
                 className='group ignai-unified-card ignai-event-card flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg lg:min-h-0'
               >
                 <div className='relative overflow-hidden'>
-                  <img
+                <div className='relative aspect-[16/9] w-full overflow-hidden'>
+                  <Image
                     src={event.cover}
                     alt=''
-                    className='aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]'
+                    fill
+                    sizes='(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw'
+                    className='object-cover transition duration-500 group-hover:scale-[1.03]'
                   />
+                </div>
                   <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
                   <div className='absolute left-4 top-4 rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
                     {eventStatusLabel[event.status]}
@@ -832,11 +841,15 @@ function FieldNotesSection({ notionEvents = [] }) {
                 </div>
 
                 <div className='px-5 sm:px-6'>
-                  <img
-                    src={item.cover}
-                    alt=''
-                    className='aspect-[2.05] w-full rounded-lg border border-white/8 object-cover transition duration-500 group-hover:scale-[1.015]'
-                  />
+                  <div className='relative aspect-[2.05] w-full overflow-hidden rounded-lg border border-white/8'>
+                    <Image
+                      src={item.cover}
+                      alt=''
+                      fill
+                      sizes='(max-width: 1024px) 100vw, 50vw'
+                      className='object-cover transition duration-500 group-hover:scale-[1.015]'
+                    />
+                  </div>
                 </div>
 
                 <div className='mt-5 border-t border-white/8 px-5 py-4 sm:px-6'>
@@ -1080,9 +1093,12 @@ function JoinSection() {
                 transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
                 className='relative overflow-hidden rounded-lg border border-white/10 bg-[#06080d] shadow-[0_28px_80px_rgba(0,0,0,0.24)]'
               >
-                <img
+                <Image
                   src='/images/generated/collaboration-threads.png'
                   alt='Warm collaboration threads and blue signal lines'
+                  width={1376}
+                  height={768}
+                  sizes='(max-width: 1024px) 100vw, 50vw'
                   className='aspect-[1.45] w-full object-cover opacity-90'
                 />
                 <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.14)_0%,rgba(4,6,10,0.1)_30%,rgba(4,6,10,0.88)_100%)]' />
