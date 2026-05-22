@@ -57,3 +57,10 @@ package-lock.json
 .perf/
 tsconfig.tsbuildinfo
 webpack-internal:/
+
+# screenshots & verification images
+*.png
+!public/**/*.png
+!public/**/*.jpg
+!public/**/*.svg
+.playwright-mcp/
