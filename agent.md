@@ -15,8 +15,8 @@
 | 后端 | Notion（唯一后端） |
 | 部署 | Vercel (主) / Docker (备用) |
 | 包管理 | yarn |
-| 分支 | `notionnext-v2` |
-| 旧版存档 | tag `v1.0.0` on `codex/aesthetic-spacing-preview` |
+| 分支 | `main`（当前集成主线） / `feature/ignai-motion-system`（历史迁移分支） |
+| 旧版存档 | `release-1.0.0` + tag `v1.0.0` |
 
 ---
 
@@ -26,13 +26,15 @@
 
 **必读文件（按顺序）：**
 
-1. `agent.md` — 本文件，了解全局
-2. `CLAUDE.md` — Claude Code 专属指引（命令、架构摘要）
-3. `blog.config.js` — 站点核心配置
-4. `doc/TO DO/TODO.md` — 当前开发路线图和待办事项
-5. `doc/architecture/arch-v2架构迁移记录.md` — 架构决策背景
+1. `AGENTS.md` — 当前仓库工作约束
+2. `doc/ROADMAP/ROADMAP-overall-plan.md` — 长期主线
+3. `doc/ROADMAP/ROADMAP-schedule.md` — 滚动排期
+4. `doc/ROADMAP/ROADMAP-master-todo.md` — 当前总待办
+5. `docs/member-execution-roadmap.zh-CN.md` — Member 主线执行文档
+6. `agent.md` — 本文件，了解全局
+7. `CLAUDE.md` — Claude Code 专属指引（命令、架构摘要）
 
-读完这 5 个文件后，你应该了解项目的来龙去脉、当前状态和下一步要做什么。
+读完这几份文件后，你应该知道当前真实主线、分支语义、项目阶段和下一步应该从哪里接。
 
 ---
 

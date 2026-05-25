@@ -1,8 +1,15 @@
 # IGNAI 社区官网整体规划
 
 记录日期：2026-05-11
+最近校准：2026-05-26
 负责人：IGNAI / Codex 协作线
-当前主分支方向：`codex/community-member-upstream-sync`
+当前主分支方向：`main`
+
+仓库协作基线：
+
+- `main` = 当前产品集成主线
+- `feature/ignai-motion-system` = 历史迁移 / 动效阶段分支，保留作存档参考
+- `release-1.0.0` + tag `v1.0.0` = 自建架构历史基线
 
 ## 1. 这份文档是干什么的
 
@@ -51,7 +58,8 @@
 - Member 数据层已初步接入
 - `/members` 路由已建立
 - 首页成员区块已接通真实数据
-- 仍需继续接进内容系统
+- 作者 -> Member、Member -> authored posts 链路已打通
+- 下一步重点转向组织表达和关系扩展
 
 ### Phase C：社区内容系统增强
 下一主阶段。
@@ -70,11 +78,11 @@
 
 按优先级：
 
-1. 稳定 Member MVP
-2. 让文章作者链接到成员页
-3. 在成员详情页展示相关文章
-4. 增强 featured members 展示
-5. 准备第一版 upstreamable diff
+1. 收束 Member MVP 的剩余体验项
+2. 增强 featured members / 角色分组 / 组织表达
+3. 预埋 Event / Member / Author 关系模型
+4. 准备第一版 upstreamable diff / PR 叙事
+5. 持续保持 `main` 为清晰可继续协作的主线
 
 ## 6. 执行原则
 

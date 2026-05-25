@@ -1,13 +1,15 @@
 # IGNAI v2.0.0 开发路线图
 
 > 架构：NotionNext 二开（ignai 自定义主题）
-> 分支：`notionnext-v2`
-> 最后更新：2026-05-07
+> 状态：历史迁移路线图（当前集成主线：`main`）
+> 最近校准：2026-05-26
 > 旧版存档：`v1.0.0` tag（Sanity + Supabase 自建架构）
 
 ---
 
 ## 当前状态
+
+> 说明：本文件主要保留 v2 迁移与主题落地阶段的 checklist。当前真实执行优先级请以 `doc/ROADMAP/*` 和 `docs/member-execution-roadmap.zh-CN.md` 为准。
 
 v2.0.0 架构已完成基础搭建 + v1.0.0 UI 动效迁移：
 
@@ -21,7 +23,7 @@ v2.0.0 架构已完成基础搭建 + v1.0.0 UI 动效迁移：
 - [x] 品牌资产保留（`public/brand/`, `public/contact/`）
 - [x] 设计文档完善（`doc/design/09-动效迁移设计文档`、TODO-animation-migration）
 
-**当前卡点**：需要创建 IGNAI 的 Notion Database 并配置 `NOTION_PAGE_ID`，否则网站无法显示内容。
+**当前重点**：Member 真实数据链路已经落地，现阶段重点转向 featured members、组织表达、Event / Member 关系预埋和 upstream diff 收束。
 
 ---
 
@@ -39,7 +41,7 @@ v2.0.0 架构已完成基础搭建 + v1.0.0 UI 动效迁移：
   - `yarn install && yarn dev`
   - 访问 `http://localhost:3000` 验证
 - [ ] **P1-04** 部署到 Vercel
-  - 在 Vercel 创建新项目，指向 `notionnext-v2` 分支
+  - 在 Vercel 创建新项目，指向 `main` 分支
   - 配置环境变量 `NOTION_PAGE_ID`
 - [ ] **P1-05** 替换品牌资产
   - favicon → IGNAI logo

@@ -1,7 +1,8 @@
 # 动效迁移 TODO — v1.0.0 → NotionNext ignai 主题
 
 > 设计文档：`doc/design/09-动效迁移设计文档-v1到NotionNext.md`
-> 分支：`notionnext-v2`
+> 分支：`notionnext-v2`（历史实施分支，当前集成主线为 `main`）
+> 状态：主体迁移已完成，保留作对照 TODO
 > 创建日期：2026-05-07
 
 ---

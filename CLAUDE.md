@@ -149,8 +149,11 @@ The `ignai` theme is a custom theme that replicates the v1.0.0 IGNAI website UI:
 
 ## Workflow Conventions
 
-- **Branch**: `codex/member-author-links` is the active development branch (merges into `feature/ignai-motion-system`)
+- **Branch**: `main` is the active integration branch and should reflect the latest stable project state
+- **Historical branch**: `feature/ignai-motion-system` is an archived migration-era branch, not the current product base
 - **v1.0.0 tag**: archived self-built architecture (Sanity + Supabase), do not modify
+- **Archive baseline**: `release-1.0.0` preserves the pre-NotionNext milestone together with tag `v1.0.0`
+- **AI hygiene**: remove temporary AI branches/worktrees after merge or review so the repo stays navigable
 - **Commit messages**: include scope, e.g. `feat(P1-01):`, `fix(P3-02):`, `docs:` (reference task IDs from `doc/TO DO/TODO.md`)
 - **Always verify**: run `yarn build` before committing major changes
 - **Issue tracking**: `doc/TO DO/TODO.md` (main roadmap), `doc/ISSUES/` (detailed issues)

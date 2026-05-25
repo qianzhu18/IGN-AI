@@ -56,31 +56,32 @@ Instead:
 When continuing work here, use this prompt:
 
 ```text
-Please read /AGENTS.md, /AI_HANDOFF.md, /docs/member-execution-roadmap.zh-CN.md, /docs/community-mvp.md, /docs/member-schema.md, /docs/execution-playbook.md, and /tasks/member-mvp-checklist.md first. Then continue the Member MVP in this repository. Keep reusable logic separate from IGNAI-specific presentation, and tell me what can be split into an upstream PR next.
+Please read /AGENTS.md, /doc/ROADMAP/ROADMAP-overall-plan.md, /doc/ROADMAP/ROADMAP-schedule.md, /doc/ROADMAP/ROADMAP-master-todo.md, /AI_HANDOFF.md, /docs/member-execution-roadmap.zh-CN.md, /docs/member-schema.md, and /docs/execution-playbook.md first. Then continue the current IGNAI community-site optimization from /main. Keep reusable logic separate from IGNAI-specific presentation, and tell me what can be split into an upstream PR next.
 ```
 
 ## Current Recommended Next Tasks
 
 ### Product-facing next
-1. replace static community member cards on the homepage with live member data
-2. make article author links resolve to member profiles
-3. add a `featured` member block to the homepage
+1. enhance featured members and organization expression
+2. improve member directory / profile presentation and mobile fit
+3. lay groundwork for event-member relationships
 
 ### Upstream-facing next
-1. prepare a minimal PR containing `Member` page type support
-2. document the schema contract in a generic way
-3. add tests for member filtering and ordering
+1. prepare a minimal PR containing generic `Member` support
+2. separate the shared data-layer diff from IGNAI-specific UI
+3. document the PR narrative and the schema contract clearly
 
 ## Suggested Git Rhythm
 
 ```bash
-git checkout codex/community-member-upstream-sync
+git checkout main
 git status
 ```
 
 For local product work:
 
 ```bash
+git checkout -b codex/<scoped-task>
 git add <scoped files>
 git commit -m "feat: add member directory foundation"
 ```
@@ -91,4 +92,4 @@ For upstream extraction later:
 git checkout -b codex/upstream-member-foundation
 ```
 
-Then only carry the shared files forward.
+Then only carry the shared files forward, merge back into `main`, and remove temporary worktrees/branches after review.
