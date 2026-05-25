@@ -32,6 +32,7 @@ describe('resolveAuthorsForPost', () => {
       id: 'member-2',
       title: 'Alice Chen',
       slug: 'members/alice-chen',
+      author_slug: 'alice-direct',
       role: 'Connector',
       ext: {
         author_slug: 'alice'
@@ -116,6 +117,18 @@ describe('resolveAuthorsForPost', () => {
       'Qianzhu',
       'Alice Chen'
     ])
+  })
+
+  it('supports top-level member author_slug aliases from normalized Notion members', () => {
+    const authors = resolveAuthorsForPost(
+      {
+        title: 'Post D2',
+        author_slug: 'alice-direct'
+      },
+      members
+    )
+
+    expect(authors.map(author => author.id)).toEqual(['member-2'])
   })
 
   it('prefers explicit slug candidates before name matches in mixed inputs', () => {

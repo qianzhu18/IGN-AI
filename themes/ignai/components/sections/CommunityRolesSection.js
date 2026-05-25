@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { getMemberQuote } from '@/lib/utils/member'
+import { getMemberPagePath } from '@/lib/utils/post'
+import { getPublishedMembers, getMemberQuote, sortMembers } from '@/lib/utils/member'
 import { Reveal } from '../Reveal'
 
 const roleCards = [
@@ -13,6 +14,16 @@ const roleCards = [
 
 const GOLDEN_ANGLE = 137.508 * (Math.PI / 180)
 const SCATTER_C = 26
+
+function getAvatar(member) {
+  return (
+    member?.avatar ||
+    member?.pageIcon ||
+    member?.pageCoverThumbnail ||
+    member?.pageCover ||
+    '/avatar.svg'
+  )
+}
 
 function usePhyllotaxis(members) {
   return useMemo(
@@ -43,10 +54,6 @@ function AvatarRing({ members }) {
     >
       {members.map((member, i) => {
         const pos = positions[i]
-        const avatar =
-          member?.avatar ||
-          member?.pageIcon ||
-          `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(member.title || member.id)}`
         const isHovered = hoveredIndex === i
 
         return (
@@ -60,11 +67,11 @@ function AvatarRing({ members }) {
             onMouseLeave={() => setHoveredIndex(null)}
           >
             <Link
-              href={`/members/${String(member.slug || member.id).split('/').pop()}`}
+              href={getMemberPagePath(member)}
               className='block no-underline'
             >
               <img
-                src={avatar}
+                src={getAvatar(member)}
                 alt={member.title}
                 className={`avatar-scatter-img${isHovered ? ' avatar-scatter-img--hovered' : ''}`}
                 draggable={false}
@@ -108,9 +115,51 @@ function AvatarRing({ members }) {
   )
 }
 
+function CompactMemberGrid({ members }) {
+  return (
+    <div className='mx-auto grid max-w-4xl gap-4 md:grid-cols-3'>
+      {members.map((member, index) => (
+        <Reveal key={member.id || member.slug || index} delay={index * 0.08}>
+          <Link
+            href={getMemberPagePath(member)}
+            className='block rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-left no-underline transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]'
+          >
+            <div className='flex items-center gap-4'>
+              <img
+                src={getAvatar(member)}
+                alt={member.title}
+                className='h-14 w-14 rounded-full object-cover ring-1 ring-white/10'
+              />
+              <div className='min-w-0'>
+                <p className='truncate text-base font-semibold text-white'>
+                  {member.title}
+                </p>
+                {member.role && (
+                  <p className='truncate text-sm text-neutral-400'>{member.role}</p>
+                )}
+              </div>
+            </div>
+            {(member.bio || member.summary) && (
+              <p className='mt-4 line-clamp-3 text-sm leading-6 text-neutral-400'>
+                {member.bio || member.summary}
+              </p>
+            )}
+            {getMemberQuote(member) && (
+              <p className='mt-4 text-sm italic leading-6 text-[#F0CB8A]/78'>
+                &ldquo;{getMemberQuote(member)}&rdquo;
+              </p>
+            )}
+          </Link>
+        </Reveal>
+      ))}
+    </div>
+  )
+}
+
 export function CommunityRolesSection({ allMembers = [] }) {
-  const hasMembers = Array.isArray(allMembers) && allMembers.length > 0
-  const displayMembers = allMembers.slice(0, 100)
+  const displayMembers = sortMembers(getPublishedMembers(allMembers)).slice(0, 100)
+  const hasMembers = displayMembers.length > 0
+  const useCompactLayout = displayMembers.length > 0 && displayMembers.length <= 3
 
   return (
     <section id='community-roles' className='ignai-home-section'>
@@ -127,7 +176,9 @@ export function CommunityRolesSection({ allMembers = [] }) {
           </p>
         </Reveal>
 
-        {hasMembers ? (
+        {useCompactLayout ? (
+          <CompactMemberGrid members={displayMembers} />
+        ) : hasMembers ? (
           <Reveal>
             <AvatarRing members={displayMembers} />
           </Reveal>

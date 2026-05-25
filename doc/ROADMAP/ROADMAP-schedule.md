@@ -18,7 +18,7 @@
 把 Member 体系从“有基础页面”推进到“进入内容主路径”。
 
 ### 本周任务
-- [ ] 稳定 `Member` 字段契约
+- [x] 稳定 `Member` 字段契约
 - [x] 让文章作者可跳转到成员页
 - [x] 在成员详情页展示相关文章
 - [x] 补 member filtering / ordering tests

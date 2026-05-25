@@ -4,6 +4,7 @@ For the full IGNAI Notion community schema template, field types, post author ma
 and event-ready fields, see:
 
 - `docs/notion-community-schema-template.zh-CN.md`
+- `docs/member-profile-collection-template.zh-CN.md`
 
 ## Status: MIGRATED (2026-05-20)
 

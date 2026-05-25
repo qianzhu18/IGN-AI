@@ -153,6 +153,8 @@ function normalizeJoinApplicationRecord(row: unknown): JoinApplicationRecord {
 }
 
 const NOTION_MEMBERS_DB_ID = 'a3ae45c4-da1e-821e-8e69-010ad0a42134';
+const NOTION_MEMBER_DRAFT_STATUS =
+  process.env.NOTION_MEMBERS_STATUS_DRAFT_VALUE || 'Invisible';
 
 export function isJoinNotionEnabled(): boolean {
   return Boolean(process.env.NOTION_API_TOKEN?.trim());
@@ -180,7 +182,7 @@ async function createNotionMemberApplication(
     title: { title: [{ text: { content: input.name } }] },
     role: { rich_text: [{ text: { content: input.role.slice(0, 200) } }] },
     bio: { rich_text: [{ text: { content: bio.slice(0, 2000) } }] },
-    status: { select: { name: 'Draft' } },
+    status: { select: { name: NOTION_MEMBER_DRAFT_STATUS } },
     type: { select: { name: 'Member' } },
     featured: { checkbox: false },
     verified: { checkbox: false },

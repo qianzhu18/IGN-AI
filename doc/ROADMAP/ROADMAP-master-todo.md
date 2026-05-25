@@ -9,7 +9,7 @@
 - [x] 建立 `/members`
 - [x] 建立 `/members/[slug]`
 - [x] 首页成员区块接入真实数据
-- [ ] 统一 Member 字段契约
+- [x] 统一 Member 字段契约
 - [x] 作者链接到 Member
 - [x] Member 详情页展示相关文章
 - [ ] featured members 进一步增强
@@ -33,7 +33,7 @@
 - [ ] Member 相关测试补齐
 - [ ] 关键页面 lint / build 验证常态化
 - [ ] 逐步清理与当前主线相关的类型债
-- [ ] 建立每次 session 的结果记录机制
+- [x] 建立每次 session 的结果记录机制
 
 ## E. 上游贡献
 - [ ] 整理 `Member` 支持的最小通用 diff

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { getMemberPagePath } from '@/lib/utils/post'
 import {
   getMemberJoinedAtText,
   getMemberQuote,
@@ -14,15 +15,6 @@ function getAvatar(member) {
     member?.pageCover ||
     '/avatar.svg'
   )
-}
-
-function getMemberHref(member) {
-  const slug = member?.slug || member?.href || member?.id || ''
-  const path = String(slug).replace(/^\/+/, '')
-  if (path.startsWith('members/')) {
-    return `/${path}`
-  }
-  return `/members/${path.split('/').filter(Boolean).pop()}`
 }
 
 export default function MemberDirectoryPage({
@@ -59,7 +51,7 @@ export default function MemberDirectoryPage({
             return (
               <Link
                 key={member.id || member.slug}
-                href={getMemberHref(member)}
+                href={getMemberPagePath(member)}
                 className='group flex items-center gap-5 rounded-lg border border-white/[0.06] bg-white/[0.02] px-5 py-4 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline'
               >
                 <img

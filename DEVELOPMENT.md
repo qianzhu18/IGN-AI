@@ -70,6 +70,7 @@ yarn
 - `yarn dev-tools`：执行开发工具入口脚本。
 - `yarn init-dev`：初始化开发环境（dev-tools init）。
 - `yarn clean`：清理缓存与构建产物（dev-tools clean）。
+- `yarn cache:clear`：清理 Notion 构建 / 开发缓存，强制重新拉取最新 Notion 数据。
 - `yarn docs`：生成或刷新文档（dev-tools docs）。
 - `yarn check-updates`：检查依赖可更新情况（dev-tools check-updates）。
 

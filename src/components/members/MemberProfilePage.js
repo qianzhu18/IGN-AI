@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { getMemberPagePath } from '@/lib/utils/post'
 import {
   getMemberJoinedAtText,
   getMemberQuote,
