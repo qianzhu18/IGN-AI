@@ -120,12 +120,10 @@ const CONFIG = {
 
   // -- 导航菜单（Header.js 直接读取此数组）--
   IGNAI_NAV_ITEMS: [
-    { label: 'What', href: '/#what-is-ignai' },
-    { label: 'Culture', href: '/#culture' },
-    { label: 'Members', href: '/members' },
-    { label: 'Events', href: '/#upcoming-events' },
-    { label: 'Records', href: '/#field-notes' },
-    { label: 'Join', href: '/join' }
+    { label: '社区', href: '/#what-is-ignai' },
+    { label: '成员', href: '/members' },
+    { label: '活动', href: '/events' },
+    { label: '记录', href: '/#field-notes' }
   ],
 
   // ========================================================================

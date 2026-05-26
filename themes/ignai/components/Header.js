@@ -61,10 +61,21 @@ function DailyReportButton() {
 
 const HIDDEN_SLUGS = ['/en']
 
+// NotionNext 模板默认菜单标题 — 这些不是 IGNAI 的真实导航
+const TEMPLATE_TITLES = new Set([
+  '友链', '友情链接', 'Link',
+  '什么是洋来', 'What', 'what',
+  '创始人', 'Founder',
+  '关于', 'About',
+  '标签', 'Tags', '分类', 'Categories',
+  'home', 'Home', '首页',
+])
+
 function buildNavItems(customMenu, fallback) {
   if (!customMenu || customMenu.length === 0) return fallback
-  return customMenu
+  const filtered = customMenu
     .filter(item => !HIDDEN_SLUGS.includes(item.slug || item.href))
+    .filter(item => !TEMPLATE_TITLES.has((item.title || item.name || '').trim()))
     .map(item => ({
       label: item.title || item.name || '',
       href: item.slug || item.href || '#',
@@ -73,6 +84,8 @@ function buildNavItems(customMenu, fallback) {
         href: sub.slug || sub.href || '#'
       })) || []
     }))
+  // 如果 Notion Menu 过滤后为空，使用 fallback
+  return filtered.length > 0 ? filtered : fallback
 }
 
 function DesktopNavItem({ item }) {

@@ -5,18 +5,23 @@ import { eventFormatLabel, eventStatusLabel } from '@/src/content/events'
 import { Reveal } from '../Reveal'
 
 export function UpcomingEventsSection({ notionEvents = [] }) {
-  const mergedEvents = notionEvents.map(e => ({
-    slug: e.slug || e.id,
-    title: e.title,
-    subtitle: e.summary || '',
-    status: e.ext?.status || 'planning',
-    dateText: e.date?.start_date || e.ext?.dateText || '待定',
-    location: e.ext?.location || '待定',
-    format: e.ext?.format || 'offline',
-    cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/ignite-core.png',
-    excerpt: e.summary || '',
-    tags: e.tags || [],
-  }))
+  const mergedEvents = notionEvents
+    .filter(e => {
+      const s = e.ext?.status || 'planning'
+      return s !== 'finished'
+    })
+    .map(e => ({
+      slug: e.slug || e.id,
+      title: e.title,
+      subtitle: e.summary || '',
+      status: e.ext?.status || 'planning',
+      dateText: e.date?.start_date || e.ext?.dateText || '待定',
+      location: e.ext?.location || '待定',
+      format: e.ext?.format || 'offline',
+      cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/ignite-core.png',
+      excerpt: e.summary || '',
+      tags: e.tags || [],
+    }))
 
   if (mergedEvents.length === 0) return null
 
