@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { getMemberPagePath } from '@/lib/utils/post'
-import { getPublishedMembers, getMemberQuote, sortMembers } from '@/lib/utils/member'
+import { getPublishedMembers, getMemberAvatar, getMemberQuote, sortMembers } from '@/lib/utils/member'
 import { Reveal } from '../Reveal'
 
 const roleCards = [
@@ -13,38 +13,46 @@ const roleCards = [
 ]
 
 const GOLDEN_ANGLE = 137.508 * (Math.PI / 180)
-const SCATTER_C = 26
 
-function getAvatar(member) {
-  return (
-    member?.avatar ||
-    member?.pageIcon ||
-    member?.pageCoverThumbnail ||
-    member?.pageCover ||
-    '/avatar.svg'
-  )
+function useViewportWidth() {
+  const [width, setWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200)
+  useEffect(() => {
+    const onResize = () => setWidth(window.innerWidth)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+  return width
 }
 
-function usePhyllotaxis(members) {
+function usePhyllotaxis(members, scatterC) {
   return useMemo(
     () =>
       members.map((_, i) => {
-        const r = SCATTER_C * Math.sqrt(i + 1)
+        const r = scatterC * Math.sqrt(i + 1)
         const theta = i * GOLDEN_ANGLE
         return { x: Math.round(r * Math.cos(theta)), y: Math.round(r * Math.sin(theta)) }
       }),
-    [members]
+    [members, scatterC]
   )
 }
 
 function AvatarRing({ members }) {
   const [hoveredIndex, setHoveredIndex] = useState(null)
-  const positions = usePhyllotaxis(members)
+  const viewportWidth = useViewportWidth()
 
-  const maxR = members.length > 0 ? SCATTER_C * Math.sqrt(members.length) : 120
-  const containerSize = Math.max(400, Math.min(660, (maxR + 40) * 2))
+  // 根据 viewport 动态调整散布参数
+  const isMobile = viewportWidth < 640
+  const scatterC = isMobile ? 18 : 26
+  const avatarSize = isMobile ? 32 : 46
+  const maxMembers = isMobile ? 40 : 100
+  const displayMembers = members.slice(0, maxMembers)
 
-  const hoveredMember = hoveredIndex !== null ? members[hoveredIndex] : null
+  const positions = usePhyllotaxis(displayMembers, scatterC)
+  const maxR = displayMembers.length > 0 ? scatterC * Math.sqrt(displayMembers.length) : 120
+  const maxSize = isMobile ? 340 : 660
+  const containerSize = Math.max(isMobile ? 280 : 400, Math.min(maxSize, (maxR + 40) * 2))
+
+  const hoveredMember = hoveredIndex !== null ? displayMembers[hoveredIndex] : null
   const hoveredPos = hoveredIndex !== null ? positions[hoveredIndex] : null
 
   return (
@@ -52,7 +60,7 @@ function AvatarRing({ members }) {
       className='avatar-scatter-container'
       style={{ width: containerSize, height: containerSize }}
     >
-      {members.map((member, i) => {
+      {displayMembers.map((member, i) => {
         const pos = positions[i]
         const isHovered = hoveredIndex === i
 
@@ -60,7 +68,12 @@ function AvatarRing({ members }) {
           <motion.div
             key={member.id || member.slug || i}
             className='avatar-scatter-item'
-            style={{ left: `calc(50% + ${pos.x}px)`, top: `calc(50% + ${pos.y}px)` }}
+            style={{
+              left: `calc(50% + ${pos.x}px)`,
+              top: `calc(50% + ${pos.y}px)`,
+              width: avatarSize,
+              height: avatarSize
+            }}
             animate={{ scale: isHovered ? 1.85 : 1, zIndex: isHovered ? 40 : 2 }}
             transition={{ type: 'spring', stiffness: 380, damping: 26 }}
             onMouseEnter={() => setHoveredIndex(i)}
@@ -71,9 +84,10 @@ function AvatarRing({ members }) {
               className='block no-underline'
             >
               <img
-                src={getAvatar(member)}
+                src={getMemberAvatar(member)}
                 alt={member.title}
                 className={`avatar-scatter-img${isHovered ? ' avatar-scatter-img--hovered' : ''}`}
+                style={{ width: avatarSize, height: avatarSize }}
                 draggable={false}
               />
             </Link>
@@ -81,8 +95,15 @@ function AvatarRing({ members }) {
         )
       })}
 
+      {/* 移动端：显示截断提示 */}
+      {isMobile && members.length > maxMembers && (
+        <div className='absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-white/40'>
+          +{members.length - maxMembers} more
+        </div>
+      )}
+
       <AnimatePresence>
-        {hoveredMember && hoveredPos && (
+        {hoveredMember && hoveredPos && !isMobile && (
           <motion.div
             className='avatar-scatter-card'
             style={{
@@ -117,7 +138,7 @@ function AvatarRing({ members }) {
 
 function CompactMemberGrid({ members }) {
   return (
-    <div className='mx-auto grid max-w-4xl gap-4 md:grid-cols-3'>
+    <div className='mx-auto grid max-w-4xl gap-4 sm:grid-cols-2 md:grid-cols-3'>
       {members.map((member, index) => (
         <Reveal key={member.id || member.slug || index} delay={index * 0.08}>
           <Link
@@ -126,7 +147,7 @@ function CompactMemberGrid({ members }) {
           >
             <div className='flex items-center gap-4'>
               <img
-                src={getAvatar(member)}
+                src={getMemberAvatar(member)}
                 alt={member.title}
                 className='h-14 w-14 rounded-full object-cover ring-1 ring-white/10'
               />
@@ -171,7 +192,7 @@ export function CommunityRolesSection({ allMembers = [] }) {
           <h2 className='section-title mt-6'>这里有谁？</h2>
           <p className='section-body mt-6 max-w-lg mx-auto'>
             {hasMembers
-              ? 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。'
+              ? `IGNAI 聚集了 ${displayMembers.length} 位关注 AI、产品、表达和行动的人。`
               : 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。第一版先展示角色画像，等有真实授权后再升级成成员墙。'}
           </p>
         </Reveal>

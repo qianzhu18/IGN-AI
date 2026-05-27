@@ -1,20 +1,11 @@
 import Link from 'next/link'
 import {
+  getMemberAvatar,
   getMemberJoinedAtText,
   getMemberQuote,
   getMemberVerificationLabel,
   isFeaturedMember
 } from '@/lib/utils/member'
-
-function getAvatar(member) {
-  return (
-    member?.avatar ||
-    member?.pageIcon ||
-    member?.pageCoverThumbnail ||
-    member?.pageCover ||
-    '/avatar.svg'
-  )
-}
 
 function collectSocialLinks(member) {
   const candidates = [
@@ -49,7 +40,7 @@ export default function MemberProfilePage({ member, siteInfo, authoredPosts = []
         <section className='mb-12'>
           <div className='flex flex-col gap-6 md:flex-row md:items-start'>
             <img
-              src={getAvatar(member)}
+              src={getMemberAvatar(member)}
               alt={member?.title || 'Member avatar'}
               className='h-24 w-24 rounded-full object-cover ring-1 ring-white/10'
             />

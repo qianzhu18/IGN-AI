@@ -1214,7 +1214,7 @@ const Style = () => {
 
       @media (max-width: 640px) {
         .avatar-scatter-container {
-          max-height: 320px;
+          max-height: 360px;
           border-radius: 16px;
         }
       }
@@ -1227,8 +1227,8 @@ const Style = () => {
       }
 
       .avatar-scatter-img {
-        width: 46px;
-        height: 46px;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         object-fit: cover;
         border: 1.5px solid rgba(255,255,255,0.12);
@@ -1292,12 +1292,7 @@ const Style = () => {
         overflow: hidden;
       }
 
-      @media (max-width: 640px) {
-        .avatar-scatter-img {
-          width: 36px;
-          height: 36px;
-        }
-      }
+      /* avatar-scatter-img size is now set dynamically via inline style */
     `}</style>
   )
 }

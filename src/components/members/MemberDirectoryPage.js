@@ -1,21 +1,12 @@
 import Link from 'next/link'
 import { getMemberPagePath } from '@/lib/utils/post'
 import {
+  getMemberAvatar,
   getMemberJoinedAtText,
   getMemberQuote,
   getMemberVerificationLabel,
   isFeaturedMember
 } from '@/lib/utils/member'
-
-function getAvatar(member) {
-  return (
-    member?.avatar ||
-    member?.pageIcon ||
-    member?.pageCoverThumbnail ||
-    member?.pageCover ||
-    '/avatar.svg'
-  )
-}
 
 export default function MemberDirectoryPage({
   members = [],
@@ -55,7 +46,7 @@ export default function MemberDirectoryPage({
                 className='group flex items-center gap-5 rounded-lg border border-white/[0.06] bg-white/[0.02] px-5 py-4 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline'
               >
                 <img
-                  src={getAvatar(member)}
+                  src={getMemberAvatar(member)}
                   alt={member.title || 'Member avatar'}
                   className='h-12 w-12 flex-shrink-0 rounded-full object-cover ring-1 ring-white/10'
                 />
