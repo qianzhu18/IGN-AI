@@ -282,7 +282,7 @@ function CompactMemberGrid({ members }) {
 /* ── 主组件 ────────────────────────────────────────────────── */
 
 export function CommunityRolesSection({ allMembers = [] }) {
-  const displayMembers = sortMembers(getPublishedMembers(allMembers)).slice(0, 100)
+  const displayMembers = sortMembers(getPublishedMembers(allMembers)).slice(0, 200)
   const hasMembers = displayMembers.length > 0
   const useCompactLayout = displayMembers.length > 0 && displayMembers.length <= 3
 
