@@ -1226,73 +1226,52 @@ const Style = () => {
         will-change: transform;
       }
 
+      .avatar-scatter-item--featured {
+        z-index: 5;
+      }
+
       .avatar-scatter-img {
         width: 100%;
         height: 100%;
         border-radius: 50%;
         object-fit: cover;
-        border: 1.5px solid rgba(255,255,255,0.12);
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        border: 1.5px solid rgba(255,255,255,0.1);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
         background: #0d0e14;
         display: block;
       }
 
-      .avatar-scatter-img--hovered {
+      .avatar-scatter-img--active {
         border-color: #ff7a18;
-        box-shadow: 0 0 16px rgba(255,122,24,0.55), 0 0 32px rgba(255,122,24,0.22);
+        box-shadow: 0 0 20px rgba(255,122,24,0.6), 0 0 40px rgba(255,122,24,0.2);
       }
 
-      .avatar-scatter-card {
+      .avatar-scatter-img--featured {
+        border-color: rgba(255,183,121,0.25);
+        box-shadow: 0 0 12px rgba(255,122,24,0.15);
+      }
+
+      /* 预览卡片 */
+      .avatar-preview-card {
         position: absolute;
-        transform: translate(-50%, calc(-100% - 28px));
-        width: 220px;
-        padding: 14px 16px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.1);
-        background: linear-gradient(160deg, rgba(16,20,30,0.98) 0%, rgba(10,13,20,0.96) 100%);
-        box-shadow: 0 16px 48px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+        transform: translate(-50%, calc(-100% - 20px));
+        width: min(260px, 80vw);
         z-index: 60;
         pointer-events: none;
       }
 
-      .avatar-scatter-card-name {
-        font-size: 0.92rem;
-        font-weight: 600;
-        color: #fff;
-        margin: 0 0 3px;
+      .avatar-preview-card-inner {
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: linear-gradient(160deg, rgba(14,17,24,0.97) 0%, rgba(8,10,16,0.95) 100%);
+        box-shadow:
+          0 2px 8px rgba(0,0,0,0.3),
+          0 16px 48px rgba(0,0,0,0.5),
+          inset 0 1px 0 rgba(255,255,255,0.04);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
       }
-
-      .avatar-scatter-card-role {
-        font-size: 0.72rem;
-        color: #ff7a18;
-        margin: 0 0 8px;
-        font-weight: 500;
-      }
-
-      .avatar-scatter-card-bio {
-        font-size: 0.78rem;
-        color: rgba(255,255,255,0.58);
-        line-height: 1.5;
-        margin: 0 0 6px;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      .avatar-scatter-card-quote {
-        font-size: 0.72rem;
-        color: rgba(255,255,255,0.36);
-        font-style: italic;
-        margin: 0;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-
-      /* avatar-scatter-img size is now set dynamically via inline style */
     `}</style>
   )
 }
