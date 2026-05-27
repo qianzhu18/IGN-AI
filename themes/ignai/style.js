@@ -102,17 +102,37 @@ const Style = () => {
 
       #theme-proxio .ignai-hero-section {
         position: relative;
-        min-height: 100vh;
+        min-height: auto;
         overflow: hidden;
-        padding-top: 28px;
-        padding-bottom: 64px;
+        padding-top: 80px;
+        padding-bottom: 48px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      @media (min-width: 640px) {
+        #theme-proxio .ignai-hero-section {
+          padding-top: 100px;
+          padding-bottom: 64px;
+        }
       }
 
       @media (min-width: 1024px) {
         #theme-proxio .ignai-hero-section {
           min-height: 880px;
           padding-top: 44px;
+        }
+      }
+
+      /* 移动端隐藏 Hero 视觉面板，只保留文案 */
+      @media (max-width: 767px) {
+        #theme-proxio .ignai-home-visual {
+          display: none;
+        }
+        #theme-proxio .ignai-hero-grid {
+          min-height: auto;
+        }
+        #theme-proxio .ignai-scroll-hint {
+          display: none;
         }
       }
 
@@ -239,7 +259,13 @@ const Style = () => {
       }
 
       #theme-proxio .ignai-header-shell {
-        min-height: 92px;
+        min-height: 64px;
+      }
+
+      @media (min-width: 640px) {
+        #theme-proxio .ignai-header-shell {
+          min-height: 92px;
+        }
       }
 
       #theme-proxio .navbar-logo span,
@@ -1183,7 +1209,14 @@ const Style = () => {
         max-width: 100%;
         margin: 0 auto;
         user-select: none;
-        overflow: visible;
+        overflow: hidden;
+      }
+
+      @media (max-width: 640px) {
+        .avatar-scatter-container {
+          max-height: 320px;
+          border-radius: 16px;
+        }
       }
 
       .avatar-scatter-item {

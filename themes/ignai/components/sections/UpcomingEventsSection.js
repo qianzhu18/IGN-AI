@@ -54,7 +54,7 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
             <Reveal key={event.slug} delay={index * 0.08}>
               <SmartLink
                 href={`/events/${event.slug}`}
-                className='group ignai-unified-card ignai-event-card flex h-full min-h-[580px] flex-col overflow-hidden rounded-lg lg:min-h-0'
+                className='group ignai-unified-card ignai-event-card flex h-full flex-col overflow-hidden rounded-lg'
               >
                 <div className='relative overflow-hidden'>
                 <div className='relative aspect-[16/9] w-full overflow-hidden'>

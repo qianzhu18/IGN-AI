@@ -1,69 +1,102 @@
 # IGNAI v2.0.0 开发路线图
 
 > 架构：NotionNext 二开（ignai 自定义主题）
-> 状态：历史迁移路线图（当前集成主线：`main`）
-> 最近校准：2026-05-26
+> 状态：**活跃开发中** — 基础功能已完成，进入打磨与上线阶段
+> 最近校准：2026-05-27
 > 旧版存档：`v1.0.0` tag（Sanity + Supabase 自建架构）
+> 上游贡献：8 个已合并 PR（含 #4113 架构级 Member/Event 数据管道）
 
 ---
 
-## 当前状态
+## 当前状态总览
 
-> 说明：本文件主要保留 v2 迁移与主题落地阶段的 checklist。当前真实执行优先级请以 `doc/ROADMAP/*` 和 `docs/member-execution-roadmap.zh-CN.md` 为准。
+| Phase | 状态 | 完成度 |
+|-------|------|--------|
+| P1 基础搭建 | **已完成** | 100% |
+| P2 内容迁移 | **进行中** | 70%（数据管道通，内容待填充） |
+| P3 外观定制 | **已完成** | 90%（剩 P3-09/10/11 微调） |
+| P4 功能开发 | **进行中** | 70%（members/events/join 已有，缺评论系统） |
+| P5 生产就绪 | **未开始** | 0% |
 
-v2.0.0 架构已完成基础搭建 + v1.0.0 UI 动效迁移：
-
-- [x] NotionNext 源码集成
-- [x] `blog.config.js` IGNAI 品牌适配
-- [x] ignai 自定义主题创建（基于 heo 骨架，复刻 v1.0.0 UI）
-- [x] **动效迁移 P0**：11 个 CSS @keyframes + utility classes + CTA 扫光 + Reveal blur
-- [x] **动效迁移 P1**：Canvas BackgroundFX（76/42 粒子 + 流线 + 脉冲）+ 92px 网格 + SVG 噪点 + 光晕
-- [x] **动效迁移 P2**：滚动视差（WhatIs / Culture）+ Join 品牌图浮动
-- [x] **卡片特效清理**：移除 presence-card / energy-card / ignai-card 多余效果
-- [x] 品牌资产保留（`public/brand/`, `public/contact/`）
-- [x] 设计文档完善（`doc/design/09-动效迁移设计文档`、TODO-animation-migration）
-
-**当前重点**：Member 真实数据链路已经落地，现阶段重点转向 featured members、组织表达、Event / Member 关系预埋和 upstream diff 收束。
+**当前重点**：Vercel 部署恢复 → 前端页面打磨 → 内容填充 → 生产上线
 
 ---
 
-## Phase 1：基础运行（1-2 天）
+## 当前紧急任务（2026-05-27 ~ 06-03）
 
-> 目标：让网站能跑起来，显示 IGNAI 的内容
+按优先级排序，完成一项再做下一项：
 
-- [ ] **P1-01** 在 Notion 创建 IGNAI 主 Database
-  - 复制 NotionNext 模板：https://tanghh.notion.site/02ab3b8678004aa69e9e415905ef32a5
-  - 填入至少 3 篇测试文章（类型：Post）
-  - 填入至少 1 个活动公告（类型：Notice）
-- [ ] **P1-02** 配置 `.env.local`
-  - 只需要一行：`NOTION_PAGE_ID=你的数据库ID`
-- [ ] **P1-03** 安装依赖并启动
-  - `yarn install && yarn dev`
-  - 访问 `http://localhost:3000` 验证
-- [ ] **P1-04** 部署到 Vercel
-  - 在 Vercel 创建新项目，指向 `main` 分支
-  - 配置环境变量 `NOTION_PAGE_ID`
-- [ ] **P1-05** 替换品牌资产
-  - favicon → IGNAI logo
-  - 默认头像 → IGNAI 品牌图
-  - og:image → IGNAI 社交分享图
+- [ ] **紧急-01** 排查 Vercel 部署超时（ign-ai.vercel.app 无法访问）
+  - 检查 Vercel dashboard 构建日志
+  - 确认环境变量 `NOTION_PAGE_ID`、`NOTION_API_TOKEN`、`NEXT_PUBLIC_THEME=ignai`
+  - 检查域名 DNS 解析
+- [x] **紧急-02** Hero 区域改为 Notion 驱动 ✅
+  - `themes/ignai/index.js` 中 `HeroSection` 已通过 `resolveSection(notionConfig, 'HERO', siteContentFallback)` 支持 Notion 优先
+  - `themes/ignai/components/Hero.js` 是未使用的遗留组件（ignai 主题未引用）
+- [ ] **紧急-03** 首页成员区块增强（featured members）
+  - `themes/ignai/index.js` 中 `roleCards` 改为从 Notion 读取
+  - 成员展示从"卡片网格"升级为"组织表达"
+- [x] **紧急-04** 移动端适配检查（P3-09）✅ 已完成基础修复
+  - [x] Hero 视觉面板在移动端隐藏（< 768px），只保留文案
+  - [x] 导航栏高度从 92px 缩小到 64px（移动端）
+  - [x] 移动端菜单加入"日报"按钮
+  - [x] Avatar scatter 容器加 overflow:hidden + 移动端限高 320px
+  - [x] 活动卡片移除 min-h-[580px]（移动端太高的问题）
+  - [ ] Footer 使用默认浅色样式，需改为 IGNAI 暗色主题（用户自行调整）
+- [ ] **紧急-05** Notion 内容填充
+  - 确保 Notion 数据库有足够内容（成员、活动、文章）
+  - 验证首页各区块数据渲染正确
 
-## Phase 2：内容迁移（2-3 天）
+---
 
-> 目标：把 v1.0.0 的内容搬到 Notion
+## 体验优化 Backlog（持续迭代）
 
-- [ ] **P2-01** 迁移活动数据
-  - v1.0.0 中的 3 条活动（fallback 数据）→ Notion Database 行
-  - 字段映射：title → 标题列, slug → slug列, date → 日期列, type → Event
-- [ ] **P2-02** 迁移社区记录
-  - v1.0.0 中的记录内容 → Notion Database 行
-  - type 设为 Post
-- [ ] **P2-03** 迁移社区简介和文化文案
-  - 在 Notion 创建对应的 Page 类型内容
-  - 内容参考 `doc/design/design-文字排布.md`
-- [ ] **P2-04** 验证所有页面
-  - 首页、文章列表、文章详情、分类、标签
-  - 确认 ISR 缓存正常（60 秒更新）
+### 成员展示（亮点功能，需重点打磨）
+- [ ] **成员-01** 成员列表百人级扩展方案
+  - 当前 phyllotaxis 散点布局在几十人时效果好，但几百人时会拥挤/溢出
+  - 需要设计分页/虚拟滚动/分组展示方案
+  - 可选方案：分角色 tab + 搜索 + 虚拟列表 / 地图式缩放 / 分页网格
+- [ ] **成员-02** 成员目录页视觉打磨
+- [ ] **成员-03** 成员详情页层级优化
+- [ ] **成员-04** 移动端成员卡片体验
+
+### 活动与内容系统
+- [ ] **活动-01** 活动生命周期管理
+  - 活动状态：未开始 → 进行中 → 已结束 → 已复盘
+  - UpcomingEventsSection 只展示未结束活动
+  - FieldNotesSection 只展示已结束活动
+  - 需要确保状态流转正确，复盘内容关联到活动
+- [ ] **活动-02** 活动与成员关系
+  - 活动参与者/组织者与 Member 关联
+  - 活动详情页展示相关成员
+- [ ] **活动-03** 活动复盘内容模板
+  - 已结束活动的复盘格式（成果、照片、反馈）
+  - 与 FieldNotes 区块的数据打通
+
+### 社区运营
+- [ ] **运营-01** 内容分流导航优化
+  - 文章 / 活动 / 成员 / 记录 四条线更清晰
+- [ ] **运营-02** 组织表达层增强
+  - 社区不只是成员列表，要有"组织感"
+
+---
+
+## Phase 1：基础运行 ✅ 已完成
+
+- [x] **P1-01** 在 Notion 创建 IGNAI 主 Database
+- [x] **P1-02** 配置 `.env.local`
+- [x] **P1-03** 安装依赖并启动（`yarn dev` 正常）
+- [x] **P1-04** 部署到 Vercel（已部署，需排查访问超时）
+- [x] **P1-05** 替换品牌资产（favicon、logo 均已就位）
+
+## Phase 2：内容迁移（进行中 — 70%）
+
+- [x] **P2-01** 迁移活动数据（数据管道已通，Notion 数据可读取）
+- [x] **P2-02** 迁移社区记录（数据管道已通）
+- [x] **P2-03** 迁移社区简介和文化文案 ✅
+  - Hero 通过 `resolveSection(notionConfig, 'HERO', siteContentFallback)` 支持 Notion 优先
+  - WhatIs / Culture / Join 均通过 `resolveSection` 模式支持 Notion 驱动
+- [ ] **P2-04** 验证所有页面（需 Vercel 部署恢复后验证线上表现）
 
 ## Phase 3：外观定制（已完成）
 
@@ -81,33 +114,18 @@ v2.0.0 架构已完成基础搭建 + v1.0.0 UI 动效迁移：
 ### 待微调
 
 - [ ] **P3-09** 移动端适配检查（卡片网格在小屏幕的响应式表现）
-- [ ] **P3-10** 字体精确匹配（确认 Cormorant Garamond 和 Noto Sans SC 加载正确）
+- [x] **P3-10** 字体精确匹配 ✅
+  - Cormorant Garamond 已添加到 `conf/font.config.js` 的 FONT_URL 和 FONT_SERIF
+  - Noto Sans SC 已在 FONT_URL 中加载
 - [ ] **P3-11** 间距打磨（对照 v1.0.0 微调 padding/margin）
 
-## Phase 4：功能二开（2-3 天）
+## Phase 4：功能二开（进行中 — 70%）
 
-> 目标：添加社区特有的功能（超出 NotionNext 默认能力）
-
-- [ ] **P4-01** 多数据库配置
-  - `NOTION_PAGE_ID='主站ID,members:成员库ID,events:活动库ID'`
-  - 在 Notion 创建独立的「成员」Database
-  - 在 Notion 创建独立的「活动」Database
-- [ ] **P4-02** /members 成员展示页
-  - 二开一个新的页面路由：`pages/members/index.js`
-  - 读取 Notion 成员 Database
-  - 渲染为头像卡片网格
-  - 参考 `doc/requirements/req-成员管理.md`
-- [ ] **P4-03** 活动详情页模板定制
-  - heo 主题默认的文章详情页改为活动风格
-  - 显示：时间、地点、报名链接、议程
-  - 利用 Notion 的 `ext` 字段存 JSON 扩展数据
-- [ ] **P4-04** 成员登记表单
-  - 方案 A：Notion Form → 直接写入成员 Database
-  - 方案 B：飞书多维表格 → 定期同步到 Notion
-  - 方案 C：自建表单页面 → Notion API 写入
-- [ ] **P4-05** 评论系统
-  - 配置 Giscus（基于 GitHub Discussions）或 Waline
-  - 文件：`conf/comment.config.js`
+- [x] **P4-01** 多数据库配置（`NOTION_PAGE_ID` 支持多库前缀）
+- [x] **P4-02** /members 成员展示页（`pages/members/index.js` + `[slug].js` 均已就位）
+- [x] **P4-03** 活动详情页模板（`pages/events/index.js` + `[slug].js` 均已就位）
+- [x] **P4-04** 成员登记表单（`pages/join.tsx` + `JoinApplicationForm.tsx` 已就位）
+- [ ] **P4-05** 评论系统（`conf/comment.config.js` 已有脚手架，未启用任何 provider）
 
 ## Phase 5：优化与上线（1-2 天）
 

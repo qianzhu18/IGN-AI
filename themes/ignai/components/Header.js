@@ -221,6 +221,9 @@ export const Header = props => {
                     加入社区
                   </SmartLink>
                 </li>
+                <li className='px-6 pt-3 border-t border-white/6'>
+                  <DailyReportButton />
+                </li>
               </ul>
             </nav>
 
