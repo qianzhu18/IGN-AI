@@ -28,11 +28,11 @@ export default function MemberProfilePage({ member, siteInfo, authoredPosts = []
   const quote = getMemberQuote(member)
 
   return (
-    <main className='min-h-screen bg-[#07080C] px-6 py-20 text-neutral-100'>
+    <main className='min-h-screen bg-[#07080C] px-4 sm:px-6 py-16 sm:py-20 text-neutral-100'>
       <div className='mx-auto max-w-3xl'>
         <Link
           href='/members'
-          className='mb-8 inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-white transition no-underline'
+          className='mb-8 inline-flex items-center gap-2 rounded-lg px-3 py-2 -ml-3 text-sm text-neutral-500 hover:text-white hover:bg-white/[0.04] transition no-underline'
         >
           &larr; 返回成员列表
         </Link>
@@ -42,7 +42,7 @@ export default function MemberProfilePage({ member, siteInfo, authoredPosts = []
             <img
               src={getMemberAvatar(member)}
               alt={member?.title || 'Member avatar'}
-              className='h-24 w-24 rounded-full object-cover ring-1 ring-white/10'
+              className='h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover ring-1 ring-white/10'
             />
             <div className='min-w-0 flex-1'>
               <div className='flex flex-wrap items-center gap-3 mb-2'>
