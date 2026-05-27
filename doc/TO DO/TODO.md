@@ -67,7 +67,13 @@
   - [x] 移动端头像缩小（80px vs 96px）
   - [x] 返回链接增大点击区域
   - [x] 移动端 padding 优化
-- [ ] **成员-04** 移动端成员卡片体验
+- [x] **成员-04** 移动端成员卡片体验 ✅ 新方案已实现
+  - [x] tap 触发预览卡片（显示姓名、角色、简介、quote）
+  - [x] 再次 tap 进入详情页
+  - [x] ResizeObserver 自适应容器大小
+  - [x] CSS transform scale 响应式定位
+  - [x] featured 成员头像更大 + 光晕效果
+  - 分支：`feat/member-avatar-showcase`
 
 ### 活动与内容系统
 - [ ] **活动-01** 活动生命周期管理
