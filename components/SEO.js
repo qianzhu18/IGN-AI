@@ -29,6 +29,10 @@ const SEO = props => {
     url = `${url}/${meta.slug}`
     image = meta.image || '/bg_image.jpg'
   }
+  // OG/Twitter 图片必须是绝对路径
+  if (image && !image.startsWith('http')) {
+    image = `${LINK}${image}`
+  }
   const TITLE = siteConfig('TITLE')
   const title = meta?.title || TITLE
   const description = meta?.description || siteConfig('DESCRIPTION') || siteInfo?.description
@@ -130,16 +134,26 @@ const SEO = props => {
       <meta property='og:site_name' content={siteConfig('TITLE')} />
       <meta property='og:type' content={type} />
 
+      {/* Canonical URL */}
+      <link rel='canonical' href={url} />
+
+      {/* Hreflang */}
+      <link rel='alternate' hrefLang='zh-CN' href={url} />
+      <link rel='alternate' hrefLang='x-default' href={url} />
+
+      {/* RSS 发现 */}
+      <link rel='alternate' type='application/rss+xml' title='IGNAI RSS' href='/rss/feed.xml' />
+
       {/* Twitter Card 元数据 */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:site' content={siteConfig('TWITTER_SITE', '@NotionNext')} />
-      <meta name='twitter:creator' content={siteConfig('TWITTER_CREATOR', '@NotionNext')} />
+      <meta name='twitter:site' content={siteConfig('TWITTER_SITE', '')} />
+      <meta name='twitter:creator' content={siteConfig('TWITTER_CREATOR', '')} />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={image} />
       <meta name='twitter:image:alt' content={title} />
 
-      <link rel='icon' href={BLOG_FAVICON} />
+      {/* favicon 由上方统一设置，避免重复 */}
 
       {COMMENT_WEBMENTION_ENABLE && (
         <>
@@ -210,7 +224,7 @@ const generateStructuredData = (meta, siteInfo, url, image, author) => {
     description: siteDesc,
     url: siteConfig('LINK'),
     author: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: author
     },
     publisher: {

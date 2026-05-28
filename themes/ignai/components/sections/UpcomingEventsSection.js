@@ -72,7 +72,7 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
           </div>
         </Reveal>
 
-        <div className='mt-16 grid items-stretch gap-6 lg:grid-cols-3'>
+        <div className='mt-16 grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {mergedEvents.slice(0, 3).map((event, index) => (
             <Reveal key={event.slug} delay={index * 0.08}>
               <SmartLink

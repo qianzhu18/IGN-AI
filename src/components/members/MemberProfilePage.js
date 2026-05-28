@@ -110,7 +110,7 @@ export default function MemberProfilePage({ member, siteInfo, authoredPosts = []
                       href={href}
                       target='_blank'
                       rel='noreferrer'
-                      className='inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 text-xs text-neutral-300 transition hover:border-white/25 hover:text-white'
+                      className='inline-flex items-center gap-1.5 rounded-full border border-white/10 px-3.5 py-2 text-xs text-neutral-300 transition hover:border-white/25 hover:text-white'
                     >
                       {SOCIAL_ICONS[label]}
                       {label}

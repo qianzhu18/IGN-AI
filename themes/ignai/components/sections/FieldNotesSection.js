@@ -44,7 +44,7 @@ export function FieldNotesSection({ notionEvents = [] }) {
           </SmartLink>
         </Reveal>
 
-        <div className='mt-16 grid gap-6 lg:grid-cols-3'>
+        <div className='mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
           {displayItems.map((item, index) => (
             <Reveal key={item.slug} delay={index * 0.08}>
               <SmartLink

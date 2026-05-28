@@ -89,8 +89,15 @@ const Style = () => {
       #theme-proxio .ignai-home-section {
         position: relative;
         z-index: 10;
-        padding-top: 96px;
-        padding-bottom: 96px;
+        padding-top: 56px;
+        padding-bottom: 56px;
+      }
+
+      @media (min-width: 640px) {
+        #theme-proxio .ignai-home-section {
+          padding-top: 80px;
+          padding-bottom: 80px;
+        }
       }
 
       @media (min-width: 1024px) {
@@ -903,7 +910,7 @@ const Style = () => {
 
       /* Display 标题 */
       #theme-proxio .ignai-display-title {
-        font-size: 3rem;
+        font-size: clamp(2rem, 8vw, 3rem);
         font-weight: 700;
         line-height: 1.1;
         color: #fff;
@@ -1062,7 +1069,12 @@ const Style = () => {
       }
 
       #theme-proxio .open-grid-item {
-        padding: 28px;
+        padding: 20px;
+      }
+      @media (min-width: 640px) {
+        #theme-proxio .open-grid-item {
+          padding: 28px;
+        }
       }
 
       #theme-proxio .ignai-unified-card:hover,
@@ -1370,6 +1382,11 @@ const Style = () => {
         transform: translate(-50%, -50%);
         cursor: pointer;
         will-change: transform;
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .avatar-scatter-item--featured {

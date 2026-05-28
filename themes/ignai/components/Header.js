@@ -147,6 +147,19 @@ export const Header = props => {
     setShowMenu(false)
   }, [router])
 
+  // 点击外部关闭移动端菜单
+  useEffect(() => {
+    if (!showMenu) return
+    const handler = (e) => {
+      // 点击菜单按钮本身不关闭（它自己处理 toggle）
+      if (e.target.closest('button[aria-label]')) return
+      if (e.target.closest('nav.ignai-mobile-menu')) return
+      setShowMenu(false)
+    }
+    document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
+  }, [showMenu])
+
   return (
     <>
       <div className='ud-header left-0 top-0 z-40 flex w-full items-center'>
@@ -187,7 +200,7 @@ export const Header = props => {
             {/* 移动端菜单按钮 */}
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-lg px-3 py-2 ring-primary focus:ring-2 md:hidden`}
+              className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-lg p-3 ring-primary focus:ring-2 md:hidden`}
               aria-label={showMenu ? '关闭菜单' : '打开菜单'}
               aria-expanded={showMenu}>
               <div className={`ignai-hamburger ${showMenu ? 'ignai-hamburger--open' : ''}`}>
@@ -199,14 +212,14 @@ export const Header = props => {
 
             {/* 移动端菜单 */}
             <nav
-              className={`absolute right-4 top-full w-full max-w-[260px] rounded-xl py-2 md:hidden ignai-mobile-menu ${showMenu ? 'ignai-mobile-menu--visible' : 'ignai-mobile-menu--hidden'}`}
+              className={`absolute right-4 top-full w-full max-w-[calc(100vw-32px)] rounded-xl py-2 md:hidden ignai-mobile-menu ${showMenu ? 'ignai-mobile-menu--visible' : 'ignai-mobile-menu--hidden'}`}
               style={{ background: 'rgba(13,14,20,0.97)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 64px rgba(0,0,0,0.5)' }}>
               <ul className='py-1'>
                 {navItems.map((item, index) => (
                   <li key={item.label || index}>
                     <SmartLink
                       href={item.href}
-                      className='block px-5 py-2.5 text-sm text-white/72 hover:text-white hover:bg-white/[0.06] rounded-lg mx-2 transition-colors'>
+                      className='block px-5 py-3 text-sm text-white/72 hover:text-white hover:bg-white/[0.06] rounded-lg mx-2 transition-colors'>
                       {item.label}
                     </SmartLink>
                     {item.subMenus?.map((sub, si) => (

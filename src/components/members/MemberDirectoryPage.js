@@ -210,11 +210,11 @@ export default function MemberDirectoryPage({
               ? `${filteredMembers.length} / ${members.length} members`
               : `${members.length} members / ${groups.length} roles`}
           </p>
-          <div className='flex gap-3'>
-            <button onClick={expandAll} className='text-xs text-neutral-600 hover:text-white/70 transition'>
+          <div className='flex gap-2'>
+            <button onClick={expandAll} className='rounded-md px-2.5 py-1.5 text-xs text-neutral-600 hover:text-white/70 hover:bg-white/[0.04] transition'>
               Expand all
             </button>
-            <button onClick={collapseAll} className='text-xs text-neutral-600 hover:text-white/70 transition'>
+            <button onClick={collapseAll} className='rounded-md px-2.5 py-1.5 text-xs text-neutral-600 hover:text-white/70 hover:bg-white/[0.04] transition'>
               Collapse
             </button>
           </div>
