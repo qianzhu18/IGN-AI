@@ -165,7 +165,13 @@
 
 ### 待微调
 
-- [ ] **P3-09** 移动端适配检查（卡片网格在小屏幕的响应式表现）
+- [x] **P3-09** 移动端适配检查 ✅
+  - Section padding: 56px mobile → 80px tablet → 120px desktop
+  - Display title: clamp(2rem, 8vw, 3rem) 窄屏自适应
+  - Header: 点击外部关闭菜单、菜单宽度 calc(100vw-32px)、触摸区域 44px
+  - 成员页: 展开/收起按钮加 padding、社交链接触摸区域增大
+  - 头像散点: min 44px 触摸区域
+  - 活动/FieldNotes: sm:grid-cols-2 平板断点
 - [x] **P3-10** 字体精确匹配 ✅
   - Cormorant Garamond 已添加到 `conf/font.config.js` 的 FONT_URL 和 FONT_SERIF
   - Noto Sans SC 已在 FONT_URL 中加载
@@ -183,10 +189,14 @@
 
 > 目标：生产级品质
 
-- [ ] **P5-01** SEO 优化
-  - `next-sitemap.config.js` 配置
-  - Open Graph 图片
-  - 结构化数据
+- [x] **P5-01** SEO 优化 ✅
+  - Canonical URL + hreflang (zh-CN / x-default)
+  - OG/Twitter 图片绝对路径
+  - Twitter handles 去掉 @NotionNext 默认值
+  - RSS 发现链接
+  - JSON-LD author: Person → Organization
+  - 去重 favicon
+  - robots.txt 去掉旧域名（域名配置后更新）
 - [ ] **P5-02** 性能优化
   - 图片压缩（WebP）
   - ISR 缓存时间调优
