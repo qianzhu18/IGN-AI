@@ -26,10 +26,7 @@
 
 按优先级排序，完成一项再做下一项：
 
-- [ ] **紧急-01** 排查 Vercel 部署超时（ign-ai.vercel.app 无法访问）
-  - 检查 Vercel dashboard 构建日志
-  - 确认环境变量 `NOTION_PAGE_ID`、`NOTION_API_TOKEN`、`NEXT_PUBLIC_THEME=ignai`
-  - 检查域名 DNS 解析
+- [x] **紧急-01** Vercel 部署 ✅ 已恢复
 - [x] **紧急-02** Hero 区域改为 Notion 驱动 ✅
 - [x] **紧急-03** 首页成员区块增强 ✅
   - 200+ 成员散点布局、golden angle、hover/tap 预览、featured 光晕
