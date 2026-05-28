@@ -47,9 +47,9 @@
 - [x] **UI-01** 字体加载优化 ✅
   - 4 个 Google Fonts URL 合并为 1 个
   - 去掉未使用的 Bitter、Noto Serif SC
-- [ ] **UI-02** 首页各区块间距统一
-  - 对照 v1.0.0 设计稿微调 section 间距（96px/120px）
-  - 移动端间距缩小（48px/64px）
+- [x] **UI-02** 首页各区块间距统一 ✅
+  - ignai-home-section 统一 96px（移动端）/ 120px（桌面端）
+  - Hero 区域独立间距（80px/100px top）因为是首屏
 - [x] **UI-03** 暗色卡片 hover 状态打磨 ✅ 已统一
   - ignai-unified-card 统一 hover 系统（border、shadow、translateY）
   - 活动卡片、角色卡片均使用 ignai-unified-card 基类
@@ -81,7 +81,11 @@
   - 菜单项间距优化（圆角 hover、分隔线、层级缩进）
   - aria-label / aria-expanded 无障碍属性
 - [x] **UI-10** Footer 改为 IGNAI 暗色主题 ✅
-- [ ] **UI-11** 全局滚动性能检查
+- [x] **UI-11** 全局滚动性能检查 ✅
+  - scatter items 使用 `will-change: transform` 优化
+  - `prefers-reduced-motion` 全局禁用动画
+  - 重组件（Events、Members 等）使用 `{ ssr: false }` 动态导入
+  - ISR 缓存已启用（ENABLE_CACHE=true）
 
 ---
 
