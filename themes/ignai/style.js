@@ -1270,6 +1270,7 @@ const Style = () => {
         margin: 0 auto;
         user-select: none;
         overflow: hidden;
+        background: radial-gradient(ellipse at center, rgba(255,122,24,0.03) 0%, transparent 60%);
       }
 
       @media (max-width: 640px) {
