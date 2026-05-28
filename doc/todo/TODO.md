@@ -198,8 +198,9 @@
   - 去重 favicon
   - robots.txt 去掉旧域名（域名配置后更新）
 - [ ] **P5-02** 性能优化
-  - 图片压缩（WebP）
-  - ISR 缓存时间调优
+  - [x] 首页数据精简 ✅ allMembers 104KB → 46KB（7 字段 vs 18 字段）
+  - [ ] 图片压缩（WebP）
+  - [ ] ISR 缓存时间调优
   - 参考 `conf/performance.config.js`
 - [ ] **P5-03** 域名绑定
   - ignai.community 或 ignai.community
