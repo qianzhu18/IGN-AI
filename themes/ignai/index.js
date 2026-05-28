@@ -127,9 +127,21 @@ function Reveal({
  */
 const LayoutBase = props => {
   const { children } = props
+  const cursorGlowRef = useRef(null)
 
   useEffect(() => {
     loadWowJS()
+  }, [])
+
+  useEffect(() => {
+    const glow = cursorGlowRef.current
+    if (!glow) return
+    const handleMove = (e) => {
+      glow.style.left = e.clientX + 'px'
+      glow.style.top = e.clientY + 'px'
+    }
+    window.addEventListener('mousemove', handleMove, { passive: true })
+    return () => window.removeEventListener('mousemove', handleMove)
   }, [])
 
   return (
@@ -151,22 +163,8 @@ const LayoutBase = props => {
         }}
       />
 
-      {/* Noise Overlay — SVG feTurbulence */}
-      <svg
-        aria-hidden='true'
-        className='pointer-events-none fixed inset-0 z-0 h-full w-full opacity-[0.05]'
-        style={{ mixBlendMode: 'overlay' }}
-      >
-        <filter id='ignai-noise'>
-          <feTurbulence
-            type='fractalNoise'
-            baseFrequency='0.75'
-            numOctaves='4'
-            stitchTiles='stitch'
-          />
-        </filter>
-        <rect width='100%' height='100%' filter='url(#ignai-noise)' />
-      </svg>
+      {/* Noise Overlay — CSS SVG filter */}
+      <div aria-hidden='true' className='ignai-noise-overlay' />
 
       {/* Glow Orbs */}
       <div
@@ -177,6 +175,9 @@ const LayoutBase = props => {
             'radial-gradient(ellipse at 16% 10%, rgba(255,122,24,0.14), transparent 32%), radial-gradient(ellipse at 84% 16%, rgba(93,169,255,0.08), transparent 28%)'
         }}
       />
+
+      {/* Cursor Glow — 桌面端鼠标跟随光晕 */}
+      <div ref={cursorGlowRef} aria-hidden='true' className='ignai-cursor-glow' style={{ left: '-500px', top: '-500px' }} />
 
       <Header {...props} />
       <div id='main-wrapper' className='grow'>

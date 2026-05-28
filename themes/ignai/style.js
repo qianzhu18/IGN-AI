@@ -788,6 +788,91 @@ const Style = () => {
         stroke-width: 2;
       }
 
+      /* ========== 噪点纹理叠加层 ========== */
+      #theme-proxio .ignai-noise-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+        opacity: 0.025;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 200px 200px;
+        mix-blend-mode: overlay;
+      }
+
+      /* ========== 光标跟随光晕 ========== */
+      #theme-proxio .ignai-cursor-glow {
+        position: fixed;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,122,24,0.06) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 1;
+        transform: translate(-50%, -50%);
+        transition: left 0.3s ease-out, top 0.3s ease-out;
+        will-change: left, top;
+      }
+
+      @media (max-width: 768px) {
+        #theme-proxio .ignai-cursor-glow {
+          display: none;
+        }
+      }
+
+      /* ========== 毛玻璃卡片增强 ========== */
+      #theme-proxio .ignai-glass-card {
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: linear-gradient(135deg, rgba(14,17,24,0.8) 0%, rgba(8,10,16,0.6) 100%);
+        backdrop-filter: blur(20px) saturate(1.2);
+        -webkit-backdrop-filter: blur(20px) saturate(1.2);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.05),
+          0 0 0 1px rgba(255,255,255,0.02),
+          0 20px 60px rgba(0,0,0,0.3);
+        transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      #theme-proxio .ignai-glass-card:hover {
+        border-color: rgba(255,183,121,0.15);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.08),
+          0 0 0 1px rgba(255,255,255,0.04),
+          0 0 40px rgba(255,122,24,0.06),
+          0 30px 80px rgba(0,0,0,0.4);
+        transform: translateY(-2px);
+      }
+
+      /* ========== 文字渐变闪烁 ========== */
+      @keyframes ignai-text-shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+
+      #theme-proxio .ignai-text-shimmer {
+        background: linear-gradient(
+          90deg,
+          rgba(255,255,255,0.6) 0%,
+          rgba(255,255,255,1) 25%,
+          rgba(255,208,154,1) 50%,
+          rgba(255,255,255,1) 75%,
+          rgba(255,255,255,0.6) 100%
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: ignai-text-shimmer 6s linear infinite;
+      }
+
+      /* ========== 数字计数器 ========== */
+      #theme-proxio .ignai-counter {
+        font-variant-numeric: tabular-nums;
+        font-feature-settings: 'tnum';
+      }
+
       /* ========== prefers-reduced-motion 全局禁用 ========== */
       @media (prefers-reduced-motion: reduce) {
         *,
