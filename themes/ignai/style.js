@@ -1095,6 +1095,16 @@ const Style = () => {
         }
       }
 
+      #theme-proxio .ignai-signal-item {
+        padding: 8px;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+
+      #theme-proxio .ignai-signal-item:hover {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
       /* ========== Converge rays (Join 区动画) ========== */
       @keyframes ignai-converge-ray {
         0% {

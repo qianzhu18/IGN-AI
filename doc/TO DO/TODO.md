@@ -55,9 +55,9 @@
   - 活动卡片、角色卡片均使用 ignai-unified-card 基类
 
 ### 首页区块
-- [ ] **UI-04** Hero 区域微调
-  - 信号卡片排版优化
-  - CTA 按钮 hover 效果
+- [x] **UI-04** Hero 区域微调 ✅
+  - 信号卡片添加 hover 背景高亮 + 品牌色圆点指示器
+  - CTA 按钮已有扫光 hover 效果（ignai-cta-primary + motion-cta）
 - [ ] **UI-05** 成员展示区精调
   - 散点布局在 200 人下的视觉密度
   - 预览卡片信息层次优化

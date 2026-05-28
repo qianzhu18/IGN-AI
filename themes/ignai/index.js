@@ -537,10 +537,13 @@ function HeroSection({ notionConfig }) {
               {siteContent.heroSignals.map((signal, index) => (
                 <div key={signal.title} className='ignai-signal-item'>
                   <p
-                    className={`text-[0.7rem] font-medium uppercase ${
+                    className={`text-[0.7rem] font-medium uppercase inline-flex items-center gap-2 ${
                       index === 1 ? 'text-[#9aceff]' : 'text-[#f0c78e]/84'
                     }`}
                   >
+                    <span className={`inline-block h-1.5 w-1.5 rounded-full ${
+                      index === 1 ? 'bg-[#5DA9FF]' : 'bg-[#FF7A18]'
+                    }`} />
                     {signal.eyebrow}
                   </p>
                   <h3 className='mt-3 text-base font-semibold leading-[1.32] text-white'>
