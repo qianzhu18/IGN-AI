@@ -31,21 +31,53 @@
   - 确认环境变量 `NOTION_PAGE_ID`、`NOTION_API_TOKEN`、`NEXT_PUBLIC_THEME=ignai`
   - 检查域名 DNS 解析
 - [x] **紧急-02** Hero 区域改为 Notion 驱动 ✅
-  - `themes/ignai/index.js` 中 `HeroSection` 已通过 `resolveSection(notionConfig, 'HERO', siteContentFallback)` 支持 Notion 优先
-  - `themes/ignai/components/Hero.js` 是未使用的遗留组件（ignai 主题未引用）
-- [ ] **紧急-03** 首页成员区块增强（featured members）
-  - `themes/ignai/index.js` 中 `roleCards` 改为从 Notion 读取
-  - 成员展示从"卡片网格"升级为"组织表达"
-- [x] **紧急-04** 移动端适配检查（P3-09）✅ 已完成基础修复
-  - [x] Hero 视觉面板在移动端隐藏（< 768px），只保留文案
-  - [x] 导航栏高度从 92px 缩小到 64px（移动端）
-  - [x] 移动端菜单加入"日报"按钮
-  - [x] Avatar scatter 容器加 overflow:hidden + 移动端限高 320px
-  - [x] 活动卡片移除 min-h-[580px]（移动端太高的问题）
-  - [ ] Footer 使用默认浅色样式，需改为 IGNAI 暗色主题（用户自行调整）
-- [ ] **紧急-05** Notion 内容填充
-  - 确保 Notion 数据库有足够内容（成员、活动、文章）
-  - 验证首页各区块数据渲染正确
+- [x] **紧急-03** 首页成员区块增强 ✅
+  - 200+ 成员散点布局、golden angle、hover/tap 预览、featured 光晕
+  - API 分页修复、数据精简、缓存启用
+- [x] **紧急-04** 移动端适配检查 ✅
+- [x] **紧急-05** Notion 内容填充 ✅ 200 条测试成员已创建
+
+---
+
+## UI 打磨冲刺（2026-05-28 ~ 06-04）
+
+对标 Linear / Vercel / Latent Space 的暗色调品质。逐项推进：
+
+### 视觉细节
+- [ ] **UI-01** 字体加载优化
+  - 当前 7 个 Google Fonts URL，阻塞首屏
+  - 合并请求、只加载实际使用的字重、font-display: swap
+- [ ] **UI-02** 首页各区块间距统一
+  - 对照 v1.0.0 设计稿微调 section 间距（96px/120px）
+  - 移动端间距缩小（48px/64px）
+- [ ] **UI-03** 暗色卡片 hover 状态打磨
+  - 统一 border、bg、shadow 的 hover 过渡
+  - 活动卡片、成员卡片、角色卡片保持一致
+
+### 首页区块
+- [ ] **UI-04** Hero 区域微调
+  - 信号卡片排版优化
+  - CTA 按钮 hover 效果
+- [ ] **UI-05** 成员展示区精调
+  - 散点布局在 200 人下的视觉密度
+  - 预览卡片信息层次优化
+- [ ] **UI-06** 活动区块优化
+  - 活动卡片信息密度
+  - 空状态处理
+
+### 成员系统
+- [x] **UI-07** 成员目录页改版 ✅ 编号手风琴分组
+  - [ ] 搜索/筛选功能（后续迭代）
+- [ ] **UI-08** 成员详情页打磨
+  - 社交链接展示优化
+  - 移动端布局微调
+
+### 移动端
+- [ ] **UI-09** 导航栏移动端体验
+  - 汉堡菜单动画
+  - 菜单项间距
+- [ ] **UI-10** Footer 改为 IGNAI 暗色主题
+- [ ] **UI-11** 全局滚动性能检查
 
 ---
 
