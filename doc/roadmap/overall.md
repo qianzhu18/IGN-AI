@@ -101,9 +101,9 @@
 ## 7. 文档索引
 
 ### 总控层
-- `doc/ROADMAP/ROADMAP-overall-plan.md`
-- `doc/ROADMAP/ROADMAP-schedule.md`
-- `doc/ROADMAP/ROADMAP-master-todo.md`
+- `doc/roadmap/overall.md`
+- `doc/roadmap/schedule.md`
+- `doc/roadmap/master-todo.md`
 
 ### Member 执行层
 - `docs/member-execution-roadmap.zh-CN.md`
@@ -119,8 +119,7 @@
 - `doc/requirements/req-NotionNext社区能力提案.md`
 
 ### 现有 TODO 层
-- `doc/TO DO/TODO.md`
-- `doc/TO DO/TODO-animation-migration.md`
+- `doc/todo/TODO.md`
 
 ## 8. 后续怎么用
 

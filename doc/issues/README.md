@@ -16,7 +16,7 @@
 
 测试执行记录请看：
 
-- [doc/TO DO/TODO.md](/Users/mac/qianzhu%20Vault/project/IGN%20AI%20官网/doc/TO%20DO/TODO.md)
+- [doc/todo/TODO.md](/Users/mac/qianzhu%20Vault/project/IGN%20AI%20官网/doc/todo/TODO.md)
 
 ## 2. 当前总览
 
@@ -319,7 +319,7 @@
 每次开始修一个问题前：
 
 1. 把对应 issue 状态改为 `In Progress`
-2. 在 `doc/TO DO/TODO.md` 标记要重跑的测试集
+2. 在 `doc/todo/TODO.md` 标记要重跑的测试集
 
 每次修完后：
 

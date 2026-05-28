@@ -18,9 +18,9 @@ Stabilize the post-Member-MVP baseline, keep the repo tidy, and keep pushing the
 
 ## What To Do First
 1. Read `AGENTS.md`
-2. Read `doc/ROADMAP/ROADMAP-overall-plan.md`
-3. Read `doc/ROADMAP/ROADMAP-schedule.md`
-4. Read `doc/ROADMAP/ROADMAP-master-todo.md`
+2. Read `doc/roadmap/overall.md`
+3. Read `doc/roadmap/schedule.md`
+4. Read `doc/roadmap/master-todo.md`
 5. Read `docs/member-execution-roadmap.zh-CN.md`
 6. Read `docs/execution-playbook.md`
 7. Read the latest session records in `docs/`

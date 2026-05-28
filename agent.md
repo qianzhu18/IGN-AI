@@ -1,7 +1,7 @@
 # agent.md — AI 开发指引
 
 > 本文件指导 Codex App 和 Claude Code 完成后续开发。
-> 最后更新：2026-05-07 | 架构版本：v2.0.0 (NotionNext 二开)
+> 最后更新：2026-05-28 | 架构版本：v2.0.0 (NotionNext 二开)
 
 ---
 
@@ -27,9 +27,9 @@
 **必读文件（按顺序）：**
 
 1. `AGENTS.md` — 当前仓库工作约束
-2. `doc/ROADMAP/ROADMAP-overall-plan.md` — 长期主线
-3. `doc/ROADMAP/ROADMAP-schedule.md` — 滚动排期
-4. `doc/ROADMAP/ROADMAP-master-todo.md` — 当前总待办
+2. `doc/roadmap/overall.md` — 长期主线
+3. `doc/roadmap/schedule.md` — 滚动排期
+4. `doc/roadmap/master-todo.md` — 当前总待办
 5. `docs/member-execution-roadmap.zh-CN.md` — Member 主线执行文档
 6. `agent.md` — 本文件，了解全局
 7. `CLAUDE.md` — Claude Code 专属指引（命令、架构摘要）
@@ -110,7 +110,7 @@ NOTION_PAGE_ID='主库ID,members:成员库ID,events:活动库ID'
 3. `lib/db/` — 数据获取层（从 Notion 读取数据）
 4. `lib/cache/` — ISR 缓存机制
 5. `themes/ignai/components/` — 可复用的 heo 主题组件
-6. `doc/TO DO/TODO.md` — 确认功能是否在路线图中
+6. `doc/todo/TODO.md` — 确认功能是否在路线图中
 
 **添加页面的步骤：**
 
@@ -243,12 +243,14 @@ IGN AI 官网/
 │   └── images/             # 通用图片资源
 │
 └── doc/                    # 文档（不被构建使用）
-    ├── TO DO/TODO.md       #   开发路线图
+    ├── todo/TODO.md        #   开发路线图
+    ├── roadmap/            #   长期规划与排期
     ├── architecture/       #   架构文档
     ├── design/             #   设计规范
     ├── requirements/       #   需求文档
     ├── dev/                #   开发指南
-    └── ISSUES/             #   问题追踪
+    ├── issues/             #   问题追踪
+    └── changelog/          #   周报与变更日志
 ```
 
 ---
@@ -315,11 +317,10 @@ IGN AI 官网/
 
 | 文档 | 位置 |
 |------|------|
-| 动效迁移设计文档 | `doc/design/09-动效迁移设计文档-v1到NotionNext.md` |
-| 动效迁移 TODO | `doc/TO DO/TODO-animation-migration.md` |
-| 品牌视觉方向 | `doc/design/04-品牌视觉方向与色彩系统.md` |
-| 动画样式体系 | `doc/design/05-动画样式体系全景(参考百科).md` |
-| 文字排布规范 | `doc/design/06-文字排布与布局规范.md` |
+| 动效迁移设计文档 | `doc/design/动效迁移设计文档.md` |
+| 品牌视觉方向 | `doc/design/品牌视觉方向与色彩系统.md` |
+| 动画样式体系 | `doc/design/动画样式体系全景.md` |
+| 文字排布规范 | `doc/design/文字排布与布局规范.md` |
 
 ---
 
@@ -327,7 +328,7 @@ IGN AI 官网/
 
 ### 修改前
 
-1. 读取 `doc/TO DO/TODO.md`，确认任务对应哪个 Phase 和任务 ID
+1. 读取 `doc/todo/TODO.md`，确认任务对应哪个 Phase 和任务 ID
 2. 读取相关配置文件（参考上方按场景读取）
 3. 如果涉及主题修改，先读 `themes/ignai/config.js` 和对应组件
 
@@ -340,14 +341,14 @@ IGN AI 官网/
 ### 修改后
 
 1. 运行 `yarn build` 验证构建通过
-2. 更新 `doc/TO DO/TODO.md` 中对应任务的状态
+2. 更新 `doc/todo/TODO.md` 中对应任务的状态
 3. Commit message 格式：`feat(P1-01): 描述` 或 `fix(P3-02): 描述`（关联任务 ID）
 
 ---
 
 ## 6. IGNAI 定制清单
 
-以下是 v2.0.0 的主要定制方向（详见 `doc/TO DO/TODO.md`）：
+以下是 v2.0.0 的主要定制方向（详见 `doc/todo/TODO.md`）：
 
 ### 已完成
 - [x] NotionNext 源码集成

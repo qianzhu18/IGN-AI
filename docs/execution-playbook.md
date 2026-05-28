@@ -56,7 +56,7 @@ Instead:
 When continuing work here, use this prompt:
 
 ```text
-Please read /AGENTS.md, /doc/ROADMAP/ROADMAP-overall-plan.md, /doc/ROADMAP/ROADMAP-schedule.md, /doc/ROADMAP/ROADMAP-master-todo.md, /AI_HANDOFF.md, /docs/member-execution-roadmap.zh-CN.md, /docs/member-schema.md, and /docs/execution-playbook.md first. Then continue the current IGNAI community-site optimization from /main. Keep reusable logic separate from IGNAI-specific presentation, and tell me what can be split into an upstream PR next.
+Please read /AGENTS.md, /doc/roadmap/overall.md, /doc/roadmap/schedule.md, /doc/roadmap/master-todo.md, /AI_HANDOFF.md, /docs/member-execution-roadmap.zh-CN.md, /docs/member-schema.md, and /docs/execution-playbook.md first. Then continue the current IGNAI community-site optimization from /main. Keep reusable logic separate from IGNAI-specific presentation, and tell me what can be split into an upstream PR next.
 ```
 
 ## Current Recommended Next Tasks

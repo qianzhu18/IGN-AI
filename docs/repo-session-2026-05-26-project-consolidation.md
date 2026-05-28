@@ -16,12 +16,11 @@
 - `CLAUDE.md`
 - `AI_HANDOFF.md`
 - `agent.md`
-- `doc/ROADMAP/ROADMAP-overall-plan.md`
-- `doc/ROADMAP/ROADMAP-master-todo.md`
+- `doc/roadmap/overall.md`
+- `doc/roadmap/master-todo.md`
 - `docs/execution-playbook.md`
-- `doc/TO DO/TODO.md`
-- `doc/TO DO/TODO-animation-migration.md`
-- `doc/design/09-动效迁移设计文档-v1到NotionNext.md`
+- `doc/todo/TODO.md`
+- `doc/design/动效迁移设计文档.md`
 - `doc/architecture/arch-v2架构迁移记录.md`
 
 ## 3. 为什么现在做这件事
@@ -61,12 +60,11 @@
 - `CLAUDE.md`
 - `AI_HANDOFF.md`
 - `agent.md`
-- `doc/ROADMAP/ROADMAP-overall-plan.md`
-- `doc/ROADMAP/ROADMAP-master-todo.md`
+- `doc/roadmap/overall.md`
+- `doc/roadmap/master-todo.md`
 - `docs/execution-playbook.md`
-- `doc/TO DO/TODO.md`
-- `doc/TO DO/TODO-animation-migration.md`
-- `doc/design/09-动效迁移设计文档-v1到NotionNext.md`
+- `doc/todo/TODO.md`
+- `doc/design/动效迁移设计文档.md`
 - `doc/architecture/arch-v2架构迁移记录.md`
 - `docs/repo-session-2026-05-26-project-consolidation.md`
 

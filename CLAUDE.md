@@ -154,9 +154,9 @@ The `ignai` theme is a custom theme that replicates the v1.0.0 IGNAI website UI:
 - **v1.0.0 tag**: archived self-built architecture (Sanity + Supabase), do not modify
 - **Archive baseline**: `release-1.0.0` preserves the pre-NotionNext milestone together with tag `v1.0.0`
 - **AI hygiene**: remove temporary AI branches/worktrees after merge or review so the repo stays navigable
-- **Commit messages**: include scope, e.g. `feat(P1-01):`, `fix(P3-02):`, `docs:` (reference task IDs from `doc/TO DO/TODO.md`)
+- **Commit messages**: include scope, e.g. `feat(P1-01):`, `fix(P3-02):`, `docs:` (reference task IDs from `doc/todo/TODO.md`)
 - **Always verify**: run `yarn build` before committing major changes
-- **Issue tracking**: `doc/TO DO/TODO.md` (main roadmap), `doc/ISSUES/` (detailed issues)
+- **Issue tracking**: `doc/todo/TODO.md` (main roadmap), `doc/issues/` (detailed issues)
 
 ## Key Constraints
 

@@ -27,9 +27,9 @@ The work in this repo now has two simultaneous goals:
 ## Long-Running Planning Files
 Before continuing substantial work, check:
 
-- `doc/ROADMAP/ROADMAP-overall-plan.md`
-- `doc/ROADMAP/ROADMAP-schedule.md`
-- `doc/ROADMAP/ROADMAP-master-todo.md`
+- `doc/roadmap/overall.md`
+- `doc/roadmap/schedule.md`
+- `doc/roadmap/master-todo.md`
 - `docs/member-execution-roadmap.zh-CN.md`
 
 These files define the active long-term direction. New work should attach to that roadmap instead of acting like an isolated patch.
