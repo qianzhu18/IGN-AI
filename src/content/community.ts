@@ -2,6 +2,8 @@ export const whatIsContent = {
   definitionLines: ["一个从长沙出发，", "连接真实行动者的 AI 社区。"],
   support:
     "我们关注 AI、Agent、Product、Startup 与内容表达，把学习、实践、分享和连接变成持续发生的事情。",
+  paragraph:
+    "在这里，你可以学习 AI 工具、参与项目实践、分享观点、认识同路人。不管你是开发者、产品经理、学生还是创业者，都能找到属于你的位置。",
   memberCards: [
     {
       eyebrow: "AI Learners",

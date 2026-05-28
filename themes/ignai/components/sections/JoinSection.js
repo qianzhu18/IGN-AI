@@ -44,7 +44,7 @@ export function JoinSection({ notionConfig }) {
 
           <div className='relative grid gap-10 xl:grid-cols-2 xl:items-center xl:gap-[72px]'>
             <Reveal>
-              <p className='section-eyebrow'>06 / Join</p>
+              <p className='section-eyebrow'>Join IGNAI</p>
               <h2 className='display-title mt-6 max-w-[20ch]'>
                 <span className='block sm:whitespace-nowrap'>
                   Join the fire.

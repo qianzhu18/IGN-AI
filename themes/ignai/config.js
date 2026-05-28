@@ -35,8 +35,8 @@ const CONFIG = {
   IGNAI_HERO_DESCRIPTION: '关注 AI、Agent、Product、Startup 与真实行动。',
   IGNAI_HERO_CTA_1: '加入社区',
   IGNAI_HERO_CTA_1_URL: '/join',
-  IGNAI_HERO_CTA_2: '查看近期活动',
-  IGNAI_HERO_CTA_2_URL: '#upcoming-events',
+  IGNAI_HERO_CTA_2: '查看活动',
+  IGNAI_HERO_CTA_2_URL: '/events',
   IGNAI_HERO_BANNER_IMAGE: '',
   IGNAI_HERO_BANNER_IFRAME_URL: '',
   IGNAI_HERO_SIGNALS: [
@@ -89,20 +89,18 @@ const CONFIG = {
     {
       name: '导航',
       menus: [
-        { title: 'What is IGNAI', href: '/#what-is-ignai' },
-        { title: 'Culture', href: '/#culture' },
-        { title: '近期活动', href: '/#upcoming-events' },
-        { title: 'Field Notes', href: '/#field-notes' },
-        { title: 'Members', href: '/members' },
-        { title: '加入社区', href: '/join' }
+        { title: '首页', href: '/' },
+        { title: '成员', href: '/members' },
+        { title: '活动', href: '/events' },
+        { title: '关于社区', href: '/about' },
+        { title: '加入我们', href: '/join' }
       ]
     },
     {
-      name: '更多',
+      name: '内容',
       menus: [
-        { title: 'Events', href: '/events' },
-        { title: 'Members', href: '/members' },
-        { title: 'Archive', href: '/archive' }
+        { title: '文章', href: '/archive' },
+        { title: '社区记录', href: '/events' }
       ]
     }
   ],
@@ -120,10 +118,9 @@ const CONFIG = {
 
   // -- 导航菜单（Header.js 直接读取此数组）--
   IGNAI_NAV_ITEMS: [
-    { label: '社区', href: '/#what-is-ignai' },
     { label: '成员', href: '/members' },
     { label: '活动', href: '/events' },
-    { label: '记录', href: '/#field-notes' }
+    { label: '关于', href: '/about' }
   ],
 
   // ========================================================================

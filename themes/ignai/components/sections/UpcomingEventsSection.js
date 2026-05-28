@@ -23,7 +23,30 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
       tags: e.tags || [],
     }))
 
-  if (mergedEvents.length === 0) return null
+  if (mergedEvents.length === 0) {
+    return (
+      <section id='upcoming-events' className='ignai-home-section'>
+        <div className='ignai-section-divider' />
+        <div className='ignai-section-atmosphere' />
+        <div className='ignai-home-container'>
+          <Reveal className='text-center'>
+            <p className='section-eyebrow'>Events</p>
+            <h2 className='section-title mt-6'>活动筹备中</h2>
+            <p className='section-body mt-6 max-w-md mx-auto'>
+              我们正在策划下一场活动，敬请期待。
+              <br />
+              加入社区，第一时间获取活动通知。
+            </p>
+            <div className='mt-8'>
+              <SmartLink href='/join' className='ignai-cta-primary'>
+                加入社区
+              </SmartLink>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section id='upcoming-events' className='ignai-home-section'>

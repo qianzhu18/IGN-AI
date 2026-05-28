@@ -198,9 +198,7 @@ const LayoutIndex = props => {
     <main className='ignai-home-shell'>
       {siteConfig('IGNAI_HERO_ENABLE', CONFIG.IGNAI_HERO_ENABLE) && <HeroSection notionConfig={notionConfig} />}
       {siteConfig('IGNAI_WHATIS_ENABLE', CONFIG.IGNAI_WHATIS_ENABLE) && <WhatIsSection notionConfig={notionConfig} />}
-      {siteConfig('IGNAI_CULTURE_ENABLE', CONFIG.IGNAI_CULTURE_ENABLE) && <CultureSection notionConfig={notionConfig} />}
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
-      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection notionEvents={props.allEvents || []} />}
       {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
       {siteConfig('IGNAI_JOIN_ENABLE', CONFIG.IGNAI_JOIN_ENABLE) && <JoinSection notionConfig={notionConfig} />}
     </main>
@@ -501,8 +499,8 @@ function HeroSection({ notionConfig }) {
             <SmartLink href='/join' className='ignai-cta-primary ignai-motion-cta'>
               加入社区
             </SmartLink>
-            <SmartLink href='#upcoming-events' className='ignai-cta-secondary'>
-              查看近期活动
+            <SmartLink href='/events' className='ignai-cta-secondary'>
+              查看活动
             </SmartLink>
           </div>
         </motion.div>
@@ -587,27 +585,32 @@ function WhatIsSection({ notionConfig }) {
   )
 
   return (
-    <section id='what-is-ignai' className='ignai-home-section' ref={ref}>
+    <section id='about' className='ignai-home-section' ref={ref}>
       <div className='ignai-home-container section-grid-start'>
         <Reveal className='section-copy'>
-          <p className='section-eyebrow'>01 / What is IGNAI</p>
-          <h2 className='display-title mt-6 max-w-[12ch]'>
-            What is
-            <br />
-            IGNAI?
-          </h2>
-          <p className='section-lead mt-6 max-w-[15ch] font-medium'>
+          <p className='section-eyebrow'>About IGNAI</p>
+          <h2 className='display-title mt-6 max-w-[14ch]'>
             {whatIsContent.definitionLines[0]}
             <br />
             {whatIsContent.definitionLines[1]}
+          </h2>
+          <p className='section-lead mt-6 max-w-[18ch] font-medium'>
+            {whatIsContent.support}
           </p>
-          <p className='section-body mt-5'>{whatIsContent.support}</p>
+          <p className='section-body mt-5'>
+            {whatIsContent.paragraph || '我们在这里学习 AI、做项目、分享观点、连接彼此。'}
+          </p>
+          <div className='mt-8 flex flex-col gap-4 sm:flex-row'>
+            <SmartLink href='/join' className='ignai-cta-primary'>
+              加入社区
+            </SmartLink>
+            <SmartLink href='/members' className='ignai-cta-secondary'>
+              认识成员
+            </SmartLink>
+          </div>
         </Reveal>
 
         <motion.div style={{ y: mediaY }}>
-          <Reveal>
-            <p className='section-eyebrow mb-5'>Community Members</p>
-          </Reveal>
           <div className='open-grid'>
             {whatIsContent.memberCards.map((card, index) => (
               <Reveal key={card.title} delay={index * 0.08}>
@@ -617,7 +620,7 @@ function WhatIsSection({ notionConfig }) {
                       index % 2 === 1 ? 'text-[#9aceff]' : 'text-[#F0CB8A]/72'
                     }`}
                   >
-                    0{index + 1} / {card.eyebrow}
+                    {card.eyebrow}
                   </p>
                   <h3 className='card-title'>{card.title}</h3>
                   <p className='card-body'>{card.description}</p>
@@ -625,52 +628,6 @@ function WhatIsSection({ notionConfig }) {
               </Reveal>
             ))}
           </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-function CultureSection({ notionConfig }) {
-  const cultureContent = resolveSection(notionConfig, 'CULTURE', cultureContentFallback)
-  const ref = useRef(null)
-  const shouldReduceMotion = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start']
-  })
-  const mediaY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, shouldReduceMotion ? 0 : 28]
-  )
-
-  return (
-    <section id='culture' className='ignai-home-section' ref={ref}>
-      <div className='ignai-home-container section-grid-start'>
-        <Reveal className='section-copy'>
-          <p className='section-eyebrow'>03 / Culture</p>
-          <h2 className='section-title mt-6 max-w-[11ch]'>
-            {cultureContent.titleLines[0]}
-            <br />
-            {cultureContent.titleLines[1]}
-          </h2>
-          <p className='section-lead mt-6 max-w-[18ch] font-medium'>
-            {cultureContent.support}
-          </p>
-          <p className='section-body mt-5'>{cultureContent.paragraph}</p>
-        </Reveal>
-
-        <motion.div style={{ y: mediaY }} className='open-grid'>
-          {cultureContent.cards.map((card, index) => (
-            <Reveal key={card.title} delay={index * 0.08}>
-              <div className='open-grid-item ignai-unified-card'>
-                <p className='card-eyebrow text-[#F0CB8A]/72'>{card.eyebrow}</p>
-                <h3 className='card-title'>{card.title}</h3>
-                <p className='card-body'>{card.description}</p>
-              </div>
-            </Reveal>
-          ))}
         </motion.div>
       </div>
     </section>
