@@ -86,7 +86,8 @@
     "react-hotkeys-hook": "^4.6.2",
     "react-notion-x": "7.10.0",
     "react-tweet-embed": "~2.0.0",
-    "remixicon-react": "^1.0.0"
+    "remixicon-react": "^1.0.0",
+    "vercel": "^54.5.0"
   },
   "devDependencies": {
     "@lhci/cli": "^0.15.1",

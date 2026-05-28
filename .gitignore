@@ -64,3 +64,4 @@ webpack-internal:/
 !public/**/*.jpg
 !public/**/*.svg
 .playwright-mcp/
+.gstack/
