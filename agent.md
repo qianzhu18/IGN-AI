@@ -378,6 +378,7 @@ IGN AI 官网/
 6. **Notion 就是后端** — 不需要数据库、不需要 API key（除了 Notion Database ID）
 7. **Pages Router** — 不是 App Router，不要用 `app/` 目录的路由方式
 8. **v1.0.0 代码已存档** — 不要修改 `v1.0.0` tag 的内容
+9. **禁止截图** — 当前模型 (mimo-v2.5-pro) 处理截图会报错，不要使用任何截图/浏览工具验证 UI，改用 curl 测量页面大小、检查 HTML 内容、或让开发人员自行验证
 
 ---
 

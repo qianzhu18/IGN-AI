@@ -1,6 +1,6 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { fetchGlobalAllData, getPostBlocks } from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData, getPostBlocks, getMembersForScatter } from '@/lib/db/SiteDataApi'
 import { generateRobotsTxt } from '@/lib/utils/robots.txt'
 import { generateRss } from '@/lib/utils/rss'
 import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
@@ -103,6 +103,11 @@ export async function getStaticProps(req) {
   }
 
   // 生成全文索引 - 仅在 yarn build 时执行 && process.env.npm_lifecycle_event === 'build'
+
+  // 首页散点展示只需要极简成员数据（7 个字段 vs 18 个）
+  if (props.allMembers) {
+    props.allMembers = getMembersForScatter({ allMembers: props.allMembers })
+  }
 
   delete props.allPages
 
