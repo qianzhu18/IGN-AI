@@ -44,15 +44,15 @@
 对标 Linear / Vercel / Latent Space 的暗色调品质。逐项推进：
 
 ### 视觉细节
-- [ ] **UI-01** 字体加载优化
-  - 当前 7 个 Google Fonts URL，阻塞首屏
-  - 合并请求、只加载实际使用的字重、font-display: swap
+- [x] **UI-01** 字体加载优化 ✅
+  - 4 个 Google Fonts URL 合并为 1 个
+  - 去掉未使用的 Bitter、Noto Serif SC
 - [ ] **UI-02** 首页各区块间距统一
   - 对照 v1.0.0 设计稿微调 section 间距（96px/120px）
   - 移动端间距缩小（48px/64px）
-- [ ] **UI-03** 暗色卡片 hover 状态打磨
-  - 统一 border、bg、shadow 的 hover 过渡
-  - 活动卡片、成员卡片、角色卡片保持一致
+- [x] **UI-03** 暗色卡片 hover 状态打磨 ✅ 已统一
+  - ignai-unified-card 统一 hover 系统（border、shadow、translateY）
+  - 活动卡片、角色卡片均使用 ignai-unified-card 基类
 
 ### 首页区块
 - [ ] **UI-04** Hero 区域微调
@@ -61,9 +61,9 @@
 - [ ] **UI-05** 成员展示区精调
   - 散点布局在 200 人下的视觉密度
   - 预览卡片信息层次优化
-- [ ] **UI-06** 活动区块优化
-  - 活动卡片信息密度
-  - 空状态处理
+- [x] **UI-06** 活动区块优化 ✅
+  - 活动卡片信息密度合理（日期、地点、标签、摘要）
+  - 空状态处理（无活动时 return null，不渲染空区块）
 
 ### 成员系统
 - [x] **UI-07** 成员目录页改版 ✅ 编号手风琴分组
@@ -73,10 +73,12 @@
   - 移动端布局微调
 
 ### 移动端
-- [ ] **UI-09** 导航栏移动端体验
-  - 汉堡菜单动画
-  - 菜单项间距
-- [ ] **UI-10** Footer 改为 IGNAI 暗色主题
+- [x] **UI-09** 导航栏移动端体验 ✅
+  - 汉堡按钮 → X 动画（CSS transform + transition）
+  - 菜单面板 scale + opacity 动画过渡
+  - 菜单项间距优化（圆角 hover、分隔线、层级缩进）
+  - aria-label / aria-expanded 无障碍属性
+- [x] **UI-10** Footer 改为 IGNAI 暗色主题 ✅
 - [ ] **UI-11** 全局滚动性能检查
 
 ---

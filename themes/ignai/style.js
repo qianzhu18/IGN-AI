@@ -1132,6 +1132,56 @@ const Style = () => {
         background: #07080c;
       }
 
+      /* ========== 移动端汉堡菜单动画 ========== */
+      #theme-proxio .ignai-hamburger {
+        position: relative;
+        width: 30px;
+        height: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      #theme-proxio .ignai-hamburger span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background: #fff;
+        border-radius: 2px;
+        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+        transform-origin: center;
+      }
+
+      #theme-proxio .ignai-hamburger--open span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+      }
+
+      #theme-proxio .ignai-hamburger--open span:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+
+      #theme-proxio .ignai-hamburger--open span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+      }
+
+      /* 移动端菜单面板动画 */
+      #theme-proxio .ignai-mobile-menu {
+        transform-origin: top right;
+        transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      #theme-proxio .ignai-mobile-menu--hidden {
+        opacity: 0;
+        transform: scale(0.95) translateY(-8px);
+        pointer-events: none;
+      }
+
+      #theme-proxio .ignai-mobile-menu--visible {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+
       /* ========== 品牌滚动条 ========== */
       #theme-proxio .ignai-brand-scroll {
         border: 1px solid rgba(255, 255, 255, 0.08);

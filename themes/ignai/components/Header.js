@@ -187,41 +187,47 @@ export const Header = props => {
             {/* 移动端菜单按钮 */}
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 md:hidden ${showMenu ? 'navbarTogglerActive' : ''}`}>
-              <span className='relative my-[6px] block h-[2px] w-[30px] bg-white duration-200 transition-all'></span>
-              <span className='relative my-[6px] block h-[2px] w-[30px] bg-white duration-200 transition-all'></span>
-              <span className='relative my-[6px] block h-[2px] w-[30px] bg-white duration-200 transition-all'></span>
+              className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-lg px-3 py-2 ring-primary focus:ring-2 md:hidden`}
+              aria-label={showMenu ? '关闭菜单' : '打开菜单'}
+              aria-expanded={showMenu}>
+              <div className={`ignai-hamburger ${showMenu ? 'ignai-hamburger--open' : ''}`}>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
             </button>
 
             {/* 移动端菜单 */}
-            <nav className={`absolute right-4 top-full w-full max-w-[250px] rounded-lg py-5 md:hidden ${showMenu ? 'block' : 'hidden'}`}
-              style={{ background: 'rgba(13,14,20,0.95)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <ul className='block'>
+            <nav
+              className={`absolute right-4 top-full w-full max-w-[260px] rounded-xl py-2 md:hidden ignai-mobile-menu ${showMenu ? 'ignai-mobile-menu--visible' : 'ignai-mobile-menu--hidden'}`}
+              style={{ background: 'rgba(13,14,20,0.97)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 64px rgba(0,0,0,0.5)' }}>
+              <ul className='py-1'>
                 {navItems.map((item, index) => (
                   <li key={item.label || index}>
                     <SmartLink
                       href={item.href}
-                      className='block px-6 py-3 text-sm text-white/72 hover:text-white hover:bg-white/4 transition'>
+                      className='block px-5 py-2.5 text-sm text-white/72 hover:text-white hover:bg-white/[0.06] rounded-lg mx-2 transition-colors'>
                       {item.label}
                     </SmartLink>
                     {item.subMenus?.map((sub, si) => (
                       <SmartLink
                         key={si}
                         href={sub.href}
-                        className='block px-10 py-2 text-sm text-white/50 hover:text-white hover:bg-white/4 transition'>
+                        className='block px-8 py-2 text-[13px] text-white/44 hover:text-white/80 hover:bg-white/[0.04] rounded-lg mx-2 transition-colors'>
                         {sub.label}
                       </SmartLink>
                     ))}
                   </li>
                 ))}
+                <li className='mx-2 my-1 border-t border-white/[0.06]' />
                 <li>
                   <SmartLink
                     href='/join'
-                    className='block px-6 py-3 text-sm font-medium text-[#FF7A18] hover:bg-white/4 transition'>
+                    className='block px-5 py-2.5 text-sm font-medium text-[#FF7A18] hover:bg-white/[0.06] rounded-lg mx-2 transition-colors'>
                     加入社区
                   </SmartLink>
                 </li>
-                <li className='px-6 pt-3 border-t border-white/6'>
+                <li className='px-5 pt-2 pb-1 mx-2'>
                   <DailyReportButton />
                 </li>
               </ul>
