@@ -28,6 +28,7 @@ function DailyReportButton() {
   return (
     <div ref={ref} className='relative'>
       <button
+        type='button'
         onClick={() => setOpen(v => !v)}
         className='flex items-center gap-1.5 text-sm text-white/68 hover:text-white transition duration-200'>
         <svg className='h-3.5 w-3.5' viewBox='0 0 16 16' fill='none'>
@@ -48,6 +49,7 @@ function DailyReportButton() {
             className='w-full rounded-lg border border-white/10 bg-white/6 px-3 py-2 text-sm text-white focus:border-white/24 focus:outline-none'
           />
           <button
+            type='button'
             onClick={jump}
             className='mt-3 w-full rounded-lg py-2 text-sm font-medium text-white transition hover:opacity-90'
             style={{ background: 'linear-gradient(135deg, rgba(255,122,24,0.9), rgba(255,154,60,0.85))' }}>
@@ -113,6 +115,7 @@ function DesktopNavItem({ item }) {
   return (
     <div ref={ref} className='relative'>
       <button
+        type='button'
         onClick={() => setOpen(v => !v)}
         className='flex items-center gap-1 text-sm text-white/68 hover:text-white transition duration-200'>
         {item.label}
@@ -199,8 +202,14 @@ export const Header = props => {
 
             {/* 移动端菜单按钮 */}
             <button
+              type='button'
               onClick={() => setShowMenu(!showMenu)}
-              className={`absolute right-4 top-1/2 -translate-y-1/2 rounded-lg p-3 ring-primary focus:ring-2 md:hidden`}
+              className='ignai-mobile-toggle absolute right-4 top-1/2 -translate-y-1/2 rounded-2xl p-3 md:hidden'
+              style={{
+                border: '1px solid rgba(255, 183, 121, 0.18)',
+                background: 'rgba(12, 15, 22, 0.78)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 16px 38px rgba(0,0,0,0.18)'
+              }}
               aria-label={showMenu ? '关闭菜单' : '打开菜单'}
               aria-expanded={showMenu}>
               <div className={`ignai-hamburger ${showMenu ? 'ignai-hamburger--open' : ''}`}>
@@ -210,37 +219,80 @@ export const Header = props => {
               </div>
             </button>
 
+            {showMenu && (
+              <button
+                type='button'
+                aria-hidden='true'
+                tabIndex={-1}
+                className='ignai-mobile-backdrop md:hidden'
+                style={{
+                  position: 'fixed',
+                  inset: 0,
+                  zIndex: 39,
+                  border: 0,
+                  background: 'linear-gradient(180deg, rgba(7,8,12,0.16) 0%, rgba(7,8,12,0.42) 100%)'
+                }}
+                onClick={() => setShowMenu(false)}
+              />
+            )}
+
             {/* 移动端菜单 */}
             <nav
-              className={`absolute right-4 top-full w-full max-w-[calc(100vw-32px)] rounded-xl py-2 md:hidden ignai-mobile-menu ${showMenu ? 'ignai-mobile-menu--visible' : 'ignai-mobile-menu--hidden'}`}
-              style={{ background: 'rgba(13,14,20,0.97)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 24px 64px rgba(0,0,0,0.5)' }}>
-              <ul className='py-1'>
+              className={`absolute right-4 top-full z-50 w-full max-w-[calc(100vw-32px)] rounded-[1.5rem] py-2 md:hidden ignai-mobile-menu ${showMenu ? 'ignai-mobile-menu--visible' : 'ignai-mobile-menu--hidden'}`}
+              aria-hidden={!showMenu}
+              style={{
+                background: 'rgba(13,14,20,0.97)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                boxShadow: '0 24px 64px rgba(0,0,0,0.5)',
+                opacity: showMenu ? 1 : 0,
+                visibility: showMenu ? 'visible' : 'hidden',
+                pointerEvents: showMenu ? 'auto' : 'none',
+                transform: showMenu ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(-8px)'
+              }}>
+              <div className='ignai-mobile-menu-header px-5 pb-3 pt-4'>
+                <p className='ignai-mobile-menu-kicker'>CHANGSHA AI COMMUNITY</p>
+                <div className='mt-3 flex items-center gap-3'>
+                  <span className='ignai-mobile-menu-title'>IGNAI</span>
+                  <span className='ignai-mobile-menu-title-glow'>Ignite before AGI.</span>
+                </div>
+                <p className='mt-3 text-sm leading-6 text-white/64'>
+                  连接本地、面向全球，把真实行动者组织在一起。
+                </p>
+              </div>
+
+              <ul className='ignai-mobile-menu-list py-1'>
                 {navItems.map((item, index) => (
                   <li key={item.label || index}>
                     <SmartLink
                       href={item.href}
-                      className='block px-5 py-3 text-sm text-white/72 hover:text-white hover:bg-white/[0.06] rounded-lg mx-2 transition-colors'>
+                      className='ignai-mobile-menu-link block rounded-xl px-5 py-3 text-sm text-white/78 transition-colors'>
                       {item.label}
                     </SmartLink>
                     {item.subMenus?.map((sub, si) => (
                       <SmartLink
                         key={si}
                         href={sub.href}
-                        className='block px-8 py-2 text-[13px] text-white/44 hover:text-white/80 hover:bg-white/[0.04] rounded-lg mx-2 transition-colors'>
+                        className='ignai-mobile-menu-sub-link block rounded-xl px-8 py-2 text-[13px] text-white/46 transition-colors'>
                         {sub.label}
                       </SmartLink>
                     ))}
                   </li>
                 ))}
-                <li className='mx-2 my-1 border-t border-white/[0.06]' />
+                <li className='ignai-mobile-menu-divider mx-5 my-2 border-t border-white/[0.06]' />
                 <li>
                   <SmartLink
                     href='/join'
-                    className='block px-5 py-2.5 text-sm font-medium text-[#FF7A18] hover:bg-white/[0.06] rounded-lg mx-2 transition-colors'>
+                    className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium text-white transition-colors'
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255,122,24,0.94), rgba(255,154,60,0.88))',
+                      boxShadow: '0 12px 34px rgba(255,122,24,0.18)'
+                    }}>
                     加入社区
                   </SmartLink>
                 </li>
-                <li className='px-5 pt-2 pb-1 mx-2'>
+                <li className='px-5 pb-2 pt-3'>
                   <DailyReportButton />
                 </li>
               </ul>

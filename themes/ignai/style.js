@@ -137,9 +137,14 @@ const Style = () => {
         }
         #theme-proxio .ignai-hero-grid {
           min-height: auto;
+          gap: 28px;
         }
         #theme-proxio .ignai-scroll-hint {
           display: none;
+        }
+        #theme-proxio .ignai-hero-section {
+          padding-top: 52px;
+          padding-bottom: 42px;
         }
       }
 
@@ -186,9 +191,9 @@ const Style = () => {
         left: 20px;
         top: 20px;
         border-radius: 999px;
-        border: 1px solid rgba(124, 200, 255, 0.2);
-        background: rgba(8, 19, 30, 0.7);
-        color: #9aceff;
+        border: 1px solid rgba(255, 183, 121, 0.2);
+        background: rgba(34, 20, 8, 0.72);
+        color: #f4cf9f;
         padding: 6px 12px;
         font-size: 0.68rem;
         text-transform: uppercase;
@@ -974,6 +979,215 @@ const Style = () => {
         max-width: 34rem;
       }
 
+      #theme-proxio .ignai-home-copy {
+        position: relative;
+        z-index: 2;
+        max-width: 39rem;
+      }
+
+      #theme-proxio .ignai-hero-identity {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px 18px;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 183, 121, 0.14);
+        background: linear-gradient(
+          135deg,
+          rgba(27, 17, 9, 0.66) 0%,
+          rgba(12, 15, 22, 0.82) 100%
+        );
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.04),
+          0 18px 54px rgba(0, 0, 0, 0.18);
+      }
+
+      #theme-proxio .ignai-hero-brand-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+      }
+
+      #theme-proxio .ignai-hero-wordmark {
+        margin: 0;
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      #theme-proxio .ignai-hero-brand-divider {
+        width: 1px;
+        height: 18px;
+        background: linear-gradient(180deg, rgba(255, 183, 121, 0), rgba(255, 183, 121, 0.65), rgba(255, 183, 121, 0));
+      }
+
+      #theme-proxio .ignai-hero-brand-context {
+        margin: 0;
+        font-size: 0.86rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.64);
+      }
+
+      #theme-proxio .ignai-hero-tagline {
+        margin: 0;
+        font-size: clamp(1.15rem, 3vw, 1.68rem);
+        font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+      }
+
+      #theme-proxio .ignai-hero-pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      #theme-proxio .ignai-hero-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 183, 121, 0.14);
+        background: rgba(255, 255, 255, 0.03);
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 0.78rem;
+        font-weight: 500;
+      }
+
+      #theme-proxio .ignai-hero-manifesto {
+        margin: 0;
+        max-width: 9ch;
+        color: #fff;
+        font-size: clamp(2.25rem, 8vw, 4.6rem);
+        font-weight: 700;
+        line-height: 1.12;
+        letter-spacing: -0.04em;
+        text-wrap: balance;
+      }
+
+      #theme-proxio .ignai-hero-summary {
+        max-width: 30rem;
+        font-size: 1rem;
+        line-height: 1.85;
+      }
+
+      #theme-proxio .ignai-hero-cta {
+        width: 100%;
+      }
+
+      @media (min-width: 640px) {
+        #theme-proxio .ignai-hero-cta {
+          width: auto;
+        }
+      }
+
+      #theme-proxio .ignai-mobile-hero-panel {
+        border-radius: 22px;
+        border: 1px solid rgba(255, 183, 121, 0.12);
+        background: linear-gradient(
+          180deg,
+          rgba(14, 17, 24, 0.9) 0%,
+          rgba(9, 11, 17, 0.94) 100%
+        );
+        padding: 18px;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.03),
+          0 22px 60px rgba(0, 0, 0, 0.22);
+      }
+
+      #theme-proxio .ignai-mobile-hero-kicker {
+        margin: 0;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: rgba(255, 183, 121, 0.82);
+      }
+
+      #theme-proxio .ignai-mobile-signal-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      #theme-proxio .ignai-mobile-signal-item {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        align-items: start;
+      }
+
+      #theme-proxio .ignai-mobile-signal-dot {
+        margin-top: 6px;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        box-shadow: 0 0 18px rgba(255, 122, 24, 0.2);
+      }
+
+      #theme-proxio .ignai-mobile-signal-dot--heat {
+        background: linear-gradient(135deg, #ff7a18 0%, #ffb062 100%);
+      }
+
+      #theme-proxio .ignai-mobile-signal-dot--soft {
+        background: linear-gradient(135deg, rgba(255, 183, 121, 0.92) 0%, rgba(255, 217, 168, 0.72) 100%);
+      }
+
+      #theme-proxio .ignai-mobile-signal-eyebrow {
+        margin: 0;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.46);
+      }
+
+      #theme-proxio .ignai-mobile-signal-title {
+        margin: 4px 0 0;
+        color: #fff;
+        font-size: 0.98rem;
+        font-weight: 600;
+        line-height: 1.38;
+      }
+
+      #theme-proxio .ignai-mobile-signal-description {
+        margin: 6px 0 0;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+
+      @media (max-width: 639px) {
+        #theme-proxio .ignai-hero-identity {
+          width: 100%;
+          padding: 15px 16px;
+        }
+
+        #theme-proxio .ignai-hero-wordmark {
+          font-size: 1.18rem;
+        }
+
+        #theme-proxio .ignai-hero-brand-context {
+          font-size: 0.76rem;
+          letter-spacing: 0.1em;
+        }
+
+        #theme-proxio .ignai-hero-manifesto {
+          max-width: none;
+        }
+
+        #theme-proxio .ignai-hero-summary {
+          font-size: 0.98rem;
+          line-height: 1.72;
+        }
+      }
+
       #theme-proxio .section-eyebrow {
         color: #f0d48d;
         opacity: 0.84;
@@ -1272,8 +1486,45 @@ const Style = () => {
         transform: translateY(-9px) rotate(-45deg);
       }
 
+      #theme-proxio .ignai-mobile-toggle {
+        border: 1px solid rgba(255, 183, 121, 0.18);
+        background: rgba(12, 15, 22, 0.76);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.04),
+          0 16px 38px rgba(0, 0, 0, 0.18);
+        transition:
+          border-color 0.2s ease,
+          background 0.2s ease,
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      #theme-proxio .ignai-mobile-toggle:hover {
+        transform: translateY(-1px);
+        border-color: rgba(255, 183, 121, 0.28);
+        background: rgba(18, 13, 10, 0.88);
+      }
+
+      #theme-proxio .ignai-mobile-toggle:focus-visible {
+        outline: 2px solid rgba(255, 154, 60, 0.58);
+        outline-offset: 2px;
+      }
+
+      #theme-proxio .ignai-mobile-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 39;
+        background: linear-gradient(
+          180deg,
+          rgba(7, 8, 12, 0.16) 0%,
+          rgba(7, 8, 12, 0.42) 100%
+        );
+        border: 0;
+      }
+
       /* 移动端菜单面板动画 */
       #theme-proxio .ignai-mobile-menu {
+        top: calc(100% + 12px);
         transform-origin: top right;
         transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
       }
@@ -1287,6 +1538,65 @@ const Style = () => {
       #theme-proxio .ignai-mobile-menu--visible {
         opacity: 1;
         transform: scale(1) translateY(0);
+      }
+
+      #theme-proxio .ignai-mobile-menu-header {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      #theme-proxio .ignai-mobile-menu-kicker {
+        margin: 0;
+        color: rgba(255, 183, 121, 0.78);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      #theme-proxio .ignai-mobile-menu-title {
+        color: #fff;
+        font-size: 1.16rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      #theme-proxio .ignai-mobile-menu-title-glow {
+        color: #ffd09a;
+        font-size: 0.94rem;
+        font-weight: 600;
+      }
+
+      #theme-proxio .ignai-mobile-menu-list > li + li {
+        margin-top: 2px;
+      }
+
+      #theme-proxio .ignai-mobile-menu-link,
+      #theme-proxio .ignai-mobile-menu-sub-link {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      #theme-proxio .ignai-mobile-menu-link:hover,
+      #theme-proxio .ignai-mobile-menu-link:focus-visible {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      #theme-proxio .ignai-mobile-menu-sub-link:hover,
+      #theme-proxio .ignai-mobile-menu-sub-link:focus-visible {
+        color: rgba(255, 255, 255, 0.88);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      #theme-proxio .ignai-mobile-menu-cta {
+        background: linear-gradient(135deg, rgba(255, 122, 24, 0.94), rgba(255, 154, 60, 0.88));
+        box-shadow: 0 12px 34px rgba(255, 122, 24, 0.18);
+      }
+
+      #theme-proxio .ignai-mobile-menu-cta:hover,
+      #theme-proxio .ignai-mobile-menu-cta:focus-visible {
+        color: #fff;
+        background: linear-gradient(135deg, rgba(255, 136, 42, 0.98), rgba(255, 164, 74, 0.92));
       }
 
       /* ========== 品牌滚动条 ========== */
@@ -1315,6 +1625,29 @@ const Style = () => {
       /* ========== Back to Top ========== */
       #theme-proxio .back-to-top {
         background: linear-gradient(135deg, #ff7a18, #ff9a3c) !important;
+      }
+
+      #theme-proxio .ignai-back-to-top {
+        border: 1px solid rgba(255, 183, 121, 0.2);
+        background: linear-gradient(135deg, rgba(255, 122, 24, 0.96), rgba(255, 154, 60, 0.9)) !important;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 18px 36px rgba(255, 122, 24, 0.22);
+      }
+
+      #theme-proxio .ignai-back-to-top:hover {
+        transform: translateY(-2px);
+        background: linear-gradient(135deg, rgba(255, 136, 42, 0.98), rgba(255, 166, 76, 0.94)) !important;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.14),
+          0 22px 46px rgba(255, 122, 24, 0.28);
+      }
+
+      @media (max-width: 767px) {
+        #theme-proxio .ignai-back-to-top {
+          right: 20px;
+          bottom: 20px;
+        }
       }
 
       /* ========== Carousel ========== */

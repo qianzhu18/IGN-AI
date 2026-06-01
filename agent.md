@@ -1,7 +1,7 @@
 # agent.md — AI 开发指引
 
 > 本文件指导 Codex、Claude Code 及其他 AI 工具完成后续开发。
-> 最后更新：2026-05-30 | 架构版本：v2.0.0 (NotionNext 二开)
+> 最后更新：2026-06-02 | 架构版本：v2.0.0 (NotionNext 二开)
 
 ---
 
@@ -252,6 +252,7 @@ NOTION_MEMBERS_DATA_SOURCE_ID=xxx  # 成员数据管道需要
 - 成员目录页编号手风琴分组 + 搜索/筛选
 - 成员详情页社交链接图标 + featured 光晕
 - 移动端全面适配（P3-09）
+- 首页 Hero / 移动端导航品牌 UI 收束（桌面首屏品牌层级增强、移动端内容重排、蓝色控件清理）
 - SEO 优化（P5-01）：canonical、hreflang、OG、JSON-LD
 - 首页数据精简（allMembers 104KB → 46KB）
 

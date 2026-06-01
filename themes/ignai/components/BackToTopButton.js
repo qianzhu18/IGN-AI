@@ -64,11 +64,18 @@ export const BackToTopButton = () => {
   return (
     <>
       {/* <!-- ====== Back To Top Start --> */}
-      <a
+      <button
+        type='button'
+        aria-label='回到顶部'
         onClick={scrollTop}
-        className='back-to-top cursor-pointer fixed bottom-16 left-auto right-8 z-[999] hidden h-10 w-10 items-center justify-center rounded-md bg-primary text-white shadow-md transition duration-300 ease-in-out hover:bg-dark'>
+        className='back-to-top ignai-back-to-top fixed bottom-16 left-auto right-8 z-[999] hidden h-11 w-11 items-center justify-center rounded-2xl text-white transition duration-300 ease-in-out'
+        style={{
+          border: '1px solid rgba(255, 183, 121, 0.2)',
+          background: 'linear-gradient(135deg, rgba(255,122,24,0.96), rgba(255,154,60,0.9))',
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.12), 0 18px 36px rgba(255,122,24,0.22)'
+        }}>
         <span className='mt-[6px] h-3 w-3 rotate-45 border-l border-t border-white'></span>
-      </a>
+      </button>
       {/* <!-- ====== Back To Top End --> */}
     </>
   )
