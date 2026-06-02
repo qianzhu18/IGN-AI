@@ -3,6 +3,7 @@
  * 导航项优先读 Notion customMenu（Menu/SubMenu 类型），fallback 到 config.js 硬编码
  */
 import SmartLink from '@/components/SmartLink'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 import CONFIG from '../config'
@@ -171,18 +172,30 @@ export const Header = props => {
 
             {/* Logo */}
             <div className='max-w-full px-4'>
-              <div className='navbar-logo flex items-center w-full py-5 cursor-pointer gap-3'>
-                <img
-                  src='/brand/ignai-logo-transparent.png'
-                  alt='IGNAI'
-                  className='ignai-header-logo'
-                  onClick={() => router.push('/')}
-                />
-                <span
-                  onClick={() => router.push('/')}
-                  className='text-white/46 text-xs sm:text-sm mt-0.5 hidden min-[440px]:inline'>
-                  Ignite before AGI
+              <div
+                className='navbar-logo ignai-header-brand-lockup flex w-full cursor-pointer items-center gap-3 py-4 sm:py-5'
+                onClick={() => {
+                  void router.push('/')
+                }}>
+                <span aria-hidden='true' className='ignai-header-mark-frame'>
+                  <span className='ignai-header-flame-shell'>
+                    <Image
+                      src='/brand/ignai-logo-transparent.png'
+                      alt=''
+                      width={148}
+                      height={30}
+                      className='ignai-header-flame-image'
+                    />
+                  </span>
                 </span>
+                <div className='flex min-w-0 flex-col justify-center'>
+                  <span className='ignai-header-wordmark'>
+                    IGNAI
+                  </span>
+                  <span className='ignai-header-subtitle hidden min-[360px]:block'>
+                    Ignite before AGI
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -195,7 +208,11 @@ export const Header = props => {
               <SmartLink
                 href='/join'
                 className='ml-4 inline-flex items-center px-5 py-2 rounded-lg text-sm font-medium text-white transition duration-200'
-                style={{ background: 'linear-gradient(135deg, rgba(255,122,24,0.9), rgba(255,154,60,0.85))' }}>
+                style={{
+                  border: '1px solid rgba(188, 124, 76, 0.34)',
+                  background: 'linear-gradient(135deg, rgba(126,79,49,0.94) 0%, rgba(168,104,64,0.92) 54%, rgba(110,70,45,0.95) 100%)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,240,224,0.08), 0 12px 34px rgba(69,36,16,0.22)'
+                }}>
                 加入社区
               </SmartLink>
             </div>
@@ -206,17 +223,57 @@ export const Header = props => {
               onClick={() => setShowMenu(!showMenu)}
               className='ignai-mobile-toggle absolute right-4 top-1/2 -translate-y-1/2 rounded-2xl p-3 md:hidden'
               style={{
-                border: '1px solid rgba(255, 183, 121, 0.18)',
-                background: 'rgba(12, 15, 22, 0.78)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 16px 38px rgba(0,0,0,0.18)'
+                border: '1px solid rgba(171, 111, 71, 0.34)',
+                background: 'linear-gradient(180deg, rgba(30,19,15,0.82) 0%, rgba(13,13,20,0.92) 100%)',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 16px 38px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,122,24,0.05)'
               }}
               aria-label={showMenu ? '关闭菜单' : '打开菜单'}
               aria-expanded={showMenu}>
-              <div className={`ignai-hamburger ${showMenu ? 'ignai-hamburger--open' : ''}`}>
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
+              <svg
+                aria-hidden='true'
+                width='22'
+                height='22'
+                viewBox='0 0 22 22'
+                fill='none'
+                style={{ display: 'block' }}>
+                {showMenu ? (
+                  <>
+                    <path
+                      d='M6 6L16 16'
+                      stroke='rgba(255, 239, 222, 0.94)'
+                      strokeWidth='1.9'
+                      strokeLinecap='round'
+                    />
+                    <path
+                      d='M16 6L6 16'
+                      stroke='rgba(255, 239, 222, 0.94)'
+                      strokeWidth='1.9'
+                      strokeLinecap='round'
+                    />
+                  </>
+                ) : (
+                  <>
+                    <path
+                      d='M4.5 6.5H17.5'
+                      stroke='rgba(255, 236, 214, 0.94)'
+                      strokeWidth='1.9'
+                      strokeLinecap='round'
+                    />
+                    <path
+                      d='M7 11H17.5'
+                      stroke='rgba(255, 236, 214, 0.88)'
+                      strokeWidth='1.9'
+                      strokeLinecap='round'
+                    />
+                    <path
+                      d='M10 15.5H17.5'
+                      stroke='rgba(255, 236, 214, 0.82)'
+                      strokeWidth='1.9'
+                      strokeLinecap='round'
+                    />
+                  </>
+                )}
+              </svg>
             </button>
 
             {showMenu && (
@@ -286,8 +343,9 @@ export const Header = props => {
                     href='/join'
                     className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium text-white transition-colors'
                     style={{
-                      background: 'linear-gradient(135deg, rgba(255,122,24,0.94), rgba(255,154,60,0.88))',
-                      boxShadow: '0 12px 34px rgba(255,122,24,0.18)'
+                      border: '1px solid rgba(188, 124, 76, 0.34)',
+                      background: 'linear-gradient(135deg, rgba(126,79,49,0.96) 0%, rgba(168,104,64,0.94) 54%, rgba(110,70,45,0.96) 100%)',
+                      boxShadow: 'inset 0 1px 0 rgba(255,240,224,0.08), 0 12px 34px rgba(69,36,16,0.22)'
                     }}>
                     加入社区
                   </SmartLink>

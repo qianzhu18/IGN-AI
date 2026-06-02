@@ -12,15 +12,15 @@ export function Reveal({
   blur = true
 }) {
   const initialFilter = blur
-    ? 'brightness(0.72) contrast(0.92) blur(10px)'
-    : 'brightness(0.72) contrast(0.92)'
+    ? 'brightness(0.92) contrast(0.98) blur(4px)'
+    : 'brightness(0.92) contrast(0.98)'
   const finalFilter = blur
     ? 'brightness(1) contrast(1) blur(0px)'
     : 'brightness(1) contrast(1)'
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: initialFilter }}
+      initial={{ opacity: 0.24, y: Math.min(y, 18), filter: initialFilter }}
       whileInView={{ opacity: 1, y: 0, filter: finalFilter }}
       viewport={MOTION_VIEWPORT}
       transition={{ duration, delay, ease: MOTION_EASE }}

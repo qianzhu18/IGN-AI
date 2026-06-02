@@ -2,7 +2,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 'use client'
-import Loading from '@/components/Loading'
 import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import { isBrowser } from '@/lib/utils'
@@ -30,14 +29,12 @@ import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import SmartLink from '@/components/SmartLink'
 import { Banner } from './components/Banner'
-import { CTA } from './components/CTA'
 import SearchInput from './components/SearchInput'
 import { SVG404 } from './components/svg/SVG404'
 import Lenis from '@/components/Lenis'
 import { ArticleLock } from './components/ArticleLock'
 import { siteContent as siteContentFallback } from '@/src/content/site'
 import {
-  cultureContent as cultureContentFallback,
   whatIsContent as whatIsContentFallback
 } from '@/src/content/community'
 
@@ -72,25 +69,6 @@ const JoinSection = dynamic(
   { ssr: false }
 )
 
-const roleCards = [
-  {
-    title: 'AI Builders',
-    description: '做 Agent、产品原型和自动化流程的人。'
-  },
-  {
-    title: 'Product Explorers',
-    description: '从用户、场景和痛点出发，探索 AI 产品机会的人。'
-  },
-  {
-    title: 'Storytellers',
-    description: '用文章、视频和社区记录传播高质量信号的人。'
-  },
-  {
-    title: 'Local Connectors',
-    description: '连接长沙高校、开发者、创业者和线下空间的人。'
-  }
-]
-
 const MOTION_EASE = [0.22, 1, 0.36, 1]
 const MOTION_VIEWPORT = { once: true, amount: 0.18 }
 
@@ -103,15 +81,15 @@ function Reveal({
   blur = true
 }) {
   const initialFilter = blur
-    ? 'brightness(0.72) contrast(0.92) blur(10px)'
-    : 'brightness(0.72) contrast(0.92)'
+    ? 'brightness(0.92) contrast(0.98) blur(4px)'
+    : 'brightness(0.92) contrast(0.98)'
   const finalFilter = blur
     ? 'brightness(1) contrast(1) blur(0px)'
     : 'brightness(1) contrast(1)'
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: initialFilter }}
+      initial={{ opacity: 0.24, y: Math.min(y, 18), filter: initialFilter }}
       whileInView={{ opacity: 1, y: 0, filter: finalFilter }}
       viewport={MOTION_VIEWPORT}
       transition={{ duration, delay, ease: MOTION_EASE }}
@@ -200,6 +178,7 @@ const LayoutIndex = props => {
       {siteConfig('IGNAI_HERO_ENABLE', CONFIG.IGNAI_HERO_ENABLE) && <HeroSection notionConfig={notionConfig} />}
       {siteConfig('IGNAI_WHATIS_ENABLE', CONFIG.IGNAI_WHATIS_ENABLE) && <WhatIsSection notionConfig={notionConfig} />}
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
+      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection notionEvents={props.allEvents || []} />}
       {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
       {siteConfig('IGNAI_JOIN_ENABLE', CONFIG.IGNAI_JOIN_ENABLE) && <JoinSection notionConfig={notionConfig} />}
     </main>
@@ -252,7 +231,7 @@ const LayoutSearch = props => {
         }
       })
     }
-  }, [])
+  }, [keyword])
 
   return (
     <section className='max-w-7xl mx-auto bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
@@ -481,54 +460,34 @@ function HeroSection({ notionConfig }) {
             {siteContent.eyebrow}
           </div>
 
-          <div
-            className='mt-6 inline-flex w-full max-w-[42rem] flex-col gap-2.5 rounded-[22px] px-4 py-4 sm:w-auto sm:px-[18px]'
-            style={{
-              border: '1px solid rgba(255, 183, 121, 0.14)',
-              background: 'linear-gradient(135deg, rgba(27,17,9,0.66) 0%, rgba(12,15,22,0.82) 100%)',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 18px 54px rgba(0,0,0,0.18)'
-            }}>
-            <div className='flex flex-wrap items-center gap-3'>
-              <p className='m-0 text-[1.18rem] font-bold uppercase tracking-[0.08em] text-white sm:text-[1.3rem]'>
+          <div className='ignai-hero-identity mt-6 w-full max-w-[42rem] sm:w-auto'>
+            <div className='ignai-hero-brand-row'>
+              <p className='ignai-hero-wordmark'>
                 {siteContent.name}
               </p>
-              <span
-                className='h-[18px] w-px'
-                style={{ background: 'linear-gradient(180deg, rgba(255,183,121,0), rgba(255,183,121,0.65), rgba(255,183,121,0))' }}
-              />
-              <p className='m-0 text-[0.76rem] font-medium uppercase tracking-[0.1em] text-white/65 sm:text-[0.86rem] sm:tracking-[0.12em]'>
+              <span className='ignai-hero-brand-divider' />
+              <p className='ignai-hero-brand-context'>
                 长沙 AI Community
               </p>
             </div>
-            <p className='m-0 text-[clamp(1.15rem,3vw,1.68rem)] font-semibold leading-[1.15] tracking-[-0.02em] text-white'>
+            <p className='ignai-hero-tagline text-white'>
               {siteContent.slogan}
             </p>
-            <div className='mt-4 flex flex-wrap gap-2.5'>
+            <div className='ignai-hero-pill-row mt-4'>
               {['Local roots', 'Global signal', '真实行动'].map(label => (
-                <span
-                  key={label}
-                  className='inline-flex min-h-[34px] items-center justify-center rounded-full px-3 py-[7px] text-[0.78rem] font-medium text-white/75'
-                  style={{ border: '1px solid rgba(255, 183, 121, 0.14)', background: 'rgba(255,255,255,0.03)' }}>
+                <span key={label} className='ignai-hero-pill'>
                   {label}
                 </span>
               ))}
             </div>
           </div>
 
-          <h1
-            className='mt-9 max-w-none text-white sm:max-w-[9ch]'
-            style={{
-              marginBottom: 0,
-              fontSize: 'clamp(2.25rem, 8vw, 4.6rem)',
-              fontWeight: 700,
-              lineHeight: 1.12,
-              letterSpacing: '-0.04em'
-            }}>
+          <h1 className='ignai-hero-manifesto mt-9'>
             在 AGI 到来之前，
             <br />
             先点燃一群真实行动的人。
           </h1>
-          <p className='mt-6 max-w-[30rem] text-[0.98rem] leading-[1.72] sm:text-base sm:leading-[1.85]'>
+          <p className='ignai-hero-summary mt-6'>
             <span className='text-white/92'>{siteContent.heroSummary}</span>
             <br />
             <span className='text-white/64'>{siteContent.heroDescription}</span>
@@ -536,50 +495,32 @@ function HeroSection({ notionConfig }) {
           <div className='mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap'>
             <SmartLink
               href='/join'
-              className='ignai-motion-cta inline-flex w-full items-center justify-center rounded-[14px] px-7 py-4 text-[0.95rem] font-semibold text-white transition sm:w-auto'
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,122,24,0.98) 0%, rgba(255,154,60,0.92) 100%)',
-                boxShadow: '0 12px 40px rgba(255,122,24,0.24)'
-              }}>
+              className='ignai-motion-cta ignai-hero-cta ignai-hero-cta--primary inline-flex items-center justify-center rounded-[14px] px-7 py-4 text-[0.95rem] font-semibold text-white transition'
+            >
               加入社区
             </SmartLink>
             <SmartLink
               href='/events'
-              className='inline-flex w-full items-center justify-center rounded-[14px] px-7 py-4 text-[0.95rem] font-medium text-white/88 transition sm:w-auto'
-              style={{
-                border: '1px solid rgba(255,255,255,0.16)',
-                background: 'rgba(255,255,255,0.04)'
-              }}>
+              className='ignai-hero-cta ignai-hero-cta--secondary inline-flex items-center justify-center rounded-[14px] px-7 py-4 text-[0.95rem] font-medium text-white/88 transition'
+            >
               查看活动
             </SmartLink>
           </div>
 
-          <div
-            className='mt-7 rounded-[22px] p-[18px] md:hidden'
-            style={{
-              border: '1px solid rgba(255, 183, 121, 0.12)',
-              background: 'linear-gradient(180deg, rgba(14,17,24,0.9) 0%, rgba(9,11,17,0.94) 100%)',
-              boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03), 0 22px 60px rgba(0,0,0,0.22)'
-            }}>
-            <p className='m-0 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[#ffb779d1]'>
+          <div className='ignai-mobile-hero-panel mt-7 md:hidden'>
+            <p className='ignai-mobile-hero-kicker'>
               COMMUNITY SNAPSHOT
             </p>
-            <div className='mt-4 grid gap-[14px]'>
+            <div className='ignai-mobile-signal-list mt-4'>
               {siteContent.heroSignals.map((signal, index) => (
-                <div key={signal.title} className='grid grid-cols-[auto_1fr] items-start gap-3'>
+                <div key={signal.title} className='ignai-mobile-signal-item'>
                   <span
-                    className='mt-1.5 h-[10px] w-[10px] rounded-full'
-                    style={{
-                      background: index === 0
-                        ? 'linear-gradient(135deg, #ff7a18 0%, #ffb062 100%)'
-                        : 'linear-gradient(135deg, rgba(255,183,121,0.92) 0%, rgba(255,217,168,0.72) 100%)',
-                      boxShadow: '0 0 18px rgba(255,122,24,0.2)'
-                    }}
+                    className={`ignai-mobile-signal-dot ${index === 0 ? 'ignai-mobile-signal-dot--heat' : 'ignai-mobile-signal-dot--soft'}`}
                   />
                   <div>
-                    <p className='m-0 text-[0.72rem] uppercase tracking-[0.08em] text-white/45'>{signal.eyebrow}</p>
-                    <p className='mt-1 text-[0.98rem] font-semibold leading-[1.38] text-white'>{signal.title}</p>
-                    <p className='mt-1.5 text-[0.9rem] leading-[1.65] text-white/62'>{signal.description}</p>
+                    <p className='ignai-mobile-signal-eyebrow'>{signal.eyebrow}</p>
+                    <p className='ignai-mobile-signal-title'>{signal.title}</p>
+                    <p className='ignai-mobile-signal-description'>{signal.description}</p>
                   </div>
                 </div>
               ))}

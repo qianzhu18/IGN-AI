@@ -261,13 +261,23 @@ const Style = () => {
 
       /* ========== 导航栏 ========== */
       #theme-proxio .ud-header {
-        background: rgba(7, 8, 12, 0.72);
+        background: linear-gradient(
+          90deg,
+          rgba(18, 12, 12, 0.9) 0%,
+          rgba(10, 12, 18, 0.9) 58%,
+          rgba(6, 12, 20, 0.92) 100%
+        );
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(171, 111, 71, 0.16);
       }
       #theme-proxio .ud-header.sticky {
-        background: rgba(7, 8, 12, 0.92);
+        background: linear-gradient(
+          90deg,
+          rgba(18, 12, 12, 0.96) 0%,
+          rgba(10, 12, 18, 0.96) 58%,
+          rgba(6, 12, 20, 0.97) 100%
+        );
       }
 
       #theme-proxio .ignai-header-shell {
@@ -286,6 +296,30 @@ const Style = () => {
         letter-spacing: 0.03em;
       }
 
+      #theme-proxio .ignai-header-brand-lockup {
+        position: relative;
+      }
+
+      #theme-proxio .ignai-header-mark-frame {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(31, 19, 14, 0.96) 0%,
+          rgba(14, 14, 22, 0.96) 100%
+        );
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.04),
+          0 10px 28px rgba(0, 0, 0, 0.18);
+      }
+
       #theme-proxio .ignai-header-logo {
         display: block;
         width: auto;
@@ -296,6 +330,70 @@ const Style = () => {
       @media (min-width: 640px) {
         #theme-proxio .ignai-header-logo {
           height: 30px;
+        }
+      }
+
+      #theme-proxio .ignai-header-flame-shell {
+        position: relative;
+        display: inline-flex;
+        width: 16px;
+        height: 30px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      #theme-proxio .ignai-header-flame-shell::after {
+        content: '';
+        position: absolute;
+        inset: -6px -4px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(255, 122, 24, 0.16) 0%, rgba(255, 122, 24, 0) 72%);
+        pointer-events: none;
+      }
+
+      #theme-proxio .ignai-header-flame-image {
+        width: 148px;
+        max-width: none;
+        height: 100%;
+        object-fit: cover;
+        object-position: left center;
+        transform: translateX(-4px);
+        filter: drop-shadow(0 6px 18px rgba(255, 122, 24, 0.28));
+      }
+
+      #theme-proxio .ignai-header-wordmark {
+        color: rgba(255, 255, 255, 0.94);
+        font-size: 1.12rem;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      #theme-proxio .ignai-header-subtitle {
+        margin-top: 5px;
+        color: rgba(240, 196, 146, 0.72);
+        font-size: 0.58rem;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      @media (min-width: 640px) {
+        #theme-proxio .ignai-header-mark-frame {
+          width: 42px;
+          height: 42px;
+        }
+
+        #theme-proxio .ignai-header-wordmark {
+          font-size: 1.2rem;
+        }
+
+        #theme-proxio .ignai-header-subtitle {
+          font-size: 0.62rem;
         }
       }
 
@@ -991,15 +1089,16 @@ const Style = () => {
         gap: 10px;
         padding: 16px 18px;
         border-radius: 22px;
-        border: 1px solid rgba(255, 183, 121, 0.14);
+        border: 1px solid rgba(165, 108, 71, 0.24);
         background: linear-gradient(
           135deg,
-          rgba(27, 17, 9, 0.66) 0%,
-          rgba(12, 15, 22, 0.82) 100%
+          rgba(35, 23, 17, 0.78) 0%,
+          rgba(16, 18, 26, 0.9) 100%
         );
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 18px 54px rgba(0, 0, 0, 0.18);
+          0 18px 54px rgba(0, 0, 0, 0.18),
+          0 0 0 1px rgba(255, 122, 24, 0.04);
       }
 
       #theme-proxio .ignai-hero-brand-row {
@@ -1055,8 +1154,12 @@ const Style = () => {
         min-height: 34px;
         padding: 7px 12px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 183, 121, 0.14);
-        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(151, 104, 72, 0.28);
+        background: linear-gradient(
+          180deg,
+          rgba(64, 42, 32, 0.34) 0%,
+          rgba(30, 22, 20, 0.44) 100%
+        );
         color: rgba(255, 255, 255, 0.74);
         font-size: 0.78rem;
         font-weight: 500;
@@ -1081,6 +1184,10 @@ const Style = () => {
 
       #theme-proxio .ignai-hero-cta {
         width: 100%;
+        border: 1px solid rgba(151, 104, 72, 0.34);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.04),
+          0 14px 40px rgba(19, 13, 10, 0.14);
       }
 
       @media (min-width: 640px) {
@@ -1089,13 +1196,33 @@ const Style = () => {
         }
       }
 
-      #theme-proxio .ignai-mobile-hero-panel {
-        border-radius: 22px;
-        border: 1px solid rgba(255, 183, 121, 0.12);
+      #theme-proxio .ignai-hero-cta--primary {
+        background: linear-gradient(
+          135deg,
+          rgba(126, 79, 49, 0.96) 0%,
+          rgba(173, 109, 66, 0.94) 54%,
+          rgba(113, 71, 45, 0.96) 100%
+        );
+        box-shadow:
+          inset 0 1px 0 rgba(255, 240, 224, 0.08),
+          0 16px 42px rgba(77, 40, 18, 0.22);
+      }
+
+      #theme-proxio .ignai-hero-cta--secondary {
         background: linear-gradient(
           180deg,
-          rgba(14, 17, 24, 0.9) 0%,
-          rgba(9, 11, 17, 0.94) 100%
+          rgba(67, 45, 33, 0.42) 0%,
+          rgba(35, 25, 20, 0.62) 100%
+        );
+      }
+
+      #theme-proxio .ignai-mobile-hero-panel {
+        border-radius: 22px;
+        border: 1px solid rgba(165, 108, 71, 0.18);
+        background: linear-gradient(
+          180deg,
+          rgba(24, 17, 17, 0.94) 0%,
+          rgba(12, 14, 21, 0.96) 100%
         );
         padding: 18px;
         box-shadow:
@@ -1331,10 +1458,12 @@ const Style = () => {
         justify-content: center;
         padding: 14px 32px;
         border-radius: 12px;
+        border: 1px solid rgba(188, 124, 76, 0.34);
         background: linear-gradient(
           135deg,
-          rgba(255, 122, 24, 0.98) 0%,
-          rgba(255, 154, 60, 0.92) 100%
+          rgba(126, 79, 49, 0.96) 0%,
+          rgba(173, 109, 66, 0.94) 54%,
+          rgba(113, 71, 45, 0.96) 100%
         );
         color: #fff;
         font-weight: 600;
@@ -1343,7 +1472,9 @@ const Style = () => {
         transition:
           transform 0.2s,
           box-shadow 0.2s;
-        box-shadow: 0 8px 32px rgba(255, 122, 24, 0.2);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 240, 224, 0.08),
+          0 12px 38px rgba(77, 40, 18, 0.22);
       }
       #theme-proxio .ignai-cta-primary::after {
         content: '';
@@ -1362,7 +1493,9 @@ const Style = () => {
       }
       #theme-proxio .ignai-cta-primary:hover {
         transform: translateY(-1px);
-        box-shadow: 0 12px 40px rgba(255, 122, 24, 0.32);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 240, 224, 0.1),
+          0 16px 44px rgba(77, 40, 18, 0.3);
       }
       #theme-proxio .ignai-cta-primary:hover::after {
         transform: translateX(360%) skewX(-24deg);
@@ -1374,8 +1507,12 @@ const Style = () => {
         justify-content: center;
         padding: 14px 32px;
         border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(151, 104, 72, 0.34);
+        background: linear-gradient(
+          180deg,
+          rgba(67, 45, 33, 0.42) 0%,
+          rgba(35, 25, 20, 0.62) 100%
+        );
         color: #e4e4e7;
         font-weight: 500;
         font-size: 0.9375rem;
@@ -1384,8 +1521,12 @@ const Style = () => {
           background 0.2s;
       }
       #theme-proxio .ignai-cta-secondary:hover {
-        border-color: rgba(255, 183, 121, 0.32);
-        background: rgba(255, 255, 255, 0.06);
+        border-color: rgba(214, 147, 95, 0.42);
+        background: linear-gradient(
+          180deg,
+          rgba(80, 54, 39, 0.5) 0%,
+          rgba(42, 29, 23, 0.68) 100%
+        );
       }
 
       /* ========== Signal 卡片网格 ========== */
@@ -1487,11 +1628,16 @@ const Style = () => {
       }
 
       #theme-proxio .ignai-mobile-toggle {
-        border: 1px solid rgba(255, 183, 121, 0.18);
-        background: rgba(12, 15, 22, 0.76);
+        border: 1px solid rgba(171, 111, 71, 0.34);
+        background: linear-gradient(
+          180deg,
+          rgba(30, 19, 15, 0.82) 0%,
+          rgba(13, 13, 20, 0.92) 100%
+        );
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 16px 38px rgba(0, 0, 0, 0.18);
+          0 16px 38px rgba(0, 0, 0, 0.18),
+          0 0 0 1px rgba(255, 122, 24, 0.05);
         transition:
           border-color 0.2s ease,
           background 0.2s ease,
@@ -1501,8 +1647,12 @@ const Style = () => {
 
       #theme-proxio .ignai-mobile-toggle:hover {
         transform: translateY(-1px);
-        border-color: rgba(255, 183, 121, 0.28);
-        background: rgba(18, 13, 10, 0.88);
+        border-color: rgba(214, 147, 95, 0.42);
+        background: linear-gradient(
+          180deg,
+          rgba(40, 24, 17, 0.92) 0%,
+          rgba(18, 14, 18, 0.96) 100%
+        );
       }
 
       #theme-proxio .ignai-mobile-toggle:focus-visible {
@@ -1589,14 +1739,26 @@ const Style = () => {
       }
 
       #theme-proxio .ignai-mobile-menu-cta {
-        background: linear-gradient(135deg, rgba(255, 122, 24, 0.94), rgba(255, 154, 60, 0.88));
-        box-shadow: 0 12px 34px rgba(255, 122, 24, 0.18);
+        background: linear-gradient(
+          135deg,
+          rgba(126, 79, 49, 0.96) 0%,
+          rgba(168, 104, 64, 0.94) 54%,
+          rgba(110, 70, 45, 0.96) 100%
+        );
+        box-shadow:
+          inset 0 1px 0 rgba(255, 240, 224, 0.08),
+          0 12px 34px rgba(69, 36, 16, 0.22);
       }
 
       #theme-proxio .ignai-mobile-menu-cta:hover,
       #theme-proxio .ignai-mobile-menu-cta:focus-visible {
         color: #fff;
-        background: linear-gradient(135deg, rgba(255, 136, 42, 0.98), rgba(255, 164, 74, 0.92));
+        background: linear-gradient(
+          135deg,
+          rgba(138, 86, 53, 0.98) 0%,
+          rgba(184, 114, 69, 0.96) 54%,
+          rgba(118, 75, 47, 0.98) 100%
+        );
       }
 
       /* ========== 品牌滚动条 ========== */

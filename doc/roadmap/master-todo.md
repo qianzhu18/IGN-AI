@@ -27,6 +27,8 @@
 - [x] 移动端基础适配（Hero 隐藏视觉面板、Header 缩小、scatter overflow、活动卡片高度）
 - [x] Hero 区域改为 Notion 驱动（`resolveSection` 模式已就位）
 - [x] 字体加载修复（Cormorant Garamond 已添加到 font.config.js）
+- [ ] 首页 Hero / Header / CTA 品牌一致性继续打磨
+- [ ] 首页后续区块完整性与显隐节奏复查（避免首屏之后出现“页面不完整”的感知）
 - [ ] 成员目录页视觉再打磨
 - [ ] 成员详情页层级再打磨
 - [ ] 首页成员区块表达再增强
