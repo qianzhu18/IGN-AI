@@ -3,6 +3,27 @@ import { useGlobal } from '@/lib/global'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+function trimSlashes(value = '') {
+  return `${value}`.replace(/^\/+|\/+$/g, '')
+}
+
+function trimTrailingSlash(value = '') {
+  return `${value}`.replace(/\/+$/g, '')
+}
+
+function buildAbsoluteUrl(base, ...parts) {
+  const root = trimTrailingSlash(base || '')
+  const pathname = parts.map(trimSlashes).filter(Boolean).join('/')
+  return pathname ? `${root}/${pathname}` : root
+}
+
+function resolveSeoImage(image, link) {
+  const fallback = '/bg_image.jpg'
+  const value = image && image !== 'undefined' ? image : fallback
+  if (/^https?:\/\//i.test(value)) return value
+  return buildAbsoluteUrl(link, value)
+}
+
 /**
  * 页面的Head头，有用于SEO
  * @param {*} param0
@@ -10,10 +31,9 @@ import { useRouter } from 'next/router'
  */
 const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
-  const PATH = siteConfig('PATH')
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
-  let url = PATH?.length ? `${LINK}/${SUB_PATH}` : LINK
+  let url = buildAbsoluteUrl(LINK, SUB_PATH)
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
@@ -26,13 +46,12 @@ const SEO = props => {
     keywords = post?.tags?.join(',')
   }
   if (meta) {
-    url = `${url}/${meta.slug}`
-    image = meta.image || '/bg_image.jpg'
+    if (meta.slug) {
+      url = buildAbsoluteUrl(url, meta.slug)
+    }
+    image = meta.image || siteInfo?.pageCover || '/bg_image.jpg'
   }
-  // OG/Twitter 图片必须是绝对路径
-  if (image && !image.startsWith('http')) {
-    image = `${LINK}${image}`
-  }
+  image = resolveSeoImage(image, LINK)
   const TITLE = siteConfig('TITLE')
   const title = meta?.title || TITLE
   const description = meta?.description || siteConfig('DESCRIPTION') || siteInfo?.description
@@ -353,7 +372,10 @@ const getSEOMeta = (props, router, locale) => {
     case '/404':
       return {
         title: `${TITLE} | ${locale.NAV.PAGE_NOT_FOUND}`,
-        image: `${siteInfo?.pageCover}`
+        description: DESCRIPTION,
+        image: `${siteInfo?.pageCover}`,
+        slug: '404',
+        type: 'website'
       }
     case '/tag':
       return {
@@ -375,10 +397,10 @@ const getSEOMeta = (props, router, locale) => {
       return {
         title: post
           ? `${post?.title} | ${TITLE}`
-          : `${TITLE} | loading`,
-        description: post?.summary,
-        type: post?.type,
-        slug: post?.slug,
+          : TITLE,
+        description: post?.summary || DESCRIPTION,
+        type: post?.type || 'website',
+        slug: post?.slug || '',
         image: post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
         category: post?.category?.[0],
         tags: post?.tags
