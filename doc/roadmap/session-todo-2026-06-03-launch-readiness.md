@@ -1,0 +1,102 @@
+# 2026-06-03 上线与运营闭环 TODO
+
+状态：进行中
+
+## P0：上线稳定性
+
+- [x] 验证 `localhost:3001` 首页、成员、加入、活动、后台入口均可访问。
+- [x] 修正成员详情页构建期全量预渲染，避免大量 Notion block 请求触发 429。
+- [x] 修正成员目录标题与描述，移除 NotionNext 默认站点文案。
+- [x] 再跑一次生产构建，确认 `/members/[slug]` 构建耗时明显下降。
+- [ ] 在干净构建环境复验 `yarn build`；本地第二次 build 已从 243 页降到 53 页，但因 `.next` vendor chunk 缺失在 `/404` 预渲染失败。
+- [x] 梳理并收敛 lint 红灯，至少清掉当前新增路由相关错误。
+
+## P0：成员资料上传与 Notion 回写
+
+- [x] 确认官网环境可用的 OSS / S3 兼容配置：Endpoint、Bucket、Region、AccessKey、Secret、Public Base URL、Path Prefix。
+- [x] 抽出服务端 `cloudImageUploader`，支持压缩后上传并返回公网 URL。
+- [x] 增加管理员头像上传 API，写入 Notion `avatar` URL。
+- [x] 增加成员资料更新 API，白名单更新 `bio`、`role`、`website`、`social_github`、`social_x`、`social_linkedin`。
+- [x] 管理后台接入上传与更新表单。
+- [x] 增加成员头像历史列表 API，支持按成员读取最近 300 张头像。
+- [x] 管理后台支持点击历史头像切换当前头像，再保存回 Notion。
+- [x] 成员资料保存后触发 `/members` 与 `/members/[slug]` 重验证。
+- [x] `getAllMembers` 保留 `website` 与 social fields，确保 Notion 字段能进入前台展示。
+- [x] 成员提交后的展示控制交给 Notion `status`，不再单独实现审批后台。
+- [x] 公开 `/join` 成员草稿表单支持直接选择并上传头像 / 个人形象照，上传后随申请写入 Notion `avatar`，并同步为 Notion 页面图标。
+
+备注：2026-06-04 已将 Cloudflare R2 / S3 兼容图床配置接入官网 `.env.local`，真实上传返回 `img.qianzhu.online/ignai/members/avatars/...webp` 公网 URL，并通过 Notion 反查确认 Join 申请写入 `avatar` 属性和页面 icon。
+
+## P1：活动发布与报名
+
+- [ ] 保持当前活动展示与 `/join` 报名可用。
+- [x] 确认活动数据主源：Notion Event。
+- [x] 首页活动区块、活动列表页、活动详情页共用 Notion Event 规范化逻辑。
+- [x] 活动详情页补齐 `registrationUrl` / `registrationQrImage` 展示。
+- [x] 管理页文案从 Studio 收束为 Notion Event 字段说明。
+
+## P1：前后端一致性
+
+- [ ] Notion `Member` 字段与前台展示字段逐项核对。
+- [x] Notion `Event` 字段与活动页展示字段逐项核对。
+- [x] 清理“IGNAI 洋来官网 / NotionNext 博客”等不适合公开上线的默认文案。
+- [x] 修正站点 `siteInfo`、成员页、活动页的标题与描述 fallback，避免 NotionNext 默认值进入公开前台。
+- [x] 修正 SEO canonical / OG URL fallback，避免 `/undefined`。
+- [x] 修正 IGNAI 主题壳在自定义页面重复挂载导致 `/join` 内容重复显示的问题。
+- [ ] 检查 sitemap、RSS、结构化数据和正式 OG 图是否符合生产站。
+
+备注：2026-06-03 复验 `/events` 与 `/members`，`siteInfo.title=IGNAI`、`description=长沙 AI 社区 — 连接创造者，点燃可能性`、`link=https://ignai.community`，且未发现 `/undefined` canonical。
+
+## 本轮文件列表
+
+### 成员资料上传与 Notion 回写
+
+- `.env.example`
+- `lib/server/cloudImageUploader.ts`
+- `lib/server/notionMemberUpdater.ts`
+- `pages/api/admin/member-avatar-upload.ts`
+- `pages/api/admin/member-avatar-list.ts`
+- `pages/api/admin/member-profile-update.ts`
+- `pages/api/join/avatar-upload.ts`
+- `pages/manage/members.tsx`
+- `src/components/forms/JoinApplicationForm.tsx`
+- `src/components/admin/MemberProfileAdminPanel.tsx`
+- `src/components/admin/adminConfig.ts`
+- `lib/db/SiteDataApi.js`
+
+### 活动发布与报名
+
+- `lib/utils/event.js`
+- `pages/events/index.js`
+- `pages/events/[slug].js`
+- `themes/ignai/components/sections/UpcomingEventsSection.js`
+- `pages/manage/content.tsx`
+- `src/components/content/ContentAdminPanel.tsx`
+
+### 公开站点信息与 SEO fallback
+
+- `components/SEO.js`
+- `lib/config.js`
+- `lib/db/SiteDataApi.js`
+- `themes/ignai/index.js`
+- `pages/members/index.js`
+- `pages/members/[slug].js`
+- `pages/events/index.js`
+- `pages/events/[slug].js`
+
+### Roadmap / TODO
+
+- `doc/roadmap/master-todo.md`
+- `doc/roadmap/schedule.md`
+- `doc/roadmap/session-todo-2026-06-03-launch-readiness.md`
+
+### 已知未归属本轮的脏工作区
+
+- `public/rss.xml`
+- `doc/contribution/`
+- `public/copyweb-demos/`
+- `doc/design/成员资料上传与前端对标方案-2026-06-03.md`
+
+## 本轮判断
+
+外观已经接近可展示状态，但运营闭环还没有完成。当前最优先不是继续大改视觉，而是先让成员资料上传、Notion 回写、活动发布源和生产构建稳定性形成闭环。

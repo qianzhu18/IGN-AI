@@ -1,0 +1,1773 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Copyweb Demo - Rig AI</title>
+    <style>
+      @font-face {
+        font-family: Chalet;
+        src: url("./rig-assets/chalet_londonnineteensixty.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: Geist Pixel Square;
+        src: url("./rig-assets/GeistPixel-Square.woff2") format("woff2");
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: Instrument Sans;
+        src: url("./rig-assets/InstrumentSans-latin.woff2") format("woff2");
+        font-weight: 400 700;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: Chivo Mono;
+        src: url("./rig-assets/ChivoMono-latin.woff2") format("woff2");
+        font-weight: 400 800;
+        font-display: swap;
+      }
+
+      :root {
+        --red: oklch(0.6329 0.2075 31.49);
+        --red-glow: oklch(0.6329 0.2075 31.49 / 42%);
+        --blue: oklch(0.5312 0.2603 266.77);
+        --green: oklch(0.8003 0.1821 151.71);
+        --ink: oklch(0.1448 0 0);
+        --paper: oklch(0.9465 0.0099 87.47);
+        --paper-70: rgba(240, 237, 230, 0.7);
+        --paper-60: rgba(240, 237, 230, 0.6);
+        --paper-50: rgba(240, 237, 230, 0.5);
+        --paper-40: rgba(240, 237, 230, 0.4);
+        --paper-35: rgba(240, 237, 230, 0.35);
+        --paper-25: rgba(240, 237, 230, 0.25);
+        --paper-15: rgba(240, 237, 230, 0.15);
+        --paper-10: rgba(240, 237, 230, 0.1);
+        --paper-06: rgba(240, 237, 230, 0.06);
+        --paper-04: rgba(240, 237, 230, 0.04);
+        --paper-02: rgba(240, 237, 230, 0.02);
+        --border: oklch(0.9465 0.0099 87.47 / 14%);
+        --border-dim: oklch(0.9465 0.0099 87.47 / 10%);
+        --chamfer: 14px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+        scrollbar-gutter: stable;
+      }
+
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background: var(--ink);
+        color: var(--paper);
+        font-family: Instrument Sans, system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      ::selection {
+        background: color-mix(in srgb, var(--red) 90%, transparent);
+        color: #fffde0;
+      }
+
+      .mono {
+        font-family: Chivo Mono, ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .pixel {
+        font-family: Geist Pixel Square, Chivo Mono, monospace;
+      }
+
+      .display {
+        font-family: Chalet, Instrument Sans, sans-serif;
+        letter-spacing: 0;
+      }
+
+      .scanlines,
+      .noise,
+      .rgb-fringe {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .scanlines {
+        z-index: 10002;
+        background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.09) 2px, rgba(0, 0, 0, 0.09) 4px);
+      }
+
+      .noise {
+        z-index: 10001;
+        opacity: 0.075;
+        filter: url(#grainy);
+      }
+
+      .rgb-fringe {
+        z-index: 10003;
+        background: linear-gradient(90deg, #e5332a05, #2b4fff04, #e5332a05);
+        background-size: 3px 100%;
+      }
+
+      .content-lines {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+      }
+
+      .content-lines::before,
+      .content-lines::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--border);
+      }
+
+      .content-lines::before { left: calc(50% - 600px); }
+      .content-lines::after { right: calc(50% - 600px); }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 3rem;
+      }
+
+      .section-divider {
+        max-width: 1200px;
+        height: 1px;
+        margin: 0 auto;
+        background: var(--border);
+      }
+
+      .btn-chamfer {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        border: 0;
+        color: inherit;
+        font: 800 0.85rem/1 Chivo Mono, monospace;
+        text-decoration: none;
+        cursor: pointer;
+        clip-path: polygon(var(--chamfer) 0, 100% 0, 100% calc(100% - var(--chamfer)), calc(100% - var(--chamfer)) 100%, 0 100%, 0 var(--chamfer));
+        transition: box-shadow 0.18s, transform 0.18s, text-shadow 0.18s;
+      }
+
+      .btn-dark { background: var(--ink); color: var(--paper); }
+      .btn-red { background: var(--red); color: var(--ink); box-shadow: 0 0 40px var(--red-glow); }
+      .btn-outline {
+        clip-path: none;
+        border: 1px solid rgba(10, 10, 10, 0.35);
+        color: var(--ink);
+        background: transparent;
+      }
+
+      .btn-chamfer:hover {
+        transform: translate(-1px, -1px);
+        text-shadow: -1px 0 rgba(43, 79, 255, 0.35), 1px 0 rgba(237, 70, 45, 0.35);
+        box-shadow: 4px 4px 0 var(--blue);
+      }
+
+      .badge {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin: 0 auto 2rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid rgba(237, 70, 45, 0.22);
+        background: rgba(10, 10, 10, 0.88);
+        color: var(--red);
+        font: 800 0.72rem/1 Chivo Mono, monospace;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        backdrop-filter: blur(8px);
+      }
+
+      .badge svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      .section-title {
+        margin: 0;
+        font: 400 clamp(2.6rem, 5vw, 4.7rem)/0.92 Chalet, sans-serif;
+        letter-spacing: 0;
+      }
+
+      .section-copy {
+        max-width: 620px;
+        margin: 1.5rem auto 0;
+        color: var(--paper-70);
+        font-size: 1rem;
+        line-height: 1.7;
+        text-wrap: balance;
+      }
+
+      .hero {
+        min-height: 654px;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        overflow: hidden;
+        position: relative;
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        background: var(--red);
+        color: var(--ink);
+      }
+
+      .site-nav {
+        width: 100%;
+        max-width: calc(1200px + 6rem);
+        margin: 0 auto;
+        padding: 1.55rem 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 20;
+      }
+
+      .site-logo img {
+        height: 22px;
+        width: auto;
+        display: block;
+        filter: brightness(0);
+      }
+
+      .site-links {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .site-links a:not(.btn-chamfer) {
+        color: var(--ink);
+        text-decoration: none;
+        font: 800 0.75rem/1 Chivo Mono, monospace;
+        opacity: 0.72;
+      }
+
+      .hero-content {
+        flex: 1;
+        width: 100%;
+        max-width: calc(1200px + 6rem);
+        margin: 0 auto;
+        padding: 0 3rem;
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .hero h1 {
+        max-width: 1120px;
+        margin: 0 0 2rem;
+        color: var(--ink);
+        font: 400 clamp(4.4rem, 8vw, 7.1rem)/0.88 Chalet, sans-serif;
+        letter-spacing: 0;
+      }
+
+      .hero-sub {
+        max-width: 540px;
+        margin: 0 0 2.5rem;
+        color: var(--ink);
+        font-size: 1.16rem;
+        line-height: 1.55;
+        font-weight: 700;
+        opacity: 0.86;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .hero-ticker {
+        border-top: 1px solid rgba(10, 10, 10, 0.16);
+        padding: 0.75rem 0;
+        overflow: hidden;
+        position: relative;
+        z-index: 10;
+      }
+
+      .hero-ticker-inner {
+        display: flex;
+        gap: 4rem;
+        width: max-content;
+        white-space: nowrap;
+        color: var(--ink);
+        opacity: 0.72;
+        font: 400 0.8rem/1 Geist Pixel Square, monospace;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        animation: ticker 18s linear infinite;
+      }
+
+      .hero-watermark {
+        position: absolute;
+        right: -5%;
+        top: 50%;
+        width: 55%;
+        transform: translateY(-50%);
+        color: var(--ink);
+        opacity: 0.08;
+        animation: watermark-glitch 4s infinite linear;
+        pointer-events: none;
+      }
+
+      .content {
+        background:
+          radial-gradient(circle at 50% 0, rgba(237, 70, 45, 0.08), transparent 30rem),
+          var(--ink);
+        position: relative;
+      }
+
+      .spacer-red-dark {
+        height: 65px;
+      }
+
+      .problem-section {
+        padding: 0;
+      }
+
+      .problem-outer {
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .problem-top {
+        padding: 3rem 3rem 2.5rem;
+        text-align: center;
+      }
+
+      .problem-headline {
+        font-size: clamp(3rem, 5vw, 4.55rem);
+      }
+
+      .problem-divider {
+        border-top: 1px solid var(--border);
+      }
+
+      .problem-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        min-height: 430px;
+      }
+
+      .problem-eye-col {
+        grid-row: 1 / 3;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-right: 1px solid var(--border);
+      }
+
+      .problem-eye-wrapper {
+        width: 380px;
+        height: 380px;
+      }
+
+      .problem-card {
+        padding: 2rem;
+      }
+
+      .problem-card:nth-child(2),
+      .problem-card:nth-child(4) {
+        border-right: 1px solid var(--border);
+      }
+
+      .problem-card:nth-child(2),
+      .problem-card:nth-child(3) {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .problem-card-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+      }
+
+      .problem-card-label {
+        color: var(--red);
+        font: 800 0.65rem/1 Chivo Mono, monospace;
+        text-transform: uppercase;
+      }
+
+      .problem-card-number {
+        color: var(--paper-25);
+        font: 700 0.6rem/1 Chivo Mono, monospace;
+      }
+
+      .problem-card h3 {
+        margin: 0 0 0.75rem;
+        font: 400 1.35rem/1.05 Chalet, sans-serif;
+      }
+
+      .problem-card p {
+        margin: 0;
+        color: var(--paper-70);
+        font-size: 0.82rem;
+        line-height: 1.6;
+      }
+
+      .eye-pupil {
+        animation: pupil-glitch 4s infinite linear;
+      }
+
+      .offline-section {
+        padding: 8rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .offline-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        width: 1px;
+        background: var(--border);
+        pointer-events: none;
+      }
+
+      .intro-flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .intro-headline-wrap {
+        max-width: 650px;
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .intro-diagram {
+        width: min(100%, 1000px);
+        border: 1px solid var(--border-dim);
+        background: radial-gradient(circle at 50% 40%, rgba(237, 70, 45, 0.16), transparent 42%), rgba(240, 237, 230, 0.02);
+        padding: 2rem;
+      }
+
+      .system-diagram {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .offline-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+      }
+
+      .offline-visual {
+        min-height: 420px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .globe {
+        width: 560px;
+        max-width: 120%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        position: relative;
+        background:
+          radial-gradient(circle at 50% 50%, transparent 0 28%, rgba(237, 70, 45, 0.12) 29% 30%, transparent 31% 100%),
+          repeating-radial-gradient(circle, transparent 0 48px, rgba(240, 237, 230, 0.12) 49px 50px);
+      }
+
+      .globe::before,
+      .globe::after {
+        content: "";
+        position: absolute;
+        inset: 24%;
+        border: 1px dashed var(--paper-15);
+        border-radius: 50%;
+        animation: disconnect 6s ease-in-out infinite;
+      }
+
+      .globe::after {
+        inset: 38%;
+        border-color: var(--red);
+        box-shadow: 0 0 50px var(--red-glow);
+      }
+
+      .offline-content h2 {
+        margin: 0 0 1.5rem;
+        font: 400 clamp(2.5rem, 5vw, 3.5rem)/0.9 Chalet, sans-serif;
+      }
+
+      .offline-content p {
+        max-width: 440px;
+        color: var(--paper-70);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+
+      .three-col {
+        padding: 0;
+      }
+
+      .three-col-grid {
+        display: grid;
+        grid-template-columns: 1fr 1px 1fr 1px 1fr;
+        align-items: stretch;
+      }
+
+      .three-col-divider {
+        width: 1px;
+        background: var(--border);
+      }
+
+      .three-col-cell {
+        padding: 2rem;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .three-col-heading {
+        margin: 1rem 0 0.75rem;
+        font: 400 clamp(1.5rem, 2.5vw, 2rem)/0.95 Chalet, sans-serif;
+      }
+
+      .three-col-text {
+        margin: 0;
+        color: var(--paper-70);
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .how-section {
+        padding: 8rem 0 0;
+      }
+
+      .how-intro {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .how-stepper {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        align-items: start;
+        gap: 0;
+      }
+
+      .how-steps-left {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .how-step {
+        position: relative;
+        padding: 1.5rem 2rem 1.5rem 1.25rem;
+        border-top: 1px solid var(--border);
+        background: transparent;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .how-step:last-child {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .how-step::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--paper-06);
+      }
+
+      .how-step.active::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background: var(--red);
+        animation: stepfill 6s linear forwards;
+      }
+
+      .how-step-num {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--paper-25);
+        font: 700 0.62rem/1 Chivo Mono, monospace;
+      }
+
+      .how-step.active .how-step-num {
+        color: var(--red);
+      }
+
+      .how-step h3 {
+        margin: 0;
+        color: var(--paper-40);
+        font: 400 clamp(1.5rem, 2.5vw, 2rem)/1.05 Chalet, sans-serif;
+      }
+
+      .how-step.active h3 {
+        color: var(--paper);
+      }
+
+      .how-step p {
+        display: none;
+        color: var(--paper-70);
+        font-size: 0.9rem;
+        line-height: 1.7;
+      }
+
+      .how-step.active p {
+        display: block;
+      }
+
+      .how-illustration {
+        min-height: 680px;
+        border: 1px solid var(--border);
+        border-right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(237, 70, 45, 0.28), transparent 40%),
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: auto, 80px 80px, 80px 80px;
+      }
+
+      .shader-card {
+        width: min(90%, 390px);
+        padding: 1.75rem 2rem;
+        border: 1px solid var(--red);
+        border-radius: 6px;
+        background: rgba(10, 10, 10, 0.88);
+        color: var(--paper-50);
+        font: 0.72rem/1.8 Chivo Mono, monospace;
+        backdrop-filter: blur(8px);
+      }
+
+      .shader-card b {
+        display: block;
+        color: var(--paper);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid rgba(237, 70, 45, 0.18);
+      }
+
+      .shader-card .red { color: var(--red); }
+      .shader-card .green { color: #22c55e; }
+      .shader-card .bright { color: var(--paper-70); }
+
+      .illust-features {
+        padding: 8rem 0;
+      }
+
+      .feature-head {
+        text-align: center;
+      }
+
+      .illust-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-top: 4rem;
+      }
+
+      .illust-card {
+        padding: 2.5rem 2rem 2rem;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.02);
+        clip-path: polygon(var(--chamfer) 0, 100% 0, 100% calc(100% - var(--chamfer)), calc(100% - var(--chamfer)) 100%, 0 100%, 0 var(--chamfer));
+        transition: border-color 0.2s, background 0.2s;
+      }
+
+      .illust-card:hover {
+        border-color: rgba(237, 70, 45, 0.34);
+        background: rgba(237, 70, 45, 0.05);
+      }
+
+      .illust-icon {
+        width: 72px;
+        height: 72px;
+        margin-bottom: 1.75rem;
+        color: var(--red);
+      }
+
+      .illust-label {
+        margin-bottom: 0.75rem;
+        color: var(--red);
+        font: 800 0.7rem/1 Chivo Mono, monospace;
+      }
+
+      .illust-card h3 {
+        margin: 0 0 0.75rem;
+        font: 400 1.35rem/1.1 Chalet, sans-serif;
+      }
+
+      .illust-card p {
+        margin: 0;
+        color: var(--paper-70);
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .stats-strip {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .stat-box {
+        padding: 2rem;
+        border-right: 1px solid var(--border);
+      }
+
+      .stat-box:last-child { border-right: 0; }
+
+      .stat-label {
+        color: var(--red);
+        font-size: 0.75rem;
+      }
+
+      .stat-value {
+        margin: 0.75rem 0;
+        font: 400 2.5rem/1 Chalet, sans-serif;
+      }
+
+      .stat-note {
+        color: var(--paper-50);
+        font-size: 0.75rem;
+      }
+
+      .terminal-section {
+        padding: 8rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .grid-bg::after {
+        content: "";
+        position: absolute;
+        inset: -80% -40% -40%;
+        z-index: 0;
+        pointer-events: none;
+        background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 80px 80px;
+        transform: perspective(600px) rotateX(55deg);
+        transform-origin: center 60%;
+        mask-image: radial-gradient(ellipse 50% 45% at center 55%, rgba(0, 0, 0, 0.62), transparent 100%);
+      }
+
+      .term-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .terminal-artifact {
+        max-width: 630px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .terminal-blueprint-left,
+      .terminal-blueprint-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 210px;
+        pointer-events: none;
+      }
+
+      .terminal-blueprint-left { right: calc(100% + 25px); }
+      .terminal-blueprint-right { left: calc(100% + 25px); }
+
+      .bp-anno {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--paper-50);
+        font: 0.62rem/1.5 Geist Pixel Square, monospace;
+        text-transform: uppercase;
+      }
+
+      .terminal-blueprint-left .bp-anno {
+        right: 0;
+        text-align: right;
+      }
+
+      .terminal-blueprint-right .bp-anno {
+        left: 0;
+      }
+
+      .bp-anno::after,
+      .bp-anno::before {
+        content: "";
+        width: 40px;
+        height: 1px;
+        background: var(--paper-15);
+        flex: 0 0 40px;
+      }
+
+      .terminal-blueprint-left .bp-anno::after { display: block; }
+      .terminal-blueprint-left .bp-anno::before { display: none; }
+      .terminal-blueprint-right .bp-anno::before { display: block; }
+      .terminal-blueprint-right .bp-anno::after { display: none; }
+
+      .bp-at-34 { top: 34%; }
+      .bp-at-50 { top: 50%; }
+      .bp-at-66 { top: 66%; }
+
+      .bp-title {
+        display: block;
+        color: var(--paper);
+      }
+
+      .monitor-casing {
+        padding: 1.25rem;
+        border: 1px solid var(--paper-06);
+        border-radius: 10px;
+        background: linear-gradient(160deg, #1a1a1a, #111, #0d0d0d);
+        box-shadow: 0 2px 0 var(--paper-04), 0 20px 60px rgba(0, 0, 0, 0.42);
+      }
+
+      .monitor-vents {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 0.75rem;
+      }
+
+      .monitor-vent {
+        height: 3px;
+        flex: 1;
+        background: var(--paper-04);
+      }
+
+      .monitor-screen-bezel {
+        border: 2px solid var(--paper-06);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+        aspect-ratio: 16 / 12;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .terminal-window {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: #050505;
+      }
+
+      .terminal-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1.25rem;
+        border-bottom: 1px solid var(--paper-06);
+        background: var(--paper-02);
+      }
+
+      .terminal-dots {
+        display: flex;
+        gap: 6px;
+      }
+
+      .terminal-dots span {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--border-dim);
+      }
+
+      .terminal-title {
+        color: var(--paper-35);
+        font: 0.7rem/1 Chivo Mono, monospace;
+      }
+
+      .terminal-body {
+        flex: 1;
+        padding: 1.75rem;
+        color: var(--paper-70);
+        font: 0.85rem/1.8 Chivo Mono, monospace;
+      }
+
+      .terminal-body pre {
+        margin: 0;
+        color: var(--paper-25);
+        font: 0.6rem/1.3 Chivo Mono, monospace;
+      }
+
+      .prompt,
+      .success,
+      .term-off {
+        color: var(--red);
+      }
+
+      .term-line {
+        opacity: 0;
+        animation: terminalLineIn 0.01s step-end forwards;
+      }
+
+      .term-line:nth-child(1) { animation-delay: 0.05s; }
+      .term-line:nth-child(2) { animation-delay: 0.12s; }
+      .term-line:nth-child(3) { animation-delay: 0.2s; }
+      .term-line:nth-child(4) { animation-delay: 0.28s; }
+      .term-line:nth-child(5) { animation-delay: 0.36s; }
+      .term-line:nth-child(6) { animation-delay: 0.44s; }
+      .term-line:nth-child(7) { animation-delay: 0.52s; }
+      .term-line:nth-child(8) { animation-delay: 0.6s; }
+
+      .cursor-block {
+        display: inline-block;
+        width: 8px;
+        height: 15px;
+        background: var(--red);
+        animation: blink 1s step-end infinite;
+        vertical-align: middle;
+      }
+
+      .monitor-bezel-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.25rem;
+        padding: 1rem 0 0.5rem;
+        border-top: 1px solid var(--paper-04);
+        color: var(--paper-25);
+        font: 0.6rem/1 Chivo Mono, monospace;
+        text-transform: uppercase;
+      }
+
+      .monitor-led {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--red);
+        box-shadow: 0 0 6px var(--red-glow);
+        animation: blink 3s ease-in-out infinite;
+      }
+
+      .promise-section {
+        padding: 8rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ea-content {
+        max-width: 500px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .ea-form {
+        display: flex;
+        gap: 0.75rem;
+        max-width: 480px;
+        margin: 2rem auto 0;
+      }
+
+      .email-input {
+        min-width: 0;
+        flex: 1;
+        padding: 0.85rem 1.2rem;
+        border: 1px solid var(--paper-15);
+        outline: none;
+        background: var(--paper-04);
+        color: var(--paper);
+        font: 0.8rem/1 Chivo Mono, monospace;
+      }
+
+      .faq-section {
+        padding: 8rem 0 0;
+      }
+
+      .faq-title {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .faq-list {
+        width: 100%;
+      }
+
+      .faq-item {
+        border-top: 1px solid var(--border);
+        padding: 0 1.5rem;
+      }
+
+      .faq-item:last-child {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .faq-question {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        padding: 1.5rem 0;
+      }
+
+      .faq-question::-webkit-details-marker { display: none; }
+
+      .faq-question-number {
+        color: var(--red);
+        flex: 0 0 auto;
+        font-size: 0.7rem;
+      }
+
+      .faq-question-text {
+        flex: 1;
+        font: 400 1.2rem/1.2 Chalet, sans-serif;
+      }
+
+      .faq-chevron {
+        color: var(--paper-35);
+        transition: transform 0.3s, color 0.3s;
+      }
+
+      .faq-item[open] .faq-chevron {
+        transform: rotate(180deg);
+        color: var(--red);
+      }
+
+      .faq-answer {
+        overflow: hidden;
+        color: var(--paper-70);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        max-width: 640px;
+        padding: 0 0 1.5rem 2.25rem;
+      }
+
+      .cta-section {
+        min-height: 976px;
+        padding: 12rem 0 16rem;
+        position: relative;
+        z-index: 10000;
+        overflow: hidden;
+        text-align: center;
+        border-top: 1px solid var(--border);
+      }
+
+      .cta-vortex-wrap {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 105vw;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+
+      .cta-vortex-img {
+        width: 100%;
+        display: block;
+      }
+
+      .cta-logo-wrap {
+        width: 65px;
+        height: 64px;
+        margin: 0 auto 3rem;
+        position: relative;
+        color: var(--red);
+      }
+
+      .cta-logo-glow {
+        position: absolute;
+        inset: 0;
+        filter: blur(18px);
+        opacity: 0.8;
+        animation: hdr-glow-pulse 3s ease-in-out infinite;
+      }
+
+      .cta-section h2 {
+        max-width: 600px;
+        margin: 0 auto 3rem;
+        font: 400 clamp(4rem, 8vw, 7rem)/0.9 Chalet, sans-serif;
+      }
+
+      .cta-section p {
+        margin: 0 0 3rem;
+        color: var(--paper-50);
+        font: 0.85rem/1.5 Chivo Mono, monospace;
+      }
+
+      .cta-btn {
+        width: min(100%, 500px);
+        padding: 2rem 3rem;
+        font-size: 1.3rem;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 4rem 0 10rem;
+        position: relative;
+        overflow: hidden;
+        z-index: 10000;
+        background: #0a0a0a;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .footer-logo {
+        height: 18px;
+        width: auto;
+        filter: invert(1) brightness(2);
+      }
+
+      .footer-brand p {
+        max-width: 280px;
+        margin: 1rem 0 0;
+        color: var(--paper-50);
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .footer-col h3 {
+        margin: 0 0 1.25rem;
+        color: var(--paper-40);
+        font-size: 0.75rem;
+      }
+
+      .footer-col ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .footer-col li {
+        margin-bottom: 0.6rem;
+      }
+
+      .footer-col a {
+        color: var(--paper-50);
+        text-decoration: none;
+        font-size: 0.85rem;
+      }
+
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border);
+        color: var(--paper-35);
+        position: relative;
+        z-index: 2;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--paper-50);
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--red);
+        animation: blink 1.5s step-end infinite;
+      }
+
+      .footer-watermark {
+        position: absolute;
+        right: -60px;
+        bottom: -80px;
+        width: 600px;
+        color: var(--paper);
+        opacity: 0.03;
+        pointer-events: none;
+      }
+
+      .asset-note {
+        position: absolute;
+        left: -9999px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+
+      @keyframes ticker {
+        to { transform: translateX(-50%); }
+      }
+
+      @keyframes watermark-glitch {
+        0%, 15%, 18%, 40%, 41.5%, 65%, 66.5%, 100% { transform: translateY(-50%) translate(0); filter: none; opacity: 0.08; }
+        15.5% { transform: translateY(-50%) translate(-10px) skew(-3deg); filter: hue-rotate(180deg) saturate(4); opacity: 0.15; }
+        16% { transform: translateY(-50%) translate(5px, -2px) skew(2deg); filter: hue-rotate(-90deg) brightness(1.5); opacity: 0.1; }
+        40.3% { transform: translateY(-50%) translate(12px) scaleX(1.02); filter: hue-rotate(120deg) saturate(5); opacity: 0.18; }
+        40.6% { transform: translateY(-50%) translate(-8px, 3px) scaleX(0.98); filter: hue-rotate(-45deg); opacity: 0.05; }
+        65.2% { transform: translateY(-50%) translate(-5px, -4px) skew(-5deg); filter: hue-rotate(200deg) saturate(3) brightness(1.4); opacity: 0.2; }
+        65.5% { transform: translateY(-50%) translate(7px, 2px) skew(2deg); filter: hue-rotate(-120deg); opacity: 0.04; }
+      }
+
+      @keyframes pupil-glitch {
+        0%, 40%, 41.5%, 75%, 76%, 100% { opacity: 1; transform: translate(0); }
+        40.3% { opacity: 0.6; transform: translate(-3px); }
+        40.8% { opacity: 0.3; transform: translate(2px, -1px); }
+        75.2% { opacity: 0.7; transform: translate(1px, 2px); }
+        75.6% { opacity: 0.4; transform: translate(-2px, -1px); }
+      }
+
+      @keyframes disconnect {
+        0%, 80%, 100% { opacity: 0.5; transform: translate(0); }
+        90% { opacity: 0.15; transform: translate(-10px, 4px); }
+      }
+
+      @keyframes stepfill {
+        from { height: 0; }
+        to { height: 100%; }
+      }
+
+      @keyframes terminalLineIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      @keyframes hdr-glow-pulse {
+        0%, 100% { opacity: 0.45; filter: blur(16px); }
+        50% { opacity: 0.78; filter: blur(22px); }
+      }
+
+      @media (max-width: 1280px) {
+        .container,
+        .section-divider,
+        .stats-strip {
+          max-width: 90%;
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .content-lines::before { left: 5%; }
+        .content-lines::after { right: 5%; }
+
+        .site-nav,
+        .hero-content {
+          max-width: 90%;
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .container { padding: 0 2rem; }
+        .how-stepper { grid-template-columns: 1fr 1fr; }
+        .terminal-blueprint-left,
+        .terminal-blueprint-right { display: none; }
+        .illust-grid { grid-template-columns: repeat(2, 1fr); }
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+        .footer-brand { grid-column: 1 / -1; }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          max-width: 100%;
+          padding: 0 1.25rem;
+        }
+
+        .section-divider {
+          max-width: calc(100% - 2.5rem);
+          margin-left: 1.25rem;
+          margin-right: 1.25rem;
+        }
+
+        .content-lines::before { left: 1.25rem; }
+        .content-lines::after { right: 1.25rem; }
+
+        .site-nav {
+          max-width: 100%;
+          padding: 1rem 1.25rem;
+        }
+
+        .site-links a:not(.btn-chamfer) {
+          display: none;
+        }
+
+        .site-links .btn-chamfer {
+          display: none;
+        }
+
+        .hero {
+          min-height: 720px;
+        }
+
+        .hero-content {
+          max-width: 100%;
+          padding: 0 1.25rem;
+        }
+
+        .hero h1 {
+          font-size: clamp(3.5rem, 14vw, 7rem);
+        }
+
+        .hero-sub {
+          font-size: 1rem;
+        }
+
+        .hero-actions {
+          width: 100%;
+          flex-wrap: wrap;
+        }
+
+        .hero-actions .btn-chamfer {
+          flex: 1 1 100%;
+          padding: 1.25rem 2rem;
+          font-size: 1rem;
+        }
+
+        .hero-ticker-inner {
+          gap: 2rem;
+        }
+
+        .hero-watermark {
+          width: 80%;
+          right: -10%;
+        }
+
+        .spacer-red-dark { height: 45px; }
+        .problem-top { padding: 1.5rem 1.25rem; }
+        .problem-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+        .problem-eye-col { grid-row: auto; min-height: 280px; border-right: 0; border-bottom: 1px solid var(--border); }
+        .problem-eye-wrapper { width: 280px; height: 280px; }
+        .problem-card { border-right: 0 !important; border-bottom: 1px solid var(--border) !important; padding: 1.25rem; }
+        .problem-card:last-child { border-bottom: 0 !important; }
+        .offline-section { padding: 4rem 0; }
+        .offline-section::before { display: none; }
+        .offline-layout { grid-template-columns: 1fr; gap: 2rem; }
+        .offline-visual { min-height: 300px; border-bottom: 1px solid var(--border); }
+        .offline-content { text-align: center; }
+        .offline-content p { margin-left: auto; margin-right: auto; }
+        .three-col-grid { grid-template-columns: 1fr; }
+        .three-col-divider { width: 100%; height: 1px; }
+        .how-section { padding-top: 4rem; }
+        .how-stepper { grid-template-columns: 1fr; }
+        .how-illustration { min-height: 400px; order: 2; border-right: 1px solid var(--border); }
+        .how-steps-left { order: 1; }
+        .illust-features { padding: 4rem 0; }
+        .illust-grid { grid-template-columns: 1fr; gap: 1rem; margin-top: 2rem; }
+        .stats-strip { grid-template-columns: 1fr; max-width: calc(100% - 2.5rem); }
+        .stat-box { border-right: 0; border-bottom: 1px solid var(--border); padding: 1.5rem 1.25rem; }
+        .stat-box:last-child { border-bottom: 0; }
+        .terminal-section { padding: 4rem 0; }
+        .terminal-body { padding: 1rem; font-size: 0.75rem; }
+        .terminal-body pre { font-size: 0.48rem; }
+        .promise-section { padding: 4rem 0; }
+        .ea-form { flex-direction: column; }
+        .faq-section { padding: 4rem 0 0; }
+        .faq-title { margin-bottom: 2rem; }
+        .faq-question { gap: 1rem; }
+        .faq-question-text { font-size: 1.05rem; }
+        .faq-answer { padding-left: 2.5rem; font-size: 0.85rem; }
+        .cta-section { min-height: 760px; padding: 6rem 0 8rem; }
+        .cta-section h2 { font-size: clamp(2.9rem, 13vw, 7rem); }
+        .cta-btn { padding: 1.25rem 2rem; font-size: 1rem; }
+        .footer-grid { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; align-items: flex-start; gap: 1rem; }
+        .footer-watermark { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" aria-hidden="true" style="display: none">
+      <filter id="grainy" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="4" stitchTiles="stitch" seed="0">
+          <animate attributeName="seed" from="0" to="100" dur="10s" repeatCount="indefinite"></animate>
+        </feTurbulence>
+        <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1 0 0 0 0"></feColorMatrix>
+      </filter>
+    </svg>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="rgb-fringe" aria-hidden="true"></div>
+
+    <section class="hero is-visible">
+      <header class="site-header" role="banner">
+        <nav class="site-nav" aria-label="Main navigation">
+          <a class="site-logo" href="#" aria-label="Rig - Home"><img src="./rig-assets/rig-wordmark.svg" alt="" width="60" height="22" /></a>
+          <div class="site-links">
+            <a href="#capabilities">Blog</a>
+            <a class="btn-chamfer btn-dark" href="#early-access">Get Early Access</a>
+          </div>
+        </nav>
+      </header>
+
+      <svg class="hero-watermark" viewBox="0 0 163 160" aria-hidden="true">
+        <path d="M162.809 89.412H82.684c-7.9 0-15.478 3.14-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.043v40.811h19.26v-33.546c0-9.638.173-18.449.173-18.449h90.465V89.412Z" fill="currentColor"/>
+        <path d="M162.808 118.61h-50.993c-7.9 0-15.478 3.14-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.044v11.613h22.867v-15.945h57.899V118.61Z" fill="currentColor"/>
+        <path d="M162.809 146.002c-18.103 0-28.242-.006-46.345.002V160h46.345v-13.998Z" fill="currentColor"/>
+        <path d="M162.809.003H70.886C52.08.003 34.045 7.476 20.75 20.777 7.464 34.07 0 52.095 0 70.889v89.108h15.785V41.537h147.027V0l-.003.003Z" fill="currentColor"/>
+        <path d="M162.809 51.87H56.804c-7.9 0-15.478 3.141-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.044v78.353h14.785V78.869h120.993V51.867v.003Z" fill="currentColor"/>
+      </svg>
+
+      <div class="hero-content">
+        <h1 class="display">On-device AI coding.<br />No cloud. No limits.</h1>
+        <p class="hero-sub">A complete coding agent that runs on your own machine. No API dependency. No usage meter.</p>
+        <div class="hero-actions">
+          <a class="btn-chamfer btn-dark" href="#early-access">Join Waitlist</a>
+          <a class="btn-chamfer btn-outline" href="#our-approach">Our Approach</a>
+        </div>
+      </div>
+
+      <div class="hero-ticker">
+        <div class="hero-ticker-inner">
+          <span>Zero telemetry</span><span>•</span><span>Native inference</span><span>•</span><span>100% offline</span><span>•</span><span>Your hardware, your rules</span><span>•</span><span>No tokens, no limits</span><span>•</span><span>Specialized SLM</span><span>•</span><span>Unbounded context</span><span>•</span>
+          <span>Zero telemetry</span><span>•</span><span>Native inference</span><span>•</span><span>100% offline</span><span>•</span><span>Your hardware, your rules</span><span>•</span><span>No tokens, no limits</span><span>•</span><span>Specialized SLM</span><span>•</span><span>Unbounded context</span><span>•</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="content-lines"></div>
+    <main class="content">
+      <div class="spacer-red-dark"><div class="section-divider" style="position: relative; top: 4rem"></div></div>
+
+      <section class="problem-section is-visible" id="problem">
+        <div class="container problem-outer">
+          <div class="problem-top">
+            <div class="badge"><span>×</span><span>The problem</span></div>
+            <h2 class="display section-title problem-headline">You don't own your AI.<br />And you're being watched.</h2>
+          </div>
+          <div class="problem-divider"></div>
+          <div class="problem-grid">
+            <div class="problem-eye-col">
+              <div class="problem-eye-wrapper">
+                <svg viewBox="0 0 480 480" width="100%" height="100%" aria-hidden="true">
+                  <defs>
+                    <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+                      <stop offset="0" stop-color="#ed462d" stop-opacity="0.5"/>
+                      <stop offset="1" stop-color="#ed462d" stop-opacity="0"/>
+                    </radialGradient>
+                  </defs>
+                  <circle cx="240" cy="240" r="178" fill="url(#eyeGlow)"/>
+                  <path d="M70 240c48-82 106-123 170-123s121 41 170 123c-49 82-106 123-170 123S118 322 70 240Z" fill="none" stroke="rgba(240,237,230,.38)" stroke-width="2"/>
+                  <circle cx="240" cy="240" r="82" fill="none" stroke="rgba(240,237,230,.22)" stroke-width="1"/>
+                  <circle class="eye-pupil" cx="240" cy="240" r="38" fill="#ed462d"/>
+                  <path d="M52 88h120M52 112h82M308 88h120M344 112h76M70 386h108M314 386h96" stroke="rgba(240,237,230,.2)" stroke-width="2"/>
+                  <text x="70" y="74" fill="#ed462d" font-family="Chivo Mono" font-size="12">MONITORING ACTIVE</text>
+                  <text x="326" y="374" fill="rgba(240,237,230,.35)" font-family="Chivo Mono" font-size="12">TELEMETRY</text>
+                </svg>
+              </div>
+            </div>
+            <article class="problem-card"><div class="problem-card-header"><span class="problem-card-label">Data extraction</span><span class="problem-card-number">001</span></div><h3>They train on your code.</h3><p>Every prompt, file, and fix moves through infrastructure you do not control. Your work becomes someone else's training signal.</p></article>
+            <article class="problem-card"><div class="problem-card-header"><span class="problem-card-label">Artificial scarcity</span><span class="problem-card-number">002</span></div><h3>They meter your ambition.</h3><p>Slowdowns, overages, and caps appear right when you are deep in a sprint and need momentum most.</p></article>
+            <article class="problem-card"><div class="problem-card-header"><span class="problem-card-label">Silent downgrades</span><span class="problem-card-number">003</span></div><h3>They change the model.</h3><p>The service can shift quality under peak load. You keep paying while the experience quietly changes.</p></article>
+            <article class="problem-card"><div class="problem-card-header"><span class="problem-card-label">Cloud dependency</span><span class="problem-card-number">004</span></div><h3>They control your flow.</h3><p>Every completion makes a round trip across the network, turning tiny interruptions into daily drag.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="offline-section three-col" id="intro-rig">
+        <div class="container intro-flex">
+          <div class="intro-headline-wrap">
+            <div class="badge"><span>×</span><span>Introducing Rig</span></div>
+            <h2 class="display section-title">Everything local.<br />Own your AI.</h2>
+            <p class="section-copy">A complete AI coding agent running on your own hardware. The point is not another chatbot; it is an owned system: model, context, tools, and runtime.</p>
+          </div>
+          <div class="intro-diagram">
+            <svg class="system-diagram" viewBox="0 0 1000 480" role="img" aria-label="Local AI system diagram">
+              <rect x="24" y="42" width="250" height="380" fill="rgba(240,237,230,.04)" stroke="rgba(240,237,230,.14)"/>
+              <text x="50" y="82" fill="#f0ede6" font-family="Chivo Mono" font-size="16">YOUR MACHINE</text>
+              <text x="50" y="122" fill="rgba(240,237,230,.55)" font-family="Chivo Mono" font-size="13">YOUR CODE</text>
+              <text x="50" y="152" fill="rgba(240,237,230,.55)" font-family="Chivo Mono" font-size="13">KEYSTROKES · FILES</text>
+              <rect x="362" y="76" width="276" height="292" rx="12" fill="rgba(237,70,45,.08)" stroke="#ed462d"/>
+              <text x="462" y="132" fill="#ed462d" font-family="Chalet" font-size="64">RIG</text>
+              <text x="422" y="184" fill="#22c55e" font-family="Chivo Mono" font-size="15">✓ LOCAL INFERENCE</text>
+              <rect x="402" y="232" width="70" height="52" fill="rgba(240,237,230,.06)" stroke="rgba(240,237,230,.18)"/><text x="420" y="263" fill="#f0ede6" font-family="Chivo Mono" font-size="13">GPU</text>
+              <rect x="490" y="232" width="70" height="52" fill="rgba(240,237,230,.06)" stroke="rgba(240,237,230,.18)"/><text x="505" y="263" fill="#f0ede6" font-family="Chivo Mono" font-size="13">INDEX</text>
+              <rect x="578" y="232" width="70" height="52" fill="rgba(240,237,230,.06)" stroke="rgba(240,237,230,.18)"/><text x="590" y="263" fill="#f0ede6" font-family="Chivo Mono" font-size="13">MODEL</text>
+              <text x="420" y="326" fill="rgba(240,237,230,.55)" font-family="Chivo Mono" font-size="13">RESPONSE &lt;300ms · ON DEVICE</text>
+              <rect x="726" y="42" width="250" height="380" fill="rgba(240,237,230,.02)" stroke="rgba(240,237,230,.10)"/>
+              <text x="804" y="82" fill="rgba(240,237,230,.35)" font-family="Chivo Mono" font-size="16">CLOUD</text>
+              <text x="786" y="122" fill="rgba(240,237,230,.28)" font-family="Chivo Mono" font-size="13">TELEMETRY</text>
+              <path d="M274 240h88M638 240h88" stroke="#ed462d" stroke-width="2" stroke-dasharray="8 8"/>
+              <path d="M680 206l58 68M738 206l-58 68" stroke="#ed462d" stroke-width="3"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="offline-section">
+        <div class="container offline-layout">
+          <div class="offline-visual"><div class="globe"></div></div>
+          <div class="offline-content">
+            <div class="badge" style="margin-left:0"><span>×</span><span>Offline</span></div>
+            <h2 class="display">Work offline</h2>
+            <p>Flights, spotty Wi-Fi, network outages, and blocked accounts no longer interrupt the work. The loop is local, so the loop keeps moving.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="offline-section three-col">
+        <div class="container three-col-grid">
+          <div class="three-col-cell"><div><div class="badge"><span>×</span><span>Unlimited</span></div><h3 class="display three-col-heading">Remove the meter</h3><p class="three-col-text">Refactor the whole codebase. Run loops. Explore ideas all day without counting tokens.</p></div></div>
+          <div class="three-col-divider"></div>
+          <div class="three-col-cell"><div><div class="badge"><span>×</span><span>Privacy</span></div><h3 class="display three-col-heading">Sever the connection</h3><p class="three-col-text">Code, keystrokes, and files stay local. Not anonymized, not aggregated, not sent.</p></div></div>
+          <div class="three-col-divider"></div>
+          <div class="three-col-cell"><div><div class="badge"><span>×</span><span>Latency</span></div><h3 class="display three-col-heading">Stop waiting</h3><p class="three-col-text">No data-center round trip. Fast inference changes the feel of every coding session.</p></div></div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="how-section" id="our-approach">
+        <div class="container">
+          <div class="how-intro">
+            <div class="badge"><span>×</span><span>Our approach</span></div>
+            <h2 class="display section-title">Purpose beats scale.</h2>
+            <p class="section-copy">The system is designed around one job: real coding work. Narrow the domain, keep the context local, and make the runtime fast enough to feel native.</p>
+          </div>
+          <div class="how-stepper">
+            <div class="how-steps-left">
+              <button class="how-step active" type="button"><span class="how-step-num">STEP 01</span><h3>A focused model, trained specifically for coding.</h3><p>Every parameter is pointed toward planning, tool use, structured edits, and engineering decisions.</p></button>
+              <button class="how-step" type="button"><span class="how-step-num">STEP 02</span><h3>Full intelligence, compressed to fit your machine.</h3><p>The model is shaped to run on consumer hardware while preserving reasoning patterns that matter.</p></button>
+              <button class="how-step" type="button"><span class="how-step-num">STEP 03</span><h3>A custom runtime, engineered for Apple Silicon.</h3><p>Model, context engine, and tools operate as one coordinated local system.</p></button>
+            </div>
+            <div class="how-illustration">
+              <div class="shader-card">
+                <b>TRAINING FOCUS</b>
+                <span class="bright">Parameters dedicated to code</span><br /><br />
+                Rig &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="red">████████████████████</span> 100%<br />
+                Generic &nbsp; ████░░░░░░░░░░░░░░░░ ~20%<br /><br />
+                <span class="green">✓</span> planning<br />
+                <span class="green">✓</span> repo context<br />
+                <span class="green">✓</span> tool calls<br />
+                <span class="green">✓</span> structured edits
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="illust-features" id="capabilities">
+        <div class="container">
+          <div class="feature-head">
+            <div class="badge"><span>×</span><span>Capabilities</span></div>
+            <h2 class="display section-title">Your machine, unleashed.</h2>
+          </div>
+          <div class="illust-grid">
+            <article class="illust-card"><svg class="illust-icon" viewBox="0 0 64 64"><path d="M12 16h40v32H12zM20 24h24M20 32h18M20 40h10" fill="none" stroke="currentColor" stroke-width="3"/></svg><div class="illust-label">[ 01 ]</div><h3>Understands your architecture.</h3><p>Builds a connected model of modules, dependencies, and relationships across files.</p></article>
+            <article class="illust-card"><svg class="illust-icon" viewBox="0 0 64 64"><path d="M14 32h14l6-12 8 24 6-12h8" fill="none" stroke="currentColor" stroke-width="3"/></svg><div class="illust-label">[ 02 ]</div><h3>Tracks relationships, prevents breakage.</h3><p>Edits respect contracts, type boundaries, and dependency graphs.</p></article>
+            <article class="illust-card"><svg class="illust-icon" viewBox="0 0 64 64"><path d="M16 48l12-32 8 18 12-8-10 32-10-18z" fill="none" stroke="currentColor" stroke-width="3"/></svg><div class="illust-label">[ 03 ]</div><h3>Strategizes before acting.</h3><p>Explore, plan, and execute workflows keep changes deliberate.</p></article>
+            <article class="illust-card"><svg class="illust-icon" viewBox="0 0 64 64"><path d="M12 18h20v14H12zM32 32h20v14H32zM22 32v6h10" fill="none" stroke="currentColor" stroke-width="3"/></svg><div class="illust-label">[ 04 ]</div><h3>Executes complex coding workflows.</h3><p>Coordinates tools, commands, code edits, and research as needed.</p></article>
+            <article class="illust-card"><svg class="illust-icon" viewBox="0 0 64 64"><path d="M18 14h28v38H18zM24 22h16M24 30h16M24 38h10" fill="none" stroke="currentColor" stroke-width="3"/></svg><div class="illust-label">[ 05 ]</div><h3>Isolates agent sandboxes.</h3><p>Parallel experiments stay isolated until you merge the work.</p></article>
+            <article class="illust-card"><svg class="illust-icon" viewBox="0 0 64 64"><path d="M12 42c8-20 32-20 40 0M24 42l8-18 8 18" fill="none" stroke="currentColor" stroke-width="3"/></svg><div class="illust-label">[ 06 ]</div><h3>Runs at full speed.</h3><p>Local inference makes the UI feel like an instrument, not a waiting room.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="stats-strip">
+        <div class="stat-box"><div class="mono stat-label">Latency</div><div class="display stat-value">0ms</div><div class="mono stat-note">No round-trip required</div></div>
+        <div class="stat-box"><div class="mono stat-label">Privacy</div><div class="display stat-value">100%</div><div class="mono stat-note">Air-gapped by design</div></div>
+        <div class="stat-box"><div class="mono stat-label">Cost / token</div><div class="display stat-value">$0</div><div class="mono stat-note">Your GPU, your tokens</div></div>
+        <div class="stat-box"><div class="mono stat-label">Uptime</div><div class="display stat-value">Local</div><div class="mono stat-note">No cloud dependency</div></div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="terminal-section grid-bg">
+        <div class="container">
+          <div class="term-header">
+            <div class="badge"><span>×</span><span>Engineered intelligence</span></div>
+            <h2 class="display section-title">Built for control freaks</h2>
+          </div>
+          <div class="terminal-artifact">
+            <div class="terminal-blueprint-left">
+              <div class="bp-anno bp-at-34"><span><span class="bp-title">Custom model</span>Optimized for hardware</span></div>
+              <div class="bp-anno bp-at-50"><span><span class="bp-title">Inference</span>Cross-OS using Rust</span></div>
+              <div class="bp-anno bp-at-66"><span><span class="bp-title">Context graph</span>Repo-wide understanding</span></div>
+            </div>
+            <div class="terminal-blueprint-right">
+              <div class="bp-anno bp-at-34"><span><span class="bp-title">Terminal UI</span>Fast local control</span></div>
+              <div class="bp-anno bp-at-50"><span><span class="bp-title">Heavily tuned</span>Consistent tool calls</span></div>
+              <div class="bp-anno bp-at-66"><span><span class="bp-title">Opinionated</span>Focused correctness</span></div>
+            </div>
+            <div class="monitor-casing">
+              <div class="monitor-vents"><span class="monitor-vent"></span><span class="monitor-vent"></span><span class="monitor-vent"></span><span class="monitor-vent"></span></div>
+              <div class="monitor-screen-bezel">
+                <div class="terminal-window">
+                  <div class="terminal-bar"><div class="terminal-dots"><span></span><span></span><span></span></div><div class="terminal-title">rig://localhost · offline</div></div>
+                  <div class="terminal-body">
+                    <div class="term-line"><span class="prompt">λ</span> <span class="cmd">rig init</span></div>
+                    <pre class="term-line">  ██████╗  ██╗  ██████╗
+  ██╔══██╗ ██║ ██╔════╝
+  ██████╔╝ ██║ ██║ ███╗
+  ██╔══██╗ ██║ ██║  ██║
+  ██║  ██║ ██║ ╚██████║
+  ╚═╝  ╚═╝ ╚═╝  ╚═════╝</pre>
+                    <div class="term-line">> Scanning hardware...</div>
+                    <div class="term-line">> Found M4 · 16GB RAM</div>
+                    <div class="term-line">> Loading RIG Model <span class="success">OK</span></div>
+                    <div class="term-line">> Indexing 2,418 files · 87,102 symbols</div>
+                    <div class="term-line"><span class="success">✓</span> Ready. Network: <span class="term-off">OFF</span> · Telemetry: <span class="term-off">OFF</span></div>
+                    <div class="term-line"><span class="prompt">λ</span> <span id="typing-text">explain this regex to me</span><span class="cursor-block"></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="monitor-bezel-bottom"><span>Neural Engine</span><span class="monitor-led"></span><span>Local Ops</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="promise-section" id="early-access">
+        <div class="container ea-content">
+          <div class="badge"><span>×</span><span>Early access</span></div>
+          <h2 class="display section-title">Rig is almost ready.</h2>
+          <p class="section-copy">Engineers are being invited to run it on real code and help shape what ships.</p>
+          <form class="ea-form">
+            <input class="email-input" type="email" placeholder="you@company.com" />
+            <button class="btn-chamfer btn-red" type="button">JOIN WAITLIST</button>
+          </form>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+
+      <section class="faq-section">
+        <div class="container">
+          <div class="faq-title"><div class="badge"><span>×</span><span>FAQ</span></div><h2 class="display section-title">Frequently asked questions.</h2></div>
+          <div class="faq-list">
+            <details class="faq-item"><summary class="faq-question"><span class="mono faq-question-number">01</span><span class="faq-question-text">What is this copyweb demo?</span><span class="faq-chevron">⌄</span></summary><div class="faq-answer">A local reconstruction study of Rig's visual system for IGNAI design exploration.</div></details>
+            <details class="faq-item"><summary class="faq-question"><span class="mono faq-question-number">02</span><span class="faq-question-text">Which assets were localized?</span><span class="faq-chevron">⌄</span></summary><div class="faq-answer">The wordmark, vortex image, and fonts are loaded locally. Product-specific videos and private screenshots still need source files.</div></details>
+            <details class="faq-item"><summary class="faq-question"><span class="mono faq-question-number">03</span><span class="faq-question-text">How close is the structure?</span><span class="faq-chevron">⌄</span></summary><div class="faq-answer">The major section stack, hero ticker, problem grid, system diagram, approach stepper, stats, terminal, FAQ, CTA, and footer are represented.</div></details>
+            <details class="faq-item"><summary class="faq-question"><span class="mono faq-question-number">04</span><span class="faq-question-text">What remains missing?</span><span class="faq-chevron">⌄</span></summary><div class="faq-answer">The original shader/canvas effects are approximated with CSS and SVG. A perfect copy would need custom canvas work and original interaction timing.</div></details>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-divider"></div>
+      <div class="spacer-red-dark"></div>
+
+      <section class="cta-section">
+        <div class="cta-vortex-wrap"><picture><source srcset="./rig-assets/cta-vortex.webp" type="image/webp" /><img class="cta-vortex-img" src="./rig-assets/cta-vortex.png" alt="" loading="lazy" /></picture></div>
+        <div class="container cta-container">
+          <div class="cta-logo-wrap">
+            <svg class="cta-logo-glow" viewBox="0 0 163 160" fill="currentColor"><path d="M162.809 89.412H82.684c-7.9 0-15.478 3.14-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.043v40.811h19.26v-33.546c0-9.638.173-18.449.173-18.449h90.465V89.412Z"/><path d="M162.809.003H70.886C52.08.003 34.045 7.476 20.75 20.777 7.464 34.07 0 52.095 0 70.889v89.108h15.785V41.537h147.027V0l-.003.003Z"/></svg>
+            <svg viewBox="0 0 163 160" fill="currentColor"><path d="M162.809 89.412H82.684c-7.9 0-15.478 3.14-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.043v40.811h19.26v-33.546c0-9.638.173-18.449.173-18.449h90.465V89.412Z"/><path d="M162.808 118.61h-50.993c-7.9 0-15.478 3.14-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.044v11.613h22.867v-15.945h57.899V118.61Z"/><path d="M162.809 146.002c-18.103 0-28.242-.006-46.345.002V160h46.345v-13.998Z"/><path d="M162.809.003H70.886C52.08.003 34.045 7.476 20.75 20.777 7.464 34.07 0 52.095 0 70.889v89.108h15.785V41.537h147.027V0l-.003.003Z"/><path d="M162.809 51.87H56.804c-7.9 0-15.478 3.141-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.044v78.353h14.785V78.869h120.993V51.867v.003Z"/></svg>
+          </div>
+          <h2 class="display">Break free from big AI</h2>
+          <p>No credit card. No usage meter.</p>
+          <a class="btn-chamfer btn-red cta-btn" href="#early-access">Request Early Access</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand"><img class="footer-logo" src="./rig-assets/rig-wordmark.svg" alt="Rig" /><p>Local-first AI for developers who refuse to depend on the cloud.</p></div>
+          <div class="footer-col"><h3 class="mono">CONNECT</h3><ul><li><a href="#">Twitter</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+          <div class="footer-col"><h3 class="mono">LEGAL</h3><ul><li><a href="#">Privacy Policy</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><span class="mono">© 2026 RIG AI INC. ALL RIGHTS RESERVED.</span><div class="status mono"><span class="status-dot"></span><span>ALL SYSTEMS LOCAL</span></div></div>
+      </div>
+      <svg class="footer-watermark" viewBox="0 0 163 160" fill="none" aria-hidden="true"><path d="M162.809 89.412H82.684c-7.9 0-15.478 3.14-21.063 8.73-5.577 5.583-8.71 13.152-8.71 21.043v40.811h19.26v-33.546c0-9.638.173-18.449.173-18.449h90.465V89.412Z" stroke="currentColor"/><path d="M162.809.003H70.886C52.08.003 34.045 7.476 20.75 20.777 7.464 34.07 0 52.095 0 70.889v89.108h15.785V41.537h147.027V0l-.003.003Z" stroke="currentColor"/></svg>
+      <p class="asset-note">Missing assets: original shader/canvas implementation, proprietary interaction source, and any private product screenshots/videos.</p>
+    </footer>
+
+    <script>
+      (() => {
+        const steps = [...document.querySelectorAll(".how-step")];
+        let active = 0;
+        const activate = (index) => {
+          steps.forEach((step, i) => step.classList.toggle("active", i === index));
+          active = index;
+        };
+        steps.forEach((step, i) => step.addEventListener("click", () => activate(i)));
+        setInterval(() => activate((active + 1) % steps.length), 6000);
+      })();
+
+      (() => {
+        const target = document.getElementById("typing-text");
+        if (!target) return;
+        const prompts = ["explain this regex to me", "refactor auth middleware", "write tests for the API layer", "find the memory leak"];
+        let promptIndex = 0;
+        let charIndex = 0;
+        let deleting = false;
+        setInterval(() => {
+          const text = prompts[promptIndex];
+          if (!deleting) {
+            charIndex += 1;
+            if (charIndex >= text.length + 12) deleting = true;
+          } else {
+            charIndex -= 1;
+            if (charIndex <= 0) {
+              deleting = false;
+              promptIndex = (promptIndex + 1) % prompts.length;
+            }
+          }
+          target.textContent = text.slice(0, Math.max(0, Math.min(charIndex, text.length)));
+        }, deleting ? 45 : 80);
+      })();
+    </script>
+  </body>
+</html>

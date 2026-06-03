@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Copyweb Demo - State of AI at Work</title>
+    <style>
+      :root {
+        --ink: #172033;
+        --muted: #687086;
+        --line: #e7e2da;
+        --paper: #fbf7ef;
+        --rose: #ff6b6b;
+        --peach: #ffc3a1;
+        --mint: #bfe9d4;
+        --sky: #b7d9ff;
+        --violet: #cfc1ff;
+        --green: #285f46;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      .notice {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 10px 20px;
+        background: #172033;
+        color: #fff7ec;
+        font-size: 13px;
+        text-align: center;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+      }
+
+      .brand-mark {
+        display: grid;
+        grid-template-columns: repeat(2, 10px);
+        gap: 4px;
+      }
+
+      .brand-mark span {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--rose);
+      }
+
+      .brand-mark span:nth-child(2) { background: var(--peach); }
+      .brand-mark span:nth-child(3) { background: var(--mint); }
+
+      nav {
+        display: flex;
+        gap: 22px;
+        font-size: 14px;
+      }
+
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 86vh;
+        display: grid;
+        align-items: end;
+        border-top: 1px solid rgba(23, 32, 51, 0.08);
+      }
+
+      .hero-inner {
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.02fr 0.98fr;
+        gap: 56px;
+        align-items: center;
+        padding: 66px 0 76px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 22px;
+        color: #8a3b2e;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+        font-size: 13px;
+      }
+
+      .eyebrow:before {
+        content: "";
+        width: 34px;
+        height: 2px;
+        background: var(--rose);
+      }
+
+      h1 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(58px, 8vw, 118px);
+        line-height: 0.92;
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        max-width: 620px;
+        margin-top: 28px;
+        color: #394155;
+        font-size: 21px;
+        line-height: 1.45;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        margin-top: 34px;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        border: 1px solid var(--ink);
+        border-radius: 999px;
+        padding: 14px 22px;
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 800;
+        background: transparent;
+      }
+
+      .button.primary {
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .hero-art {
+        min-height: 560px;
+        position: relative;
+      }
+
+      .chapter-card {
+        position: absolute;
+        width: 62%;
+        min-width: 280px;
+        padding: 24px;
+        border: 2px solid rgba(23, 32, 51, 0.14);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.62);
+        box-shadow: 0 30px 80px rgba(23, 32, 51, 0.12);
+        backdrop-filter: blur(12px);
+      }
+
+      .chapter-card strong {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 42px;
+        line-height: 1;
+        margin-bottom: 14px;
+      }
+
+      .chapter-card p {
+        margin: 0;
+        color: #3f4658;
+        line-height: 1.5;
+      }
+
+      .card-a { top: 18px; left: 8%; background: #fff5ed; }
+      .card-b { top: 180px; right: 0; background: #eef8f2; }
+      .card-c { bottom: 12px; left: 0; background: #eef5ff; }
+
+      .orb {
+        position: absolute;
+        border-radius: 999px;
+        opacity: 0.82;
+        filter: blur(0.2px);
+      }
+
+      .orb.one { width: 110px; height: 110px; background: var(--rose); right: 18%; top: 8%; }
+      .orb.two { width: 80px; height: 80px; background: var(--violet); left: 4%; top: 44%; }
+      .orb.three { width: 140px; height: 140px; background: var(--peach); right: 10%; bottom: 0; }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 58px;
+        width: min(1180px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 80px 0;
+      }
+
+      aside {
+        position: sticky;
+        top: 64px;
+        height: max-content;
+        padding: 22px 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      aside a {
+        display: block;
+        padding: 12px 0;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      aside a:first-child {
+        color: var(--ink);
+        font-weight: 800;
+      }
+
+      section.report {
+        padding: 80px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-label {
+        color: #a44a37;
+        font-weight: 900;
+        margin-bottom: 18px;
+      }
+
+      h2 {
+        max-width: 780px;
+        margin: 0 0 24px;
+        font-family: Georgia, serif;
+        font-size: clamp(36px, 5vw, 68px);
+        line-height: 1;
+        letter-spacing: 0;
+      }
+
+      .lede {
+        max-width: 720px;
+        color: #444d62;
+        font-size: 20px;
+        line-height: 1.55;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 36px;
+      }
+
+      .stat {
+        min-height: 190px;
+        padding: 24px;
+        border-radius: 24px;
+        border: 1px solid rgba(23, 32, 51, 0.12);
+        background: #fffaf3;
+      }
+
+      .stat:nth-child(2) { background: #eff9f4; }
+      .stat:nth-child(3) { background: #f0f5ff; }
+
+      .stat b {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 68px;
+        line-height: 1;
+      }
+
+      .stat span {
+        display: block;
+        margin-top: 16px;
+        color: #51596c;
+        line-height: 1.45;
+      }
+
+      .story-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 38px;
+      }
+
+      .panel {
+        padding: 28px;
+        border: 1px solid rgba(23, 32, 51, 0.12);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.52);
+      }
+
+      .panel h3 {
+        margin: 0 0 12px;
+        font-size: 24px;
+      }
+
+      .panel p {
+        margin: 0;
+        color: #4c5467;
+        line-height: 1.55;
+      }
+
+      .timeline {
+        margin-top: 42px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .step {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 22px;
+        align-items: start;
+        padding: 24px;
+        border-radius: 22px;
+        background: #fff;
+        border: 1px solid var(--line);
+      }
+
+      .step-num {
+        width: 54px;
+        height: 54px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 900;
+      }
+
+      footer {
+        padding: 70px 24px;
+        color: #fff;
+        background: var(--ink);
+        text-align: center;
+      }
+
+      footer h2 {
+        margin-inline: auto;
+      }
+
+      @media (max-width: 860px) {
+        header { align-items: flex-start; }
+        nav { display: none; }
+        .hero-inner, .layout, .story-grid { grid-template-columns: 1fr; }
+        .hero-art { min-height: 470px; }
+        aside { position: relative; top: auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 18px; }
+        .stats { grid-template-columns: 1fr; }
+        .chapter-card { width: 78%; }
+        .card-b { top: 150px; }
+        .card-c { bottom: 4px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="notice">Copyweb study: 原站的专有插画/视频未本地化，这里用原创 CSS 图形替代。若要更贴近原站，请补充原图、报告图表与视频素材。</div>
+    <header>
+      <div class="brand"><span class="brand-mark"><span></span><span></span><span></span></span> AI Work Report</div>
+      <nav>
+        <a href="#intro">Introduction</a>
+        <a href="#signals">Signals</a>
+        <a href="#chapters">Chapters</a>
+        <a href="#takeaways">Takeaways</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="intro">
+        <div class="hero-inner">
+          <div>
+            <p class="eyebrow">State of AI at Work</p>
+            <h1>AI is now part of the team.</h1>
+            <p class="hero-copy">A report-style long page for community insights, event retrospectives, and trend observation. The structure borrows the feeling of chaptered data storytelling, then adapts it for IGNAI.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="#signals">Read the signals</a>
+              <a class="button" href="#chapters">View chapters</a>
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="orb one"></div>
+            <div class="orb two"></div>
+            <div class="orb three"></div>
+            <article class="chapter-card card-a"><strong>01</strong><p>Workers move from experimenting alone to coordinating AI workflows across teams.</p></article>
+            <article class="chapter-card card-b"><strong>57%</strong><p>More teams now expect AI literacy to become a visible operating habit.</p></article>
+            <article class="chapter-card card-c"><strong>2026</strong><p>The next advantage is not tool access, but organizational practice.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <div class="layout">
+        <aside>
+          <a href="#intro">Introduction</a>
+          <a href="#signals">AI signals</a>
+          <a href="#chapters">Chapter flow</a>
+          <a href="#takeaways">Takeaways</a>
+        </aside>
+
+        <div>
+          <section class="report" id="signals">
+            <div class="section-label">01 / SIGNALS</div>
+            <h2>AI work is becoming visible, measurable, and cultural.</h2>
+            <p class="lede">The page pattern works because every section has one large narrative claim, one supporting paragraph, and a set of cards or illustrations that make the idea scannable while scrolling.</p>
+            <div class="stats">
+              <div class="stat"><b>3x</b><span>Teams ask for repeatable prompts, playbooks, and shared operating rituals.</span></div>
+              <div class="stat"><b>41%</b><span>Communities need examples, not abstract principles, to spread AI practice.</span></div>
+              <div class="stat"><b>8</b><span>Chapters can hold report slices: people, tools, trust, workflow, learning, ROI.</span></div>
+            </div>
+          </section>
+
+          <section class="report" id="chapters">
+            <div class="section-label">02 / CHAPTERS</div>
+            <h2>Break the long read into moments people can remember.</h2>
+            <p class="lede">A sticky chapter rail and repeated visual modules make the report feel guided instead of heavy. This is suitable for IGNAI event recaps, community research, and AI trend observation pages.</p>
+            <div class="story-grid">
+              <div class="panel"><h3>Illustration first</h3><p>Use playful abstract diagrams, community photos, or generated editorial art to introduce each insight before the numbers arrive.</p></div>
+              <div class="panel"><h3>Data second</h3><p>Keep statistics large, sparse, and human-readable. Let each number do one job instead of filling the screen with dashboards.</p></div>
+              <div class="panel"><h3>Chapter anchors</h3><p>Readers can jump between Introduction, Signals, Practice, Cases, and Takeaways without losing context.</p></div>
+              <div class="panel"><h3>Scroll rhythm</h3><p>Alternate quiet text sections with colorful cards so the page keeps energy across a long narrative.</p></div>
+            </div>
+          </section>
+
+          <section class="report" id="takeaways">
+            <div class="section-label">03 / TAKEAWAYS</div>
+            <h2>Turn a report into a community operating artifact.</h2>
+            <div class="timeline">
+              <div class="step"><div class="step-num">1</div><div><h3>Collect field notes</h3><p>Gather member stories, event quotes, and tool workflows before designing the final report.</p></div></div>
+              <div class="step"><div class="step-num">2</div><div><h3>Map evidence to chapters</h3><p>Each chapter should combine a human story, one data point, and a recommended practice.</p></div></div>
+              <div class="step"><div class="step-num">3</div><div><h3>Publish as a reusable format</h3><p>The same structure can support monthly AI trend reports, event recaps, and sponsor-ready community briefings.</p></div></div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <h2>Community reports can feel like products.</h2>
+      <p>Missing assets: original illustrations, raw research charts, any embedded video or animation files.</p>
+    </footer>
+  </body>
+</html>
