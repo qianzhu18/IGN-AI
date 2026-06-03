@@ -7,6 +7,7 @@
 
 const Style = () => {
   return (
+    <>
     <style jsx global>{`
       /* ========== 基础底色 ========== */
       body {
@@ -32,6 +33,19 @@ const Style = () => {
         --ignai-border: rgba(255, 255, 255, 0.1);
         --ignai-text: #e4e4e7;
         --ignai-text-dim: rgba(255, 255, 255, 0.56);
+        --rig-heat: oklch(0.6329 0.2075 31.49);
+        --rig-heat-glow: oklch(0.6329 0.2075 31.49 / 42%);
+        --rig-signal: oklch(0.5312 0.2603 266.77);
+        --rig-ink: oklch(0.1448 0 0);
+        --rig-paper: oklch(0.9465 0.0099 87.47);
+        --rig-paper-70: rgba(240, 237, 230, 0.7);
+        --rig-paper-50: rgba(240, 237, 230, 0.5);
+        --rig-paper-35: rgba(240, 237, 230, 0.35);
+        --rig-paper-15: rgba(240, 237, 230, 0.15);
+        --rig-paper-06: rgba(240, 237, 230, 0.06);
+        --rig-border: oklch(0.9465 0.0099 87.47 / 14%);
+        --rig-chamfer: 14px;
+        --rig-max-w: 1200px;
       }
 
       #theme-proxio {
@@ -1930,8 +1944,313 @@ const Style = () => {
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
       }
+
+      /* --- Rig 设计系统：字体声明保留在 styled-jsx 中，其余通过独立 style 注入 --- */
+
     `}</style>
+    {/* Rig 样式独立注入，绕过 styled-jsx 的 CSSOM 解析限制 */}
+    <style dangerouslySetInnerHTML={{ __html: rigStyle }} />
+    </>
   )
 }
+
+const rigStyle = `
+  /* --- Rig 工具类 --- */
+  #theme-proxio .rig-mono { font-family: 'Rig Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
+  #theme-proxio .rig-display { font-family: 'Rig Chalet', 'Rig Sans', sans-serif; letter-spacing: 0; }
+  #theme-proxio .rig-sans { font-family: 'Rig Sans', system-ui, sans-serif; }
+
+  /* --- 覆盖效果 --- */
+  #theme-proxio .rig-scanlines {
+    position: fixed; inset: 0; pointer-events: none; z-index: 10002;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.09) 2px, rgba(0,0,0,0.09) 4px);
+  }
+  #theme-proxio .rig-rgb-fringe {
+    position: fixed; inset: 0; pointer-events: none; z-index: 10003;
+    background: linear-gradient(90deg, #e5332a05, #2b4fff04, #e5332a05);
+    background-size: 3px 100%;
+  }
+  #theme-proxio .rig-content-lines {
+    position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  }
+  #theme-proxio .rig-content-lines::before,
+  #theme-proxio .rig-content-lines::after {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 1px;
+    background: var(--rig-border);
+  }
+  #theme-proxio .rig-content-lines::before { left: calc(50% - 600px); }
+  #theme-proxio .rig-content-lines::after { right: calc(50% - 600px); }
+
+  /* --- 切角按钮 --- */
+  #theme-proxio .rig-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    padding: 1rem 2rem; border: 0; color: inherit; cursor: pointer;
+    font: 800 0.85rem/1 'Rig Mono', monospace; text-decoration: none;
+    clip-path: polygon(var(--rig-chamfer) 0, 100% 0, 100% calc(100% - var(--rig-chamfer)), calc(100% - var(--rig-chamfer)) 100%, 0 100%, 0 var(--rig-chamfer));
+    transition: box-shadow 0.18s, transform 0.18s, text-shadow 0.18s;
+  }
+  #theme-proxio .rig-btn--dark { background: var(--rig-ink); color: var(--rig-paper); }
+  #theme-proxio .rig-btn--heat {
+    background: var(--rig-heat); color: var(--rig-ink);
+    box-shadow: 0 0 40px var(--rig-heat-glow);
+  }
+  #theme-proxio .rig-btn--outline {
+    clip-path: none; border: 1px solid rgba(10,10,10,0.35);
+    color: var(--rig-ink); background: transparent;
+  }
+  #theme-proxio .rig-btn:hover {
+    transform: translate(-1px, -1px);
+    text-shadow: -1px 0 rgba(43,79,255,0.35), 1px 0 rgba(237,70,45,0.35);
+    box-shadow: 4px 4px 0 var(--rig-signal);
+  }
+
+  /* --- Badge --- */
+  #theme-proxio .rig-badge {
+    width: fit-content; display: flex; align-items: center; gap: 0.6rem;
+    margin: 0 auto 2rem; padding: 0.5rem 1rem;
+    border: 1px solid rgba(237,70,45,0.22); background: rgba(10,10,10,0.88);
+    color: var(--rig-heat);
+    font: 800 0.72rem/1 'Rig Mono', monospace; letter-spacing: 0; text-transform: uppercase;
+    backdrop-filter: blur(8px);
+  }
+
+  /* --- Section --- */
+  #theme-proxio .rig-section {
+    max-width: var(--rig-max-w); margin: 0 auto; padding: 6rem 3rem;
+  }
+  #theme-proxio .rig-section-title {
+    margin: 0; color: var(--rig-paper);
+    font: 400 clamp(2.6rem, 5vw, 4.7rem)/0.92 'Rig Chalet', sans-serif;
+    letter-spacing: 0;
+  }
+  #theme-proxio .rig-section-title br + * { color: var(--rig-heat); }
+  #theme-proxio .rig-divider {
+    max-width: var(--rig-max-w); height: 1px; margin: 0 auto;
+    background: var(--rig-border);
+  }
+
+  /* --- Hero --- */
+  #theme-proxio .rig-hero {
+    position: relative; z-index: 10; overflow: hidden;
+    background: var(--rig-heat); color: var(--rig-ink);
+    padding: 4rem 0 3rem;
+  }
+  #theme-proxio .rig-hero-inner {
+    max-width: calc(var(--rig-max-w) + 6rem); margin: 0 auto; padding: 0 3rem;
+  }
+  #theme-proxio .rig-hero h1 {
+    max-width: 1120px; margin: 0 0 2rem; color: var(--rig-ink);
+    font: 400 clamp(3.2rem, 7vw, 6rem)/0.88 'Rig Chalet', sans-serif;
+    letter-spacing: 0;
+  }
+  #theme-proxio .rig-hero-sub {
+    max-width: 540px; margin: 0 0 2.5rem; color: var(--rig-ink);
+    font-size: 1.1rem; line-height: 1.55; font-weight: 700; opacity: 0.86;
+  }
+  #theme-proxio .rig-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* --- Ticker --- */
+  #theme-proxio .rig-ticker {
+    border-top: 1px solid rgba(10,10,10,0.16);
+    padding: 0.75rem 0; overflow: hidden; margin-top: 3rem;
+    font: 800 0.78rem/1 'Rig Mono', monospace; white-space: nowrap; color: var(--rig-ink);
+    opacity: 0.55;
+  }
+  #theme-proxio .rig-ticker-track {
+    display: flex; gap: 2.5rem; width: max-content;
+    animation: rig-ticker-scroll 28s linear infinite;
+  }
+  #theme-proxio .rig-ticker-track span { white-space: nowrap; }
+  #theme-proxio .rig-ticker-dot { margin: 0 0.5rem; opacity: 0.4; }
+  @keyframes rig-ticker-scroll { to { transform: translateX(-50%); } }
+
+  /* --- Problem --- */
+  #theme-proxio .rig-problem-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;
+  }
+  #theme-proxio .rig-problem-card {
+    padding: 2rem 1.5rem; border: 1px solid var(--rig-border);
+    background: var(--rig-paper-06);
+    clip-path: polygon(var(--rig-chamfer) 0, 100% 0, 100% calc(100% - var(--rig-chamfer)), calc(100% - var(--rig-chamfer)) 100%, 0 100%, 0 var(--rig-chamfer));
+    transition: background 0.2s;
+  }
+  #theme-proxio .rig-problem-card:hover { background: rgba(240,237,230,0.1); }
+  #theme-proxio .rig-problem-card-label {
+    font: 800 0.68rem/1 'Rig Mono', monospace; color: var(--rig-heat);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;
+  }
+  #theme-proxio .rig-problem-card-num {
+    font: 400 2.8rem/1 'Rig Chalet', sans-serif; color: var(--rig-paper-15);
+    margin-bottom: 0.5rem;
+  }
+  #theme-proxio .rig-problem-card-title {
+    font: 600 1.05rem/1.4 'Rig Sans', sans-serif; color: var(--rig-paper);
+    margin-bottom: 0.5rem;
+  }
+  #theme-proxio .rig-problem-card-desc {
+    font-size: 0.88rem; line-height: 1.55; color: var(--rig-paper-50);
+  }
+
+  /* --- Capabilities --- */
+  #theme-proxio .rig-caps-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;
+  }
+  #theme-proxio .rig-cap-card {
+    padding: 2rem 1.5rem; border: 1px solid var(--rig-border);
+    background: var(--rig-paper-06);
+    clip-path: polygon(var(--rig-chamfer) 0, 100% 0, 100% calc(100% - var(--rig-chamfer)), calc(100% - var(--rig-chamfer)) 100%, 0 100%, 0 var(--rig-chamfer));
+    transition: background 0.2s;
+  }
+  #theme-proxio .rig-cap-card:hover { background: rgba(240,237,230,0.1); }
+  #theme-proxio .rig-cap-label {
+    font: 800 0.78rem/1 'Rig Mono', monospace; color: var(--rig-heat);
+    margin-bottom: 1rem;
+  }
+  #theme-proxio .rig-cap-title {
+    font: 600 1.05rem/1.4 'Rig Sans', sans-serif; color: var(--rig-paper);
+    margin-bottom: 0.5rem;
+  }
+  #theme-proxio .rig-cap-desc {
+    font-size: 0.88rem; line-height: 1.55; color: var(--rig-paper-50);
+  }
+
+  /* --- Stats --- */
+  #theme-proxio .rig-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px;
+    background: var(--rig-border);
+  }
+  #theme-proxio .rig-stat {
+    padding: 2.5rem 1.5rem; background: var(--rig-ink); text-align: center;
+  }
+  #theme-proxio .rig-stat-value {
+    font: 400 3.2rem/1 'Rig Chalet', sans-serif; color: var(--rig-paper);
+    margin-bottom: 0.4rem;
+  }
+  #theme-proxio .rig-stat-label {
+    font: 800 0.72rem/1 'Rig Mono', monospace; color: var(--rig-heat);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.3rem;
+  }
+  #theme-proxio .rig-stat-note { font-size: 0.78rem; color: var(--rig-paper-35); }
+
+  /* --- Terminal --- */
+  #theme-proxio .rig-terminal {
+    border: 1px solid var(--rig-border); background: rgba(10,10,10,0.7);
+    font-family: 'Rig Mono', monospace; overflow: hidden;
+  }
+  #theme-proxio .rig-terminal-bar {
+    padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--rig-border);
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; color: var(--rig-paper-35);
+  }
+  #theme-proxio .rig-terminal-dot {
+    width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+  }
+  #theme-proxio .rig-terminal-body { padding: 1.5rem 1.25rem; font-size: 0.82rem; line-height: 1.8; }
+  #theme-proxio .rig-term-prompt::before {
+    content: '❯ '; color: var(--rig-heat);
+  }
+  #theme-proxio .rig-term-plain { color: var(--rig-paper-70); }
+  #theme-proxio .rig-term-success { color: #34d399; }
+  #theme-proxio .rig-term-ascii { color: var(--rig-heat); white-space: pre; font-size: 0.6rem; line-height: 1.2; }
+  #theme-proxio .rig-term-cursor {
+    display: inline-block; width: 8px; height: 1em; background: var(--rig-heat);
+    animation: rig-blink 1s step-end infinite; vertical-align: text-bottom;
+  }
+  @keyframes rig-blink { 50% { opacity: 0; } }
+
+  /* --- FAQ --- */
+  #theme-proxio .rig-faq-item {
+    border: 1px solid var(--rig-border); border-bottom: 0;
+    background: var(--rig-paper-06);
+  }
+  #theme-proxio .rig-faq-item:last-child { border-bottom: 1px solid var(--rig-border); }
+  #theme-proxio .rig-faq-q {
+    padding: 1.25rem 1.5rem; display: flex; justify-content: space-between;
+    align-items: center; cursor: pointer; font-weight: 600; color: var(--rig-paper);
+    transition: background 0.2s;
+  }
+  #theme-proxio .rig-faq-q:hover { background: rgba(240,237,230,0.06); }
+  #theme-proxio .rig-faq-a {
+    padding: 0 1.5rem; max-height: 0; overflow: hidden;
+    color: var(--rig-paper-70); font-size: 0.9rem; line-height: 1.6;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+  }
+  #theme-proxio .rig-faq-item--open .rig-faq-a { max-height: 300px; padding: 0 1.5rem 1.25rem; }
+  #theme-proxio .rig-faq-chevron {
+    width: 18px; height: 18px; transition: transform 0.25s;
+    color: var(--rig-paper-35);
+  }
+  #theme-proxio .rig-faq-item--open .rig-faq-chevron { transform: rotate(180deg); }
+
+  /* --- CTA --- */
+  #theme-proxio .rig-cta {
+    text-align: center; padding: 6rem 3rem;
+    position: relative; overflow: hidden;
+  }
+  #theme-proxio .rig-cta-glow {
+    position: absolute; width: 420px; height: 420px; border-radius: 50%;
+    background: var(--rig-heat); opacity: 0.08; filter: blur(100px);
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  #theme-proxio .rig-cta-title {
+    position: relative; margin: 0 0 1rem;
+    font: 400 clamp(2.6rem, 5vw, 4.2rem)/0.92 'Rig Chalet', sans-serif;
+    color: var(--rig-paper);
+  }
+  #theme-proxio .rig-cta-sub {
+    position: relative; max-width: 480px; margin: 0 auto 2.5rem;
+    color: var(--rig-paper-70); font-size: 1rem; line-height: 1.6;
+  }
+
+  /* --- Footer --- */
+  #theme-proxio .rig-footer {
+    border-top: 1px solid var(--rig-border); padding: 4rem 0 2rem;
+    background: var(--rig-ink); color: var(--rig-paper-70);
+  }
+  #theme-proxio .rig-footer-grid {
+    display: grid; grid-template-columns: 2fr repeat(var(--footer-cols, 2), 1fr);
+    gap: 3rem;
+  }
+  #theme-proxio .rig-footer-brand p { margin: 0; }
+  #theme-proxio .rig-footer-col h3 {
+    margin: 0 0 1rem; font: 800 0.72rem/1 'Rig Mono', monospace;
+    color: var(--rig-paper-35); text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  #theme-proxio .rig-footer-col ul { list-style: none; margin: 0; padding: 0; }
+  #theme-proxio .rig-footer-col li { margin-bottom: 0.5rem; }
+  #theme-proxio .rig-footer-col a {
+    color: var(--rig-paper-70); text-decoration: none; font-size: 0.88rem;
+    transition: color 0.15s;
+  }
+  #theme-proxio .rig-footer-col a:hover { color: var(--rig-paper); }
+  #theme-proxio .rig-footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rig-border);
+    font-size: 0.72rem; color: var(--rig-paper-35);
+  }
+  #theme-proxio .rig-footer-status {
+    display: flex; align-items: center; gap: 0.5rem;
+    font: 800 0.68rem/1 'Rig Mono', monospace;
+  }
+  #theme-proxio .rig-footer-status-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: #34d399;
+    box-shadow: 0 0 8px #34d39988;
+  }
+
+  /* --- 响应式 --- */
+  @media (max-width: 768px) {
+    #theme-proxio .rig-section { padding: 4rem 1.5rem; }
+    #theme-proxio .rig-hero-inner { padding: 0 1.5rem; }
+    #theme-proxio .rig-hero h1 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+    #theme-proxio .rig-problem-grid { grid-template-columns: 1fr; }
+    #theme-proxio .rig-caps-grid { grid-template-columns: 1fr; }
+    #theme-proxio .rig-stats { grid-template-columns: repeat(2, 1fr); }
+    #theme-proxio .rig-footer-grid { grid-template-columns: 1fr; }
+    #theme-proxio .rig-content-lines::before,
+    #theme-proxio .rig-content-lines::after { display: none; }
+    #theme-proxio .rig-cta { padding: 4rem 1.5rem; }
+  }
+`
 
 export { Style }

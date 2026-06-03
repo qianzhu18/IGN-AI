@@ -78,6 +78,82 @@ const CONFIG = {
   ],
 
   // ========================================================================
+  // 2b. Rig 风格首页文案（适配 IGNAI 社区）
+  // ========================================================================
+
+  // -- Rig Hero --
+  RIG_HERO_TITLE: '连接创造者，<br/>点燃可能性。',
+  RIG_HERO_SUB: 'IGNAI — 长沙 AI 社区。本地连接、全球信号，让真实行动者聚在一起。',
+  RIG_HERO_CTA_1: '加入社区',
+  RIG_HERO_CTA_1_URL: '/join',
+  RIG_HERO_CTA_2: '查看活动',
+  RIG_HERO_CTA_2_URL: '/events',
+  RIG_HERO_TICKER: [
+    '连接创造者', '点燃可能性', 'Local roots · Global signal', '真实行动',
+    'AI · Agent · Product', '长沙 AI 社区', 'Ignite before AGI', '做项目 · 分享观点',
+  ],
+
+  // -- Rig Problem Section --
+  RIG_PROBLEM_BADGE: 'The Problem',
+  RIG_PROBLEM_TITLE: 'AI 很热，<br/>但真正的连接很少。',
+  RIG_PROBLEM_CARDS: [
+    { label: '信息过载', number: '001', title: '刷不完的 AI 资讯，却不知道从哪开始。', desc: '每天海量信息涌来，缺少本地化的筛选和实践场景。' },
+    { label: '孤独学习', number: '002', title: '一个人学 AI，进度缓慢、方向模糊。', desc: '没有同伴互相激励，遇到问题无处讨论，容易半途而废。' },
+    { label: '纸上谈兵', number: '003', title: '看了一百篇教程，还是没有做出东西。', desc: '缺乏真实项目实践和反馈，知识停留在理论层面。' },
+    { label: '资源分散', number: '004', title: '本地有人才，但没有聚合的场景。', desc: '开发者、设计者、创业者在同一个城市却不认识彼此。' },
+  ],
+
+  // -- Rig Capabilities --
+  RIG_CAPS_BADGE: 'Capabilities',
+  RIG_CAPS_TITLE: '我们怎么行动。',
+  RIG_CAPS_CARDS: [
+    { label: '[ 01 ]', title: '线下活动，真实碰撞。', desc: '分享会、黑客松、项目路演——面对面的交流，激发真实的想法和行动。' },
+    { label: '[ 02 ]', title: '学习小组，一起往前走。', desc: 'AI 工具、Agent 开发、产品设计——有主题、有节奏、有同伴。' },
+    { label: '[ 03 ]', title: '项目共创，从 0 到 1。', desc: '社区成员组队做真实项目，边做边学，成果公开展示。' },
+    { label: '[ 04 ]', title: '内容输出，放大信号。', desc: '社区成员的观点、实践记录、教程——让好内容被更多人看到。' },
+    { label: '[ 05 ]', title: '本地连接，全球视野。', desc: '扎根长沙，关注全球 AI 趋势——把外部信号带回来，把本地声音传出去。' },
+    { label: '[ 06 ]', title: '开放文化，人人可参与。', desc: '无论你是学生、开发者、设计师还是创业者——只要对 AI 有热情，这里就有你的位置。' },
+  ],
+
+  // -- Rig Stats --
+  RIG_STATS: [
+    { label: '社区成员', value: '200+', note: '持续增长中' },
+    { label: '线下活动', value: '20+', note: '分享会 × 黑客松' },
+    { label: '城市', value: '长沙', note: 'Local roots' },
+    { label: '成立', value: '2025', note: 'Ignite before AGI' },
+  ],
+
+  // -- Rig Terminal --
+  RIG_TERM_TITLE: 'Built for builders',
+  RIG_TERM_LINES: [
+    { type: 'prompt', text: 'ignai init' },
+    { type: 'ascii', text: '  ██████╗  ██╗  ██████╗\n  ██╔══██╗ ██║ ██╔════╝\n  ██████╔╝ ██║ ██║ ███╗\n  ██╔══██╗ ██║ ██║  ██║\n  ██║  ██║ ██║ ╚██████║\n  ╚═╝  ╚═╝ ╚═╝  ╚═════╝' },
+    { type: 'plain', text: '> 扫描社区...' },
+    { type: 'plain', text: '> 发现 200+ 位行动者 · 长沙' },
+    { type: 'success', text: '> 加载 IGNAI 社区引擎 OK' },
+    { type: 'plain', text: '> 已连接 20+ 场线下活动' },
+    { type: 'success', text: '✓ 就绪。网络: ON · 社区: ACTIVE' },
+    { type: 'typing', prompts: ['加入社区一起做项目', '分享你的 AI 实践', '认识志同道合的人'] },
+  ],
+
+  // -- Rig FAQ --
+  RIG_FAQ_BADGE: 'FAQ',
+  RIG_FAQ_TITLE: '常见问题。',
+  RIG_FAQ_ITEMS: [
+    { q: 'IGNAI 是什么？', a: 'IGNAI 是一个 base 长沙、连接本地、面向全球的 AI 社区。我们关注 AI、Agent、Product、Startup 与真实行动。' },
+    { q: '谁可以加入？', a: '任何人。学生、开发者、设计师、创业者、产品经理——只要对 AI 有热情和好奇心，都欢迎。' },
+    { q: '社区做什么活动？', a: '线下分享会、黑客松、学习小组、项目共创、社交聚会。主题围绕 AI 工具、Agent 开发、产品设计等。' },
+    { q: '需要在长沙才能参加吗？', a: '线下活动主要在长沙，但线上内容和社区讨论对所有人开放。我们也鼓励远程成员参与。' },
+    { q: '怎么加入？', a: '点击「加入社区」按钮，填写简单信息即可。我们会通过微信或邮件邀请你进入社区。' },
+  ],
+
+  // -- Rig CTA --
+  RIG_CTA_TITLE: 'Ignite before AGI.',
+  RIG_CTA_SUB: '加入一个鼓励表达、持续行动、彼此点燃的 AI 社区。',
+  RIG_CTA_BTN: '加入社区',
+  RIG_CTA_BTN_URL: '/join',
+
+  // ========================================================================
   // 3. Footer / 404 / 导航
   // ========================================================================
 

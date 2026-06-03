@@ -1,4 +1,3 @@
-import { siteConfig } from '@/lib/config'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
@@ -6,57 +5,48 @@ const Footer = () => {
   const links = CONFIG.IGNAI_FOOTER_LINKS || []
   const slogan = CONFIG.IGNAI_FOOTER_SLOGAN || 'Ignite before AGI.'
   const subtitle = CONFIG.IGNAI_FOOTER_SUBTITLE || ''
-  const location = CONFIG.IGNAI_FOOTER_LOCATION || ''
 
   return (
-    <footer className='relative z-10 border-t border-white/[0.06] bg-[#07080C]'>
-      <div className='mx-auto max-w-[1200px] px-5 sm:px-8 py-16 sm:py-20'>
-        <div className='flex flex-col lg:flex-row justify-between gap-12 lg:gap-8'>
-
-          {/* 左侧品牌 */}
-          <div className='max-w-xs'>
-            <p className='text-lg font-semibold text-white'>IGNAI</p>
+    <footer className='rig-footer'>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 3rem' }}>
+        <div className='rig-footer-grid'>
+          <div className='rig-footer-brand'>
+            <p className='rig-display' style={{ color: '#fff', fontSize: '1.3rem', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', margin: 0 }}>
+              IGNAI
+            </p>
             {subtitle && (
-              <p className='mt-1 text-xs text-neutral-500'>{subtitle}</p>
+              <p style={{ marginTop: 4, color: 'rgba(255,255,255,0.3)', fontSize: '0.72rem' }}>{subtitle}</p>
             )}
-            <p className='mt-4 text-sm text-neutral-400 italic'>&ldquo;{slogan}&rdquo;</p>
-            {location && (
-              <p className='mt-3 text-xs text-neutral-600'>{location}</p>
-            )}
+            <p style={{ marginTop: '1rem', color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem', lineHeight: 1.6, maxWidth: 280 }}>
+              {slogan}
+            </p>
+            <p style={{ marginTop: '0.75rem', color: 'rgba(255,255,255,0.25)', fontSize: '0.78rem' }}>
+              Based in Changsha, connected to the world.
+            </p>
           </div>
 
-          {/* 右侧链接 */}
-          <div className='flex flex-wrap gap-x-16 gap-y-8'>
-            {links.map(group => (
-              <div key={group.name}>
-                <p className='text-xs font-medium uppercase tracking-wider text-neutral-500 mb-4'>
-                  {group.name}
-                </p>
-                <ul className='space-y-2.5'>
-                  {group.menus.map(item => (
-                    <li key={item.href || item.title}>
-                      <SmartLink
-                        href={item.href}
-                        className='text-sm text-neutral-400 hover:text-white transition-colors duration-200 no-underline'
-                      >
-                        {item.title}
-                      </SmartLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {links.map(group => (
+            <div key={group.name} className='rig-footer-col'>
+              <h3>{group.name}</h3>
+              <ul>
+                {group.menus.map(item => (
+                  <li key={item.href || item.title}>
+                    <SmartLink href={item.href}>
+                      {item.title}
+                    </SmartLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* 底部 */}
-        <div className='mt-12 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row justify-between items-center gap-2'>
-          <p className='text-xs text-neutral-600'>
-            &copy; {new Date().getFullYear()} IGNAI Community
-          </p>
-          <p className='text-xs text-neutral-700'>
-            Built with NotionNext
-          </p>
+        <div className='rig-footer-bottom'>
+          <span>&copy; {new Date().getFullYear()} IGNAI COMMUNITY. ALL RIGHTS RESERVED.</span>
+          <div className='rig-footer-status'>
+            <span className='rig-footer-status-dot' />
+            <span>COMMUNITY ACTIVE</span>
+          </div>
         </div>
       </div>
     </footer>

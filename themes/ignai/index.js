@@ -157,6 +157,17 @@ const LayoutBase = props => {
       {/* Cursor Glow — 桌面端鼠标跟随光晕 */}
       <div ref={cursorGlowRef} aria-hidden='true' className='ignai-cursor-glow' style={{ left: '-500px', top: '-500px' }} />
 
+      {/* Rig 覆盖效果 */}
+      <div aria-hidden='true' className='rig-scanlines' />
+      <div aria-hidden='true' className='rig-rgb-fringe' />
+      <div aria-hidden='true' className='rig-content-lines' />
+      {/* Rig noise SVG filter */}
+      <svg aria-hidden='true' style={{ position: 'absolute', width: 0, height: 0 }}>
+        <filter id='rig-grainy'>
+          <feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch' />
+        </filter>
+      </svg>
+
       <Header {...props} />
       <div id='main-wrapper' className='grow'>
         {children}
@@ -175,12 +186,18 @@ const LayoutIndex = props => {
   const notionConfig = props?.NOTION_CONFIG
   return (
     <main className='ignai-home-shell'>
-      {siteConfig('IGNAI_HERO_ENABLE', CONFIG.IGNAI_HERO_ENABLE) && <HeroSection notionConfig={notionConfig} />}
-      {siteConfig('IGNAI_WHATIS_ENABLE', CONFIG.IGNAI_WHATIS_ENABLE) && <WhatIsSection notionConfig={notionConfig} />}
+      <RigHeroSection />
+      <RigTicker />
+      <div className='rig-divider' />
+      <RigProblemSection />
+      <div className='rig-divider' />
+      <RigCapabilitiesSection />
+      <RigStatsStrip />
+      <RigTerminalBlock />
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
-      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection notionEvents={props.allEvents || []} />}
       {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
-      {siteConfig('IGNAI_JOIN_ENABLE', CONFIG.IGNAI_JOIN_ENABLE) && <JoinSection notionConfig={notionConfig} />}
+      <RigFAQSection />
+      <RigCTASection />
     </main>
   )
 }
@@ -653,6 +670,263 @@ function WhatIsSection({ notionConfig }) {
           </div>
         </motion.div>
       </div>
+    </section>
+  )
+}
+
+/* ================================================================
+   RIG AI 风格组件
+   ================================================================ */
+
+function RigHeroSection() {
+  const title = siteConfig('RIG_HERO_TITLE', CONFIG.RIG_HERO_TITLE)
+  const sub = siteConfig('RIG_HERO_SUB', CONFIG.RIG_HERO_SUB)
+  const cta1Text = siteConfig('RIG_HERO_CTA_1', CONFIG.RIG_HERO_CTA_1)
+  const cta1Url = siteConfig('RIG_HERO_CTA_1_URL', CONFIG.RIG_HERO_CTA_1_URL)
+  const cta2Text = siteConfig('RIG_HERO_CTA_2', CONFIG.RIG_HERO_CTA_2)
+  const cta2Url = siteConfig('RIG_HERO_CTA_2_URL', CONFIG.RIG_HERO_CTA_2_URL)
+
+  return (
+    <section className='rig-hero'>
+      <div className='rig-hero-inner'>
+        <Reveal>
+          <h1 dangerouslySetInnerHTML={{ __html: title }} />
+        </Reveal>
+        <Reveal delay={0.12}>
+          <p className='rig-hero-sub'>{sub}</p>
+        </Reveal>
+        <Reveal delay={0.22}>
+          <div className='rig-hero-actions'>
+            <SmartLink href={cta1Url} className='rig-btn rig-btn--dark'>
+              {cta1Text}
+            </SmartLink>
+            <SmartLink href={cta2Url} className='rig-btn rig-btn--outline'>
+              {cta2Text}
+            </SmartLink>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+function RigTicker() {
+  const items = siteConfig('RIG_HERO_TICKER', CONFIG.RIG_HERO_TICKER)
+  const doubled = [...items, ...items]
+  return (
+    <div className='rig-ticker'>
+      <div className='rig-ticker-track'>
+        {doubled.map((t, i) => (
+          <span key={i}>
+            {t}
+            <span className='rig-ticker-dot'>◆</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function RigProblemSection() {
+  const badge = siteConfig('RIG_PROBLEM_BADGE', CONFIG.RIG_PROBLEM_BADGE)
+  const title = siteConfig('RIG_PROBLEM_TITLE', CONFIG.RIG_PROBLEM_TITLE)
+  const cards = siteConfig('RIG_PROBLEM_CARDS', CONFIG.RIG_PROBLEM_CARDS)
+
+  return (
+    <section className='rig-section'>
+      <Reveal>
+        <div className='rig-badge'>
+          <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
+            <circle cx='12' cy='12' r='10' /><path d='M12 8v4M12 16h.01' />
+          </svg>
+          {badge}
+        </div>
+      </Reveal>
+      <Reveal delay={0.08}>
+        <h2 className='rig-section-title' style={{ textAlign: 'center' }} dangerouslySetInnerHTML={{ __html: title }} />
+      </Reveal>
+      <div className='rig-problem-grid' style={{ marginTop: '3rem' }}>
+        {cards.map((card, i) => (
+          <Reveal key={card.number} delay={i * 0.08}>
+            <div className='rig-problem-card'>
+              <p className='rig-problem-card-label'>{card.label}</p>
+              <p className='rig-problem-card-num'>{card.number}</p>
+              <p className='rig-problem-card-title'>{card.title}</p>
+              <p className='rig-problem-card-desc'>{card.desc}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function RigCapabilitiesSection() {
+  const badge = siteConfig('RIG_CAPS_BADGE', CONFIG.RIG_CAPS_BADGE)
+  const title = siteConfig('RIG_CAPS_TITLE', CONFIG.RIG_CAPS_TITLE)
+  const cards = siteConfig('RIG_CAPS_CARDS', CONFIG.RIG_CAPS_CARDS)
+
+  return (
+    <section className='rig-section'>
+      <Reveal>
+        <div className='rig-badge'>
+          <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
+            <polygon points='12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5' />
+          </svg>
+          {badge}
+        </div>
+      </Reveal>
+      <Reveal delay={0.08}>
+        <h2 className='rig-section-title' style={{ textAlign: 'center' }}>{title}</h2>
+      </Reveal>
+      <div className='rig-caps-grid' style={{ marginTop: '3rem' }}>
+        {cards.map((card, i) => (
+          <Reveal key={card.label} delay={i * 0.06}>
+            <div className='rig-cap-card'>
+              <p className='rig-cap-label'>{card.label}</p>
+              <p className='rig-cap-title'>{card.title}</p>
+              <p className='rig-cap-desc'>{card.desc}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function RigStatsStrip() {
+  const stats = siteConfig('RIG_STATS', CONFIG.RIG_STATS)
+  return (
+    <div style={{ maxWidth: 'var(--rig-max-w)', margin: '0 auto' }}>
+      <Reveal>
+        <div className='rig-stats'>
+          {stats.map(s => (
+            <div key={s.label} className='rig-stat'>
+              <p className='rig-stat-value'>{s.value}</p>
+              <p className='rig-stat-label'>{s.label}</p>
+              <p className='rig-stat-note'>{s.note}</p>
+            </div>
+          ))}
+        </div>
+      </Reveal>
+    </div>
+  )
+}
+
+function RigTerminalBlock() {
+  const title = siteConfig('RIG_TERM_TITLE', CONFIG.RIG_TERM_TITLE)
+  const lines = siteConfig('RIG_TERM_LINES', CONFIG.RIG_TERM_LINES)
+  const [typingIdx, setTypingIdx] = useState(0)
+  const [displayed, setDisplayed] = useState('')
+  const typingLine = lines.find(l => l.type === 'typing')
+  const prompts = typingLine?.prompts || []
+
+  useEffect(() => {
+    if (!prompts.length) return
+    const current = prompts[typingIdx % prompts.length]
+    let i = 0
+    setDisplayed('')
+    const timer = setInterval(() => {
+      i++
+      setDisplayed(current.slice(0, i))
+      if (i >= current.length) {
+        clearInterval(timer)
+        setTimeout(() => setTypingIdx(prev => prev + 1), 2200)
+      }
+    }, 80)
+    return () => clearInterval(timer)
+  }, [typingIdx, prompts])
+
+  return (
+    <section className='rig-section'>
+      <Reveal>
+        <p className='rig-section-title' style={{ textAlign: 'center', fontSize: 'clamp(1.6rem, 3vw, 2.4rem)' }}>{title}</p>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <div className='rig-terminal' style={{ maxWidth: 640, margin: '2rem auto 0' }}>
+          <div className='rig-terminal-bar'>
+            <span className='rig-terminal-dot' style={{ background: '#ef4444' }} />
+            <span className='rig-terminal-dot' style={{ background: '#eab308' }} />
+            <span className='rig-terminal-dot' style={{ background: '#22c55e' }} />
+            <span style={{ marginLeft: '0.5rem' }}>ignai@community</span>
+          </div>
+          <div className='rig-terminal-body'>
+            {lines.filter(l => l.type !== 'typing').map((line, i) => (
+              <div key={i} className={`rig-term-${line.type}`}>
+                {line.text}
+              </div>
+            ))}
+            {prompts.length > 0 && (
+              <div className='rig-term-prompt'>
+                {displayed}
+                <span className='rig-term-cursor' />
+              </div>
+            )}
+          </div>
+        </div>
+      </Reveal>
+    </section>
+  )
+}
+
+function RigFAQSection() {
+  const badge = siteConfig('RIG_FAQ_BADGE', CONFIG.RIG_FAQ_BADGE)
+  const title = siteConfig('RIG_FAQ_TITLE', CONFIG.RIG_FAQ_TITLE)
+  const items = siteConfig('RIG_FAQ_ITEMS', CONFIG.RIG_FAQ_ITEMS)
+  const [openIdx, setOpenIdx] = useState(-1)
+
+  return (
+    <section className='rig-section'>
+      <Reveal>
+        <div className='rig-badge'>
+          <svg width='15' height='15' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
+            <circle cx='12' cy='12' r='10' /><path d='M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3' /><path d='M12 17h.01' />
+          </svg>
+          {badge}
+        </div>
+      </Reveal>
+      <Reveal delay={0.08}>
+        <h2 className='rig-section-title' style={{ textAlign: 'center' }}>{title}</h2>
+      </Reveal>
+      <div style={{ maxWidth: 720, margin: '3rem auto 0' }}>
+        {items.map((item, i) => (
+          <Reveal key={i} delay={i * 0.05}>
+            <div className={`rig-faq-item ${openIdx === i ? 'rig-faq-item--open' : ''}`}>
+              <div className='rig-faq-q' onClick={() => setOpenIdx(openIdx === i ? -1 : i)}>
+                <span>{item.q}</span>
+                <svg className='rig-faq-chevron' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2'>
+                  <polyline points='6 9 12 15 18 9' />
+                </svg>
+              </div>
+              <div className='rig-faq-a'>{item.a}</div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function RigCTASection() {
+  const title = siteConfig('RIG_CTA_TITLE', CONFIG.RIG_CTA_TITLE)
+  const sub = siteConfig('RIG_CTA_SUB', CONFIG.RIG_CTA_SUB)
+  const btn = siteConfig('RIG_CTA_BTN', CONFIG.RIG_CTA_BTN)
+  const btnUrl = siteConfig('RIG_CTA_BTN_URL', CONFIG.RIG_CTA_BTN_URL)
+
+  return (
+    <section className='rig-cta'>
+      <div className='rig-cta-glow' />
+      <Reveal>
+        <h2 className='rig-cta-title'>{title}</h2>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <p className='rig-cta-sub'>{sub}</p>
+      </Reveal>
+      <Reveal delay={0.2}>
+        <SmartLink href={btnUrl} className='rig-btn rig-btn--heat'>
+          {btn}
+        </SmartLink>
+      </Reveal>
     </section>
   )
 }
