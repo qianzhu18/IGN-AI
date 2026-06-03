@@ -5,6 +5,7 @@ import Slug from '..'
 import { checkSlugHasOneSlash } from '@/lib/utils/post'
 import { isExport } from '@/lib/utils/buildMode'
 import { getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
+import { hasReservedPathSegment } from '@/lib/utils/reservedPath'
 
 /**
  * 根据notion的slug访问页面
@@ -17,6 +18,13 @@ const PrefixSlug = props => {
 }
 
 export async function getStaticPaths() {
+  if (process.env.NODE_ENV === 'development') {
+    return {
+      paths: [],
+      fallback: 'blocking'
+    }
+  }
+
   const from = 'slug-paths'
   const { allPages } = await fetchGlobalAllData({ from })
 
@@ -53,6 +61,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix, slug }, locale }) {
+  if (hasReservedPathSegment(prefix, slug)) {
+    return { notFound: true }
+  }
+
   const props = await resolvePostProps({
     prefix,
     slug,

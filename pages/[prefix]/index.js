@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { isExport } from '@/lib/utils/buildMode'
 import { getPriorityPages, prefetchAllBlockMaps } from '@/lib/build/prefetch'
+import { hasReservedPathSegment } from '@/lib/utils/reservedPath'
 
 /**
  * 根据notion的slug访问页面
@@ -112,6 +113,13 @@ Slug.propTypes = {
 }
 
 export async function getStaticPaths() {
+  if (process.env.NODE_ENV === 'development') {
+    return {
+      paths: [],
+      fallback: 'blocking'
+    }
+  }
+
   const from = 'slug-paths'
   const { allPages } = await fetchGlobalAllData({ from })
 
@@ -138,6 +146,10 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { prefix }, locale }) {
+  if (hasReservedPathSegment(prefix)) {
+    return { notFound: true }
+  }
+
   const props = await resolvePostProps({
     prefix,
     locale,

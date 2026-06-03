@@ -25,7 +25,7 @@
 - [x] 成员提交后的展示控制交给 Notion `status`，不再单独实现审批后台。
 - [x] 公开 `/join` 成员草稿表单支持直接选择并上传头像 / 个人形象照，上传后随申请写入 Notion `avatar`，并同步为 Notion 页面图标。
 
-备注：2026-06-04 已将 Cloudflare R2 / S3 兼容图床配置接入官网 `.env.local`，真实上传返回 `img.qianzhu.online/ignai/members/avatars/...webp` 公网 URL，并通过 Notion 反查确认 Join 申请写入 `avatar` 属性和页面 icon。
+备注：2026-06-04 已将 Cloudflare R2 / S3 兼容图床配置接入官网 `.env.local`，真实上传返回 `img.qianzhu.online/ignai/members/avatars/...webp` 公网 URL，并通过 Notion 反查确认 Join 申请写入 `avatar` 属性和页面 icon。当前图床不是阿里云 OSS，而是 Cloudflare R2；公网资产域名使用 `img.qianzhu.online`，后续迁移优先保持自有域名和对象路径不变，降低 Notion `avatar` URL 批量改写成本。
 
 ## P1：活动发布与报名
 
@@ -34,6 +34,9 @@
 - [x] 首页活动区块、活动列表页、活动详情页共用 Notion Event 规范化逻辑。
 - [x] 活动详情页补齐 `registrationUrl` / `registrationQrImage` 展示。
 - [x] 管理页文案从 Studio 收束为 Notion Event 字段说明。
+- [x] 管理页增加 Notion 发布后的前台即时刷新入口，支持刷新首页、活动列表和指定活动详情页。
+- [ ] 高并发增强：Join 提交增加 Notion 写入限速 / 队列 / 幂等保护，避免公开发布时被 Notion API 限流打断。
+- [ ] 图床资产治理：为头像对象沉淀 `storageKey` / 迁移脚本，确保从 Cloudflare R2 迁到阿里云 OSS 时可批量复制并保持 URL 策略可控。
 
 ## P1：前后端一致性
 
@@ -71,6 +74,7 @@
 - `pages/events/[slug].js`
 - `themes/ignai/components/sections/UpcomingEventsSection.js`
 - `pages/manage/content.tsx`
+- `pages/api/admin/content-revalidate.ts`
 - `src/components/content/ContentAdminPanel.tsx`
 
 ### 公开站点信息与 SEO fallback

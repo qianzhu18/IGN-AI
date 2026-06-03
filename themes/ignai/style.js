@@ -5,10 +5,7 @@
  * 基于 proxio 骨架，爆改为 IGNAI 暗色品牌视觉系统
  */
 
-const Style = () => {
-  return (
-    <>
-    <style jsx global>{`
+const ignaiThemeCss = `
       /* ========== 基础底色 ========== */
       body {
         background-color: #07080c;
@@ -1947,12 +1944,7 @@ const Style = () => {
 
       /* --- Rig 设计系统：字体声明保留在 styled-jsx 中，其余通过独立 style 注入 --- */
 
-    `}</style>
-    {/* Rig 样式独立注入，绕过 styled-jsx 的 CSSOM 解析限制 */}
-    <style dangerouslySetInnerHTML={{ __html: rigStyle }} />
-    </>
-  )
-}
+`
 
 const rigStyle = `
   /* --- Rig 工具类 --- */
@@ -2252,5 +2244,9 @@ const rigStyle = `
     #theme-proxio .rig-cta { padding: 4rem 1.5rem; }
   }
 `
+
+const Style = () => {
+  return <style dangerouslySetInnerHTML={{ __html: `${ignaiThemeCss}\n${rigStyle}` }} />
+}
 
 export { Style }

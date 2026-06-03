@@ -38,7 +38,9 @@
 - [x] **P0** 活动发布数据源确认：收束为 Notion Event
 - [x] **P0** 活动首页、列表页、详情页读取同一份 Notion Event 契约
 - [x] **P0** 活动详情页支持 Notion 报名链接 / 报名二维码展示
+- [x] **P0** 活动后台支持 Notion 发布后刷新首页、活动列表和活动详情缓存
 - [x] **P1** 公开站点 title、description、link、canonical fallback 收束为 IGNAI
+- [ ] Join 高并发保护与图床资产迁移预案
 - [ ] featured members / 角色分组展示增强
 - [ ] 成员目录页视觉打磨
 - [ ] 首页成员区块从卡片升级为组织表达

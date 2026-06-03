@@ -22,6 +22,7 @@
 - [x] 活动发布主源收束为 Notion Event
 - [x] 首页活动区块、活动列表、活动详情共用 Event 规范化契约
 - [x] 活动详情页支持 Notion Event 报名链接 / 报名二维码展示
+- [x] 后台支持 Notion 活动发布后手动刷新前台缓存
 - [ ] 文章、活动、成员之间的关系模型梳理
 - [ ] 内容分流导航更清晰
 - [ ] 组织表达层增强
@@ -73,6 +74,8 @@
 - [x] 前端成员数据出口包含 `website` 与 social fields
 - [x] Join 申请进入 Notion 草稿后，通过 Notion `status` 控制隐藏 / 展示
 - [x] 不再单独实现成员审批后台，Notion `Published` / `Invisible` 作为发布开关
+- [ ] Join 高并发保护：Notion 写入限速、失败重试、幂等去重
+- [ ] 图床资产治理：记录对象 key、准备 R2 / OSS 迁移脚本
 
 ## G. 生产上线（新增 — 当前最优先）
 - [ ] Vercel 部署恢复正常
