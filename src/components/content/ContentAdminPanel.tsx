@@ -12,11 +12,11 @@ export function ContentAdminPanel({ type }: ContentAdminPanelProps) {
           eyebrow: "Manage events",
           title: "活动发布和报名，都从这里改。",
           body:
-            "活动内容的发布入口在 Studio。每条活动都可以单独设置标题、时间、地点、封面、详情正文、报名链接，以及报名二维码。",
+            "活动内容以 Notion Event 为主源。每条活动可以在 Notion 中维护标题、时间、地点、封面、详情正文、报名链接，以及报名二维码。",
           bullets: [
-            "发布新活动：进入 Studio -> 近期活动",
-            "活动报名：给该活动填写飞书多维表格链接",
-            "如果你要放二维码：上传到该活动的报名二维码字段",
+            "发布新活动：在 Notion 新建 type=Event 的页面",
+            "活动报名：填写 ext.registrationUrl",
+            "如果你要放二维码：填写 ext.registrationQrImage",
           ],
         }
       : {
@@ -57,10 +57,10 @@ export function ContentAdminPanel({ type }: ContentAdminPanelProps) {
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <Link
-          href="/studio"
+          href="/events"
           className="button-shine inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5"
         >
-          <span>打开内容后台</span>
+          <span>查看活动前台</span>
           <Sparkles className="h-4 w-4" />
         </Link>
         <Link

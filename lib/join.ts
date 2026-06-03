@@ -212,6 +212,9 @@ async function createNotionMemberApplication(
       body: JSON.stringify({
         parent: { database_id: NOTION_MEMBERS_DB_ID },
         properties,
+        ...(profile?.avatarUrl
+          ? { icon: { external: { url: profile.avatarUrl } } }
+          : {}),
       }),
     });
 

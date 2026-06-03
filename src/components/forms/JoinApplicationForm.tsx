@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { CircleAlert, Database, ExternalLink, Inbox, Mail } from "lucide-react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { Camera, CircleAlert, Database, ExternalLink, Inbox, Loader2, Mail, Upload } from "lucide-react";
 
-import { siteLinks } from "@/src/content/links";
 import type { JoinExperienceMode } from "@/lib/join";
 
 const interestOptions = ["线下交流", "主题共创", "项目展示", "内容分享", "合作咨询"];
@@ -18,6 +17,30 @@ type SubmitState = {
   status: "idle" | "submitting" | "success" | "error";
   message: string;
 };
+
+type AvatarUploadState = {
+  status: "idle" | "selected" | "uploading" | "success" | "error";
+  message: string;
+  previewUrl: string;
+  uploadedUrl: string;
+  fileName: string;
+};
+
+const initialAvatarState: AvatarUploadState = {
+  status: "idle",
+  message: "",
+  previewUrl: "",
+  uploadedUrl: "",
+  fileName: "",
+};
+
+const fileToDataUrl = (file: File) =>
+  new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ""));
+    reader.onerror = () => reject(new Error("READ_FAILED"));
+    reader.readAsDataURL(file);
+  });
 
 const joinEmailHref = (contactEmailHref: string) => {
   const subject = encodeURIComponent("申请加入 IGNAI 社区");
@@ -100,6 +123,7 @@ export function JoinApplicationForm({
     status: "idle",
     message: "",
   });
+  const [avatar, setAvatar] = useState<AvatarUploadState>(initialAvatarState);
 
   if (experienceMode === "external" || experienceMode === "email") {
     return (
@@ -132,14 +156,113 @@ export function JoinApplicationForm({
     );
   };
 
+  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setAvatar({
+        ...initialAvatarState,
+        status: "error",
+        message: "请选择图片文件。",
+      });
+      return;
+    }
+
+    if (file.size > 4 * 1024 * 1024) {
+      setAvatar({
+        ...initialAvatarState,
+        status: "error",
+        message: "图片太大了，请选择 4MB 以内的图片。",
+      });
+      return;
+    }
+
+    setAvatar({
+      status: "selected",
+      message: "已选择图片，上传后会自动保存到成员页草稿。",
+      previewUrl: URL.createObjectURL(file),
+      uploadedUrl: "",
+      fileName: file.name,
+    });
+  };
+
+  const uploadAvatarFile = async (form: HTMLFormElement | null) => {
+    const input = form?.elements.namedItem("avatarFile") as HTMLInputElement | null;
+    const file = input?.files?.[0];
+    if (!file || !form) {
+      throw new Error("请先选择一张图片。");
+    }
+
+    setAvatar((current) => ({
+      ...current,
+      status: "uploading",
+      message: "正在上传图片...",
+    }));
+
+    try {
+      const response = await fetch("/api/join/avatar-upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          dataUrl: await fileToDataUrl(file),
+          fileName: file.name,
+          name: new FormData(form).get("name"),
+        }),
+      });
+      const payload = (await response.json()) as {
+        message?: string;
+        data?: { url?: string };
+      };
+
+      if (!response.ok || !payload.data?.url) {
+        throw new Error(payload.message || "头像上传失败。");
+      }
+
+      setAvatar((current) => ({
+        ...current,
+        status: "success",
+        message: "图片已上传，会随申请一起保存。",
+        uploadedUrl: payload.data?.url || "",
+      }));
+
+      return payload.data?.url || "";
+    } catch (error) {
+      setAvatar((current) => ({
+        ...current,
+        status: "error",
+        message: error instanceof Error ? error.message : "头像上传失败，请稍后再试。",
+      }));
+      throw error;
+    }
+  };
+
+  const handleAvatarUpload = async (form: HTMLFormElement | null) => {
+    try {
+      await uploadAvatarFile(form);
+    } catch {
+      // The avatar state already contains the user-facing error message.
+    }
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const avatarInput = form.elements.namedItem("avatarFile") as HTMLInputElement | null;
+    const selectedAvatarFile = avatarInput?.files?.[0];
+    let avatarUrl = avatar.uploadedUrl || String(formData.get("avatarUrl") || "");
 
     setState({ status: "submitting", message: "正在提交..." });
 
     try {
+      if (selectedAvatarFile && !avatarUrl) {
+        setState({ status: "submitting", message: "正在上传头像..." });
+        avatarUrl = await uploadAvatarFile(form);
+      }
+
       const response = await fetch("/api/join", {
         method: "POST",
         headers: {
@@ -152,7 +275,7 @@ export function JoinApplicationForm({
           message: formData.get("message"),
           interests,
           memberProfile: {
-            avatarUrl: formData.get("avatarUrl"),
+            avatarUrl,
             headline: formData.get("headline"),
             website: formData.get("website"),
             github: formData.get("github"),
@@ -166,16 +289,17 @@ export function JoinApplicationForm({
       if (response.ok) {
         form.reset();
         setInterests(["线下交流"]);
+        setAvatar(initialAvatarState);
       }
 
       setState({
         status: response.ok ? "success" : "error",
         message: payload.message || (response.ok ? "提交成功。" : "提交失败。"),
       });
-    } catch {
+    } catch (error) {
       setState({
         status: "error",
-        message: "网络异常，请稍后再试或通过 Email 联系。",
+        message: error instanceof Error ? error.message : "网络异常，请稍后再试或通过 Email 联系。",
       });
     }
   };
@@ -234,31 +358,101 @@ export function JoinApplicationForm({
           <p className="join-card-eyebrow">Member draft</p>
           <h3 className="mt-3 text-lg font-medium text-white">顺手留下成员页草稿</h3>
           <p className="mt-2 text-sm leading-7 text-white/58">
-            这些都不是必填。你可以先留头像链接、一句话和想展示的外部链接，后续审核通过后会更容易整理成成员页。
+            这些都不是必填。你可以先上传一张头像或个人形象照，再留一句话和想展示的外部链接。
           </p>
         </div>
 
         <div className="mt-6 space-y-5">
-          <label className="block">
-            <div className="flex items-end justify-between gap-3">
-              <span className="join-card-eyebrow">Avatar URL</span>
-              {siteLinks.memberAvatarUploadConfigured ? (
-                <a
-                  href={siteLinks.memberAvatarUploadUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-xs text-[#9aceff] transition hover:text-white"
-                >
-                  打开图床上传
-                </a>
-              ) : null}
+          <div className="rounded-2xl border border-[#ffb879]/14 bg-[#0f1219]/88 p-4 sm:p-5">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] text-white/36">
+                {avatar.previewUrl || avatar.uploadedUrl ? (
+                  <img
+                    src={avatar.previewUrl || avatar.uploadedUrl}
+                    alt="头像预览"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <Camera className="h-7 w-7" />
+                )}
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="join-card-eyebrow">头像 / 个人形象照</span>
+                <p className="mt-2 text-sm leading-6 text-white/58">
+                  上传一张你希望出现在成员页上的图片，JPG、PNG、WebP 均可。
+                </p>
+                {avatar.fileName ? (
+                  <p className="mt-2 truncate text-xs text-white/42">{avatar.fileName}</p>
+                ) : null}
+              </div>
             </div>
-            <input name="avatarUrl" placeholder="https://..." className="join-field" />
-          </label>
 
-          {siteLinks.memberAvatarUploadConfigured ? (
-            <div className="rounded-2xl border border-[#9aceff]/14 bg-[#0f1720]/88 px-4 py-3 text-sm leading-6 text-white/58">
-              如果你已经上传头像，把图床链接贴到上面的 Avatar URL 即可。
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-white/72 transition hover:border-white/22 hover:text-white">
+                <Upload className="h-4 w-4" />
+                <span>选择图片</span>
+                <input
+                  name="avatarFile"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  onChange={handleAvatarChange}
+                  className="sr-only"
+                />
+              </label>
+              <button
+                type="button"
+                onClick={(event) => void handleAvatarUpload(event.currentTarget.form)}
+                disabled={!avatar.previewUrl || avatar.status === "uploading"}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#ffd8ae]/34 bg-[#ff9a3c]/14 px-5 py-3 text-sm text-[#ffd09a] transition hover:bg-[#ff9a3c]/20 disabled:cursor-not-allowed disabled:opacity-45"
+              >
+                {avatar.status === "uploading" ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Upload className="h-4 w-4" />
+                )}
+                <span>{avatar.status === "uploading" ? "上传中" : "上传图片"}</span>
+              </button>
+            </div>
+
+            <input type="hidden" name="avatarUrl" value={avatar.uploadedUrl} readOnly />
+
+            {avatar.message ? (
+              <p
+                className={`mt-3 text-sm leading-6 ${
+                  avatar.status === "success"
+                    ? "text-[#bdf0c8]"
+                    : avatar.status === "error"
+                      ? "text-[#ffd09a]"
+                      : "text-white/48"
+                }`}
+              >
+                {avatar.message}
+              </p>
+            ) : null}
+
+            <details className="mt-4 text-sm text-white/42">
+              <summary className="cursor-pointer text-white/52 transition hover:text-white/72">
+                已经有图片链接？
+              </summary>
+              <input
+                name="avatarUrlFallback"
+                placeholder="https://..."
+                className="join-field mt-3"
+                onChange={(event) =>
+                  setAvatar((current) => ({
+                    ...current,
+                    uploadedUrl: event.target.value,
+                    status: event.target.value ? "success" : current.status,
+                    message: event.target.value ? "已使用你填写的图片链接。" : current.message,
+                  }))
+                }
+              />
+            </details>
+          </div>
+
+          {avatar.uploadedUrl ? (
+            <div className="rounded-2xl border border-[#9aceff]/14 bg-[#0f1720]/88 px-4 py-3 text-xs leading-6 text-white/46 break-all">
+              图片链接已生成：{avatar.uploadedUrl}
             </div>
           ) : null}
 
@@ -339,7 +533,11 @@ export function JoinApplicationForm({
           disabled={state.status === "submitting"}
           className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-7 py-3.5 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[132px]"
         >
-          {state.status === "submitting" ? "提交中" : "提交申请"}
+          {state.status === "submitting"
+            ? "提交中"
+            : avatar.previewUrl && !avatar.uploadedUrl
+              ? "上传头像并提交"
+              : "提交申请"}
         </button>
         {state.message ? (
           <p

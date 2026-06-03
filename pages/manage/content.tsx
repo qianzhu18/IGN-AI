@@ -14,13 +14,17 @@ type ManageContentPageProps = {
 const contentCards = [
   {
     title: "活动发布",
-    body: "在 Studio 里维护标题、时间、地点、封面、详情正文和报名链接。",
-    bullets: ["发布新活动：进入 Studio -> 近期活动", "报名链接与二维码都按活动单独维护"],
+    body: "活动以 Notion Event 为主源。把状态设为 Published 就会进入前台，Invisible / Draft 会隐藏。",
+    bullets: [
+      "发布新活动：在 Notion 新建 type=Event 的页面",
+      "核心字段：slug、summary、date、tags、page cover、ext.status/location/format",
+      "报名链接与二维码：维护 ext.registrationUrl / ext.registrationQrImage",
+    ],
   },
   {
     title: "社区记录",
-    body: "活动复盘、成员故事、项目记录和工具清单都继续走 Studio 编辑。",
-    bullets: ["发布新记录：进入 Studio -> 现场记录", "首页与列表会按排序字段自动展示"],
+    body: "活动复盘、成员故事、项目记录和工具清单暂时仍可走现有内容流，后续再收束为 Records。",
+    bullets: ["发布新记录：沿用当前内容后台", "首页与列表会按排序字段自动展示"],
   },
 ];
 
@@ -47,11 +51,11 @@ export default function ManageContentPage({ gateMode }: ManageContentPageProps) 
       <AdminShell
         eyebrow="Content Ops"
         title="内容发布"
-        description="这页先做内容运营总入口，把活动发布、社区记录和申请池之间的常用跳转收起来。"
+        description="这页收束内容运营入口。活动发布以 Notion Event 为主源，前台列表、详情和首页活动区块都会读取同一份数据。"
         navItems={adminNavItems}
         currentHref="/manage/content"
         actions={[
-          { href: "/studio", label: "打开内容后台" },
+          { href: "/events", label: "查看活动前台" },
           { href: "/manage/join", label: "查看申请池", secondary: true },
         ]}
       >
@@ -79,10 +83,10 @@ export default function ManageContentPage({ gateMode }: ManageContentPageProps) 
           <p className="card-eyebrow">Quick paths</p>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/studio"
+              href="/events"
               className="button-shine inline-flex items-center justify-center rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5"
             >
-              打开 Studio
+              查看活动前台
             </Link>
             <Link
               href="/manage/join"
