@@ -1,10 +1,7 @@
 import Head from 'next/head'
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import {
-  fetchGlobalAllData,
-  resolvePostProps
-} from '@/lib/db/SiteDataApi'
+import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import MemberProfilePage from '@/src/components/members/MemberProfilePage'
 import {
   getMemberAuthoredPosts,
@@ -15,9 +12,10 @@ import { extractMemberPathSlug as extractMemberSlug } from '@/lib/utils/member'
 const MemberProfileRoute = props => {
   const member = props.member || props.post
   const title = member?.title
-    ? `${member.title} | ${props.siteInfo?.title || 'Community'}`
-    : `${props.siteInfo?.title || 'Community'} Member`
-  const description = member?.bio || member?.summary || props.siteInfo?.description || ''
+    ? `${member.title} | IGNAI`
+    : 'IGNAI Member'
+  const description =
+    member?.bio || member?.summary || '连接本地 AI 行动者、组织者、创作者和开源贡献者。'
 
   return (
     <>
@@ -31,6 +29,13 @@ const MemberProfileRoute = props => {
 }
 
 export async function getStaticPaths() {
+  if (!process.env.EXPORT) {
+    return {
+      paths: [],
+      fallback: 'blocking'
+    }
+  }
+
   const { allMembers } = await fetchGlobalAllData({ from: 'member-profile-paths' })
 
   return {
@@ -44,32 +49,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug }, locale }) {
-  let props = await resolvePostProps({
-    prefix: 'members',
-    slug,
-    locale,
-    from: 'member-profile'
+  const props = await fetchGlobalAllData({
+    from: 'member-profile',
+    locale
   })
-
-  let member = props.post?.type === 'Member' ? props.post : null
-  let authoredPosts = []
-  let relatedSiteProps = null
-
-  if (!member) {
-    const siteProps = await fetchGlobalAllData({
-      from: 'member-profile-fallback',
-      locale
-    })
-    relatedSiteProps = siteProps
-    member = (siteProps.allMembers || []).find(candidate => {
-      const candidateSlug = extractMemberSlug(candidate?.slug, candidate?.id)
-      return candidateSlug === slug
-    }) || null
-    props = {
-      ...siteProps,
-      post: member
-    }
-  }
+  const member = (props.allMembers || []).find(candidate => {
+    const candidateSlug = extractMemberSlug(candidate?.slug, candidate?.id)
+    return candidateSlug === slug
+  }) || null
 
   if (!member || member.type !== 'Member') {
     return {
@@ -80,18 +67,11 @@ export async function getStaticProps({ params: { slug }, locale }) {
     }
   }
 
-  if (!relatedSiteProps) {
-    relatedSiteProps = await fetchGlobalAllData({
-      from: 'member-profile-related-posts',
-      locale
-    })
-  }
-
-  authoredPosts = (relatedSiteProps.allPages || []).map(post => ({
+  const authoredPosts = (props.allPages || []).map(post => ({
     ...post,
-    authors: resolveAuthorsForPost(post, relatedSiteProps.allMembers || [])
+    authors: resolveAuthorsForPost(post, props.allMembers || [])
   }))
-  authoredPosts = getMemberAuthoredPosts(member, authoredPosts)
+  const relatedPosts = getMemberAuthoredPosts(member, authoredPosts)
     .sort((a, b) => (b?.publishDate ?? 0) - (a?.publishDate ?? 0))
     .slice(0, 6)
 
@@ -104,7 +84,7 @@ export async function getStaticProps({ params: { slug }, locale }) {
     props: {
       ...props,
       member,
-      authoredPosts
+      authoredPosts: relatedPosts
     },
     revalidate: process.env.EXPORT
       ? undefined

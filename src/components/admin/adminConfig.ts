@@ -22,7 +22,7 @@ export const adminNavItems: AdminNavItem[] = [
   {
     href: "/manage/members",
     label: "成员管理",
-    note: "成员头像、简介、自介与展示控制的后续核心模块。",
-    state: "Todo",
+    note: "维护成员头像、简介、自介与展示控制，支持图床上传并回写 Notion。",
+    state: "P0",
   },
 ] as const;

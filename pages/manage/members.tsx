@@ -1,23 +1,23 @@
 import Head from "next/head";
-import Link from "next/link";
 import type { GetServerSidePropsContext } from "next";
 
 import { AdminShell } from "@/src/components/admin/AdminShell";
+import {
+  MemberProfileAdminPanel,
+  type MemberProfileAdminMember,
+} from "@/src/components/admin/MemberProfileAdminPanel";
 import { adminNavItems } from "@/src/components/admin/adminConfig";
 import { OpsAccessGate } from "@/src/components/admin/OpsAccessGate";
+import { fetchGlobalAllData } from "@/lib/db/SiteDataApi";
 import { isOpsAuthorized, isOpsPasswordConfigured } from "@/lib/join";
+import { getPublishedMembers, sortMembers } from "@/lib/utils/member";
 
 type ManageMembersPageProps = {
   gateMode?: "login" | "setup";
+  members?: MemberProfileAdminMember[];
 };
 
-const nextSteps = [
-  "从申请池里筛出值得推进的人。",
-  "补齐头像、简介、自介、外链和展示状态。",
-  "下一轮再把申请通过后一键转成员接起来。",
-];
-
-export default function ManageMembersPage({ gateMode }: ManageMembersPageProps) {
+export default function ManageMembersPage({ gateMode, members = [] }: ManageMembersPageProps) {
   if (gateMode) {
     return (
       <>
@@ -40,7 +40,7 @@ export default function ManageMembersPage({ gateMode }: ManageMembersPageProps) 
       <AdminShell
         eyebrow="Member Ops"
         title="成员管理"
-        description="这块现在还是过渡态。Join 申请已经能收集成员资料草稿，下一步就是把通过审核的人整理成正式成员信息。"
+        description="维护正式成员资料、上传头像并回写 Notion。成员列表要完整，头像上传就是 P0 闭环的一部分。"
         navItems={adminNavItems}
         currentHref="/manage/members"
         actions={[
@@ -48,52 +48,13 @@ export default function ManageMembersPage({ gateMode }: ManageMembersPageProps) 
           { href: "/manage/join", label: "回到申请池", secondary: true },
         ]}
       >
-        <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="surface-card-strong p-5 sm:p-6">
-            <p className="card-eyebrow">Next build</p>
-            <h2 className="mt-4 text-[1.4rem] font-semibold text-white">
-              这里先作为成员编排入口。
-            </h2>
-            <p className="mt-3 text-sm leading-7 text-white/60">
-              现在最实用的流程，是先在申请池里筛选，再把合适的人整理进 Members 展示页。等下一轮再把审核备注、展示开关和自动转成员接上。
-            </p>
-
-            <div className="mt-6 space-y-3">
-              {nextSteps.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-[18px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-7 text-white/68"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="surface-card p-5 sm:p-6">
-            <p className="card-eyebrow">Current routes</p>
-            <div className="mt-4 space-y-3">
-              <Link
-                href="/members"
-                className="block rounded-[18px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white/72 transition hover:border-white/18 hover:text-white"
-              >
-                Members 列表页
-              </Link>
-              <Link
-                href="/manage/join"
-                className="block rounded-[18px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white/72 transition hover:border-white/18 hover:text-white"
-              >
-                申请池
-              </Link>
-            </div>
-          </div>
-        </section>
+        <MemberProfileAdminPanel members={members} />
       </AdminShell>
     </>
   );
 }
 
-export function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   if (!isOpsPasswordConfigured()) {
     return { props: { gateMode: "setup" } };
   }
@@ -102,5 +63,13 @@ export function getServerSideProps(context: GetServerSidePropsContext) {
     return { props: { gateMode: "login" } };
   }
 
-  return { props: {} };
+  const props = (await fetchGlobalAllData({
+    from: "manage-members",
+    locale: context.locale,
+  })) as { allMembers?: MemberProfileAdminMember[] };
+  const rawMembers = Array.isArray(props.allMembers) ? props.allMembers : [];
+  const publishedMembers = getPublishedMembers(rawMembers) as MemberProfileAdminMember[];
+  const members = sortMembers(publishedMembers) as MemberProfileAdminMember[];
+
+  return { props: { members } };
 }
