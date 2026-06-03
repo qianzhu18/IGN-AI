@@ -2,7 +2,8 @@ import Head from 'next/head'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
-import { events as staticEvents, eventStatusLabel, eventFormatLabel } from '@/src/content/events'
+import { eventStatusLabel, eventFormatLabel } from '@/src/content/events'
+import { normalizeEventList } from '@/lib/utils/event'
 import Link from 'next/link'
 import { CalendarDays, MapPin } from 'lucide-react'
 
@@ -86,22 +87,8 @@ export async function getStaticProps({ locale }) {
   const from = 'events-index'
   const props = await fetchGlobalAllData({ from, locale })
 
-  // Merge Notion events with static events
-  const notionEvents = (props.allEvents || []).map(e => ({
-    slug: e.slug || e.id,
-    title: e.title,
-    subtitle: e.summary || '',
-    status: e.ext?.status || 'planning',
-    dateText: e.date?.start_date || e.ext?.dateText || '待定',
-    location: e.ext?.location || '待定',
-    format: e.ext?.format || 'offline',
-    cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/ignite-core.png',
-    excerpt: e.summary || '',
-    tags: e.tags || [],
-  }))
-
-  const events = notionEvents.length > 0 ? notionEvents : staticEvents
-  const pageTitle = `${props.siteInfo?.title || 'IGNAI'} - 活动`
+  const events = normalizeEventList(props.allEvents || [])
+  const pageTitle = 'IGNAI - 活动'
   const pageDescription = 'IGNAI 社区活动 — 线下聚会、工作坊、Demo 和共创'
 
   delete props.allPages

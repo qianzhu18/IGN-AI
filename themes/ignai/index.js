@@ -112,6 +112,23 @@ const LayoutBase = props => {
   }, [])
 
   useEffect(() => {
+    const removeDuplicateThemeRoots = () => {
+      const roots = Array.from(document.querySelectorAll('#theme-proxio'))
+      if (roots.length <= 1) return
+
+      const keep = roots[roots.length - 1]
+      roots.slice(0, -1).forEach(root => {
+        root.parentNode?.removeChild(root)
+      })
+      keep?.scrollIntoView({ block: 'start' })
+    }
+
+    removeDuplicateThemeRoots()
+    const timer = window.setTimeout(removeDuplicateThemeRoots, 240)
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
     const glow = cursorGlowRef.current
     if (!glow) return
     const handleMove = (e) => {

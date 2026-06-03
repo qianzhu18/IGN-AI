@@ -7,6 +7,7 @@ import {
   eventStatusLabel,
   eventFormatLabel
 } from '@/src/content/events'
+import { normalizeEventList, normalizeNotionEvent } from '@/lib/utils/event'
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
 
@@ -106,13 +107,32 @@ const EventDetailPage = ({ event, pageTitle }) => {
             </div>
           )}
 
-          {event.registrationUrl && (
-            <Link
-              href={event.registrationUrl}
-              className='inline-block rounded-full bg-[#FF7A18] px-6 py-3 text-sm font-medium text-white no-underline hover:bg-[#ff8c3a] transition'
-            >
-              报名参加
-            </Link>
+          {(event.registrationUrl || event.registrationQrImage) && (
+            <div className='mt-12 rounded-lg border border-white/10 bg-white/[0.03] p-5'>
+              <h2 className='text-xl font-semibold mb-4'>报名入口</h2>
+              <div className='flex flex-col gap-5 sm:flex-row sm:items-center'>
+                {event.registrationQrImage && (
+                  <img
+                    src={event.registrationQrImage}
+                    alt='活动报名二维码'
+                    className='h-32 w-32 rounded-lg border border-white/10 object-cover'
+                  />
+                )}
+                <div>
+                  <p className='mb-4 text-sm leading-7 text-white/50'>
+                    报名链接和二维码由 Notion Event 字段维护，修改后会同步到前台。
+                  </p>
+                  {event.registrationUrl && (
+                    <Link
+                      href={event.registrationUrl}
+                      className='inline-block rounded-full bg-[#FF7A18] px-6 py-3 text-sm font-medium text-white no-underline hover:bg-[#ff8c3a] transition'
+                    >
+                      报名参加
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>
@@ -120,8 +140,7 @@ const EventDetailPage = ({ event, pageTitle }) => {
   )
 }
 
-export async function getStaticPaths() {
-  // Static event slugs
+export function getStaticPaths() {
   const paths = staticEvents.map(e => ({ params: { slug: e.slug } }))
   return { paths, fallback: 'blocking' }
 }
@@ -131,37 +150,22 @@ export async function getStaticProps({ params, locale }) {
   const from = 'event-detail'
   const props = await fetchGlobalAllData({ from, locale })
 
-  // Try Notion events first, then static
   const notionEvent = (props.allEvents || []).find(
     e => e.slug === slug || e.id === slug
   )
 
   let event
   if (notionEvent) {
-    event = {
-      slug: notionEvent.slug || notionEvent.id,
-      title: notionEvent.title,
-      subtitle: notionEvent.summary || '',
-      status: notionEvent.ext?.status || 'planning',
-      dateText: notionEvent.date?.start_date || notionEvent.ext?.dateText || '待定',
-      location: notionEvent.ext?.location || '待定',
-      format: notionEvent.ext?.format || 'offline',
-      cover: notionEvent.pageCoverThumbnail || notionEvent.ext?.cover || '',
-      excerpt: notionEvent.summary || '',
-      tags: notionEvent.tags || [],
-      content: notionEvent.ext?.content || [],
-      agenda: notionEvent.ext?.agenda || [],
-      registrationUrl: notionEvent.ext?.registrationUrl || ''
-    }
+    event = normalizeNotionEvent(notionEvent)
   } else {
-    event = staticEvents.find(e => e.slug === slug) || null
+    event = normalizeEventList([], staticEvents).find(e => e.slug === slug) || null
   }
 
   if (!event) {
     return { notFound: true }
   }
 
-  const pageTitle = `${event.title} - ${props.siteInfo?.title || 'IGNAI'}`
+  const pageTitle = `${event.title} - IGNAI`
 
   return {
     props: {
