@@ -58,6 +58,7 @@
 - [x] 整理对应 issue / PR 叙事（#4035 → #4113）
 - [x] 拆第一版 upstream PR（#4113 已合并，2026-05-27）
 - [x] 建立组织者 issue 修复与上游协作 playbook
+- [x] 创建第二批数据层 upstream PR（#4169：Event 官方 data source API 补拉）
 - [ ] 持续记录开源贡献素材
 - [ ] 下一步：ignai 主题作为社区站示例贡献
 

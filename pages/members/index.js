@@ -1,5 +1,8 @@
 import Head from 'next/head'
-import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import {
+  fetchGlobalAllData,
+  getMembersForDirectory
+} from '@/lib/db/SiteDataApi'
 import MemberDirectoryPage from '@/src/components/members/MemberDirectoryPage'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
@@ -20,15 +23,24 @@ const MembersIndexPage = props => {
 export async function getStaticProps({ locale }) {
   const from = 'members-index'
   const props = await fetchGlobalAllData({ from, locale })
-  const members = sortMembers(getPublishedMembers(props.allMembers || []))
+  const members = getMembersForDirectory({
+    allMembers: sortMembers(getPublishedMembers(props.allMembers || []))
+  })
   const pageTitle = 'IGNAI 成员目录'
   const pageDescription =
     '连接本地 AI 行动者、组织者、创作者和开源贡献者。'
 
   delete props.allPages
   delete props.allMembers
+  delete props.allEvents
   delete props.latestPosts
   delete props.allNavPages
+  delete props.notice
+  delete props.customMenu
+  delete props.customNav
+  delete props.tagOptions
+  delete props.categoryOptions
+  delete props.postCount
 
   return {
     props: {

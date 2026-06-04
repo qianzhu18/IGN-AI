@@ -110,6 +110,15 @@ export async function getStaticProps(req) {
   }
 
   delete props.allPages
+  delete props.posts
+  delete props.latestPosts
+  delete props.allNavPages
+  delete props.notice
+  delete props.customMenu
+  delete props.customNav
+  delete props.tagOptions
+  delete props.categoryOptions
+  delete props.postCount
 
   return {
     props,

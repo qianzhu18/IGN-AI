@@ -37,7 +37,7 @@ function buildNavItems(customMenu, fallback) {
   return filtered.length > 0 ? filtered : fallback
 }
 
-function DesktopNavItem({ item }) {
+function DesktopNavItem({ item, onIntent }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
 
@@ -53,6 +53,9 @@ function DesktopNavItem({ item }) {
     return (
       <SmartLink
         href={item.href}
+        prefetch={false}
+        onMouseEnter={() => onIntent(item.href)}
+        onTouchStart={() => onIntent(item.href)}
         className='text-sm text-white/68 hover:text-white transition duration-200'>
         {item.label}
       </SmartLink>
@@ -77,6 +80,9 @@ function DesktopNavItem({ item }) {
             <SmartLink
               key={i}
               href={sub.href}
+              prefetch={false}
+              onMouseEnter={() => onIntent(sub.href)}
+              onTouchStart={() => onIntent(sub.href)}
               onClick={() => setOpen(false)}
               className='block px-4 py-2 text-sm text-white/68 hover:text-white hover:bg-white/4 transition'>
               {sub.label}
@@ -102,20 +108,12 @@ export const Header = props => {
 
   useEffect(() => {
     setShowMenu(false)
-  }, [router])
+  }, [router.asPath])
 
-  useEffect(() => {
-    const criticalPaths = [
-      ...navItems.map(item => item.href).filter(Boolean),
-      '/join'
-    ]
-
-    criticalPaths
-      .filter(href => typeof href === 'string' && href.startsWith('/'))
-      .forEach(href => {
-        router.prefetch(href).catch(() => {})
-      })
-  }, [navItems, router])
+  const prefetchOnIntent = href => {
+    if (typeof href !== 'string' || !href.startsWith('/')) return
+    router.prefetch(href).catch(() => {})
+  }
 
   // 点击外部关闭移动端菜单
   useEffect(() => {
@@ -168,10 +166,17 @@ export const Header = props => {
             {/* 桌面端导航 */}
             <div className='hidden md:flex items-center gap-6'>
               {navItems.map((item, index) => (
-                <DesktopNavItem key={item.label || index} item={item} />
+                <DesktopNavItem
+                  key={item.label || index}
+                  item={item}
+                  onIntent={prefetchOnIntent}
+                />
               ))}
               <SmartLink
                 href='/join'
+                prefetch={false}
+                onMouseEnter={() => prefetchOnIntent('/join')}
+                onTouchStart={() => prefetchOnIntent('/join')}
                 className='ml-4 inline-flex items-center px-5 py-2 rounded-lg text-sm font-medium text-white transition duration-200'
                 style={{
                   border: '1px solid rgba(188, 124, 76, 0.34)',
@@ -289,6 +294,8 @@ export const Header = props => {
                   <li key={item.label || index}>
                     <SmartLink
                       href={item.href}
+                      prefetch={false}
+                      onTouchStart={() => prefetchOnIntent(item.href)}
                       className='ignai-mobile-menu-link block rounded-xl px-5 py-3 text-sm text-white/78 transition-colors'>
                       {item.label}
                     </SmartLink>
@@ -296,6 +303,8 @@ export const Header = props => {
                       <SmartLink
                         key={si}
                         href={sub.href}
+                        prefetch={false}
+                        onTouchStart={() => prefetchOnIntent(sub.href)}
                         className='ignai-mobile-menu-sub-link block rounded-xl px-8 py-2 text-[13px] text-white/46 transition-colors'>
                         {sub.label}
                       </SmartLink>
@@ -306,6 +315,8 @@ export const Header = props => {
                 <li>
                   <SmartLink
                     href='/join'
+                    prefetch={false}
+                    onTouchStart={() => prefetchOnIntent('/join')}
                     className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium text-white transition-colors'
                     style={{
                       border: '1px solid rgba(188, 124, 76, 0.34)',

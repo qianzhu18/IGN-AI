@@ -56,6 +56,15 @@
 
 备注：2026-06-03 复验 `/events` 与 `/members`，`siteInfo.title=IGNAI`、`description=长沙 AI 社区 — 连接创造者，点燃可能性`、`link=https://ignai.community`，且未发现 `/undefined` canonical。
 
+## P1：上游贡献推进
+
+- [x] 当前产品分支 `glm/feat/rig-ai-redesign` 已推送到 `origin`，保留社区站完整产品成果。
+- [x] 已从 `notionnext-org/NotionNext` 的 `main` 创建上游分支 `codex/community-event-data-source`。
+- [x] 已创建上游 PR [#4169](https://github.com/notionnext-org/NotionNext/pull/4169)：为 `Event` 增加 Notion 官方 data source API 补拉管道，并修正 `ext` JSON 空格解析。
+- [ ] 下一批上游拆分候选：社区记录 / Records 的通用内容类型、Member directory 的主题无关组件、社区站示例主题说明。
+
+备注：#4169 刻意只包含数据层能力，不包含 IGNAI 主题、活动页 UI、Records 页面或运营后台，方便上游维护者独立评审。
+
 ## 本轮文件列表
 
 ### 成员资料上传与 Notion 回写
@@ -108,6 +117,13 @@
 - `doc/roadmap/master-todo.md`
 - `doc/roadmap/schedule.md`
 - `doc/roadmap/session-todo-2026-06-03-launch-readiness.md`
+
+### 上游贡献
+
+- `lib/db/SiteDataApi.js`
+- `lib/db/notion/eventDataSource.js`
+- `lib/db/notion/memberDataSource.js`
+- `lib/db/notion/getPageProperties.js`
 
 ### 已知未归属本轮的脏工作区
 

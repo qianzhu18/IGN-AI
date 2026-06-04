@@ -17,6 +17,7 @@ function MemberCard({ member }) {
   return (
     <Link
       href={getMemberPagePath(member)}
+      prefetch={false}
       className='group flex items-start gap-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-white/[0.04] no-underline'
     >
       <img

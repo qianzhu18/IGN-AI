@@ -29,6 +29,7 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
               <Link
                 key={event.slug}
                 href={getEventHref(event)}
+                prefetch={false}
                 target={isExternalEvent(event) ? '_blank' : undefined}
                 rel={isExternalEvent(event) ? 'noopener noreferrer' : undefined}
                 className='group grid overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline sm:grid-cols-[220px_1fr]'
@@ -105,6 +106,12 @@ export async function getStaticProps({ locale }) {
   delete props.allEvents
   delete props.latestPosts
   delete props.allNavPages
+  delete props.notice
+  delete props.customMenu
+  delete props.customNav
+  delete props.tagOptions
+  delete props.categoryOptions
+  delete props.postCount
 
   return {
     props: {
