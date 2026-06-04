@@ -56,7 +56,8 @@
 - [ ] 评论系统启用（Giscus 或 Waline）
 - [ ] 域名绑定（ignai.community）
 - [x] 梳理 NotionNext 社区基础设施 PR Stack 与面试 / 简历叙事
-- [ ] 跟进 #4169，并拆下一批架构型上游 PR：Content Type Registry / Typed Collection Helpers
+- [x] 拆架构型上游 PR：Content Type Registry（#4170）
+- [ ] 跟进 #4169 / #4170，并拆下一批架构型上游 PR：Typed Collection Helpers
 
 ## 4. 近 4 周目标（06-16 ~ 07-14）
 

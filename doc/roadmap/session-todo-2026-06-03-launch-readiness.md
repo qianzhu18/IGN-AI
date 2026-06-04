@@ -61,9 +61,10 @@
 - [x] 当前产品分支 `glm/feat/rig-ai-redesign` 已推送到 `origin`，保留社区站完整产品成果。
 - [x] 已从 `notionnext-org/NotionNext` 的 `main` 创建上游分支 `codex/community-event-data-source`。
 - [x] 已创建上游 PR [#4169](https://github.com/notionnext-org/NotionNext/pull/4169)：为 `Event` 增加 Notion 官方 data source API 补拉管道，并修正 `ext` JSON 空格解析。
-- [ ] 下一批上游拆分候选：社区记录 / Records 的通用内容类型、Member directory 的主题无关组件、社区站示例主题说明。
+- [x] 已创建上游 PR [#4170](https://github.com/notionnext-org/NotionNext/pull/4170)：新增 `contentTypes` registry，收束 `Post / Page / Member / Event` 等类型与状态判断。
+- [ ] 下一批上游拆分候选：Typed Collection Helpers、社区记录 / Records 的通用内容类型、Member directory 的主题无关组件、社区站示例主题说明。
 
-备注：#4169 刻意只包含数据层能力，不包含 IGNAI 主题、活动页 UI、Records 页面或运营后台，方便上游维护者独立评审。
+备注：#4169 和 #4170 刻意只包含数据层 / 契约层能力，不包含 IGNAI 主题、活动页 UI、Records 页面或运营后台，方便上游维护者独立评审。
 
 ## 本轮文件列表
 

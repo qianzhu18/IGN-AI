@@ -26,8 +26,8 @@ Use this repository as both:
 
 ## Recommended PR Order
 1. Event 官方 data source API fallback（已开 #4169）
-2. Community Content Type Registry
-3. Typed Collection Helpers
+2. Community Content Type Registry（已开 #4170）
+3. Typed Collection Helpers（下一步）
 4. Member Data Contract
 5. Member Directory / Detail Routes
 6. Author to Member Relationship
