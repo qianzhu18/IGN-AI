@@ -45,6 +45,8 @@
 - [x] **P0** 头像上传 API 12 路并发烟测通过，确认 R2 上传链路可用
 - [x] **P0** 本地 `yarn build` 完整通过，日报入口已从桌面 / 移动导航移除
 - [x] **P0** Notion 生成成员清理 dry-run 工具完成，等待确认后批量隐藏测试成员
+- [x] **P0** 点击跳转性能优化：裁剪首页 / 成员 / 活动 pageProps，并关闭批量成员链接自动 prefetch
+- [x] **P0** 点击跳转流畅度优化：移除全站 Lenis RAF，首页动态背景只在首页运行，canvas 降频并降低成员散点渲染负载
 - [x] **P1** 公开站点 title、description、link、canonical fallback 收束为 IGNAI
 - [ ] Join 高并发保护与图床资产迁移预案
 - [ ] featured members / 角色分组展示增强

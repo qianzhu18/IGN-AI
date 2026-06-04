@@ -8,6 +8,7 @@ const PARTICLE_COLORS = {
 }
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value))
+const TARGET_FRAME_MS = 1000 / 24
 
 export function BackgroundFX() {
   const canvasRef = useRef(null)
@@ -26,6 +27,7 @@ export function BackgroundFX() {
     let dpr = 1
     let particles = []
     let lines = []
+    let lastDrawTime = 0
 
     const scrollProgress = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight
@@ -33,7 +35,7 @@ export function BackgroundFX() {
     }
 
     const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       width = window.innerWidth
       height = window.innerHeight
       canvas.width = Math.floor(width * dpr)
@@ -42,7 +44,7 @@ export function BackgroundFX() {
       canvas.style.height = `${height}px`
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
 
-      const particleCount = width < 768 ? 42 : 76
+      const particleCount = width < 768 ? 22 : 38
       particles = Array.from({ length: particleCount }, (_, index) => {
         const band = index / particleCount
         const baseY = height * (0.16 + 0.68 * ((band * 1.7 + Math.random() * 0.35) % 1))
@@ -59,7 +61,7 @@ export function BackgroundFX() {
         }
       })
 
-      lines = Array.from({ length: width < 768 ? 4 : 7 }, (_, index) => ({
+      lines = Array.from({ length: width < 768 ? 3 : 4 }, (_, index) => ({
         y: height * (0.24 + index * 0.09),
         amplitude: 18 + index * 3,
         phase: Math.random() * Math.PI * 2,
@@ -114,6 +116,14 @@ export function BackgroundFX() {
     }
 
     const draw = (time) => {
+      if (!reducedMotion) {
+        animationFrame = requestAnimationFrame(draw)
+      }
+
+      if (document.hidden && !reducedMotion) return
+      if (!reducedMotion && time - lastDrawTime < TARGET_FRAME_MS) return
+      lastDrawTime = time
+
       const progress = scrollProgress()
       context.clearRect(0, 0, width, height)
       context.globalCompositeOperation = 'lighter'
@@ -163,18 +173,10 @@ export function BackgroundFX() {
       }
 
       context.globalCompositeOperation = 'source-over'
-
-      if (!reducedMotion) {
-        animationFrame = requestAnimationFrame(draw)
-      }
     }
 
     resize()
     draw(performance.now())
-
-    if (!reducedMotion) {
-      animationFrame = requestAnimationFrame(draw)
-    }
 
     window.addEventListener('resize', resize)
 

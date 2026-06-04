@@ -62,7 +62,7 @@ function AvatarShowcase({ members }) {
 
   // 根据容器大小自适应
   const isNarrow = containerSize.width < 480
-  const maxDisplay = isNarrow ? 50 : 100
+  const maxDisplay = isNarrow ? 28 : 56
   const displayMembers = members.slice(0, maxDisplay)
 
   // 散点半径：容器宽度的 38%
@@ -137,20 +137,17 @@ function AvatarShowcase({ members }) {
         const avatarSize = isFeatured ? featuredAvatar : baseAvatar
 
         return (
-          <motion.div
+          <div
             key={member.id || member.slug || i}
             className={`avatar-scatter-item${isFeatured ? ' avatar-scatter-item--featured' : ''}`}
             style={{
               left: `calc(50% + ${pos.x * scale}px)`,
               top: `calc(50% + ${pos.y * scale}px)`,
               width: avatarSize,
-              height: avatarSize
-            }}
-            animate={{
-              scale: isActive ? 1.9 : 1,
+              height: avatarSize,
+              transform: `translate(-50%, -50%) scale(${isActive ? 1.55 : 1})`,
               zIndex: isActive ? 50 : isFeatured ? 5 : 2
             }}
-            transition={{ type: 'spring', stiffness: 400, damping: 28 }}
             onMouseEnter={() => handleMouseEnter(i)}
             onMouseLeave={handleMouseLeave}
             onClick={(e) => { e.stopPropagation(); handleTap(i, e) }}
@@ -160,6 +157,7 @@ function AvatarShowcase({ members }) {
               prefetch={false}
               className='block no-underline'
               onClick={(e) => {
+                if (!isNarrow) return
                 if (isNarrow && tappedOnce && activeIndex === i) {
                   // 允许导航
                 } else {
@@ -175,7 +173,7 @@ function AvatarShowcase({ members }) {
                 draggable={false}
               />
             </Link>
-          </motion.div>
+          </div>
         )
       })}
 
@@ -284,7 +282,8 @@ function CompactMemberGrid({ members }) {
 /* ── 主组件 ────────────────────────────────────────────────── */
 
 export function CommunityRolesSection({ allMembers = [] }) {
-  const displayMembers = sortMembers(getPublishedMembers(allMembers)).slice(0, 200)
+  const publishedMembers = sortMembers(getPublishedMembers(allMembers))
+  const displayMembers = publishedMembers.slice(0, 96)
   const hasMembers = displayMembers.length > 0
   const useCompactLayout = displayMembers.length > 0 && displayMembers.length <= 3
 
@@ -298,7 +297,7 @@ export function CommunityRolesSection({ allMembers = [] }) {
           <h2 className='section-title mt-6'>这里有谁？</h2>
           <p className='section-body mt-6 max-w-lg mx-auto'>
             {hasMembers
-              ? `IGNAI 聚集了 ${displayMembers.length} 位关注 AI、产品、表达和行动的人。`
+              ? `IGNAI 聚集了 ${publishedMembers.length} 位关注 AI、产品、表达和行动的人。`
               : 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。'}
           </p>
         </Reveal>

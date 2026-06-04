@@ -48,6 +48,8 @@
 - [ ] Member 相关测试补齐
 - [ ] 关键页面 lint / build 验证常态化
 - [ ] 逐步清理与当前主线相关的类型债
+- [x] 首页 / 成员 / 活动列表 pageProps 瘦身，并收敛 Header 与成员列表批量 prefetch
+- [x] 点击跳转客户端性能优化：关闭全站 Lenis，首页专属动画不再挂到子页面，背景 canvas 降频，成员散点减少 motion 节点
 - [x] 收束已合并 AI worktree / 分支残留并统一主分支说明
 - [x] 建立每次 session 的结果记录机制
 - [x] 公开站点信息优先使用 IGNAI 本地配置，避免 NotionNext 默认 title / description / link 进入前台

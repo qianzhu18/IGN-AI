@@ -31,7 +31,6 @@ import SmartLink from '@/components/SmartLink'
 import { Banner } from './components/Banner'
 import SearchInput from './components/SearchInput'
 import { SVG404 } from './components/svg/SVG404'
-import Lenis from '@/components/Lenis'
 import { ArticleLock } from './components/ArticleLock'
 import { siteContent as siteContentFallback } from '@/src/content/site'
 import {
@@ -106,6 +105,8 @@ function Reveal({
 const LayoutBase = props => {
   const { children } = props
   const cursorGlowRef = useRef(null)
+  const router = useRouter()
+  const isHomePage = router.pathname === '/'
 
   useEffect(() => {
     loadWowJS()
@@ -130,14 +131,29 @@ const LayoutBase = props => {
 
   useEffect(() => {
     const glow = cursorGlowRef.current
-    if (!glow) return
+    if (!glow || !isHomePage) return
+    const media = window.matchMedia('(pointer: fine)')
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (!media.matches || reducedMotion.matches) return
+
+    let frame = 0
+    let x = -500
+    let y = -500
     const handleMove = (e) => {
-      glow.style.left = e.clientX + 'px'
-      glow.style.top = e.clientY + 'px'
+      x = e.clientX
+      y = e.clientY
+      if (frame) return
+      frame = window.requestAnimationFrame(() => {
+        glow.style.transform = `translate3d(${x}px, ${y}px, 0)`
+        frame = 0
+      })
     }
     window.addEventListener('mousemove', handleMove, { passive: true })
-    return () => window.removeEventListener('mousemove', handleMove)
-  }, [])
+    return () => {
+      window.removeEventListener('mousemove', handleMove)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [isHomePage])
 
   return (
     <div
@@ -145,7 +161,7 @@ const LayoutBase = props => {
       className={`${siteConfig('FONT_STYLE')} min-h-screen flex-col flex dark:bg-dark scroll-smooth`}
     >
       <Style />
-      <BackgroundFX />
+      {isHomePage && <BackgroundFX />}
 
       {/* Grid Lines — 92px grid pattern */}
       <div
@@ -172,12 +188,23 @@ const LayoutBase = props => {
       />
 
       {/* Cursor Glow — 桌面端鼠标跟随光晕 */}
-      <div ref={cursorGlowRef} aria-hidden='true' className='ignai-cursor-glow' style={{ left: '-500px', top: '-500px' }} />
+      {isHomePage && (
+        <div
+          ref={cursorGlowRef}
+          aria-hidden='true'
+          className='ignai-cursor-glow'
+          style={{ transform: 'translate3d(-500px, -500px, 0)' }}
+        />
+      )}
 
-      {/* Rig 覆盖效果 */}
-      <div aria-hidden='true' className='rig-scanlines' />
-      <div aria-hidden='true' className='rig-rgb-fringe' />
-      <div aria-hidden='true' className='rig-content-lines' />
+      {/* Rig 覆盖效果：首页保留动态质感，子页面避免常驻绘制拖慢跳转 */}
+      {isHomePage && (
+        <>
+          <div aria-hidden='true' className='rig-scanlines' />
+          <div aria-hidden='true' className='rig-rgb-fringe' />
+          <div aria-hidden='true' className='rig-content-lines' />
+        </>
+      )}
       {/* Rig noise SVG filter */}
       <svg aria-hidden='true' style={{ position: 'absolute', width: 0, height: 0 }}>
         <filter id='rig-grainy'>
@@ -191,7 +218,6 @@ const LayoutBase = props => {
       </div>
       <Footer {...props} />
       <BackToTopButton />
-      <Lenis />
     </div>
   )
 }

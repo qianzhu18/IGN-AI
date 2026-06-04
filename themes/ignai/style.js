@@ -1885,7 +1885,6 @@ const ignaiThemeCss = `
 
       .avatar-scatter-item {
         position: absolute;
-        transform: translate(-50%, -50%);
         cursor: pointer;
         will-change: transform;
         min-width: 44px;
@@ -1893,6 +1892,7 @@ const ignaiThemeCss = `
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: transform 0.16s ease-out;
       }
 
       .avatar-scatter-item--featured {
