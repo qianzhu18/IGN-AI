@@ -156,6 +156,13 @@ const NOTION_MEMBERS_DB_ID = 'a3ae45c4-da1e-821e-8e69-010ad0a42134';
 const NOTION_MEMBER_DRAFT_STATUS =
   process.env.NOTION_MEMBERS_STATUS_DRAFT_VALUE || 'Invisible';
 
+function formatDateOnly(date = new Date()): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 export function isJoinNotionEnabled(): boolean {
   return Boolean(process.env.NOTION_API_TOKEN?.trim());
 }
@@ -168,6 +175,7 @@ async function createNotionMemberApplication(
 
   const profile = input.metadata?.member_profile;
   const now = new Date().toISOString();
+  const submittedDate = formatDateOnly(new Date(now));
 
   // 将 interests + message + 小红书拼入 bio
   const bioParts: string[] = [];
@@ -175,7 +183,8 @@ async function createNotionMemberApplication(
   if (input.interests.length > 0) bioParts.push(`兴趣方向：${input.interests.join('、')}`);
   if (profile?.xiaohongshu) bioParts.push(`小红书：${profile.xiaohongshu}`);
   bioParts.push(`联系方式：${input.contact}`);
-  bioParts.push(`来源：${input.source} | 提交时间：${now}`);
+  bioParts.push(`来源：${input.source}`);
+  bioParts.push(`提交日期：${submittedDate}`);
   const bio = bioParts.join('\n\n');
 
   const properties: Record<string, unknown> = {

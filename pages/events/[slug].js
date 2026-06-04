@@ -4,10 +4,15 @@ import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import {
   events as staticEvents,
+  eventKindLabel,
   eventStatusLabel,
   eventFormatLabel
 } from '@/src/content/events'
-import { normalizeEventList, normalizeNotionEvent } from '@/lib/utils/event'
+import {
+  normalizeEventList,
+  normalizeEventSlugValue,
+  normalizeNotionEvent
+} from '@/lib/utils/event'
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
 
@@ -40,13 +45,17 @@ const EventDetailPage = ({ event, pageTitle }) => {
             <img
               src={event.cover}
               alt=''
+              style={{ objectPosition: event.coverPosition || 'center' }}
               className='w-full rounded-lg object-cover aspect-[16/9] mb-8'
             />
           )}
 
           <div className='flex flex-wrap gap-3 text-sm text-white/50 mb-4'>
+            <span className='inline-block rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1 text-xs font-medium text-[#ffd09a]'>
+              {eventKindLabel[event.kind] || '社区活动'}
+            </span>
             <span className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
-              event.status === 'open'
+              event.status === 'open' || event.status === 'ongoing'
                 ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
                 : 'border-white/10 bg-white/5 text-white/50'
             }`}>
@@ -140,8 +149,25 @@ const EventDetailPage = ({ event, pageTitle }) => {
   )
 }
 
-export function getStaticPaths() {
-  const paths = staticEvents.map(e => ({ params: { slug: e.slug } }))
+export async function getStaticPaths({ locales = [] } = {}) {
+  let events = staticEvents
+
+  try {
+    const props = await fetchGlobalAllData({ from: 'event-paths' })
+    events = normalizeEventList(props.allEvents || [], staticEvents)
+  } catch (error) {
+    console.warn('[EVENT-PATHS] Failed to fetch Notion Event paths:', error.message)
+  }
+
+  const slugs = [
+    ...new Set(events.map(event => normalizeEventSlugValue(event.slug)).filter(Boolean))
+  ]
+  const paths = locales.length > 0
+    ? locales.flatMap(locale =>
+        slugs.map(slug => ({ params: { slug }, locale }))
+      )
+    : slugs.map(slug => ({ params: { slug } }))
+
   return { paths, fallback: 'blocking' }
 }
 
@@ -150,15 +176,21 @@ export async function getStaticProps({ params, locale }) {
   const from = 'event-detail'
   const props = await fetchGlobalAllData({ from, locale })
 
+  const normalizedSlug = normalizeEventSlugValue(slug)
   const notionEvent = (props.allEvents || []).find(
-    e => e.slug === slug || e.id === slug
+    e =>
+      normalizeEventSlugValue(e.slug, e.title, e.id) === normalizedSlug ||
+      normalizeEventSlugValue(e.id) === normalizedSlug
   )
 
   let event
   if (notionEvent) {
     event = normalizeNotionEvent(notionEvent)
   } else {
-    event = normalizeEventList([], staticEvents).find(e => e.slug === slug) || null
+    event =
+      normalizeEventList([], staticEvents).find(
+        e => normalizeEventSlugValue(e.slug) === normalizedSlug
+      ) || null
   }
 
   if (!event) {

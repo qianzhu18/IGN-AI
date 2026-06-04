@@ -1,8 +1,13 @@
 import { CalendarDays, MapPin } from 'lucide-react'
 import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
-import { eventFormatLabel, eventStatusLabel } from '@/src/content/events'
-import { getVisibleUpcomingEvents, normalizeEventList } from '@/lib/utils/event'
+import { eventFormatLabel, eventKindLabel, eventStatusLabel } from '@/src/content/events'
+import {
+  getEventHref,
+  getVisibleUpcomingEvents,
+  isExternalEvent,
+  normalizeEventList
+} from '@/lib/utils/event'
 import { Reveal } from '../Reveal'
 
 export function UpcomingEventsSection({ notionEvents = [] }) {
@@ -47,7 +52,7 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
               真实发生。
             </h2>
             <p className='section-body mt-6'>
-              线下聚会、主题共创、工作坊和社区实验，都会在这里持续更新。
+              成员组织、联动参与、线下宣发和社区实验，都会在这里持续更新。
             </p>
           </div>
           <div className='flex gap-4'>
@@ -61,7 +66,9 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
           {mergedEvents.slice(0, 3).map((event, index) => (
             <Reveal key={event.slug} delay={index * 0.08}>
               <SmartLink
-                href={`/events/${event.slug}`}
+                href={getEventHref(event)}
+                target={isExternalEvent(event) ? '_blank' : undefined}
+                rel={isExternalEvent(event) ? 'noopener noreferrer' : undefined}
                 className='group ignai-unified-card ignai-event-card flex h-full flex-col overflow-hidden rounded-lg'
               >
                 <div className='relative overflow-hidden'>
@@ -71,12 +78,18 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
                     alt=''
                     fill
                     sizes='(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw'
+                    style={{ objectPosition: event.coverPosition || 'center' }}
                     className='object-cover transition duration-500 group-hover:scale-[1.03]'
                   />
                 </div>
                   <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
-                  <div className='absolute left-4 top-4 rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
-                    {eventStatusLabel[event.status]}
+                  <div className='absolute left-4 top-4 flex flex-wrap gap-2'>
+                    <span className='rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
+                      {eventKindLabel[event.kind] || '社区活动'}
+                    </span>
+                    <span className='rounded-full border border-white/10 bg-[#080b10]/72 px-3 py-1.5 text-xs font-medium text-white/70'>
+                      {eventStatusLabel[event.status]}
+                    </span>
                   </div>
                 </div>
 

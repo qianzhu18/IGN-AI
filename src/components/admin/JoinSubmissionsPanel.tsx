@@ -15,6 +15,15 @@ type JoinSubmissionsPanelProps = {
 
 type UpdateState = Record<string, "idle" | "saving" | "saved" | "error">;
 
+function formatDateOnly(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function JoinSubmissionsPanel({ initialItems }: JoinSubmissionsPanelProps) {
   const [items, setItems] = useState(initialItems);
   const [filter, setFilter] = useState<JoinApplicationStatus | "all">("all");
@@ -125,7 +134,7 @@ export function JoinSubmissionsPanel({ initialItems }: JoinSubmissionsPanelProps
                   <p>联系方式：{item.contact}</p>
                   <p>身份：{item.role}</p>
                   <p>来源：{item.source}</p>
-                  <p>提交时间：{new Date(item.created_at).toLocaleString("zh-CN")}</p>
+                  <p>提交日期：{formatDateOnly(item.created_at)}</p>
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">

@@ -23,6 +23,11 @@
 - [x] 首页活动区块、活动列表、活动详情共用 Event 规范化契约
 - [x] 活动详情页支持 Notion Event 报名链接 / 报名二维码展示
 - [x] 后台支持 Notion 活动发布后手动刷新前台缓存
+- [x] 活动通过 Notion 官方 data_source API 补拉真实 `Event` 行，详情页路径映射到具体 Event slug
+- [x] Event 支持成员组织 / 联动 / 宣发 / 参与关系、外部活动入口和 16:9 封面裁剪
+- [x] Event 支持 Notion 管理 `planning` / `ongoing` / `recap` 状态与活动时间段展示
+- [x] 社区记录 `/records` 与 `/records/[slug]` 前台入口补齐
+- [x] 首页 Field Notes 区块接入社区记录
 - [ ] 文章、活动、成员之间的关系模型梳理
 - [ ] 内容分流导航更清晰
 - [ ] 组织表达层增强
@@ -74,12 +79,15 @@
 - [x] 前端成员数据出口包含 `website` 与 social fields
 - [x] Join 申请进入 Notion 草稿后，通过 Notion `status` 控制隐藏 / 展示
 - [x] 不再单独实现成员审批后台，Notion `Published` / `Invisible` 作为发布开关
+- [x] 完成头像上传 API 并发烟测：12 路并发上传至 Cloudflare R2 全部成功
 - [ ] Join 高并发保护：Notion 写入限速、失败重试、幂等去重
 - [ ] 图床资产治理：记录对象 key、准备 R2 / OSS 迁移脚本
 
 ## G. 生产上线（新增 — 当前最优先）
 - [ ] Vercel 部署恢复正常
 - [x] 成员详情页构建期全量预渲染收敛，降低 Notion 429 风险
+- [x] 本地 `yarn build` 通过，生产构建阻断问题本地已解除
+- [x] Notion 生成成员清理 dry-run 工具就绪（默认不改数据，确认后可批量改为 `Invisible`）
 - [ ] Notion 内容填充完成
 - [ ] SEO 优化（sitemap、RSS、正式 OG 图、结构化数据）
 - [ ] 域名绑定（ignai.community）

@@ -9,13 +9,28 @@ import {
 } from '@/lib/utils/post'
 import { extractMemberPathSlug as extractMemberSlug } from '@/lib/utils/member'
 
+function getPublicMemberDescription(member) {
+  const summary = typeof member?.summary === 'string' ? member.summary.trim() : ''
+  if (summary) return summary
+
+  const bio = typeof member?.bio === 'string' ? member.bio : ''
+  const body = bio
+    .split(/\n{2,}/)
+    .map(item => item.trim())
+    .filter(Boolean)
+    .filter(item => !/^(兴趣方向|联系方式|小红书|来源|提交时间|提交日期)：/.test(item))
+    .join(' ')
+    .trim()
+
+  return body || '连接本地 AI 行动者、组织者、创作者和开源贡献者。'
+}
+
 const MemberProfileRoute = props => {
   const member = props.member || props.post
   const title = member?.title
     ? `${member.title} | IGNAI`
     : 'IGNAI Member'
-  const description =
-    member?.bio || member?.summary || '连接本地 AI 行动者、组织者、创作者和开源贡献者。'
+  const description = getPublicMemberDescription(member)
 
   return (
     <>
@@ -67,18 +82,23 @@ export async function getStaticProps({ params: { slug }, locale }) {
     }
   }
 
-  const authoredPosts = (props.allPages || []).map(post => ({
-    ...post,
-    authors: resolveAuthorsForPost(post, props.allMembers || [])
-  }))
+  const authoredPosts = (props.allPages || [])
+    .filter(post => post?.type === 'Post' && post?.status === 'Published')
+    .map(post => ({
+      ...post,
+      authors: resolveAuthorsForPost(post, [member])
+    }))
+
   const relatedPosts = getMemberAuthoredPosts(member, authoredPosts)
     .sort((a, b) => (b?.publishDate ?? 0) - (a?.publishDate ?? 0))
     .slice(0, 6)
 
   delete props.allPages
   delete props.allMembers
+  delete props.allEvents
   delete props.latestPosts
   delete props.allNavPages
+  delete props.notice
 
   return {
     props: {

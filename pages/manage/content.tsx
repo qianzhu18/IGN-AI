@@ -18,14 +18,24 @@ const contentCards = [
     body: "活动以 Notion Event 为主源。把状态设为 Published 就会进入前台，Invisible / Draft 会隐藏。",
     bullets: [
       "发布新活动：在 Notion 新建 type=Event 的页面",
-      "核心字段：slug、summary、date、tags、page cover、ext.status/location/format",
+      "活动封面：直接使用 Notion 页面顶部的添加封面 / 更换封面",
+      "核心字段：slug、summary、date 或 event_start、location、tags",
+      "活动状态：维护 ext.status=planning/ongoing/recap，兼容 open/closed/finished",
+      "活动时间段：优先维护 ext.eventDateText，或填写 event_start / event_end",
+      "活动关系：维护 ext.kind=hosted/cohosted/promoted/participating",
+      "外部活动：slug 可直接填外部活动 URL，官网会作为外部入口打开",
+      "封面裁剪：维护 ext.coverPosition，例如 center、top、50% 35%",
       "报名链接与二维码：维护 ext.registrationUrl / ext.registrationQrImage",
     ],
   },
   {
     title: "社区记录",
-    body: "活动复盘、成员故事、项目记录和工具清单暂时仍可走现有内容流，后续再收束为 Records。",
-    bullets: ["发布新记录：沿用当前内容后台", "首页与列表会按排序字段自动展示"],
+    body: "活动复盘、成员故事、项目记录和工具清单当前已在前台开放 Records 入口，后续再把编辑源从静态内容迁移到 Notion 或轻量后台。",
+    bullets: [
+      "查看记录前台：/records 与 /records/[slug]",
+      "当前内容源：src/content/records.ts",
+      "后续增强：将 Record 字段迁入 Notion 并接入刷新入口",
+    ],
   },
 ];
 
@@ -138,6 +148,7 @@ export default function ManageContentPage({ gateMode }: ManageContentPageProps) 
         currentHref="/manage/content"
         actions={[
           { href: "/events", label: "查看活动前台" },
+          { href: "/records", label: "查看记录前台", secondary: true },
           { href: "/manage/join", label: "查看申请池", secondary: true },
         ]}
       >
@@ -175,6 +186,12 @@ export default function ManageContentPage({ gateMode }: ManageContentPageProps) 
               className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm text-white/72 transition hover:border-white/18 hover:text-white"
             >
               去申请池联动查看线索
+            </Link>
+            <Link
+              href="/records"
+              className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm text-white/72 transition hover:border-white/18 hover:text-white"
+            >
+              查看社区记录
             </Link>
           </div>
         </section>

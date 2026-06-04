@@ -1,23 +1,12 @@
 import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
-import { recordTypeLabel } from '@/src/content/records'
+import { records, recordTypeLabel } from '@/src/content/records'
 import { Reveal } from '../Reveal'
 
-export function FieldNotesSection({ notionEvents = [] }) {
-  const finishedEvents = notionEvents.filter(
-    e => e.ext?.status === 'finished' || e.status === 'finished'
-  )
-  const displayItems = finishedEvents.slice(0, 3).map(e => ({
-    slug: e.slug || e.id,
-    title: e.title,
-    type: 'recap',
-    dateText: e.date?.start_date || e.ext?.dateText || '',
-    location: e.ext?.location || '',
-    cover: e.pageCoverThumbnail || e.ext?.cover || '/images/generated/human-energy-scene.png',
-    excerpt: e.summary || '',
-    outcomes: e.ext?.outcomes || [],
-    tags: e.tags || [],
-    href: `/events/${e.slug || e.id}`,
+export function FieldNotesSection() {
+  const displayItems = records.slice(0, 3).map(record => ({
+    ...record,
+    href: `/records/${record.slug}`
   }))
 
   if (displayItems.length === 0) return null
@@ -39,7 +28,7 @@ export function FieldNotesSection({ notionEvents = [] }) {
               把活动、项目、思考和成员故事沉淀成可以被继续阅读和传播的内容资产。
             </p>
           </div>
-          <SmartLink href='/events' className='ignai-cta-secondary'>
+          <SmartLink href='/records' className='ignai-cta-secondary'>
             查看现场记录
           </SmartLink>
         </Reveal>
@@ -65,7 +54,7 @@ export function FieldNotesSection({ notionEvents = [] }) {
                       </p>
                     </div>
                     <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
-                      {recordTypeLabel[item.type] || '活动复盘'}
+                      {recordTypeLabel[item.type] || '社区记录'}
                     </span>
                   </div>
 

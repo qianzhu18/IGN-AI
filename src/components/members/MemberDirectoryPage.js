@@ -11,31 +11,42 @@ import {
 function MemberCard({ member }) {
   const quote = getMemberQuote(member)
   const verified = getMemberVerificationLabel(member)
+  const role = member.role || '成员'
+  const description = member.bio || member.summary || quote
 
   return (
     <Link
       href={getMemberPagePath(member)}
-      className='group flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200 hover:bg-white/[0.04] no-underline'
+      className='group flex items-start gap-3 rounded-lg px-3 py-3 transition-all duration-200 hover:bg-white/[0.04] no-underline'
     >
       <img
         src={getMemberAvatar(member)}
         alt={member.title || 'Member avatar'}
-        className='h-8 w-8 flex-shrink-0 rounded-full object-cover ring-1 ring-white/10'
+        className='mt-0.5 h-10 w-10 flex-shrink-0 rounded-full object-cover ring-1 ring-white/10'
       />
       <div className='flex-1 min-w-0'>
-        <div className='flex items-center gap-1.5'>
-          <span className='truncate text-sm text-white/90 group-hover:text-[#ffd09a] transition'>
+        <div className='flex min-w-0 flex-wrap items-center gap-2'>
+          <span className='truncate text-sm font-medium text-white/90 group-hover:text-[#ffd09a] transition'>
             {member.title}
           </span>
+          <span className='rounded-full border border-white/[0.08] px-2 py-0.5 text-[10px] text-white/42'>
+            {role}
+          </span>
           {isFeaturedMember(member) && (
-            <span className='text-[10px] text-emerald-400'>*</span>
+            <span className='rounded-full border border-emerald-400/15 px-2 py-0.5 text-[10px] text-emerald-300/82'>
+              Featured
+            </span>
           )}
           {verified && (
-            <span className='text-[10px] text-sky-400'>~</span>
+            <span className='rounded-full border border-sky-400/15 px-2 py-0.5 text-[10px] text-sky-300/82'>
+              {verified}
+            </span>
           )}
         </div>
-        {quote && (
-          <p className='text-[11px] text-neutral-600 truncate mt-0.5'>&ldquo;{quote}&rdquo;</p>
+        {description && (
+          <p className='mt-1 line-clamp-2 text-xs leading-5 text-white/42'>
+            {description}
+          </p>
         )}
       </div>
       <span className='text-xs text-white/15 group-hover:text-white/40 transition'>&rarr;</span>
@@ -83,6 +94,7 @@ export default function MemberDirectoryPage({
   const [openGroups, setOpenGroups] = useState(new Set())
   const [search, setSearch] = useState('')
   const [roleFilter, setRoleFilter] = useState(null)
+  const [showAllRoles, setShowAllRoles] = useState(false)
 
   const groups = useMemo(() => {
     const map = new Map()
@@ -94,7 +106,14 @@ export default function MemberDirectoryPage({
     return [...map.entries()].sort((a, b) => b[1].length - a[1].length)
   }, [members])
 
-  const allRoles = useMemo(() => groups.map(([r]) => r), [groups])
+  const allRoles = useMemo(
+    () => groups.map(([role, roleMembers]) => ({
+      role,
+      count: roleMembers.length
+    })),
+    [groups]
+  )
+  const visibleRoles = showAllRoles ? allRoles : allRoles.slice(0, 10)
 
   const filteredMembers = useMemo(() => {
     let list = members
@@ -150,7 +169,7 @@ export default function MemberDirectoryPage({
         </div>
 
         {/* Search + Filter */}
-        <div className='mb-4 space-y-3'>
+        <div className='mb-5 space-y-4'>
           <div className='relative'>
             <svg className='absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-600' viewBox='0 0 16 16' fill='none' stroke='currentColor' strokeWidth='1.5'>
               <circle cx='7' cy='7' r='5' />
@@ -175,31 +194,54 @@ export default function MemberDirectoryPage({
             )}
           </div>
 
-          {/* Role filter chips */}
-          <div className='flex flex-wrap gap-2'>
-            <button
-              onClick={() => setRoleFilter(null)}
-              className={`rounded-full px-3 py-1 text-xs transition ${
-                !roleFilter
-                  ? 'bg-white/10 text-white border border-white/20'
-                  : 'text-neutral-500 border border-white/[0.06] hover:text-white/70 hover:border-white/10'
-              }`}
-            >
-              全部
-            </button>
-            {allRoles.map(role => (
+          <div className='rounded-xl border border-white/[0.06] bg-white/[0.018] p-3 sm:p-4'>
+            <div className='mb-3 flex items-center justify-between gap-3'>
+              <div>
+                <p className='text-[11px] font-medium uppercase tracking-wider text-[#F0CB8A]/70'>
+                  按角色筛选
+                </p>
+                <p className='mt-1 text-xs text-white/34'>
+                  先展示人数较多的角色，更多角色可展开。
+                </p>
+              </div>
+              {allRoles.length > 10 && (
+                <button
+                  type='button'
+                  onClick={() => setShowAllRoles(value => !value)}
+                  className='shrink-0 rounded-full border border-white/[0.08] px-3 py-1.5 text-xs text-white/54 transition hover:border-white/16 hover:text-white/78'
+                >
+                  {showAllRoles ? '收起角色' : `更多 ${allRoles.length - 10} 个`}
+                </button>
+              )}
+            </div>
+
+            <div className='flex flex-wrap gap-2'>
               <button
-                key={role}
-                onClick={() => setRoleFilter(roleFilter === role ? null : role)}
-                className={`rounded-full px-3 py-1 text-xs transition ${
-                  roleFilter === role
+                onClick={() => setRoleFilter(null)}
+                className={`rounded-full px-3 py-1.5 text-xs transition ${
+                  !roleFilter
                     ? 'bg-white/10 text-white border border-white/20'
                     : 'text-neutral-500 border border-white/[0.06] hover:text-white/70 hover:border-white/10'
                 }`}
               >
-                {role}
+                全部
+                <span className='ml-1 text-white/34'>{members.length}</span>
               </button>
-            ))}
+              {visibleRoles.map(({ role, count }) => (
+                <button
+                  key={role}
+                  onClick={() => setRoleFilter(roleFilter === role ? null : role)}
+                  className={`rounded-full px-3 py-1.5 text-xs transition ${
+                    roleFilter === role
+                      ? 'bg-white/10 text-white border border-white/20'
+                      : 'text-neutral-500 border border-white/[0.06] hover:text-white/70 hover:border-white/10'
+                  }`}
+                >
+                  {role}
+                  <span className='ml-1 text-white/34'>{count}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -207,15 +249,15 @@ export default function MemberDirectoryPage({
         <div className='flex items-center justify-between mb-4'>
           <p className='text-xs text-neutral-600'>
             {isFiltering
-              ? `${filteredMembers.length} / ${members.length} members`
-              : `${members.length} members / ${groups.length} roles`}
+              ? `${filteredMembers.length} / ${members.length} 位成员`
+              : `${members.length} 位成员 / ${groups.length} 个角色`}
           </p>
           <div className='flex gap-2'>
             <button onClick={expandAll} className='rounded-md px-2.5 py-1.5 text-xs text-neutral-600 hover:text-white/70 hover:bg-white/[0.04] transition'>
-              Expand all
+              展开全部
             </button>
             <button onClick={collapseAll} className='rounded-md px-2.5 py-1.5 text-xs text-neutral-600 hover:text-white/70 hover:bg-white/[0.04] transition'>
-              Collapse
+              收起
             </button>
           </div>
         </div>

@@ -2,10 +2,10 @@ import Head from 'next/head'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
-import { eventStatusLabel, eventFormatLabel } from '@/src/content/events'
-import { normalizeEventList } from '@/lib/utils/event'
+import { eventStatusLabel, eventFormatLabel, eventKindLabel } from '@/src/content/events'
+import { getEventHref, isExternalEvent, normalizeEventList } from '@/lib/utils/event'
 import Link from 'next/link'
-import { CalendarDays, MapPin } from 'lucide-react'
+import { CalendarDays, ExternalLink, MapPin } from 'lucide-react'
 
 const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
   return (
@@ -21,39 +21,52 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
           </p>
           <h1 className='text-3xl font-bold mb-2'>近期活动</h1>
           <p className='text-white/50 mb-12'>
-            线下聚会、主题共创、工作坊和社区实验，都会在这里持续更新。
+            这里整理 IGNAI 成员组织、联动、参与和协助宣发的活动。
           </p>
 
-          <div className='flex flex-col gap-4'>
+          <div className='grid gap-5'>
             {events.map(event => (
               <Link
                 key={event.slug}
-                href={`/events/${event.slug}`}
-                className='group flex items-center gap-6 rounded-lg border border-white/[0.06] bg-white/[0.02] px-6 py-5 transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline'
+                href={getEventHref(event)}
+                target={isExternalEvent(event) ? '_blank' : undefined}
+                rel={isExternalEvent(event) ? 'noopener noreferrer' : undefined}
+                className='group grid overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline sm:grid-cols-[220px_1fr]'
               >
-                <div className='flex-shrink-0 w-16 text-center'>
-                  <span className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
-                    event.status === 'open'
-                      ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
-                      : 'border-white/10 bg-white/5 text-white/50'
-                  }`}>
-                    {eventStatusLabel[event.status] || event.status}
-                  </span>
-                </div>
-
-                <div className='flex-shrink-0 hidden sm:block'>
+                <div className='relative aspect-[16/9] overflow-hidden bg-white/[0.03] sm:aspect-auto'>
                   <img
                     src={event.cover || '/images/generated/ignite-core.png'}
                     alt=''
-                    className='h-16 w-24 rounded object-cover'
+                    style={{ objectPosition: event.coverPosition || 'center' }}
+                    className='h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]'
                   />
                 </div>
 
-                <div className='flex-1 min-w-0'>
-                  <h3 className='text-base font-semibold text-white truncate transition group-hover:text-[#ffd09a]'>
+                <div className='min-w-0 p-5'>
+                  <div className='mb-3 flex flex-wrap gap-2'>
+                    <span className='rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1 text-xs font-medium text-[#ffd09a]'>
+                      {eventKindLabel[event.kind] || '社区活动'}
+                    </span>
+                    <span className={`rounded-full border px-3 py-1 text-xs font-medium ${
+                      event.status === 'open' || event.status === 'ongoing'
+                        ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
+                        : 'border-white/10 bg-white/5 text-white/50'
+                    }`}>
+                      {eventStatusLabel[event.status] || event.status}
+                    </span>
+                    {isExternalEvent(event) && (
+                      <span className='inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/52'>
+                        外部入口 <ExternalLink className='h-3 w-3' />
+                      </span>
+                    )}
+                  </div>
+                  <h3 className='text-lg font-semibold leading-snug text-white transition group-hover:text-[#ffd09a]'>
                     {event.title}
                   </h3>
-                  <div className='flex flex-wrap gap-4 mt-1.5 text-xs text-white/45'>
+                  <p className='mt-2 line-clamp-2 text-sm leading-6 text-white/52'>
+                    {event.excerpt || event.subtitle || '查看活动详情与参与方式。'}
+                  </p>
+                  <div className='mt-4 flex flex-wrap gap-4 text-xs text-white/45'>
                     <span className='inline-flex items-center gap-1.5'>
                       <CalendarDays className='h-3.5 w-3.5 text-[#F0CB8A]/60' />
                       {event.dateText}
@@ -63,10 +76,6 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
                       {event.location} · {eventFormatLabel[event.format] || event.format}
                     </span>
                   </div>
-                </div>
-
-                <div className='flex-shrink-0 text-white/30 group-hover:text-white/60 transition'>
-                  <span className='text-sm'>&rarr;</span>
                 </div>
               </Link>
             ))}

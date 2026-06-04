@@ -38,7 +38,13 @@
 - [x] **P0** 活动发布数据源确认：收束为 Notion Event
 - [x] **P0** 活动首页、列表页、详情页读取同一份 Notion Event 契约
 - [x] **P0** 活动详情页支持 Notion 报名链接 / 报名二维码展示
+- [x] **P0** 活动官方 API 补数与真实 Event slug 路由映射完成
 - [x] **P0** 活动后台支持 Notion 发布后刷新首页、活动列表和活动详情缓存
+- [x] **P0** 活动支持 Notion `ext.status=planning/ongoing/recap` 与 `ext.eventDateText` 时间段展示
+- [x] **P0** 社区记录 `/records`、`/records/[slug]` 与首页 Field Notes 前台入口补齐
+- [x] **P0** 头像上传 API 12 路并发烟测通过，确认 R2 上传链路可用
+- [x] **P0** 本地 `yarn build` 完整通过，日报入口已从桌面 / 移动导航移除
+- [x] **P0** Notion 生成成员清理 dry-run 工具完成，等待确认后批量隐藏测试成员
 - [x] **P1** 公开站点 title、description、link、canonical fallback 收束为 IGNAI
 - [ ] Join 高并发保护与图床资产迁移预案
 - [ ] featured members / 角色分组展示增强

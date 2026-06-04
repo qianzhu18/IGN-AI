@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { cleanCache } from "@/lib/cache/local_file_cache";
 import { isOpsAuthorized, isOpsPasswordConfigured } from "@/lib/join";
 
 const DEFAULT_PATHS = ["/", "/events"];
@@ -35,6 +36,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const eventSlug = normalizeSlug(body.eventSlug);
   const paths = eventSlug ? [...DEFAULT_PATHS, `/events/${eventSlug}`] : DEFAULT_PATHS;
   const revalidated: string[] = [];
+
+  cleanCache();
 
   for (const path of paths) {
     await res.revalidate(path);

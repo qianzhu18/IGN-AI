@@ -45,11 +45,68 @@ function collectSocialLinks(member) {
   return candidates.filter(([, href]) => typeof href === 'string' && href.trim())
 }
 
+function formatDateOnly(value) {
+  if (!value || typeof value !== 'string') return ''
+  const matched = value.match(/\d{4}-\d{2}-\d{2}/)
+  if (matched?.[0]) return matched[0]
+
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return value.trim()
+
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
+function parseMemberBio(rawBio = '', fallback = '') {
+  const raw = typeof rawBio === 'string' ? rawBio : ''
+  const paragraphs = raw
+    .split(/\n{2,}/)
+    .map(item => item.trim())
+    .filter(Boolean)
+  const meta = []
+  const body = []
+
+  const pushMeta = (label, value) => {
+    if (!value) return
+    meta.push({ label, value: value.trim() })
+  }
+
+  for (const paragraph of paragraphs) {
+    const sourceSubmittedMatch = paragraph.match(/^来源：(.+?)\s*\|\s*提交时间：(.+)$/)
+    if (sourceSubmittedMatch) {
+      pushMeta('来源', sourceSubmittedMatch[1])
+      pushMeta('提交日期', formatDateOnly(sourceSubmittedMatch[2]))
+      continue
+    }
+
+    const simpleMatch = paragraph.match(/^(兴趣方向|联系方式|小红书|来源|提交时间|提交日期)：(.+)$/)
+    if (simpleMatch) {
+      const label = simpleMatch[1] === '提交时间' ? '提交日期' : simpleMatch[1]
+      const value = label === '提交日期' ? formatDateOnly(simpleMatch[2]) : simpleMatch[2]
+      pushMeta(label, value)
+      continue
+    }
+
+    body.push(paragraph)
+  }
+
+  return {
+    body: body.length > 0 ? body : (fallback ? [fallback] : []),
+    meta
+  }
+}
+
 export default function MemberProfilePage({ member, siteInfo, authoredPosts = [] }) {
   const socialLinks = collectSocialLinks(member)
   const verificationLabel = getMemberVerificationLabel(member)
   const joinedAtText = getMemberJoinedAtText(member)
   const quote = getMemberQuote(member)
+  const profile = parseMemberBio(
+    member?.bio,
+    member?.summary || siteInfo?.description || ''
+  )
 
   return (
     <main className='min-h-screen bg-[#07080C] px-4 sm:px-6 py-16 sm:py-20 text-neutral-100'>
@@ -93,9 +150,30 @@ export default function MemberProfilePage({ member, siteInfo, authoredPosts = []
                 {member?.role && <span>{member.role}</span>}
                 {joinedAtText && <span>Joined {joinedAtText}</span>}
               </div>
-              <p className='text-sm leading-7 text-neutral-300'>
-                {member?.bio || member?.summary || siteInfo?.description || ''}
-              </p>
+              {profile.body.length > 0 && (
+                <div className='space-y-3 text-sm leading-7 text-neutral-300'>
+                  {profile.body.map(paragraph => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              )}
+              {profile.meta.length > 0 && (
+                <div className='mt-5 grid gap-2 sm:grid-cols-2'>
+                  {profile.meta.map(item => (
+                    <div
+                      key={`${item.label}-${item.value}`}
+                      className='rounded-lg border border-white/[0.07] bg-white/[0.025] px-3.5 py-3'
+                    >
+                      <p className='text-[10px] uppercase tracking-[0.18em] text-[#F0CB8A]/58'>
+                        {item.label}
+                      </p>
+                      <p className='mt-1.5 break-words text-sm leading-6 text-neutral-300'>
+                        {item.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
               {quote && (
                 <blockquote className='mt-4 border-l border-white/10 pl-4 text-sm italic leading-7 text-neutral-400'>
                   {quote}

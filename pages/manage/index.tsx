@@ -19,6 +19,15 @@ type ManageHomePageProps = {
   latestSubmission: Pick<JoinApplicationRecord, "name" | "created_at" | "status"> | null;
 };
 
+function formatDateOnly(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 const quickLinks = [
   {
     href: "/manage/join",
@@ -121,7 +130,7 @@ export default function ManageHomePage({
                       状态：{latestSubmission.status}
                     </p>
                     <p className="mt-1 text-sm text-white/48">
-                      提交时间：{new Date(latestSubmission.created_at).toLocaleString("zh-CN")}
+                      提交日期：{formatDateOnly(latestSubmission.created_at)}
                     </p>
                   </>
                 ) : (
