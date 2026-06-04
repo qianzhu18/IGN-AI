@@ -61,7 +61,9 @@
 - [x] 拆第一版 upstream PR（#4113 已合并，2026-05-27）
 - [x] 建立组织者 issue 修复与上游协作 playbook
 - [x] 创建第二批数据层 upstream PR（#4169：Event 官方 data source API 补拉）
+- [x] 梳理社区基础设施 PR Stack、四周日程和面试 / 简历叙事
 - [ ] 持续记录开源贡献素材
+- [ ] 按 PR Stack 继续拆 Content Type Registry / Typed Collection Helpers
 - [ ] 下一步：ignai 主题作为社区站示例贡献
 
 ## F. 长期运营支持

@@ -110,6 +110,7 @@
 - `docs/member-schema.md`
 - `tasks/member-session-template.md`
 - `docs/upstream-pr-split-checklist.zh-CN.md`
+- `docs/upstream-community-pr-stack.zh-CN.md`
 
 ### 组织者协作层
 - `docs/organizers/notionnext-org-issue-bugfix-playbook.zh-CN.md`
