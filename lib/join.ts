@@ -38,11 +38,143 @@ export type JoinSubmissionInput = {
 const JOIN_DATA_DIR = path.join(process.cwd(), ".data");
 const JOIN_DATA_FILE = path.join(JOIN_DATA_DIR, "join-applications.json");
 const OPS_COOKIE_NAME = "ignai_ops_session";
+const JOIN_RATE_LIMIT_WINDOW_MS = Number(process.env.JOIN_RATE_LIMIT_WINDOW_MS || 10 * 60 * 1000);
+const JOIN_RATE_LIMIT_MAX_PER_IP = Number(process.env.JOIN_RATE_LIMIT_MAX_PER_IP || 80);
+const JOIN_RATE_LIMIT_MAX_PER_CONTACT = Number(process.env.JOIN_RATE_LIMIT_MAX_PER_CONTACT || 3);
+const JOIN_DUPLICATE_WINDOW_MS = Number(process.env.JOIN_DUPLICATE_WINDOW_MS || 30 * 60 * 1000);
+const NOTION_WRITE_RETRY_COUNT = Number(process.env.JOIN_NOTION_RETRY_COUNT || 3);
+const NOTION_WRITE_MIN_INTERVAL_MS = Number(process.env.JOIN_NOTION_MIN_INTERVAL_MS || 350);
 
 type JoinApplicationRow = Record<string, unknown>;
+type JoinRateLimitBucket = { count: number; resetAt: number };
+type JoinRuntimeState = {
+  ipBuckets: Map<string, JoinRateLimitBucket>;
+  contactBuckets: Map<string, JoinRateLimitBucket>;
+  recentFingerprints: Map<string, number>;
+  notionWriteQueue: Promise<unknown>;
+  lastNotionWriteAt: number;
+};
+
+const joinRuntimeState = (() => {
+  const key = "__ignaiJoinRuntimeState";
+  const root = globalThis as typeof globalThis & Record<string, JoinRuntimeState | undefined>;
+  if (!root[key]) {
+    root[key] = {
+      ipBuckets: new Map(),
+      contactBuckets: new Map(),
+      recentFingerprints: new Map(),
+      notionWriteQueue: Promise.resolve(),
+      lastNotionWriteAt: 0,
+    };
+  }
+  return root[key];
+})();
 
 function readString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function sha256(value: string) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function normalizeContactKey(value: string) {
+  return value.trim().toLowerCase().replace(/\s+/g, "");
+}
+
+function getJoinFingerprint(input: JoinSubmissionInput) {
+  return sha256([
+    normalizeContactKey(input.contact),
+    input.name.trim().toLowerCase(),
+    input.role.trim().toLowerCase(),
+  ].join("|"));
+}
+
+function getClientIp(req: IncomingMessage) {
+  const forwarded = req.headers["x-forwarded-for"];
+  if (typeof forwarded === "string" && forwarded.trim()) {
+    return forwarded.split(",")[0]?.trim() || "unknown";
+  }
+  const realIp = req.headers["x-real-ip"];
+  if (typeof realIp === "string" && realIp.trim()) return realIp.trim();
+  return req.socket.remoteAddress || "unknown";
+}
+
+function pruneRuntimeState(now = Date.now()) {
+  for (const [key, bucket] of Array.from(joinRuntimeState.ipBuckets.entries())) {
+    if (bucket.resetAt <= now) joinRuntimeState.ipBuckets.delete(key);
+  }
+  for (const [key, bucket] of Array.from(joinRuntimeState.contactBuckets.entries())) {
+    if (bucket.resetAt <= now) joinRuntimeState.contactBuckets.delete(key);
+  }
+  for (const [key, expiresAt] of Array.from(joinRuntimeState.recentFingerprints.entries())) {
+    if (expiresAt <= now) joinRuntimeState.recentFingerprints.delete(key);
+  }
+}
+
+function bumpBucket(
+  map: Map<string, JoinRateLimitBucket>,
+  key: string,
+  limit: number,
+  now = Date.now(),
+) {
+  const current = map.get(key);
+  if (!current || current.resetAt <= now) {
+    map.set(key, { count: 1, resetAt: now + JOIN_RATE_LIMIT_WINDOW_MS });
+    return;
+  }
+  current.count += 1;
+  if (current.count > limit) {
+    const retryAfterSeconds = Math.max(1, Math.ceil((current.resetAt - now) / 1000));
+    const error = new Error("RATE_LIMITED");
+    Object.assign(error, { retryAfterSeconds });
+    throw error;
+  }
+}
+
+export function enforceJoinSubmissionGuard(
+  req: IncomingMessage,
+  input: JoinSubmissionInput,
+) {
+  const now = Date.now();
+  pruneRuntimeState(now);
+
+  const ip = getClientIp(req);
+  const contactKey = normalizeContactKey(input.contact);
+  const fingerprint = getJoinFingerprint(input);
+
+  if (joinRuntimeState.recentFingerprints.has(fingerprint)) {
+    throw new Error("DUPLICATE_SUBMISSION");
+  }
+
+  bumpBucket(joinRuntimeState.ipBuckets, ip, JOIN_RATE_LIMIT_MAX_PER_IP, now);
+  bumpBucket(joinRuntimeState.contactBuckets, contactKey, JOIN_RATE_LIMIT_MAX_PER_CONTACT, now);
+
+  joinRuntimeState.recentFingerprints.set(
+    fingerprint,
+    now + JOIN_DUPLICATE_WINDOW_MS,
+  );
+}
+
+async function delay(ms: number) {
+  if (ms <= 0) return;
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function enqueueNotionWrite<T>(task: () => Promise<T>) {
+  const run = async () => {
+    const waitMs = Math.max(
+      0,
+      joinRuntimeState.lastNotionWriteAt + NOTION_WRITE_MIN_INTERVAL_MS - Date.now(),
+    );
+    await delay(waitMs);
+    joinRuntimeState.lastNotionWriteAt = Date.now();
+    return task();
+  };
+
+  const queued = joinRuntimeState.notionWriteQueue.then(run, run);
+  joinRuntimeState.notionWriteQueue = queued.catch(() => undefined);
+  return queued;
 }
 
 function normalizeOptionalUrl(value: unknown) {
@@ -152,6 +284,36 @@ function normalizeJoinApplicationRecord(row: unknown): JoinApplicationRecord {
   };
 }
 
+function hasSameContact(item: JoinApplicationRecord, input: JoinSubmissionInput) {
+  return normalizeContactKey(item.contact) === normalizeContactKey(input.contact);
+}
+
+async function findExistingJoinApplication(
+  input: JoinSubmissionInput,
+): Promise<JoinApplicationRecord | null> {
+  const client = getSupabaseServerClient();
+
+  if (client) {
+    const result = await client
+      .from("join_applications")
+      .select("*")
+      .eq("contact", input.contact)
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+    if (!result.error && result.data?.[0]) {
+      return normalizeJoinApplicationRecord(result.data[0]);
+    }
+  }
+
+  try {
+    const items = await readLocalJoinApplications();
+    return items.find((item) => hasSameContact(item, input)) || null;
+  } catch {
+    return null;
+  }
+}
+
 const NOTION_MEMBERS_DB_ID = 'a3ae45c4-da1e-821e-8e69-010ad0a42134';
 const NOTION_MEMBER_DRAFT_STATUS =
   process.env.NOTION_MEMBERS_STATUS_DRAFT_VALUE || 'Invisible';
@@ -211,7 +373,7 @@ async function createNotionMemberApplication(
   }
 
   try {
-    const response = await fetch('https://api.notion.com/v1/pages', {
+    const response = await enqueueNotionWrite(() => fetch('https://api.notion.com/v1/pages', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -225,7 +387,7 @@ async function createNotionMemberApplication(
           ? { icon: { external: { url: profile.avatarUrl } } }
           : {}),
       }),
-    });
+    }));
 
     if (!response.ok) {
       const errorText = await response.text();
@@ -234,6 +396,12 @@ async function createNotionMemberApplication(
         statusText: response.statusText,
         body: errorText.slice(0, 500),
       });
+      if (
+        response.status === 429 ||
+        response.status >= 500
+      ) {
+        throw new Error(`NOTION_RETRYABLE_${response.status}`);
+      }
       return null;
     }
 
@@ -266,11 +434,35 @@ async function createNotionMemberApplication(
   }
 }
 
+async function createNotionMemberApplicationWithRetry(
+  input: JoinSubmissionInput,
+): Promise<JoinApplicationRecord | null> {
+  for (let attempt = 1; attempt <= NOTION_WRITE_RETRY_COUNT; attempt += 1) {
+    const result = await createNotionMemberApplication(input);
+    if (result) return result;
+    if (attempt < NOTION_WRITE_RETRY_COUNT) {
+      await delay(300 * attempt * attempt);
+    }
+  }
+  return null;
+}
+
 export async function createJoinApplication(
   input: JoinSubmissionInput,
 ): Promise<JoinApplicationRecord> {
+  const existing = await findExistingJoinApplication(input);
+  if (existing) {
+    return {
+      ...existing,
+      metadata: {
+        ...existing.metadata,
+        duplicate_detected: true,
+      },
+    };
+  }
+
   // 优先写入 Notion Members 数据库（Status=Draft，不会出现在前台）
-  const notionResult = await createNotionMemberApplication(input);
+  const notionResult = await createNotionMemberApplicationWithRetry(input);
   if (notionResult) return notionResult;
 
   const client = getSupabaseServerClient();

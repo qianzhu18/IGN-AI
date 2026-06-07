@@ -1,7 +1,7 @@
 # IGNAI 社区官网总 TO DO
 
 记录日期：2026-05-11
-最近校准：2026-06-04
+最近校准：2026-06-07
 说明：这是总 TO DO。只要这里还有未完成项，就代表项目仍处于持续优化阶段。
 
 ## A. Member 体系 ✅ 基本完成
@@ -86,19 +86,38 @@
 - [x] Join 申请进入 Notion 草稿后，通过 Notion `status` 控制隐藏 / 展示
 - [x] 不再单独实现成员审批后台，Notion `Published` / `Invisible` 作为发布开关
 - [x] 完成头像上传 API 并发烟测：12 路并发上传至 Cloudflare R2 全部成功
-- [ ] Join 高并发保护：Notion 写入限速、失败重试、幂等去重
+- [x] **P0 / 9.6** Join 高并发保护：Notion 写入限速、失败重试、幂等去重，目标支撑 200+ 社区成员集中填写
 - [ ] 图床资产治理：记录对象 key、准备 R2 / OSS 迁移脚本
 
 ## G. 生产上线（新增 — 当前最优先）
-- [ ] Vercel 部署恢复正常
+- [ ] **P0 / 10.0** Vercel 部署恢复正常：避免 Notion 拉取超时后生成空站或坏 RSS
 - [x] 成员详情页构建期全量预渲染收敛，降低 Notion 429 风险
 - [x] 本地 `yarn build` 通过，生产构建阻断问题本地已解除
 - [x] Notion 生成成员清理 dry-run 工具就绪（默认不改数据，确认后可批量改为 `Invisible`）
-- [ ] Notion 内容填充完成
-- [ ] SEO 优化（sitemap、RSS、正式 OG 图、结构化数据）
-- [ ] 域名绑定（ignai.community）
+- [ ] **P0 / 9.8** Notion 内容填充完成：`/members` 至少展示真实 Published 成员，避免成员目录为空
+- [x] **P0 / 9.5** SEO 基础输出修复：`robots.txt`、`sitemap.xml`、RSS、canonical 不出现 `undefined`，并收录成员 / 活动 / 记录 / 加入 / 关于页
+- [x] **P0 / 9.2** 公开危险接口收口：`/api/cache` 必须鉴权或关闭公开访问
+- [ ] **P0 / 9.0** 生产环境变量核对：`OPS_ACCESS_PASSWORD`、图床、Join 数据落点、正式域名、Notion Token
+- [ ] **P1 / 8.2** 域名绑定（ignai.community）和 Vercel 环境中的 `NEXT_PUBLIC_LINK` 对齐
 - [ ] 国内访问优化
-- [ ] 上线检查清单通过
+- [ ] **P1 / 8.0** 上线检查清单通过：构建、核心页面、Join 提交、后台访问、SEO 输出、移动端 smoke
+
+## H. QA 发现问题池（2026-06-06 新增）
+- [ ] **P0 / 10.0** 修复 Notion 构建超时后的错误降级，避免 `allPages` 空值继续生成坏页面
+- [ ] **P0 / 9.8** 恢复 `/members` 真实成员数据展示，并清理 QA 测试提交 `QA Test / qa@example.com`
+- [ ] **P0 / 9.7** Join 生产级持久化保护：把限流 / 幂等 / Notion 写入队列从单实例内存升级为 Supabase / Redis / Vercel KV 等跨 Serverless 实例共享机制
+- [x] **P0 / 9.5** 修复 RSS 生成 `undefined`，避免 `public/rss.xml` 被坏内容覆盖
+- [x] **P0 / 9.4** 修复 `robots.txt` 中 `Host: undefined`、`Sitemap: undefined/sitemap.xml`
+- [x] **P0 / 9.35** 删除 `robots.txt` 中对 Google 无效的 `Host` 指令，仅保留标准 Sitemap
+- [x] **P0 / 9.3** 修复 sitemap 缺核心社区页面
+- [x] **P0 / 9.2** `/api/cache` 加运营鉴权，禁止匿名 GET 清缓存
+- [x] **P0 / 9.0** Join 表单服务端限速、重复提交识别、Notion 失败后可追踪本地/数据库兜底
+- [x] **P1 / 8.4** 修复核心社区页面 canonical 全部指向根域名的问题
+- [x] **P1 / 8.0** 清理 `.worktrees` 对 Jest 的干扰，让上线前测试结果可信
+- [ ] **P1 / 7.8** 修复 `yarn lint` 中与上线主线相关的 error
+- [ ] **P2 / 6.5** 修复 `<link rel=preload> has an invalid href value` 控制台警告
+- [ ] **P2 / 6.0** 更新 Browserslist / caniuse-lite
+- [ ] **P2 / 5.5** 评估是否保留前台 HTML 中的 `NotionNext` generator 标记
 
 ## 结论
 

@@ -297,7 +297,7 @@ const generateStructuredData = (meta, siteInfo, url, image, author) => {
  * @param {*} router
  */
 const getSEOMeta = (props, router, locale) => {
-  const { post, siteInfo, tag, category, page } = props
+  const { post, siteInfo, tag, category, page, pageTitle, pageDescription } = props
   const keyword = router?.query?.s
 
   const TITLE = siteConfig('TITLE')
@@ -358,6 +358,81 @@ const getSEOMeta = (props, router, locale) => {
         description: DESCRIPTION,
         image: `${siteInfo?.pageCover}`,
         slug: 'search',
+        type: 'website'
+      }
+    case '/members':
+      return {
+        title: pageTitle || `成员 | ${TITLE}`,
+        description: pageDescription || DESCRIPTION,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'members',
+        type: 'website'
+      }
+    case '/members/[slug]':
+      return {
+        title: post?.title ? `${post.title} | ${TITLE}` : `成员 | ${TITLE}`,
+        description: post?.summary || post?.bio || DESCRIPTION,
+        image: post?.avatar || post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
+        slug: post?.slug || `members/${router?.query?.slug || ''}`,
+        type: 'profile'
+      }
+    case '/events':
+      return {
+        title: pageTitle || `活动 | ${TITLE}`,
+        description: pageDescription || DESCRIPTION,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'events',
+        type: 'website'
+      }
+    case '/events/[slug]':
+      return {
+        title: pageTitle || `活动 | ${TITLE}`,
+        description: pageDescription || DESCRIPTION,
+        image: `${siteInfo?.pageCover}`,
+        slug: `events/${router?.query?.slug || ''}`,
+        type: 'website'
+      }
+    case '/records':
+      return {
+        title: pageTitle || `社区记录 | ${TITLE}`,
+        description: pageDescription || 'IGNAI 社区记录、活动复盘、项目记录与 AI 工作流工具清单。',
+        image: `${siteInfo?.pageCover}`,
+        slug: 'records',
+        type: 'website'
+      }
+    case '/records/[slug]':
+      return {
+        title: pageTitle || `社区记录 | ${TITLE}`,
+        description: pageDescription || DESCRIPTION,
+        image: `${siteInfo?.pageCover}`,
+        slug: `records/${router?.query?.slug || ''}`,
+        type: 'article'
+      }
+    case '/join':
+      return {
+        title: pageTitle || `加入社区 | ${TITLE}`,
+        description: pageDescription || '提交加入意向和成员资料草稿，和 IGNAI 社区建立第一层连接。',
+        image: `${siteInfo?.pageCover}`,
+        slug: 'join',
+        type: 'website'
+      }
+    case '/about':
+      return {
+        title: pageTitle || `关于 | ${TITLE}`,
+        description: pageDescription || DESCRIPTION,
+        image: `${siteInfo?.pageCover}`,
+        slug: 'about',
+        type: 'website'
+      }
+    case '/manage':
+    case '/manage/content':
+    case '/manage/join':
+    case '/manage/members':
+      return {
+        title: pageTitle || `运营后台 | ${TITLE}`,
+        description: 'IGNAI 社区运营后台。',
+        image: `${siteInfo?.pageCover}`,
+        slug: router?.asPath || 'manage',
         type: 'website'
       }
     case '/search/[keyword]':

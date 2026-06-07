@@ -16,7 +16,7 @@ import {
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
 
-const EventDetailPage = ({ event, pageTitle }) => {
+const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
   if (!event) {
     return (
       <div className='min-h-screen bg-[#07080C] text-white flex items-center justify-center'>
@@ -29,7 +29,7 @@ const EventDetailPage = ({ event, pageTitle }) => {
     <>
       <Head>
         <title>{pageTitle}</title>
-        <meta name='description' content={event.excerpt} />
+        <meta name='description' content={pageDescription} />
       </Head>
       <div className='min-h-screen bg-[#07080C] text-white'>
         <div className='mx-auto max-w-3xl px-6 py-20'>
@@ -198,11 +198,13 @@ export async function getStaticProps({ params, locale }) {
   }
 
   const pageTitle = `${event.title} - IGNAI`
+  const pageDescription = event.excerpt || event.subtitle || 'IGNAI 社区活动详情与参与方式。'
 
   return {
     props: {
       event,
-      pageTitle
+      pageTitle,
+      pageDescription
     },
     revalidate: process.env.EXPORT
       ? undefined

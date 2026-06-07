@@ -3,18 +3,15 @@ import Link from 'next/link'
 import { ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
 import { records, recordTypeLabel } from '@/src/content/records'
 
-const RecordsIndexPage = ({ records: recordItems }) => {
+const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) => {
   const featuredRecord = recordItems[0]
   const secondaryRecords = recordItems.slice(1)
 
   return (
     <>
       <Head>
-        <title>IGNAI - 社区记录</title>
-        <meta
-          name='description'
-          content='IGNAI 社区记录、活动复盘、项目记录与 AI 工作流工具清单。'
-        />
+        <title>{pageTitle}</title>
+        <meta name='description' content={pageDescription} />
       </Head>
       <main className='min-h-screen bg-[#07080C] text-white'>
         <section className='mx-auto max-w-6xl px-6 py-20 lg:py-24'>
@@ -130,7 +127,9 @@ const RecordsIndexPage = ({ records: recordItems }) => {
 export function getStaticProps() {
   return {
     props: {
-      records
+      records,
+      pageTitle: 'IGNAI - 社区记录',
+      pageDescription: 'IGNAI 社区记录、活动复盘、项目记录与 AI 工作流工具清单。'
     }
   }
 }

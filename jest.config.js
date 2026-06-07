@@ -39,7 +39,8 @@ const customJestConfig = {
     '<rootDir>/.next/',
     '<rootDir>/node_modules/',
     '<rootDir>/out/',
-    '<rootDir>/.vercel/'
+    '<rootDir>/.vercel/',
+    '<rootDir>/.worktrees/'
   ],
   
   // Transform files
@@ -67,6 +68,7 @@ const customJestConfig = {
     '!pages/api/**',
     '!**/*.d.ts',
     '!**/node_modules/**',
+    '!**/.worktrees/**',
     '!**/.next/**',
     '!**/out/**',
     '!**/coverage/**'

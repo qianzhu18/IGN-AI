@@ -34,6 +34,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "quality": "node scripts/quality-check.js",
+    "postbuild": "node scripts/cleanup-static-seo-files.js",
     "pre-commit": "yarn lint:fix && yarn format && yarn type-check",
     "dev-tools": "node scripts/dev-tools.js",
     "init-dev": "node scripts/dev-tools.js init",

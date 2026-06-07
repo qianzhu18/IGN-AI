@@ -9,7 +9,6 @@ import {
   toSitemapDateString
 } from '@/lib/sitemap-utils'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
-import { getServerSideSitemap } from 'next-sitemap'
 
 export const getServerSideProps = async ctx => {
   let fields = []
@@ -40,72 +39,45 @@ export const getServerSideProps = async ctx => {
     'Cache-Control',
     'public, max-age=3600, stale-while-revalidate=59'
   )
-  return getServerSideSitemap(ctx, fields)
+  ctx.res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+  ctx.res.write(renderSitemapXml(fields))
+  ctx.res.end()
+
+  return {
+    props: {}
+  }
 }
 
 function generateLocalesSitemap(link, allPages, locale) {
   const normalizedLink = normalizeSitemapBaseUrl(link)
   const normalizedLocale = normalizeSitemapLocale(locale)
   const dateNow = toSitemapDateString(new Date())
+  const communitySlugs = [
+    '',
+    'members',
+    'events',
+    'records',
+    'join',
+    'about',
+    'archive',
+    'category',
+    'tag',
+    'search',
+    'rss/feed.xml'
+  ]
 
-  const defaultFields = [
-    {
-      loc: buildSitemapLoc({ baseUrl: normalizedLink, locale: normalizedLocale }),
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: '0.7'
-    },
-    {
+  const defaultFields = communitySlugs
+    .map(slug => ({
       loc: buildSitemapLoc({
         baseUrl: normalizedLink,
         locale: normalizedLocale,
-        slug: 'archive'
+        slug
       }),
       lastmod: dateNow,
       changefreq: 'daily',
-      priority: '0.7'
-    },
-    {
-      loc: buildSitemapLoc({
-        baseUrl: normalizedLink,
-        locale: normalizedLocale,
-        slug: 'category'
-      }),
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: '0.7'
-    },
-    {
-      loc: buildSitemapLoc({
-        baseUrl: normalizedLink,
-        locale: normalizedLocale,
-        slug: 'rss/feed.xml'
-      }),
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: '0.7'
-    },
-    {
-      loc: buildSitemapLoc({
-        baseUrl: normalizedLink,
-        locale: normalizedLocale,
-        slug: 'search'
-      }),
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: '0.7'
-    },
-    {
-      loc: buildSitemapLoc({
-        baseUrl: normalizedLink,
-        locale: normalizedLocale,
-        slug: 'tag'
-      }),
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: '0.7'
-    }
-  ].filter(field => Boolean(field?.loc))
+      priority: slug === '' ? '1.0' : '0.8'
+    }))
+    .filter(field => Boolean(field?.loc))
 
   const postFields =
     allPages
@@ -144,6 +116,33 @@ function getUniqueFields(fields) {
   })
 
   return Array.from(uniqueFieldsMap.values())
+}
+
+function escapeXml(value) {
+  return `${value ?? ''}`
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
+function renderSitemapXml(fields) {
+  const urls = fields
+    .filter(field => field?.loc)
+    .map(field => {
+      return [
+        '  <url>',
+        `    <loc>${escapeXml(field.loc)}</loc>`,
+        field.lastmod ? `    <lastmod>${escapeXml(field.lastmod)}</lastmod>` : '',
+        field.changefreq ? `    <changefreq>${escapeXml(field.changefreq)}</changefreq>` : '',
+        field.priority ? `    <priority>${escapeXml(field.priority)}</priority>` : '',
+        '  </url>'
+      ].filter(Boolean).join('\n')
+    })
+    .join('\n')
+
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
 }
 
 export default () => { }

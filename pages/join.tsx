@@ -16,11 +16,6 @@ export default function JoinPage({
   return (
     <>
       <Head>
-        <title>Join IGNAI</title>
-        <meta
-          name="description"
-          content="提交加入意向和成员资料草稿，和 IGNAI 社区建立第一层连接。"
-        />
         <style>{`
           .join-surface-card-strong {
             width: 100%;
@@ -120,6 +115,8 @@ export function getServerSideProps() {
     props: {
       experienceMode: getJoinExperienceMode(),
       externalFormUrl: process.env.NEXT_PUBLIC_JOIN_FORM_URL?.trim() || "",
+      pageTitle: "加入社区 | IGNAI",
+      pageDescription: "提交加入意向和成员资料草稿，和 IGNAI 社区建立第一层连接。",
     },
   };
 }

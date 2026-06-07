@@ -88,6 +88,12 @@ const preBuild = (function () {
     console.log('Deleted existing sitemap.xml from root directory')
   }
 
+  const robotsPath = path.resolve(__dirname, 'public', 'robots.txt')
+  if (fs.existsSync(robotsPath)) {
+    fs.unlinkSync(robotsPath)
+    console.log('Deleted existing robots.txt from public directory')
+  }
+
   const notionCacheRoot = path.resolve(__dirname, '.next', 'cache', 'notion')
   const prefetchDir = path.join(notionCacheRoot, 'sessions')
   const sessionFile = path.join(notionCacheRoot, 'build-session.json')

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
 import { records, recordTypeLabel } from '@/src/content/records'
 
-const RecordDetailPage = ({ record, moreRecords }) => {
+const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) => {
   if (!record) {
     return (
       <main className='flex min-h-screen items-center justify-center bg-[#07080C] text-white'>
@@ -15,8 +15,8 @@ const RecordDetailPage = ({ record, moreRecords }) => {
   return (
     <>
       <Head>
-        <title>{record.title} - IGNAI</title>
-        <meta name='description' content={record.excerpt} />
+        <title>{pageTitle}</title>
+        <meta name='description' content={pageDescription} />
       </Head>
       <main className='min-h-screen bg-[#07080C] text-white'>
         <article className='mx-auto max-w-4xl px-6 py-20'>
@@ -166,7 +166,9 @@ export function getStaticProps({ params }) {
   return {
     props: {
       record,
-      moreRecords: records.filter(item => item.slug !== record.slug).slice(0, 2)
+      moreRecords: records.filter(item => item.slug !== record.slug).slice(0, 2),
+      pageTitle: `${record.title} - IGNAI`,
+      pageDescription: record.excerpt
     }
   }
 }
