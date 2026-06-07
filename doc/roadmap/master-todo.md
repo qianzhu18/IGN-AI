@@ -94,6 +94,7 @@
 - [x] 成员详情页构建期全量预渲染收敛，降低 Notion 429 风险
 - [x] 本地 `yarn build` 通过，生产构建阻断问题本地已解除
 - [x] Notion 生成成员清理 dry-run 工具就绪（默认不改数据，确认后可批量改为 `Invisible`）
+- [x] **P0 / 9.9** 成员 / 活动 Published 后刷新链路修复：核心页面直接补拉官方 Notion data source，ISR 上限收敛到 60 秒，手动刷新路径覆盖 `/members` / `/events` / `/records`
 - [ ] **P0 / 9.8** Notion 内容填充完成：`/members` 至少展示真实 Published 成员，避免成员目录为空
 - [x] **P0 / 9.5** SEO 基础输出修复：`robots.txt`、`sitemap.xml`、RSS、canonical 不出现 `undefined`，并收录成员 / 活动 / 记录 / 加入 / 关于页
 - [x] **P0 / 9.2** 公开危险接口收口：`/api/cache` 必须鉴权或关闭公开访问
@@ -101,10 +102,11 @@
 - [ ] **P1 / 8.2** 域名绑定（ignai.community）和 Vercel 环境中的 `NEXT_PUBLIC_LINK` 对齐
 - [ ] 国内访问优化
 - [ ] **P1 / 8.0** 上线检查清单通过：构建、核心页面、Join 提交、后台访问、SEO 输出、移动端 smoke
+- [ ] **P1 / 8.0** Vercel 新部署完成后线上 smoke：确认 `/members` 显示 3 位 Published 成员并包含「许全均」
 
 ## H. QA 发现问题池（2026-06-06 新增）
 - [ ] **P0 / 10.0** 修复 Notion 构建超时后的错误降级，避免 `allPages` 空值继续生成坏页面
-- [ ] **P0 / 9.8** 恢复 `/members` 真实成员数据展示，并清理 QA 测试提交 `QA Test / qa@example.com`
+- [x] **P0 / 9.8** 恢复 `/members` 真实成员数据展示，并清理 QA 测试 / 生成成员数据
 - [ ] **P0 / 9.7** Join 生产级持久化保护：把限流 / 幂等 / Notion 写入队列从单实例内存升级为 Supabase / Redis / Vercel KV 等跨 Serverless 实例共享机制
 - [x] **P0 / 9.5** 修复 RSS 生成 `undefined`，避免 `public/rss.xml` 被坏内容覆盖
 - [x] **P0 / 9.4** 修复 `robots.txt` 中 `Host: undefined`、`Sitemap: undefined/sitemap.xml`
