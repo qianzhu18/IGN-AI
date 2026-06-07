@@ -1,5 +1,8 @@
 import Head from 'next/head'
-import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import {
+  fetchEventsFromOfficialAPI,
+  fetchGlobalAllData
+} from '@/lib/db/SiteDataApi'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import {
@@ -153,8 +156,14 @@ export async function getStaticPaths({ locales = [] } = {}) {
   let events = staticEvents
 
   try {
-    const props = await fetchGlobalAllData({ from: 'event-paths' })
-    events = normalizeEventList(props.allEvents || [], staticEvents)
+    const [props, freshEvents] = await Promise.all([
+      fetchGlobalAllData({ from: 'event-paths' }),
+      fetchEventsFromOfficialAPI()
+    ])
+    events = normalizeEventList(
+      freshEvents.length > 0 ? freshEvents : props.allEvents || [],
+      staticEvents
+    )
   } catch (error) {
     console.warn('[EVENT-PATHS] Failed to fetch Notion Event paths:', error.message)
   }
@@ -175,9 +184,11 @@ export async function getStaticProps({ params, locale }) {
   const { slug } = params
   const from = 'event-detail'
   const props = await fetchGlobalAllData({ from, locale })
+  const freshEvents = await fetchEventsFromOfficialAPI()
+  const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
 
   const normalizedSlug = normalizeEventSlugValue(slug)
-  const notionEvent = (props.allEvents || []).find(
+  const notionEvent = allEvents.find(
     e =>
       normalizeEventSlugValue(e.slug, e.title, e.id) === normalizedSlug ||
       normalizeEventSlugValue(e.id) === normalizedSlug
@@ -208,10 +219,15 @@ export async function getStaticProps({ params, locale }) {
     },
     revalidate: process.env.EXPORT
       ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
+      : Math.min(
+          Number(
+            siteConfig(
+              'NEXT_REVALIDATE_SECOND',
+              BLOG.NEXT_REVALIDATE_SECOND,
+              props.NOTION_CONFIG
+            )
+          ) || 600,
+          60
         )
   }
 }

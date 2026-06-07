@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { cleanCache } from "@/lib/cache/local_file_cache";
 import { isOpsAuthorized, isOpsPasswordConfigured } from "@/lib/join";
 
-const DEFAULT_PATHS = ["/", "/events"];
+const DEFAULT_PATHS = ["/", "/members", "/events", "/records"];
 
 function normalizeSlug(value: unknown) {
   if (typeof value !== "string") return "";

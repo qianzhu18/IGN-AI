@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import {
   fetchGlobalAllData,
+  fetchMembersFromOfficialAPI,
   getMembersForDirectory
 } from '@/lib/db/SiteDataApi'
 import MemberDirectoryPage from '@/src/components/members/MemberDirectoryPage'
@@ -23,8 +24,10 @@ const MembersIndexPage = props => {
 export async function getStaticProps({ locale }) {
   const from = 'members-index'
   const props = await fetchGlobalAllData({ from, locale })
+  const freshMembers = await fetchMembersFromOfficialAPI()
+  const allMembers = freshMembers.length > 0 ? freshMembers : props.allMembers || []
   const members = getMembersForDirectory({
-    allMembers: sortMembers(getPublishedMembers(props.allMembers || []))
+    allMembers: sortMembers(getPublishedMembers(allMembers))
   })
   const pageTitle = 'IGNAI 成员目录'
   const pageDescription =
@@ -51,10 +54,15 @@ export async function getStaticProps({ locale }) {
     },
     revalidate: process.env.EXPORT
       ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
+      : Math.min(
+          Number(
+            siteConfig(
+              'NEXT_REVALIDATE_SECOND',
+              BLOG.NEXT_REVALIDATE_SECOND,
+              props.NOTION_CONFIG
+            )
+          ) || 600,
+          60
         )
   }
 }

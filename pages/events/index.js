@@ -1,5 +1,8 @@
 import Head from 'next/head'
-import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import {
+  fetchEventsFromOfficialAPI,
+  fetchGlobalAllData
+} from '@/lib/db/SiteDataApi'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import { eventStatusLabel, eventFormatLabel, eventKindLabel } from '@/src/content/events'
@@ -96,8 +99,10 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
 export async function getStaticProps({ locale }) {
   const from = 'events-index'
   const props = await fetchGlobalAllData({ from, locale })
+  const freshEvents = await fetchEventsFromOfficialAPI()
+  const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
 
-  const events = normalizeEventList(props.allEvents || [])
+  const events = normalizeEventList(allEvents)
   const pageTitle = 'IGNAI - 活动'
   const pageDescription = 'IGNAI 社区活动 — 线下聚会、工作坊、Demo 和共创'
 
@@ -122,10 +127,15 @@ export async function getStaticProps({ locale }) {
     },
     revalidate: process.env.EXPORT
       ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
+      : Math.min(
+          Number(
+            siteConfig(
+              'NEXT_REVALIDATE_SECOND',
+              BLOG.NEXT_REVALIDATE_SECOND,
+              props.NOTION_CONFIG
+            )
+          ) || 600,
+          60
         )
   }
 }

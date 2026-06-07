@@ -1,7 +1,10 @@
 import Head from 'next/head'
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
+import {
+  fetchGlobalAllData,
+  fetchMembersFromOfficialAPI
+} from '@/lib/db/SiteDataApi'
 import MemberProfilePage from '@/src/components/members/MemberProfilePage'
 import {
   getMemberAuthoredPosts,
@@ -51,7 +54,11 @@ export async function getStaticPaths() {
     }
   }
 
-  const { allMembers } = await fetchGlobalAllData({ from: 'member-profile-paths' })
+  const [props, freshMembers] = await Promise.all([
+    fetchGlobalAllData({ from: 'member-profile-paths' }),
+    fetchMembersFromOfficialAPI()
+  ])
+  const allMembers = freshMembers.length > 0 ? freshMembers : props.allMembers || []
 
   return {
     paths: (allMembers || []).map(member => ({
@@ -68,6 +75,10 @@ export async function getStaticProps({ params: { slug }, locale }) {
     from: 'member-profile',
     locale
   })
+  const freshMembers = await fetchMembersFromOfficialAPI()
+  if (freshMembers.length > 0) {
+    props.allMembers = freshMembers
+  }
   const member = (props.allMembers || []).find(candidate => {
     const candidateSlug = extractMemberSlug(candidate?.slug, candidate?.id)
     return candidateSlug === slug
@@ -78,7 +89,7 @@ export async function getStaticProps({ params: { slug }, locale }) {
       notFound: true,
       revalidate: process.env.EXPORT
         ? undefined
-        : BLOG.NEXT_REVALIDATE_SECOND
+        : Math.min(Number(BLOG.NEXT_REVALIDATE_SECOND) || 600, 60)
     }
   }
 
@@ -108,10 +119,15 @@ export async function getStaticProps({ params: { slug }, locale }) {
     },
     revalidate: process.env.EXPORT
       ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
+      : Math.min(
+          Number(
+            siteConfig(
+              'NEXT_REVALIDATE_SECOND',
+              BLOG.NEXT_REVALIDATE_SECOND,
+              props.NOTION_CONFIG
+            )
+          ) || 600,
+          60
         )
   }
 }

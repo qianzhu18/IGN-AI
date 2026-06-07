@@ -1,6 +1,12 @@
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { fetchGlobalAllData, getPostBlocks, getMembersForScatter } from '@/lib/db/SiteDataApi'
+import {
+  fetchEventsFromOfficialAPI,
+  fetchGlobalAllData,
+  fetchMembersFromOfficialAPI,
+  getPostBlocks,
+  getMembersForScatter
+} from '@/lib/db/SiteDataApi'
 import { generateRobotsTxt } from '@/lib/utils/robots.txt'
 import { generateRss } from '@/lib/utils/rss'
 import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
@@ -27,6 +33,16 @@ export async function getStaticProps(req) {
   const { locale } = req
   const from = 'index'
   const props = await fetchGlobalAllData({ from, locale })
+  const [freshMembers, freshEvents] = await Promise.all([
+    fetchMembersFromOfficialAPI(),
+    fetchEventsFromOfficialAPI()
+  ])
+  if (freshMembers.length > 0) {
+    props.allMembers = freshMembers
+  }
+  if (freshEvents.length > 0) {
+    props.allEvents = freshEvents
+  }
   if (process.env.NODE_ENV === 'development') {
     const configTheme = BLOG.THEME
     const notionTheme = props?.NOTION_CONFIG?.THEME || null
@@ -124,10 +140,15 @@ export async function getStaticProps(req) {
     props,
     revalidate: process.env.EXPORT
       ? undefined
-      : siteConfig(
-          'NEXT_REVALIDATE_SECOND',
-          BLOG.NEXT_REVALIDATE_SECOND,
-          props.NOTION_CONFIG
+      : Math.min(
+          Number(
+            siteConfig(
+              'NEXT_REVALIDATE_SECOND',
+              BLOG.NEXT_REVALIDATE_SECOND,
+              props.NOTION_CONFIG
+            )
+          ) || 600,
+          60
         )
   }
 }
