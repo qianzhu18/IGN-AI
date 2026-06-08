@@ -17,6 +17,8 @@ const CONFIG = {
   IGNAI_WHATIS_ENABLE: true,
   IGNAI_CULTURE_ENABLE: true,
   IGNAI_EVENTS_ENABLE: true,
+  IGNAI_ARTICLES_ENABLE: true,
+  IGNAI_ARTICLES_HOME_COUNT: 4,
   IGNAI_FIELDNOTES_ENABLE: true,
   IGNAI_MEMBERS_ENABLE: true,
   IGNAI_JOIN_ENABLE: true,
@@ -200,6 +202,7 @@ const CONFIG = {
   IGNAI_NAV_ITEMS: [
     { label: '成员', href: '/members' },
     { label: '活动', href: '/events' },
+    { label: '文章', href: '/archive' },
     { label: '记录', href: '/records' },
     { label: '关于', href: '/about' }
   ],

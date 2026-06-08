@@ -8,8 +8,8 @@
 const ignaiThemeCss = `
       /* ========== 基础底色 ========== */
       body {
-        background-color: #07080c;
-        color: #e4e4e7;
+        background-color: var(--ignai-bg, #07080c);
+        color: var(--ignai-text, #e4e4e7);
         font-family:
           'Noto Sans SC',
           -apple-system,
@@ -18,18 +18,36 @@ const ignaiThemeCss = `
           sans-serif;
       }
       .dark body {
-        background-color: #07080c;
+        background-color: var(--ignai-bg, #07080c);
+      }
+      .light body {
+        background-color: var(--ignai-bg, #fff8ef);
       }
 
       /* ========== IGNAI 品牌色 ========== */
+      html.dark,
       :root {
+        color-scheme: dark;
         --ignai-heat: #ff7a18;
         --ignai-signal: #5da9ff;
         --ignai-bg: #07080c;
         --ignai-card: #0d0e14;
+        --ignai-card-strong: rgba(10, 12, 18, 0.94);
         --ignai-border: rgba(255, 255, 255, 0.1);
         --ignai-text: #e4e4e7;
         --ignai-text-dim: rgba(255, 255, 255, 0.56);
+        --ignai-text-soft: rgba(255, 255, 255, 0.72);
+        --ignai-header-bg: linear-gradient(90deg, rgba(18, 12, 12, 0.9) 0%, rgba(10, 12, 18, 0.9) 58%, rgba(6, 12, 20, 0.92) 100%);
+        --ignai-header-bg-sticky: linear-gradient(90deg, rgba(18, 12, 12, 0.96) 0%, rgba(10, 12, 18, 0.96) 58%, rgba(6, 12, 20, 0.97) 100%);
+        --ignai-header-border: rgba(171, 111, 71, 0.16);
+        --ignai-nav-text: rgba(255, 255, 255, 0.68);
+        --ignai-nav-hover: rgba(255, 255, 255, 0.96);
+        --ignai-dropdown-bg: rgba(13, 14, 20, 0.97);
+        --ignai-dropdown-hover: rgba(255, 255, 255, 0.05);
+        --ignai-mobile-backdrop: linear-gradient(180deg, rgba(7, 8, 12, 0.16) 0%, rgba(7, 8, 12, 0.42) 100%);
+        --ignai-page-grid: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+        --ignai-background-field: radial-gradient(ellipse at 16% 10%, rgba(255,122,24,0.14), transparent 32%), radial-gradient(ellipse at 84% 16%, rgba(93,169,255,0.08), transparent 28%);
+        --ignai-home-bg: radial-gradient(circle at 16% 10%, rgba(255, 122, 24, 0.22), transparent 28%), radial-gradient(circle at 84% 18%, rgba(93, 169, 255, 0.1), transparent 26%), linear-gradient(180deg, #040507 0%, #07080c 38%, #090d14 100%);
         --rig-heat: oklch(0.6329 0.2075 31.49);
         --rig-heat-glow: oklch(0.6329 0.2075 31.49 / 42%);
         --rig-signal: oklch(0.5312 0.2603 266.77);
@@ -41,29 +59,101 @@ const ignaiThemeCss = `
         --rig-paper-15: rgba(240, 237, 230, 0.15);
         --rig-paper-06: rgba(240, 237, 230, 0.06);
         --rig-border: oklch(0.9465 0.0099 87.47 / 14%);
+        --rig-section-bg: transparent;
+        --rig-card-bg: rgba(240, 237, 230, 0.06);
+        --rig-card-hover-bg: rgba(240, 237, 230, 0.1);
+        --rig-terminal-bg: rgba(10,10,10,0.7);
+        --rig-hero-bg: radial-gradient(circle at 18% 12%, rgba(255,122,24,0.22), transparent 30%), radial-gradient(circle at 78% 18%, rgba(93,169,255,0.12), transparent 32%), linear-gradient(135deg, #07080c 0%, #111015 54%, #050608 100%);
+        --rig-hero-artwash: linear-gradient(90deg, rgba(255,122,24,0.1), transparent 42%), url('/brand/ignai/business-card-mockup.webp');
+        --rig-hero-title: var(--rig-paper);
+        --rig-hero-copy: var(--rig-paper-70);
+        --rig-hero-visual-bg: rgba(6, 8, 12, 0.58);
+        --rig-btn-primary-bg: linear-gradient(135deg, #ff7a18 0%, #ff9a3c 100%);
+        --rig-btn-primary-text: #130c08;
+        --rig-btn-outline-text: var(--rig-paper);
+        --rig-btn-outline-border: rgba(240, 237, 230, 0.28);
+        --rig-btn-outline-bg: rgba(240, 237, 230, 0.04);
+        --rig-footer-bg: #050608;
+        --rig-footer-text: var(--rig-paper-70);
         --rig-chamfer: 14px;
         --rig-max-w: 1200px;
       }
 
+      html.light {
+        color-scheme: light;
+        --ignai-heat: #f05a1a;
+        --ignai-signal: #2457d6;
+        --ignai-bg: #fff8ef;
+        --ignai-card: #fffaf3;
+        --ignai-card-strong: rgba(255, 252, 246, 0.96);
+        --ignai-border: rgba(118, 67, 31, 0.16);
+        --ignai-text: #19130e;
+        --ignai-text-dim: rgba(34, 24, 16, 0.58);
+        --ignai-text-soft: rgba(34, 24, 16, 0.72);
+        --ignai-header-bg: linear-gradient(90deg, rgba(255, 250, 242, 0.9) 0%, rgba(255, 245, 232, 0.88) 54%, rgba(255, 239, 222, 0.9) 100%);
+        --ignai-header-bg-sticky: linear-gradient(90deg, rgba(255, 250, 242, 0.96) 0%, rgba(255, 245, 232, 0.96) 54%, rgba(255, 239, 222, 0.97) 100%);
+        --ignai-header-border: rgba(180, 91, 33, 0.18);
+        --ignai-nav-text: rgba(39, 26, 16, 0.68);
+        --ignai-nav-hover: rgba(22, 15, 9, 0.96);
+        --ignai-dropdown-bg: rgba(255, 250, 242, 0.97);
+        --ignai-dropdown-hover: rgba(235, 93, 22, 0.08);
+        --ignai-mobile-backdrop: linear-gradient(180deg, rgba(255, 248, 239, 0.32) 0%, rgba(91, 50, 21, 0.18) 100%);
+        --ignai-page-grid: linear-gradient(rgba(132,74,38,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(132,74,38,0.09) 1px, transparent 1px);
+        --ignai-background-field: radial-gradient(ellipse at 16% 10%, rgba(255,122,24,0.16), transparent 32%), radial-gradient(ellipse at 84% 16%, rgba(43,79,255,0.08), transparent 28%);
+        --ignai-home-bg: radial-gradient(circle at 16% 10%, rgba(255, 122, 24, 0.16), transparent 30%), radial-gradient(circle at 84% 18%, rgba(43, 79, 255, 0.08), transparent 26%), linear-gradient(180deg, #fff8ef 0%, #fff4e8 44%, #fffaf4 100%);
+        --rig-heat: #ff5f1f;
+        --rig-heat-glow: rgba(255, 95, 31, 0.28);
+        --rig-signal: #2b4fff;
+        --rig-ink: #17100b;
+        --rig-paper: #20150e;
+        --rig-paper-70: rgba(32, 21, 14, 0.72);
+        --rig-paper-50: rgba(32, 21, 14, 0.54);
+        --rig-paper-35: rgba(32, 21, 14, 0.38);
+        --rig-paper-15: rgba(32, 21, 14, 0.14);
+        --rig-paper-06: rgba(32, 21, 14, 0.06);
+        --rig-border: rgba(145, 76, 31, 0.18);
+        --rig-section-bg: transparent;
+        --rig-card-bg: rgba(255, 255, 255, 0.56);
+        --rig-card-hover-bg: rgba(255, 255, 255, 0.8);
+        --rig-terminal-bg: rgba(30, 20, 13, 0.08);
+        --rig-hero-bg: linear-gradient(135deg, #ff8a18 0%, #ff5f1f 46%, #e3252f 100%);
+        --rig-hero-artwash: linear-gradient(90deg, rgba(255,138,24,0.1), transparent 42%), url('/brand/ignai/hero-gradient-brand.webp');
+        --rig-hero-title: #190e08;
+        --rig-hero-copy: rgba(25, 14, 8, 0.78);
+        --rig-hero-visual-bg: rgba(255, 244, 232, 0.28);
+        --rig-btn-primary-bg: #17100b;
+        --rig-btn-primary-text: #fff8ef;
+        --rig-btn-outline-text: #190e08;
+        --rig-btn-outline-border: rgba(25, 14, 8, 0.28);
+        --rig-btn-outline-bg: rgba(255, 255, 255, 0.18);
+        --rig-footer-bg: #19110c;
+        --rig-footer-text: rgba(255, 248, 239, 0.72);
+      }
+
       #theme-proxio {
         --tw-bg-opacity: 1;
+        background: var(--ignai-bg);
+        color: var(--ignai-text);
       }
 
       #theme-proxio .ignai-home-shell {
         position: relative;
         overflow: hidden;
-        background:
-          radial-gradient(
-            circle at 16% 10%,
-            rgba(255, 122, 24, 0.22),
-            transparent 28%
-          ),
-          radial-gradient(
-            circle at 84% 18%,
-            rgba(93, 169, 255, 0.1),
-            transparent 26%
-          ),
-          linear-gradient(180deg, #040507 0%, #07080c 38%, #090d14 100%);
+        background: var(--ignai-home-bg);
+      }
+
+      #theme-proxio .ignai-grid-overlay {
+        opacity: 0.04;
+        background-image: var(--ignai-page-grid);
+        background-size: 92px 92px;
+      }
+
+      html.light #theme-proxio .ignai-grid-overlay {
+        opacity: 0.34;
+      }
+
+      #theme-proxio .ignai-background-field {
+        background: var(--ignai-background-field);
       }
 
       #theme-proxio,
@@ -272,23 +362,13 @@ const ignaiThemeCss = `
 
       /* ========== 导航栏 ========== */
       #theme-proxio .ud-header {
-        background: linear-gradient(
-          90deg,
-          rgba(18, 12, 12, 0.9) 0%,
-          rgba(10, 12, 18, 0.9) 58%,
-          rgba(6, 12, 20, 0.92) 100%
-        );
+        background: var(--ignai-header-bg);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(171, 111, 71, 0.16);
+        border-bottom: 1px solid var(--ignai-header-border);
       }
       #theme-proxio .ud-header.sticky {
-        background: linear-gradient(
-          90deg,
-          rgba(18, 12, 12, 0.96) 0%,
-          rgba(10, 12, 18, 0.96) 58%,
-          rgba(6, 12, 20, 0.97) 100%
-        );
+        background: var(--ignai-header-bg-sticky);
       }
 
       #theme-proxio .ignai-header-shell {
@@ -311,80 +391,51 @@ const ignaiThemeCss = `
         position: relative;
       }
 
-      #theme-proxio .ignai-header-mark-frame {
+      #theme-proxio .ignai-header-logo-frame {
         position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 38px;
-        height: 38px;
-        border-radius: 14px;
+        width: 32px;
+        height: 34px;
+        border-radius: 10px;
         overflow: hidden;
         flex-shrink: 0;
-        background: linear-gradient(
-          180deg,
-          rgba(31, 19, 14, 0.96) 0%,
-          rgba(14, 14, 22, 0.96) 100%
-        );
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 10px 28px rgba(0, 0, 0, 0.18);
+        background: transparent;
       }
 
-      #theme-proxio .ignai-header-logo {
+      #theme-proxio .ignai-header-logo-image {
         display: block;
         width: auto;
-        height: 26px;
+        height: 30px;
         object-fit: contain;
+        filter: drop-shadow(0 0 12px rgba(255, 122, 24, 0.24));
       }
 
       @media (min-width: 640px) {
-        #theme-proxio .ignai-header-logo {
-          height: 30px;
+        #theme-proxio .ignai-header-logo-frame {
+          width: 36px;
+          height: 40px;
+        }
+
+        #theme-proxio .ignai-header-logo-image {
+          height: 34px;
         }
       }
 
-      #theme-proxio .ignai-header-flame-shell {
-        position: relative;
-        display: inline-flex;
-        width: 16px;
-        height: 30px;
-        overflow: hidden;
-        flex-shrink: 0;
-      }
-
-      #theme-proxio .ignai-header-flame-shell::after {
-        content: '';
-        position: absolute;
-        inset: -6px -4px;
-        border-radius: 999px;
-        background: radial-gradient(circle, rgba(255, 122, 24, 0.16) 0%, rgba(255, 122, 24, 0) 72%);
-        pointer-events: none;
-      }
-
-      #theme-proxio .ignai-header-flame-image {
-        width: 148px;
-        max-width: none;
-        height: 100%;
-        object-fit: cover;
-        object-position: left center;
-        transform: translateX(-4px);
-        filter: drop-shadow(0 6px 18px rgba(255, 122, 24, 0.28));
-      }
-
       #theme-proxio .ignai-header-wordmark {
-        color: rgba(255, 255, 255, 0.94);
-        font-size: 1.12rem;
+        color: var(--ignai-nav-hover);
+        font-size: 1.02rem;
         font-weight: 700;
         line-height: 1;
-        letter-spacing: 0.09em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         white-space: nowrap;
       }
 
       #theme-proxio .ignai-header-subtitle {
         margin-top: 5px;
-        color: rgba(240, 196, 146, 0.72);
+        color: color-mix(in srgb, var(--ignai-heat) 72%, var(--ignai-text) 28%);
         font-size: 0.58rem;
         font-weight: 600;
         line-height: 1;
@@ -394,18 +445,86 @@ const ignaiThemeCss = `
       }
 
       @media (min-width: 640px) {
-        #theme-proxio .ignai-header-mark-frame {
-          width: 42px;
-          height: 42px;
-        }
-
         #theme-proxio .ignai-header-wordmark {
-          font-size: 1.2rem;
+          font-size: 1.12rem;
         }
 
         #theme-proxio .ignai-header-subtitle {
           font-size: 0.62rem;
         }
+      }
+
+      #theme-proxio .ignai-nav-link {
+        color: var(--ignai-nav-text);
+      }
+
+      #theme-proxio .ignai-nav-link:hover,
+      #theme-proxio .ignai-nav-link:focus-visible {
+        color: var(--ignai-nav-hover);
+      }
+
+      #theme-proxio .ignai-nav-dropdown {
+        background: var(--ignai-dropdown-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid var(--ignai-border);
+        box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+      }
+
+      html.light #theme-proxio .ignai-nav-dropdown {
+        box-shadow: 0 18px 48px rgba(125, 67, 28, 0.16);
+      }
+
+      #theme-proxio .ignai-nav-dropdown-link {
+        color: var(--ignai-nav-text);
+      }
+
+      #theme-proxio .ignai-nav-dropdown-link:hover,
+      #theme-proxio .ignai-nav-dropdown-link:focus-visible {
+        color: var(--ignai-nav-hover);
+        background: var(--ignai-dropdown-hover);
+      }
+
+      #theme-proxio .ignai-theme-toggle,
+      #theme-proxio .ignai-mobile-theme-toggle {
+        border: 1px solid var(--ignai-border);
+        background: var(--ignai-card-strong);
+        color: var(--ignai-nav-hover);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      }
+
+      #theme-proxio .ignai-theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      }
+
+      #theme-proxio .ignai-theme-toggle:hover,
+      #theme-proxio .ignai-mobile-theme-toggle:hover,
+      #theme-proxio .ignai-theme-toggle:focus-visible,
+      #theme-proxio .ignai-mobile-theme-toggle:focus-visible {
+        transform: translateY(-1px);
+        border-color: color-mix(in srgb, var(--ignai-heat) 46%, var(--ignai-border));
+        outline: none;
+      }
+
+      #theme-proxio .ignai-header-join,
+      #theme-proxio .ignai-mobile-menu-cta {
+        border: 1px solid rgba(188, 124, 76, 0.34);
+        background: linear-gradient(135deg, rgba(126,79,49,0.94) 0%, rgba(168,104,64,0.92) 54%, rgba(110,70,45,0.95) 100%);
+        color: #fff;
+        box-shadow: inset 0 1px 0 rgba(255,240,224,0.08), 0 12px 34px rgba(69,36,16,0.22);
+      }
+
+      html.light #theme-proxio .ignai-header-join,
+      html.light #theme-proxio .ignai-mobile-menu-cta {
+        background: linear-gradient(135deg, #f05a1a 0%, #ff8a18 54%, #df2530 100%);
+        color: #fffaf3;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 12px 34px rgba(202,72,21,0.2);
       }
 
       /* ========== IGNAI Hero ========== */
@@ -1601,8 +1720,8 @@ const ignaiThemeCss = `
 
       /* ========== Footer ========== */
       #theme-proxio .ignai-footer {
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        background: #07080c;
+        border-top: 1px solid var(--ignai-border);
+        background: var(--rig-footer-bg);
       }
 
       /* ========== 移动端汉堡菜单动画 ========== */
@@ -1619,7 +1738,7 @@ const ignaiThemeCss = `
         display: block;
         height: 2px;
         width: 100%;
-        background: #fff;
+        background: var(--ignai-nav-hover);
         border-radius: 2px;
         transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
         transform-origin: center;
@@ -1639,16 +1758,12 @@ const ignaiThemeCss = `
       }
 
       #theme-proxio .ignai-mobile-toggle {
-        border: 1px solid rgba(171, 111, 71, 0.34);
-        background: linear-gradient(
-          180deg,
-          rgba(30, 19, 15, 0.82) 0%,
-          rgba(13, 13, 20, 0.92) 100%
-        );
+        color: var(--ignai-nav-hover);
+        border: 1px solid var(--ignai-border);
+        background: var(--ignai-card-strong);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.04),
-          0 16px 38px rgba(0, 0, 0, 0.18),
-          0 0 0 1px rgba(255, 122, 24, 0.05);
+          0 16px 38px rgba(0, 0, 0, 0.12);
         transition:
           border-color 0.2s ease,
           background 0.2s ease,
@@ -1658,12 +1773,8 @@ const ignaiThemeCss = `
 
       #theme-proxio .ignai-mobile-toggle:hover {
         transform: translateY(-1px);
-        border-color: rgba(214, 147, 95, 0.42);
-        background: linear-gradient(
-          180deg,
-          rgba(40, 24, 17, 0.92) 0%,
-          rgba(18, 14, 18, 0.96) 100%
-        );
+        border-color: color-mix(in srgb, var(--ignai-heat) 46%, var(--ignai-border));
+        background: var(--ignai-dropdown-bg);
       }
 
       #theme-proxio .ignai-mobile-toggle:focus-visible {
@@ -1675,11 +1786,7 @@ const ignaiThemeCss = `
         position: fixed;
         inset: 0;
         z-index: 39;
-        background: linear-gradient(
-          180deg,
-          rgba(7, 8, 12, 0.16) 0%,
-          rgba(7, 8, 12, 0.42) 100%
-        );
+        background: var(--ignai-mobile-backdrop);
         border: 0;
       }
 
@@ -1687,7 +1794,16 @@ const ignaiThemeCss = `
       #theme-proxio .ignai-mobile-menu {
         top: calc(100% + 12px);
         transform-origin: top right;
+        background: var(--ignai-dropdown-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--ignai-border);
+        box-shadow: 0 24px 64px rgba(0,0,0,0.32);
         transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      html.light #theme-proxio .ignai-mobile-menu {
+        box-shadow: 0 24px 64px rgba(125,67,28,0.18);
       }
 
       #theme-proxio .ignai-mobile-menu--hidden {
@@ -1702,7 +1818,7 @@ const ignaiThemeCss = `
       }
 
       #theme-proxio .ignai-mobile-menu-header {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid var(--ignai-border);
       }
 
       #theme-proxio .ignai-mobile-menu-kicker {
@@ -1715,16 +1831,20 @@ const ignaiThemeCss = `
       }
 
       #theme-proxio .ignai-mobile-menu-title {
-        color: #fff;
+        color: var(--ignai-nav-hover);
         font-size: 1.16rem;
         font-weight: 700;
         letter-spacing: 0.08em;
       }
 
       #theme-proxio .ignai-mobile-menu-title-glow {
-        color: #ffd09a;
+        color: color-mix(in srgb, var(--ignai-heat) 72%, var(--ignai-text) 28%);
         font-size: 0.94rem;
         font-weight: 600;
+      }
+
+      #theme-proxio .ignai-mobile-menu-copy {
+        color: var(--ignai-text-soft);
       }
 
       #theme-proxio .ignai-mobile-menu-list > li + li {
@@ -1737,28 +1857,28 @@ const ignaiThemeCss = `
         margin-right: 10px;
       }
 
+      #theme-proxio .ignai-mobile-menu-link {
+        color: var(--ignai-nav-text);
+      }
+
+      #theme-proxio .ignai-mobile-menu-sub-link {
+        color: var(--ignai-text-dim);
+      }
+
       #theme-proxio .ignai-mobile-menu-link:hover,
       #theme-proxio .ignai-mobile-menu-link:focus-visible {
-        color: #fff;
-        background: rgba(255, 255, 255, 0.05);
+        color: var(--ignai-nav-hover);
+        background: var(--ignai-dropdown-hover);
       }
 
       #theme-proxio .ignai-mobile-menu-sub-link:hover,
       #theme-proxio .ignai-mobile-menu-sub-link:focus-visible {
-        color: rgba(255, 255, 255, 0.88);
-        background: rgba(255, 255, 255, 0.04);
+        color: var(--ignai-nav-hover);
+        background: var(--ignai-dropdown-hover);
       }
 
       #theme-proxio .ignai-mobile-menu-cta {
-        background: linear-gradient(
-          135deg,
-          rgba(126, 79, 49, 0.96) 0%,
-          rgba(168, 104, 64, 0.94) 54%,
-          rgba(110, 70, 45, 0.96) 100%
-        );
-        box-shadow:
-          inset 0 1px 0 rgba(255, 240, 224, 0.08),
-          0 12px 34px rgba(69, 36, 16, 0.22);
+        color: #fff;
       }
 
       #theme-proxio .ignai-mobile-menu-cta:hover,
@@ -1774,8 +1894,8 @@ const ignaiThemeCss = `
 
       /* ========== 品牌滚动条 ========== */
       #theme-proxio .ignai-brand-scroll {
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: rgba(13, 14, 20, 0.6);
+        border: 1px solid var(--ignai-border);
+        background: var(--ignai-card-strong);
       }
 
       /* ========== 暗色覆盖 ========== */
@@ -1957,6 +2077,9 @@ const rigStyle = `
     position: fixed; inset: 0; pointer-events: none; z-index: 10002;
     background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.09) 2px, rgba(0,0,0,0.09) 4px);
   }
+  html.light #theme-proxio .rig-scanlines {
+    opacity: 0.18;
+  }
   #theme-proxio .rig-rgb-fringe {
     position: fixed; inset: 0; pointer-events: none; z-index: 10003;
     background: linear-gradient(90deg, #e5332a05, #2b4fff04, #e5332a05);
@@ -1981,14 +2104,18 @@ const rigStyle = `
     clip-path: polygon(var(--rig-chamfer) 0, 100% 0, 100% calc(100% - var(--rig-chamfer)), calc(100% - var(--rig-chamfer)) 100%, 0 100%, 0 var(--rig-chamfer));
     transition: box-shadow 0.18s, transform 0.18s, text-shadow 0.18s;
   }
-  #theme-proxio .rig-btn--dark { background: var(--rig-ink); color: var(--rig-paper); }
+  #theme-proxio .rig-btn--dark {
+    background: var(--rig-btn-primary-bg);
+    color: var(--rig-btn-primary-text);
+    box-shadow: 0 16px 42px var(--rig-heat-glow);
+  }
   #theme-proxio .rig-btn--heat {
-    background: var(--rig-heat); color: var(--rig-ink);
+    background: var(--rig-btn-primary-bg); color: var(--rig-btn-primary-text);
     box-shadow: 0 0 40px var(--rig-heat-glow);
   }
   #theme-proxio .rig-btn--outline {
-    clip-path: none; border: 1px solid rgba(10,10,10,0.35);
-    color: var(--rig-ink); background: transparent;
+    clip-path: none; border: 1px solid var(--rig-btn-outline-border);
+    color: var(--rig-btn-outline-text); background: var(--rig-btn-outline-bg);
   }
   #theme-proxio .rig-btn:hover {
     transform: translate(-1px, -1px);
@@ -2000,7 +2127,7 @@ const rigStyle = `
   #theme-proxio .rig-badge {
     width: fit-content; display: flex; align-items: center; gap: 0.6rem;
     margin: 0 auto 2rem; padding: 0.5rem 1rem;
-    border: 1px solid rgba(237,70,45,0.22); background: rgba(10,10,10,0.88);
+    border: 1px solid color-mix(in srgb, var(--rig-heat) 28%, transparent); background: var(--ignai-card-strong);
     color: var(--rig-heat);
     font: 800 0.72rem/1 'Rig Mono', monospace; letter-spacing: 0; text-transform: uppercase;
     backdrop-filter: blur(8px);
@@ -2024,29 +2151,110 @@ const rigStyle = `
   /* --- Hero --- */
   #theme-proxio .rig-hero {
     position: relative; z-index: 10; overflow: hidden;
-    background: var(--rig-heat); color: var(--rig-ink);
-    padding: 4rem 0 3rem;
+    background: var(--rig-hero-bg); color: var(--rig-hero-title);
+    padding: 5.75rem 0 4.25rem;
+  }
+  #theme-proxio .rig-hero-artwash {
+    position: absolute;
+    inset: 0;
+    opacity: 0.16;
+    background-image: var(--rig-hero-artwash);
+    background-position: center;
+    background-size: cover;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
   }
   #theme-proxio .rig-hero-inner {
+    position: relative; z-index: 1;
     max-width: calc(var(--rig-max-w) + 6rem); margin: 0 auto; padding: 0 3rem;
+    display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.78fr);
+    gap: 3.5rem; align-items: center;
+  }
+  #theme-proxio .rig-hero-kicker {
+    display: inline-flex; align-items: center; gap: 0.55rem;
+    margin-bottom: 1.4rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid color-mix(in srgb, var(--rig-hero-title) 20%, transparent);
+    background: color-mix(in srgb, var(--rig-hero-visual-bg) 76%, transparent);
+    color: var(--rig-hero-title);
+    font: 800 0.72rem/1 'Rig Mono', monospace;
+    text-transform: uppercase;
+  }
+  #theme-proxio .rig-hero-kicker-dot {
+    width: 7px; height: 7px; border-radius: 999px;
+    background: var(--rig-heat);
+    box-shadow: 0 0 16px var(--rig-heat-glow);
   }
   #theme-proxio .rig-hero h1 {
-    max-width: 1120px; margin: 0 0 2rem; color: var(--rig-ink);
-    font: 400 clamp(3.2rem, 7vw, 6rem)/0.88 'Rig Chalet', sans-serif;
+    max-width: 820px; margin: 0 0 2rem; color: var(--rig-hero-title);
+    font: 400 clamp(3.6rem, 7vw, 6.6rem)/0.88 'Rig Chalet', sans-serif;
     letter-spacing: 0;
+    text-shadow: 0 18px 50px rgba(0,0,0,0.18);
   }
   #theme-proxio .rig-hero-sub {
-    max-width: 540px; margin: 0 0 2.5rem; color: var(--rig-ink);
+    max-width: 620px; margin: 0 0 2.5rem; color: var(--rig-hero-copy);
     font-size: 1.1rem; line-height: 1.55; font-weight: 700; opacity: 0.86;
   }
   #theme-proxio .rig-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  #theme-proxio .rig-hero-visual-wrap {
+    min-width: 0;
+  }
+  #theme-proxio .rig-hero-visual {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--rig-hero-title) 20%, transparent);
+    background: var(--rig-hero-visual-bg);
+    box-shadow: 0 32px 80px rgba(0,0,0,0.22);
+    aspect-ratio: 16 / 10;
+    clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+  }
+  #theme-proxio .rig-hero-brand-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #theme-proxio .rig-hero-brand-image--light {
+    display: none;
+  }
+  #theme-proxio .rig-hero-brand-image--dark {
+    display: block;
+  }
+  html.light #theme-proxio .rig-hero-brand-image--light {
+    display: block;
+  }
+  html.light #theme-proxio .rig-hero-brand-image--dark {
+    display: none;
+  }
+  #theme-proxio .rig-hero-visual-caption {
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    color: #fff8ef;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.36);
+  }
+  #theme-proxio .rig-hero-visual-caption span {
+    font: 800 0.7rem/1 'Rig Mono', monospace;
+    text-transform: uppercase;
+    opacity: 0.76;
+  }
+  #theme-proxio .rig-hero-visual-caption strong {
+    font: 800 0.78rem/1 'Rig Mono', monospace;
+    text-align: right;
+  }
 
   /* --- Ticker --- */
   #theme-proxio .rig-ticker {
-    border-top: 1px solid rgba(10,10,10,0.16);
+    border-top: 1px solid var(--rig-border);
     padding: 0.75rem 0; overflow: hidden; margin-top: 3rem;
-    font: 800 0.78rem/1 'Rig Mono', monospace; white-space: nowrap; color: var(--rig-ink);
-    opacity: 0.55;
+    font: 800 0.78rem/1 'Rig Mono', monospace; white-space: nowrap; color: var(--rig-paper);
+    opacity: 0.62;
   }
   #theme-proxio .rig-ticker-track {
     display: flex; gap: 2.5rem; width: max-content;
@@ -2062,11 +2270,11 @@ const rigStyle = `
   }
   #theme-proxio .rig-problem-card {
     padding: 2rem 1.5rem; border: 1px solid var(--rig-border);
-    background: var(--rig-paper-06);
+    background: var(--rig-card-bg);
     clip-path: polygon(var(--rig-chamfer) 0, 100% 0, 100% calc(100% - var(--rig-chamfer)), calc(100% - var(--rig-chamfer)) 100%, 0 100%, 0 var(--rig-chamfer));
     transition: background 0.2s;
   }
-  #theme-proxio .rig-problem-card:hover { background: rgba(240,237,230,0.1); }
+  #theme-proxio .rig-problem-card:hover { background: var(--rig-card-hover-bg); }
   #theme-proxio .rig-problem-card-label {
     font: 800 0.68rem/1 'Rig Mono', monospace; color: var(--rig-heat);
     text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;
@@ -2089,11 +2297,11 @@ const rigStyle = `
   }
   #theme-proxio .rig-cap-card {
     padding: 2rem 1.5rem; border: 1px solid var(--rig-border);
-    background: var(--rig-paper-06);
+    background: var(--rig-card-bg);
     clip-path: polygon(var(--rig-chamfer) 0, 100% 0, 100% calc(100% - var(--rig-chamfer)), calc(100% - var(--rig-chamfer)) 100%, 0 100%, 0 var(--rig-chamfer));
     transition: background 0.2s;
   }
-  #theme-proxio .rig-cap-card:hover { background: rgba(240,237,230,0.1); }
+  #theme-proxio .rig-cap-card:hover { background: var(--rig-card-hover-bg); }
   #theme-proxio .rig-cap-label {
     font: 800 0.78rem/1 'Rig Mono', monospace; color: var(--rig-heat);
     margin-bottom: 1rem;
@@ -2112,7 +2320,7 @@ const rigStyle = `
     background: var(--rig-border);
   }
   #theme-proxio .rig-stat {
-    padding: 2.5rem 1.5rem; background: var(--rig-ink); text-align: center;
+    padding: 2.5rem 1.5rem; background: var(--ignai-card-strong); text-align: center;
   }
   #theme-proxio .rig-stat-value {
     font: 400 3.2rem/1 'Rig Chalet', sans-serif; color: var(--rig-paper);
@@ -2126,7 +2334,7 @@ const rigStyle = `
 
   /* --- Terminal --- */
   #theme-proxio .rig-terminal {
-    border: 1px solid var(--rig-border); background: rgba(10,10,10,0.7);
+    border: 1px solid var(--rig-border); background: var(--rig-terminal-bg);
     font-family: 'Rig Mono', monospace; overflow: hidden;
   }
   #theme-proxio .rig-terminal-bar {
@@ -2153,7 +2361,7 @@ const rigStyle = `
   /* --- FAQ --- */
   #theme-proxio .rig-faq-item {
     border: 1px solid var(--rig-border); border-bottom: 0;
-    background: var(--rig-paper-06);
+    background: var(--rig-card-bg);
   }
   #theme-proxio .rig-faq-item:last-child { border-bottom: 1px solid var(--rig-border); }
   #theme-proxio .rig-faq-q {
@@ -2161,7 +2369,7 @@ const rigStyle = `
     align-items: center; cursor: pointer; font-weight: 600; color: var(--rig-paper);
     transition: background 0.2s;
   }
-  #theme-proxio .rig-faq-q:hover { background: rgba(240,237,230,0.06); }
+  #theme-proxio .rig-faq-q:hover { background: var(--rig-card-hover-bg); }
   #theme-proxio .rig-faq-a {
     padding: 0 1.5rem; max-height: 0; overflow: hidden;
     color: var(--rig-paper-70); font-size: 0.9rem; line-height: 1.6;
@@ -2195,10 +2403,312 @@ const rigStyle = `
     color: var(--rig-paper-70); font-size: 1rem; line-height: 1.6;
   }
 
+  /* --- Article collections --- */
+  #theme-proxio .ignai-articles-section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  #theme-proxio .ignai-home-articles-grid,
+  #theme-proxio .ignai-articles-grid {
+    display: grid;
+    gap: 1rem;
+  }
+  #theme-proxio .ignai-home-articles-grid {
+    margin-top: 4rem;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+  #theme-proxio .ignai-home-articles-grid .ignai-article-card:not(:first-child) {
+    min-height: 0;
+  }
+  #theme-proxio .ignai-articles-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  #theme-proxio .ignai-articles-page {
+    position: relative;
+    z-index: 10;
+    padding: 8rem 1.5rem 5rem;
+  }
+  #theme-proxio .ignai-search-page {
+    position: relative;
+    z-index: 10;
+    padding-top: 7rem;
+  }
+  #theme-proxio .ignai-articles-page-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  #theme-proxio .ignai-articles-page-head {
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+  #theme-proxio .ignai-articles-page-head h1 {
+    margin: 1.1rem 0 1rem;
+    color: var(--rig-paper);
+    font: 400 clamp(3rem, 6vw, 5.8rem)/0.9 'Rig Chalet', sans-serif;
+    letter-spacing: 0;
+  }
+  #theme-proxio .ignai-articles-page-head p {
+    margin: 0;
+    max-width: 620px;
+    color: var(--rig-paper-70);
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+  #theme-proxio .ignai-article-card {
+    display: flex;
+    min-width: 0;
+    min-height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--rig-border);
+    background: var(--rig-card-bg);
+    color: var(--rig-paper);
+    text-decoration: none;
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+  #theme-proxio .ignai-article-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--rig-heat) 38%, var(--rig-border));
+    background: var(--rig-card-hover-bg);
+  }
+  #theme-proxio .ignai-article-card:not(.ignai-article-card--featured) {
+    flex-direction: column;
+  }
+  #theme-proxio .ignai-home-articles-grid .ignai-article-card--featured {
+    grid-row: span 3;
+    flex-direction: column;
+  }
+  #theme-proxio .ignai-articles-grid .ignai-article-card--featured {
+    grid-column: span 2;
+    flex-direction: column;
+  }
+  #theme-proxio .ignai-article-cover {
+    position: relative;
+    flex: 0 0 auto;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--ignai-card-strong);
+    border-bottom: 1px solid var(--rig-border);
+  }
+  #theme-proxio .ignai-article-card:not(.ignai-article-card--featured) .ignai-article-cover {
+    aspect-ratio: 16 / 8.8;
+  }
+  #theme-proxio .ignai-article-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+  }
+  #theme-proxio .ignai-article-card:hover .ignai-article-cover img {
+    transform: scale(1.025);
+  }
+  #theme-proxio .ignai-article-body {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    padding: 1.2rem;
+  }
+  #theme-proxio .ignai-article-card--featured .ignai-article-body {
+    padding: 1.45rem;
+  }
+  #theme-proxio .ignai-article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    color: var(--rig-heat);
+    font: 800 0.66rem/1 'Rig Mono', monospace;
+    text-transform: uppercase;
+  }
+  #theme-proxio .ignai-article-meta span + span {
+    color: var(--rig-paper-35);
+  }
+  #theme-proxio .ignai-article-authorline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-top: 0.65rem;
+    color: var(--rig-paper-45);
+    font: 700 0.68rem/1.2 'Rig Mono', monospace;
+    text-transform: uppercase;
+  }
+  #theme-proxio .ignai-article-authorline strong {
+    color: var(--rig-paper-70);
+    font-weight: 800;
+  }
+  #theme-proxio .ignai-article-body h3 {
+    margin: 0.85rem 0 0;
+    color: var(--rig-paper);
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  #theme-proxio .ignai-article-card--featured .ignai-article-body h3 {
+    font-size: clamp(1.55rem, 3vw, 2.3rem);
+    line-height: 1.16;
+  }
+  #theme-proxio .ignai-article-body p {
+    margin: 0.75rem 0 0;
+    color: var(--rig-paper-50);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  #theme-proxio .ignai-article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: auto;
+    padding-top: 1.1rem;
+  }
+  #theme-proxio .ignai-article-tags span {
+    border: 1px solid color-mix(in srgb, var(--rig-heat) 18%, var(--rig-border));
+    padding: 0.36rem 0.5rem;
+    color: var(--rig-paper-50);
+    font: 700 0.68rem/1 'Rig Mono', monospace;
+  }
+  #theme-proxio .ignai-articles-empty {
+    border: 1px solid var(--rig-border);
+    background: var(--rig-card-bg);
+    padding: 2rem;
+    color: var(--rig-paper-50);
+    font-size: 0.95rem;
+  }
+
+  /* --- Post detail community context --- */
+  #theme-proxio .ignai-post-context {
+    max-width: 980px;
+    margin: 0 auto 2.5rem;
+    padding: 1.25rem;
+    border: 1px solid var(--rig-border);
+    background: var(--rig-card-bg);
+    color: var(--rig-paper);
+    clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+  }
+  #theme-proxio .ignai-post-context-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--rig-border);
+  }
+  #theme-proxio .ignai-post-context-head span,
+  #theme-proxio .ignai-post-context-label,
+  #theme-proxio .ignai-post-context-status {
+    font: 800 0.68rem/1 'Rig Mono', monospace;
+    text-transform: uppercase;
+  }
+  #theme-proxio .ignai-post-context-head span {
+    color: var(--rig-heat);
+  }
+  #theme-proxio .ignai-post-context-head h2 {
+    margin: 0;
+    color: var(--rig-paper);
+    font: 700 1rem/1.35 'Rig Sans', sans-serif;
+  }
+  #theme-proxio .ignai-post-context-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  #theme-proxio .ignai-post-context-group {
+    min-width: 0;
+  }
+  #theme-proxio .ignai-post-context-label {
+    margin-bottom: 0.7rem;
+    color: var(--rig-paper-35);
+  }
+  #theme-proxio .ignai-post-context-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  #theme-proxio .ignai-post-context-member,
+  #theme-proxio .ignai-post-context-event {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 0.72rem;
+    border: 1px solid var(--rig-border);
+    background: color-mix(in srgb, var(--rig-card-bg) 72%, transparent);
+    color: var(--rig-paper);
+    text-decoration: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+  }
+  #theme-proxio .ignai-post-context-member:hover,
+  #theme-proxio .ignai-post-context-event:hover {
+    transform: translateY(-1px);
+    border-color: color-mix(in srgb, var(--rig-heat) 42%, var(--rig-border));
+    background: var(--rig-card-hover-bg);
+  }
+  #theme-proxio .ignai-post-context-avatar {
+    position: relative;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    border: 1px solid var(--rig-border);
+    background: var(--ignai-card-strong);
+  }
+  #theme-proxio .ignai-post-context-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #theme-proxio .ignai-post-context-member strong,
+  #theme-proxio .ignai-post-context-event strong {
+    display: block;
+    overflow: hidden;
+    color: var(--rig-paper);
+    font-size: 0.9rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #theme-proxio .ignai-post-context-member em,
+  #theme-proxio .ignai-post-context-event em {
+    display: block;
+    margin-top: 0.18rem;
+    overflow: hidden;
+    color: var(--rig-paper-50);
+    font-size: 0.76rem;
+    font-style: normal;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #theme-proxio .ignai-post-context-member--author {
+    border-color: color-mix(in srgb, var(--rig-heat) 34%, var(--rig-border));
+  }
+  #theme-proxio .ignai-post-context-event {
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  #theme-proxio .ignai-post-context-event-main {
+    min-width: 0;
+  }
+  #theme-proxio .ignai-post-context-status {
+    flex: 0 0 auto;
+    padding: 0.35rem 0.45rem;
+    border: 1px solid color-mix(in srgb, var(--rig-heat) 28%, var(--rig-border));
+    color: var(--rig-heat);
+    font-size: 0.58rem;
+  }
+
   /* --- Footer --- */
   #theme-proxio .rig-footer {
     border-top: 1px solid var(--rig-border); padding: 4rem 0 2rem;
-    background: var(--rig-ink); color: var(--rig-paper-70);
+    background: var(--rig-footer-bg); color: var(--rig-footer-text);
   }
   #theme-proxio .rig-footer-grid {
     display: grid; grid-template-columns: 2fr repeat(var(--footer-cols, 2), 1fr);
@@ -2207,19 +2717,19 @@ const rigStyle = `
   #theme-proxio .rig-footer-brand p { margin: 0; }
   #theme-proxio .rig-footer-col h3 {
     margin: 0 0 1rem; font: 800 0.72rem/1 'Rig Mono', monospace;
-    color: var(--rig-paper-35); text-transform: uppercase; letter-spacing: 0.08em;
+    color: color-mix(in srgb, var(--rig-footer-text) 56%, transparent); text-transform: uppercase; letter-spacing: 0.08em;
   }
   #theme-proxio .rig-footer-col ul { list-style: none; margin: 0; padding: 0; }
   #theme-proxio .rig-footer-col li { margin-bottom: 0.5rem; }
   #theme-proxio .rig-footer-col a {
-    color: var(--rig-paper-70); text-decoration: none; font-size: 0.88rem;
+    color: var(--rig-footer-text); text-decoration: none; font-size: 0.88rem;
     transition: color 0.15s;
   }
-  #theme-proxio .rig-footer-col a:hover { color: var(--rig-paper); }
+  #theme-proxio .rig-footer-col a:hover { color: color-mix(in srgb, var(--rig-footer-text) 70%, #fff 30%); }
   #theme-proxio .rig-footer-bottom {
     display: flex; justify-content: space-between; align-items: center;
     margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rig-border);
-    font-size: 0.72rem; color: var(--rig-paper-35);
+    font-size: 0.72rem; color: color-mix(in srgb, var(--rig-footer-text) 50%, transparent);
   }
   #theme-proxio .rig-footer-status {
     display: flex; align-items: center; gap: 0.5rem;
@@ -2231,13 +2741,70 @@ const rigStyle = `
   }
 
   /* --- 响应式 --- */
+  @media (max-width: 959px) {
+    #theme-proxio .rig-hero {
+      padding: 5rem 0 3rem;
+    }
+    #theme-proxio .rig-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    #theme-proxio .rig-hero h1 {
+      max-width: 760px;
+    }
+    #theme-proxio .rig-hero-visual {
+      max-width: 620px;
+    }
+  }
+
   @media (max-width: 768px) {
     #theme-proxio .rig-section { padding: 4rem 1.5rem; }
     #theme-proxio .rig-hero-inner { padding: 0 1.5rem; }
     #theme-proxio .rig-hero h1 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+    #theme-proxio .rig-hero-kicker { font-size: 0.66rem; }
+    #theme-proxio .rig-hero-visual-caption { align-items: start; flex-direction: column; }
+    html.light #theme-proxio .rig-hero-visual-caption,
+    html.dark #theme-proxio .rig-hero-visual-caption {
+      display: none;
+    }
     #theme-proxio .rig-problem-grid { grid-template-columns: 1fr; }
     #theme-proxio .rig-caps-grid { grid-template-columns: 1fr; }
     #theme-proxio .rig-stats { grid-template-columns: repeat(2, 1fr); }
+    #theme-proxio .ignai-articles-section-head {
+      display: block;
+    }
+    #theme-proxio .ignai-articles-section-head .ignai-cta-secondary {
+      margin-top: 1.5rem;
+    }
+    #theme-proxio .ignai-home-articles-grid,
+    #theme-proxio .ignai-articles-grid {
+      grid-template-columns: 1fr;
+    }
+    #theme-proxio .ignai-home-articles-grid .ignai-article-card--featured {
+      grid-row: auto;
+    }
+    #theme-proxio .ignai-articles-grid .ignai-article-card--featured {
+      grid-column: auto;
+    }
+    #theme-proxio .ignai-articles-page {
+      padding: 6rem 1.25rem 4rem;
+    }
+    #theme-proxio .ignai-article-card--featured .ignai-article-body h3 {
+      font-size: 1.55rem;
+    }
+    #theme-proxio .ignai-post-context {
+      padding: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    #theme-proxio .ignai-post-context-head {
+      display: block;
+    }
+    #theme-proxio .ignai-post-context-head h2 {
+      margin-top: 0.45rem;
+    }
+    #theme-proxio .ignai-post-context-grid {
+      grid-template-columns: 1fr;
+    }
     #theme-proxio .rig-footer-grid { grid-template-columns: 1fr; }
     #theme-proxio .rig-content-lines::before,
     #theme-proxio .rig-content-lines::after { display: none; }

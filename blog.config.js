@@ -23,7 +23,7 @@ const BLOG = {
   BIO: process.env.NEXT_PUBLIC_BIO || '长沙 AI 社区 — 连接创造者，点燃可能性', // 社区简介
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://ignai.community', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'IGNAI, AI社区, 长沙, 人工智能, 科技社区', // 网站关键词
-  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/favicon.png', // IGNAI favicon
+  BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/brand/ignai/favicon-512.png', // IGNAI favicon
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
   BEI_AN_GONGAN: process.env.NEXT_PUBLIC_BEI_AN_GONGAN || '', // 公安备案号，例如 '浙公网安备3xxxxxxxx8号'

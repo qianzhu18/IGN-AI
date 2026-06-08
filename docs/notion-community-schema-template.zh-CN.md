@@ -103,7 +103,7 @@
 | `member_status` | Select | `core` | 成员状态分层 |
 | `join_year` | Text | `2026` | 更轻量的加入时间 |
 
-## 5. Post 作者映射模板
+## 5. Post 社区关系模板
 
 如果文章要稳定跳转到成员页，推荐至少补下面两个字段。
 
@@ -118,6 +118,22 @@
 | --- | --- | --- | --- |
 | `authors` | Text | `Qianzhu,Alice` | 多作者展示 |
 | `author_slugs` | Text | `qianzhu,alice-chen` | 多作者映射 |
+
+如果文章需要展示“相关成员 / 相关活动”，推荐继续预留：
+
+| 字段名 | Notion 类型 | 示例 | 用途 |
+| --- | --- | --- | --- |
+| `member_slugs` | Text | `qianzhu,alice-chen` | 文章相关成员 |
+| `event_slugs` | Text | `opc-vote-night,agent-workshop` | 文章相关活动 |
+
+也可以先写入 `ext` JSON，前台会兼容读取：
+
+```json
+{
+  "member_slugs": ["qianzhu", "alice-chen"],
+  "event_slugs": ["opc-vote-night"]
+}
+```
 
 ## 6. Event 预埋模板
 
@@ -155,14 +171,18 @@
 | `social_linkedin` | `member.social_linkedin` | 社交链接 |
 | `website` | `member.website` | 外部主页 |
 
-### 7.2 Post 作者映射
+### 7.2 Post 社区关系映射
 
 | Notion 字段 | 页面对象字段 | 当前使用位置 |
 | --- | --- | --- |
-| `author` | `post.author` | 作者显示 |
-| `author_slug` | `post.author_slug` | 成员页跳转 |
+| `author` | `post.authors` | 文章页作者展示 / 成员页跳转 |
+| `author_slug` | `post.authors` | 显式映射成员 |
 | `authors` | `post.authors` | 多作者兼容 |
-| `author_slugs` | `post.author_slugs` | 多作者兼容 |
+| `author_slugs` | `post.authors` | 多作者兼容 |
+| `member_slugs` | `post.relatedMembers` | 文章页相关成员展示 |
+| `event_slugs` | `post.relatedEvents` | 文章页相关活动展示 |
+| `ext.member_slugs` | `post.relatedMembers` | 不新增字段时的 JSON 兜底 |
+| `ext.event_slugs` | `post.relatedEvents` | 不新增字段时的 JSON 兜底 |
 
 ### 7.3 兼容策略
 
@@ -194,12 +214,16 @@
 1. 正常写文章
 2. 设置 `author`
 3. 设置 `author_slug`
-4. 保证 `author_slug` 与成员的 `slug` 末段一致
+4. 如需额外关联成员，设置 `member_slugs`
+5. 如需关联活动，设置 `event_slugs`
+6. 保证这些 slug 与成员 / 活动的 `slug` 末段一致
 
 例如：
 
 - 成员 slug: `members/qianzhu`
 - 文章 `author_slug`: `qianzhu`
+- 活动 slug: `events/opc-vote-night`
+- 文章 `event_slugs`: `opc-vote-night`
 
 ## 9. 实操命令
 

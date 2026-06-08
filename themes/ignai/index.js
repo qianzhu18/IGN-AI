@@ -17,7 +17,6 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { BackToTopButton } from './components/BackToTopButton'
-import { Blog } from './components/Blog'
 import Footer from './components/Footer'
 import { Header } from './components/Header'
 import CONFIG from './config'
@@ -29,6 +28,11 @@ import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
 import SmartLink from '@/components/SmartLink'
 import { Banner } from './components/Banner'
+import { PostCommunityContext } from './components/PostCommunityContext'
+import {
+  HomeArticlesSection,
+  PostCollectionPage
+} from './components/PostCollection'
 import SearchInput from './components/SearchInput'
 import { SVG404 } from './components/svg/SVG404'
 import { ArticleLock } from './components/ArticleLock'
@@ -166,26 +170,13 @@ const LayoutBase = props => {
       {/* Grid Lines — 92px grid pattern */}
       <div
         aria-hidden='true'
-        className='pointer-events-none fixed inset-0 z-0 opacity-[0.035]'
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
-          backgroundSize: '92px 92px'
-        }}
+        className='ignai-grid-overlay pointer-events-none fixed inset-0 z-0'
       />
 
       {/* Noise Overlay — CSS SVG filter */}
       <div aria-hidden='true' className='ignai-noise-overlay' />
 
-      {/* Glow Orbs */}
-      <div
-        aria-hidden='true'
-        className='pointer-events-none fixed inset-0 z-0'
-        style={{
-          background:
-            'radial-gradient(ellipse at 16% 10%, rgba(255,122,24,0.14), transparent 32%), radial-gradient(ellipse at 84% 16%, rgba(93,169,255,0.08), transparent 28%)'
-        }}
-      />
+      <div aria-hidden='true' className='ignai-background-field pointer-events-none fixed inset-0 z-0' />
 
       {/* Cursor Glow — 桌面端鼠标跟随光晕 */}
       {isHomePage && (
@@ -238,6 +229,7 @@ const LayoutIndex = props => {
       <RigStatsStrip />
       <RigTerminalBlock />
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
+      {siteConfig('IGNAI_ARTICLES_ENABLE', CONFIG.IGNAI_ARTICLES_ENABLE) && <HomeArticlesSection posts={props.latestPosts || []} />}
       {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection />}
       {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
       <RigFAQSection />
@@ -254,13 +246,14 @@ const LayoutSlug = props => {
 
   return (
     <>
-      <Banner title={post?.title} description={post?.summary} />
+      <Banner title={post?.title} description={post?.summary} post={post} />
       <div className='container grow'>
         <div className='flex flex-wrap justify-center -mx-4'>
           <div id='container-inner' className='w-full p-4'>
             {lock && <ArticleLock validPassword={validPassword} />}
             {!lock && post && (
               <div id='article-wrapper' className='mx-auto'>
+                <PostCommunityContext post={post} />
                 <NotionPage {...props} />
                 <Comment frontMatter={post} />
                 <ShareBar post={post} />
@@ -295,9 +288,17 @@ const LayoutSearch = props => {
   }, [keyword])
 
   return (
-    <section className='max-w-7xl mx-auto bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px]'>
+    <section className='ignai-search-page'>
       <SearchInput {...props} />
-      {currentSearch && <Blog {...props} />}
+      {currentSearch && (
+        <PostCollectionPage
+          posts={props.posts || []}
+          eyebrow='Search'
+          title={`搜索：${currentSearch}`}
+          description='从已发布文章中查找相关内容。'
+          emptyText='没有匹配的文章。'
+        />
+      )}
     </section>
   )
 }
@@ -307,7 +308,12 @@ const LayoutSearch = props => {
  */
 const LayoutArchive = props => (
   <>
-    <Blog {...props} />
+    <PostCollectionPage
+      posts={props.posts || []}
+      eyebrow='Articles'
+      title='内容文章'
+      description='成员观点、活动复盘、工具实践和社区写作会在这里集中展示。'
+    />
   </>
 )
 
@@ -347,64 +353,16 @@ const LayoutPostList = props => {
   const slotTitle = category || tag
 
   return (
-    <section className='pb-10 pt-20 lg:pb-20 lg:pt-[120px]'>
-      <div className='container mx-auto'>
-        <div className='-mx-4 flex flex-wrap justify-center'>
-          <div className='w-full px-4'>
-            <div className='mx-auto mb-[60px] max-w-[485px] text-center'>
-              {slotTitle && (
-                <h2 className='mb-4 text-3xl font-bold text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
-                  {slotTitle}
-                </h2>
-              )}
-              {!slotTitle && (
-                <>
-                  <span className='ignai-badge mb-4 inline-block'>
-                    {siteConfig('IGNAI_BLOG_TITLE')}
-                  </span>
-                  <h2 className='mb-4 text-3xl font-bold text-white sm:text-4xl md:text-[40px] md:leading-[1.2]'>
-                    {siteConfig('IGNAI_BLOG_TEXT_1')}
-                  </h2>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className='-mx-4 flex flex-wrap'>
-          {posts?.map((item, index) => (
-            <div key={index} className='w-full px-4 md:w-1/2 lg:w-1/3'>
-              <div className='wow fadeInUp group mb-10' data-wow-delay='.1s'>
-                <div className='mb-8 overflow-hidden rounded-[8px] border border-white/8'>
-                  <SmartLink href={item?.href} className='block'>
-                    <img
-                      src={item.pageCoverThumbnail}
-                      alt={item.title}
-                      className='w-full transition group-hover:scale-105 duration-300'
-                    />
-                  </SmartLink>
-                </div>
-                <div>
-                  <span className='ignai-badge mb-4 inline-block'>
-                    {item.publishDay}
-                  </span>
-                  <h3>
-                    <SmartLink
-                      href={item?.href}
-                      className='mb-4 inline-block text-xl font-semibold text-white hover:text-[#FF7A18] sm:text-2xl lg:text-xl xl:text-2xl'
-                    >
-                      {item.title}
-                    </SmartLink>
-                  </h3>
-                  <p className='max-w-[370px] text-base text-white/56'>
-                    {item.summary}
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <PostCollectionPage
+      posts={posts || []}
+      eyebrow={category ? 'Category' : tag ? 'Tag' : 'Articles'}
+      title={slotTitle || siteConfig('IGNAI_BLOG_TEXT_1')}
+      description={
+        slotTitle
+          ? '当前筛选下的已发布文章。'
+          : '成员观点、活动复盘、工具实践和社区写作会在这里集中展示。'
+      }
+    />
   )
 }
 
@@ -732,21 +690,56 @@ function RigHeroSection() {
 
   return (
     <section className='rig-hero'>
+      <div aria-hidden='true' className='rig-hero-artwash' />
       <div className='rig-hero-inner'>
-        <Reveal>
-          <h1 dangerouslySetInnerHTML={{ __html: title }} />
-        </Reveal>
-        <Reveal delay={0.12}>
-          <p className='rig-hero-sub'>{sub}</p>
-        </Reveal>
-        <Reveal delay={0.22}>
-          <div className='rig-hero-actions'>
-            <SmartLink href={cta1Url} className='rig-btn rig-btn--dark'>
-              {cta1Text}
-            </SmartLink>
-            <SmartLink href={cta2Url} className='rig-btn rig-btn--outline'>
-              {cta2Text}
-            </SmartLink>
+        <div className='rig-hero-copy'>
+          <Reveal>
+            <div className='rig-hero-kicker'>
+              <span className='rig-hero-kicker-dot' />
+              Changsha AI Community
+            </div>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <h1 dangerouslySetInnerHTML={{ __html: title }} />
+          </Reveal>
+          <Reveal delay={0.12}>
+            <p className='rig-hero-sub'>{sub}</p>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div className='rig-hero-actions'>
+              <SmartLink href={cta1Url} className='rig-btn rig-btn--dark'>
+                {cta1Text}
+              </SmartLink>
+              <SmartLink href={cta2Url} className='rig-btn rig-btn--outline'>
+                {cta2Text}
+              </SmartLink>
+            </div>
+          </Reveal>
+        </div>
+        <Reveal delay={0.16} className='rig-hero-visual-wrap'>
+          <div className='rig-hero-visual'>
+            <Image
+              src='/brand/ignai/hero-gradient-brand.webp'
+              alt='IGNAI brand gradient lockup'
+              width={1600}
+              height={893}
+              priority
+              sizes='(max-width: 960px) 100vw, 42vw'
+              className='rig-hero-brand-image rig-hero-brand-image--light'
+            />
+            <Image
+              src='/brand/ignai/storefront-sign.webp'
+              alt='IGNAI storefront sign'
+              width={1600}
+              height={893}
+              priority
+              sizes='(max-width: 960px) 100vw, 42vw'
+              className='rig-hero-brand-image rig-hero-brand-image--dark'
+            />
+            <div className='rig-hero-visual-caption'>
+              <span>Brand Assets</span>
+              <strong>IGNITE BEFORE AGI</strong>
+            </div>
           </div>
         </Reveal>
       </div>

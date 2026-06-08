@@ -1,7 +1,7 @@
 # IGNAI 社区官网排期
 
 记录日期：2026-05-11
-最近校准：2026-06-04
+最近校准：2026-06-09
 说明：这是一个滚动排期，会随着开发实时更新。
 
 ## 1. 排期方法
@@ -48,6 +48,9 @@
 - [x] **P0** 点击跳转性能优化：裁剪首页 / 成员 / 活动 pageProps，并关闭批量成员链接自动 prefetch
 - [x] **P0** 点击跳转流畅度优化：移除全站 Lenis RAF，首页动态背景只在首页运行，canvas 降频并降低成员散点渲染负载
 - [x] **P1** 公开站点 title、description、link、canonical fallback 收束为 IGNAI
+- [x] **P1** 首页明暗主题切换、美术资料库接入、Header / Hero / Footer 品牌一致性首轮完成
+- [x] **P1** Post 详情页接入 Member / Event 关系展示，补齐文章内容的社区上下文使用闭环
+- [x] **P1** 首页文章区与 Archive / Category / Tag / Search 文章集合页完成 IGNAI 卡片排布，并保留首页薄数据出口
 - [ ] Join 高并发保护与图床资产迁移预案
 - [ ] featured members / 角色分组展示增强
 - [ ] 成员目录页视觉打磨

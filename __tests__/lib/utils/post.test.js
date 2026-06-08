@@ -17,6 +17,8 @@ jest.mock('@/lib/plugins/wordCount', () => ({
 import {
   getMemberAuthoredPosts,
   getMemberPagePath,
+  resolveRelatedEventsForPost,
+  resolveRelatedMembersForPost,
   resolveAuthorsForPost
 } from '@/lib/utils/post'
 
@@ -176,6 +178,120 @@ describe('getMemberAuthoredPosts', () => {
     expect(getMemberAuthoredPosts(member, posts).map(post => post.id)).toEqual([
       'post-1'
     ])
+  })
+})
+
+describe('resolveRelatedMembersForPost', () => {
+  const members = [
+    {
+      id: 'member-1',
+      title: 'Qianzhu',
+      slug: 'members/qianzhu',
+      role: 'Builder'
+    },
+    {
+      id: 'member-2',
+      title: 'Alice Chen',
+      slug: 'members/alice-chen',
+      role: 'Connector'
+    }
+  ]
+
+  it('keeps resolved authors and adds explicit related member fields', () => {
+    const authors = resolveAuthorsForPost(
+      { author_slug: 'qianzhu' },
+      members
+    )
+    const relatedMembers = resolveRelatedMembersForPost(
+      {
+        member_slugs: 'alice-chen',
+        ext: {
+          members: 'Qianzhu'
+        }
+      },
+      members,
+      authors
+    )
+
+    expect(relatedMembers.map(member => member.id)).toEqual([
+      'member-1',
+      'member-2'
+    ])
+  })
+
+  it('supports object candidates from ext relatedMembers', () => {
+    const relatedMembers = resolveRelatedMembersForPost(
+      {
+        ext: {
+          relatedMembers: [{ slug: 'members/alice-chen' }]
+        }
+      },
+      members
+    )
+
+    expect(relatedMembers.map(member => member.title)).toEqual(['Alice Chen'])
+  })
+})
+
+describe('resolveRelatedEventsForPost', () => {
+  const events = [
+    {
+      id: 'event-1',
+      type: 'Event',
+      status: 'Published',
+      title: 'OPC 投票夜',
+      slug: 'events/opc-vote-night',
+      summary: '一起参与 OPC。',
+      ext: {
+        status: 'ongoing',
+        eventDateText: '2026 / 06 / 04',
+        location: 'Changsha'
+      }
+    },
+    {
+      id: 'event-2',
+      type: 'Event',
+      status: 'Published',
+      title: 'Agent Workshop',
+      slug: 'agent-workshop',
+      ext: {
+        status: 'planning'
+      }
+    }
+  ]
+
+  it('resolves related events from slug fields and ext arrays', () => {
+    const relatedEvents = resolveRelatedEventsForPost(
+      {
+        event_slug: 'opc-vote-night',
+        ext: {
+          event_slugs: ['events/agent-workshop']
+        }
+      },
+      events
+    )
+
+    expect(relatedEvents.map(event => event.title)).toEqual([
+      'OPC 投票夜',
+      'Agent Workshop'
+    ])
+    expect(relatedEvents[0]).toMatchObject({
+      href: '/events/opc-vote-night',
+      status: 'ongoing',
+      dateText: '2026 / 06 / 04',
+      location: 'Changsha'
+    })
+  })
+
+  it('resolves related events by title fallback', () => {
+    const relatedEvents = resolveRelatedEventsForPost(
+      {
+        related_events: 'Agent Workshop'
+      },
+      events
+    )
+
+    expect(relatedEvents.map(event => event.id)).toEqual(['event-2'])
   })
 })
 

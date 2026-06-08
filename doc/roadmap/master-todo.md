@@ -1,7 +1,7 @@
 # IGNAI 社区官网总 TO DO
 
 记录日期：2026-05-11
-最近校准：2026-06-07
+最近校准：2026-06-09
 说明：这是总 TO DO。只要这里还有未完成项，就代表项目仍处于持续优化阶段。
 
 ## A. Member 体系 ✅ 基本完成
@@ -28,6 +28,8 @@
 - [x] Event 支持 Notion 管理 `planning` / `ongoing` / `recap` 状态与活动时间段展示
 - [x] 社区记录 `/records` 与 `/records/[slug]` 前台入口补齐
 - [x] 首页 Field Notes 区块接入社区记录
+- [x] Post 详情页展示关联 Member / Event 的首轮使用闭环
+- [x] 首页文章区与 Archive / Category / Tag / Search 文章集合页改为 IGNAI 卡片排布
 - [ ] 文章、活动、成员之间的关系模型梳理
 - [ ] 内容分流导航更清晰
 - [ ] 组织表达层增强
@@ -36,13 +38,15 @@
 - [x] 移动端基础适配（Hero 隐藏视觉面板、Header 缩小、scatter overflow、活动卡片高度）
 - [x] Hero 区域改为 Notion 驱动（`resolveSection` 模式已就位）
 - [x] 字体加载修复（Cormorant Garamond 已添加到 font.config.js）
-- [ ] 首页 Hero / Header / CTA 品牌一致性继续打磨
+- [x] 首页 Hero / Header / CTA 品牌一致性首轮打磨（明暗主题切换 + 美术资料库接入 + Header/Hero/Footer 变量化）
+- [ ] 首页 Hero / Header / CTA 品牌一致性后续细节继续打磨
 - [ ] 首页后续区块完整性与显隐节奏复查（避免首屏之后出现“页面不完整”的感知）
 - [ ] 成员目录页视觉再打磨
 - [ ] 成员详情页层级再打磨
 - [ ] 首页成员区块表达再增强
 - [ ] 图片与加载体验优化
-- [ ] Footer 改为 IGNAI 暗色主题（当前使用默认浅色样式）
+- [x] Footer 改为 IGNAI 明暗主题变量样式
+- [ ] 二级社区页面（members/events/records/about）明暗主题一致性复查
 
 ## D. 工程与验证
 - [ ] Member 相关测试补齐

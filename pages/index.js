@@ -25,6 +25,33 @@ const Index = props => {
   return <DynamicLayout theme={theme} layoutName='LayoutIndex' {...props} />
 }
 
+function getHomeArticlePosts(posts = [], limit = 4) {
+  return posts.filter(Boolean).slice(0, limit).map(post => ({
+    id: post.id ?? null,
+    title: post.title ?? null,
+    slug: post.slug ?? null,
+    href: post.href ?? null,
+    summary: post.summary ?? null,
+    category: post.category ?? null,
+    tags: Array.isArray(post.tags) ? post.tags.filter(Boolean) : [],
+    publishDay: post.publishDay ?? null,
+    publishDate: post.publishDate ?? null,
+    lastEditedDate: post.lastEditedDate ?? null,
+    pageCover: post.pageCover ?? null,
+    pageCoverThumbnail: post.pageCoverThumbnail ?? null,
+    author: post.author ?? null,
+    authors: Array.isArray(post.authors)
+      ? post.authors.map(author => ({
+          id: author.id ?? null,
+          title: author.title ?? null,
+          slug: author.slug ?? null,
+          href: author.href ?? null,
+          role: author.role ?? null
+        }))
+      : []
+  }))
+}
+
 /**
  * SSG 获取数据
  * @returns
@@ -99,6 +126,10 @@ export async function getStaticProps(req) {
       )
     )
   }
+  props.latestPosts = getHomeArticlePosts(
+    props.posts,
+    siteConfig('IGNAI_ARTICLES_HOME_COUNT', 4, props?.NOTION_CONFIG)
+  )
 
   const isBuildLifecycle = ['build', 'export'].includes(
     process.env.npm_lifecycle_event
@@ -127,7 +158,6 @@ export async function getStaticProps(req) {
 
   delete props.allPages
   delete props.posts
-  delete props.latestPosts
   delete props.allNavPages
   delete props.notice
   delete props.customMenu

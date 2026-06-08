@@ -54,5 +54,10 @@ Prefer a generic data contract and light route support first. Keep custom commun
 
 ## Next Shared Candidates
 - `Event` type
-- multi-author post metadata
-- related members / related events
+- multi-author post metadata beyond the IGNAI theme
+- upstream-friendly related members / related events extraction
+
+## Current Local Product Additions
+- IGNAI post detail pages now resolve `author` / `author_slug` into visible member links.
+- IGNAI post detail pages can display related members from `member_slugs` or `ext.member_slugs`.
+- IGNAI post detail pages can display related events from `event_slugs` or `ext.event_slugs`.

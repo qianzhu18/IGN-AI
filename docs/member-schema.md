@@ -34,6 +34,13 @@ All 24 fields verified present in Notion database via `yarn notion:members:smoke
 - `author` - rich_text
 - `author_slug` - rich_text
 
+## Post Community Relations (recommended next Notion fields)
+- `member_slugs` - rich_text
+- `event_slugs` - rich_text
+
+The frontend also reads `ext.member_slugs` and `ext.event_slugs`, so operations can use
+the existing `ext` JSON field before adding dedicated Notion columns.
+
 ## Event Fields (pre-created in Notion)
 - `event_start` - date
 - `event_end` - date

@@ -4,6 +4,8 @@
  */
 import SmartLink from '@/components/SmartLink'
 import { siteConfig } from '@/lib/config'
+import { useGlobal } from '@/lib/global'
+import { Moon, Sun } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -56,7 +58,7 @@ function DesktopNavItem({ item, onIntent }) {
         prefetch={false}
         onMouseEnter={() => onIntent(item.href)}
         onTouchStart={() => onIntent(item.href)}
-        className='text-sm text-white/68 hover:text-white transition duration-200'>
+        className='ignai-nav-link text-sm transition duration-200'>
         {item.label}
       </SmartLink>
     )
@@ -67,15 +69,14 @@ function DesktopNavItem({ item, onIntent }) {
       <button
         type='button'
         onClick={() => setOpen(v => !v)}
-        className='flex items-center gap-1 text-sm text-white/68 hover:text-white transition duration-200'>
+        className='ignai-nav-link flex items-center gap-1 text-sm transition duration-200'>
         {item.label}
         <svg className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`} viewBox='0 0 12 12' fill='none'>
           <path d='M2 4l4 4 4-4' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
         </svg>
       </button>
       {open && (
-        <div className='absolute left-0 top-full mt-2 min-w-[160px] rounded-lg py-2 z-50'
-          style={{ background: 'rgba(13,14,20,0.97)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className='ignai-nav-dropdown absolute left-0 top-full z-50 mt-2 min-w-[160px] rounded-lg py-2'>
           {item.subMenus.map((sub, i) => (
             <SmartLink
               key={i}
@@ -84,7 +85,7 @@ function DesktopNavItem({ item, onIntent }) {
               onMouseEnter={() => onIntent(sub.href)}
               onTouchStart={() => onIntent(sub.href)}
               onClick={() => setOpen(false)}
-              className='block px-4 py-2 text-sm text-white/68 hover:text-white hover:bg-white/4 transition'>
+              className='ignai-nav-dropdown-link block px-4 py-2 text-sm transition'>
               {sub.label}
             </SmartLink>
           ))}
@@ -96,6 +97,7 @@ function DesktopNavItem({ item, onIntent }) {
 
 export const Header = props => {
   const router = useRouter()
+  const { isDarkMode, toggleDarkMode } = useGlobal()
   const fallbackNavItems = CONFIG.IGNAI_NAV_ITEMS || []
   const useNotionMenu = siteConfig(
     'IGNAI_NAV_USE_NOTION_MENU',
@@ -141,16 +143,15 @@ export const Header = props => {
                 onClick={() => {
                   void router.push('/')
                 }}>
-                <span aria-hidden='true' className='ignai-header-mark-frame'>
-                  <span className='ignai-header-flame-shell'>
-                    <Image
-                      src='/brand/ignai-logo-transparent.png'
-                      alt=''
-                      width={148}
-                      height={30}
-                      className='ignai-header-flame-image'
-                    />
-                  </span>
+                <span aria-hidden='true' className='ignai-header-logo-frame'>
+                  <Image
+                    src='/brand/ignai/torch-icon-transparent.png'
+                    alt=''
+                    width={25}
+                    height={96}
+                    priority
+                    className='ignai-header-logo-image'
+                  />
                 </span>
                 <div className='flex min-w-0 flex-col justify-center'>
                   <span className='ignai-header-wordmark'>
@@ -172,17 +173,26 @@ export const Header = props => {
                   onIntent={prefetchOnIntent}
                 />
               ))}
+              <button
+                type='button'
+                onClick={toggleDarkMode}
+                className='ignai-theme-toggle'
+                aria-label={isDarkMode ? '切换到浅色模式' : '切换到深色模式'}
+                aria-pressed={isDarkMode}
+                title={isDarkMode ? '切换到浅色模式' : '切换到深色模式'}
+              >
+                {isDarkMode ? (
+                  <Sun className='h-4 w-4' aria-hidden='true' />
+                ) : (
+                  <Moon className='h-4 w-4' aria-hidden='true' />
+                )}
+              </button>
               <SmartLink
                 href='/join'
                 prefetch={false}
                 onMouseEnter={() => prefetchOnIntent('/join')}
                 onTouchStart={() => prefetchOnIntent('/join')}
-                className='ml-4 inline-flex items-center px-5 py-2 rounded-lg text-sm font-medium text-white transition duration-200'
-                style={{
-                  border: '1px solid rgba(188, 124, 76, 0.34)',
-                  background: 'linear-gradient(135deg, rgba(126,79,49,0.94) 0%, rgba(168,104,64,0.92) 54%, rgba(110,70,45,0.95) 100%)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,240,224,0.08), 0 12px 34px rgba(69,36,16,0.22)'
-                }}>
+                className='ignai-header-join inline-flex items-center rounded-lg px-5 py-2 text-sm font-medium transition duration-200'>
                 加入社区
               </SmartLink>
             </div>
@@ -192,11 +202,6 @@ export const Header = props => {
               type='button'
               onClick={() => setShowMenu(!showMenu)}
               className='ignai-mobile-toggle absolute right-4 top-1/2 -translate-y-1/2 rounded-2xl p-3 md:hidden'
-              style={{
-                border: '1px solid rgba(171, 111, 71, 0.34)',
-                background: 'linear-gradient(180deg, rgba(30,19,15,0.82) 0%, rgba(13,13,20,0.92) 100%)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.04), 0 16px 38px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,122,24,0.05)'
-              }}
               aria-label={showMenu ? '关闭菜单' : '打开菜单'}
               aria-expanded={showMenu}>
               <svg
@@ -210,13 +215,13 @@ export const Header = props => {
                   <>
                     <path
                       d='M6 6L16 16'
-                      stroke='rgba(255, 239, 222, 0.94)'
+                      stroke='currentColor'
                       strokeWidth='1.9'
                       strokeLinecap='round'
                     />
                     <path
                       d='M16 6L6 16'
-                      stroke='rgba(255, 239, 222, 0.94)'
+                      stroke='currentColor'
                       strokeWidth='1.9'
                       strokeLinecap='round'
                     />
@@ -225,19 +230,19 @@ export const Header = props => {
                   <>
                     <path
                       d='M4.5 6.5H17.5'
-                      stroke='rgba(255, 236, 214, 0.94)'
+                      stroke='currentColor'
                       strokeWidth='1.9'
                       strokeLinecap='round'
                     />
                     <path
                       d='M7 11H17.5'
-                      stroke='rgba(255, 236, 214, 0.88)'
+                      stroke='currentColor'
                       strokeWidth='1.9'
                       strokeLinecap='round'
                     />
                     <path
                       d='M10 15.5H17.5'
-                      stroke='rgba(255, 236, 214, 0.82)'
+                      stroke='currentColor'
                       strokeWidth='1.9'
                       strokeLinecap='round'
                     />
@@ -252,13 +257,6 @@ export const Header = props => {
                 aria-hidden='true'
                 tabIndex={-1}
                 className='ignai-mobile-backdrop md:hidden'
-                style={{
-                  position: 'fixed',
-                  inset: 0,
-                  zIndex: 39,
-                  border: 0,
-                  background: 'linear-gradient(180deg, rgba(7,8,12,0.16) 0%, rgba(7,8,12,0.42) 100%)'
-                }}
                 onClick={() => setShowMenu(false)}
               />
             )}
@@ -268,11 +266,6 @@ export const Header = props => {
               className={`absolute right-4 top-full z-50 w-full max-w-[calc(100vw-32px)] rounded-[1.5rem] py-2 md:hidden ignai-mobile-menu ${showMenu ? 'ignai-mobile-menu--visible' : 'ignai-mobile-menu--hidden'}`}
               aria-hidden={!showMenu}
               style={{
-                background: 'rgba(13,14,20,0.97)',
-                backdropFilter: 'blur(16px)',
-                WebkitBackdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                boxShadow: '0 24px 64px rgba(0,0,0,0.5)',
                 opacity: showMenu ? 1 : 0,
                 visibility: showMenu ? 'visible' : 'hidden',
                 pointerEvents: showMenu ? 'auto' : 'none',
@@ -284,7 +277,7 @@ export const Header = props => {
                   <span className='ignai-mobile-menu-title'>IGNAI</span>
                   <span className='ignai-mobile-menu-title-glow'>Ignite before AGI.</span>
                 </div>
-                <p className='mt-3 text-sm leading-6 text-white/64'>
+                <p className='ignai-mobile-menu-copy mt-3 text-sm leading-6'>
                   连接本地、面向全球，把真实行动者组织在一起。
                 </p>
               </div>
@@ -296,7 +289,7 @@ export const Header = props => {
                       href={item.href}
                       prefetch={false}
                       onTouchStart={() => prefetchOnIntent(item.href)}
-                      className='ignai-mobile-menu-link block rounded-xl px-5 py-3 text-sm text-white/78 transition-colors'>
+                      className='ignai-mobile-menu-link block rounded-xl px-5 py-3 text-sm transition-colors'>
                       {item.label}
                     </SmartLink>
                     {item.subMenus?.map((sub, si) => (
@@ -305,24 +298,34 @@ export const Header = props => {
                         href={sub.href}
                         prefetch={false}
                         onTouchStart={() => prefetchOnIntent(sub.href)}
-                        className='ignai-mobile-menu-sub-link block rounded-xl px-8 py-2 text-[13px] text-white/46 transition-colors'>
+                        className='ignai-mobile-menu-sub-link block rounded-xl px-8 py-2 text-[13px] transition-colors'>
                         {sub.label}
                       </SmartLink>
                     ))}
                   </li>
                 ))}
-                <li className='ignai-mobile-menu-divider mx-5 my-2 border-t border-white/[0.06]' />
+                <li className='ignai-mobile-menu-divider mx-5 my-2 border-t' />
+                <li>
+                  <button
+                    type='button'
+                    onClick={toggleDarkMode}
+                    className='ignai-mobile-theme-toggle mx-5 mb-2 flex w-[calc(100%-2.5rem)] items-center justify-between rounded-xl px-5 py-3 text-sm font-medium transition-colors'
+                    aria-pressed={isDarkMode}
+                  >
+                    <span>{isDarkMode ? '浅色模式' : '深色模式'}</span>
+                    {isDarkMode ? (
+                      <Sun className='h-4 w-4' aria-hidden='true' />
+                    ) : (
+                      <Moon className='h-4 w-4' aria-hidden='true' />
+                    )}
+                  </button>
+                </li>
                 <li>
                   <SmartLink
                     href='/join'
                     prefetch={false}
                     onTouchStart={() => prefetchOnIntent('/join')}
-                    className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium text-white transition-colors'
-                    style={{
-                      border: '1px solid rgba(188, 124, 76, 0.34)',
-                      background: 'linear-gradient(135deg, rgba(126,79,49,0.96) 0%, rgba(168,104,64,0.94) 54%, rgba(110,70,45,0.96) 100%)',
-                      boxShadow: 'inset 0 1px 0 rgba(255,240,224,0.08), 0 12px 34px rgba(69,36,16,0.22)'
-                    }}>
+                    className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium transition-colors'>
                     加入社区
                   </SmartLink>
                 </li>

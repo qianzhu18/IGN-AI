@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import { JoinApplicationForm } from "@/src/components/forms/JoinApplicationForm";
+import { JoinContactCard } from "@/src/components/forms/JoinContactCard";
 import { getJoinExperienceMode } from "@/lib/join";
 import { siteLinks } from "@/src/content/links";
 
@@ -103,6 +104,9 @@ export default function JoinPage({
               contactEmailHref={siteLinks.contactEmailHref}
               externalFormUrl={externalFormUrl}
             />
+            <div className="mt-6">
+              <JoinContactCard />
+            </div>
           </div>
         </div>
       </section>
