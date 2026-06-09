@@ -153,7 +153,8 @@
 - 在 `.env.example` 中给出 `NEXT_PUBLIC_LINK=https://www.yanglaishe.cn` 示例，避免后续部署忘记显式配置。
 - 首页轻量 `latestPosts` 补回 RSS 必需的 `status` / `password` 字段，避免构建期 RSS 因缺少发布状态变成空 feed。
 - `generateRss` 改为使用克隆文章对象渲染 Notion 内容，避免把 RSS 用的 `blockMap` 反向挂回首页 props，造成首页 page data 膨胀。
+- `/search` 前端搜索页删除完整 `allPages`，并只保留文章卡片和浏览器搜索需要的轻量字段，消除搜索页 page data size 警告。
 
 ### 保留事项
 - `ignai.community` 还不是当前 Vercel 部署别名，后续完成 DNS / Vercel 绑定后再切换正式 canonical。
-- `/search` 与旧模板文章详情仍有 page data size 警告，需要后续单独瘦身。
+- 旧模板文章详情 `article/example-1` 仍有 page data size 警告，需要后续通过隐藏模板文章或优化文章详情 props 单独处理。
