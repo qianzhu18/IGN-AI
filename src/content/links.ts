@@ -1,5 +1,5 @@
 const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://ignai.community";
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://www.yanglaishe.cn";
 const joinUrl =
   process.env.NEXT_PUBLIC_COMMUNITY_JOIN_URL?.trim() || "/join";
 const joinFormUrl = process.env.NEXT_PUBLIC_JOIN_FORM_URL?.trim() || "";

@@ -1,7 +1,7 @@
 import BLOG from '@/blog.config'
 
 export function getServerSideProps({ res }) {
-  const siteUrl = (BLOG.LINK || 'https://ignai.community').replace(/\/+$/, '')
+  const siteUrl = (BLOG.LINK || 'https://www.yanglaishe.cn').replace(/\/+$/, '')
   const body = [
     'User-agent: *',
     'Allow: /',

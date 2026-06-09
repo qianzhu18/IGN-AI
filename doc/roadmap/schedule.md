@@ -57,6 +57,7 @@
 - [ ] 首页成员区块从卡片升级为组织表达
 - [ ] 活动与成员关系预埋
 - [ ] 评论系统启用（Giscus 或 Waline）
+- [x] 当前生产域（yanglaishe.cn）与站点默认 URL / SEO 输出对齐
 - [ ] 域名绑定（ignai.community）
 - [x] 梳理 NotionNext 社区基础设施 PR Stack 与面试 / 简历叙事
 - [x] 拆架构型上游 PR：Content Type Registry（#4170）

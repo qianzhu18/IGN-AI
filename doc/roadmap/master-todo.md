@@ -103,7 +103,8 @@
 - [x] **P0 / 9.5** SEO 基础输出修复：`robots.txt`、`sitemap.xml`、RSS、canonical 不出现 `undefined`，并收录成员 / 活动 / 记录 / 加入 / 关于页
 - [x] **P0 / 9.2** 公开危险接口收口：`/api/cache` 必须鉴权或关闭公开访问
 - [ ] **P0 / 9.0** 生产环境变量核对：`OPS_ACCESS_PASSWORD`、图床、Join 数据落点、正式域名、Notion Token
-- [ ] **P1 / 8.2** 域名绑定（ignai.community）和 Vercel 环境中的 `NEXT_PUBLIC_LINK` 对齐
+- [x] **P1 / 8.2** 当前生产域（yanglaishe.cn）与 `NEXT_PUBLIC_LINK` / 站点默认 URL 对齐
+- [ ] **P1 / 8.2** 域名绑定（ignai.community）接入 Vercel，并在完成后切换正式 canonical
 - [ ] 国内访问优化
 - [ ] **P1 / 8.0** 上线检查清单通过：构建、核心页面、Join 提交、后台访问、SEO 输出、移动端 smoke
 - [ ] **P1 / 8.0** Vercel 新部署完成后线上 smoke：确认 `/members` 显示 3 位 Published 成员并包含「许全均」

@@ -30,6 +30,8 @@ function getHomeArticlePosts(posts = [], limit = 4) {
     id: post.id ?? null,
     title: post.title ?? null,
     slug: post.slug ?? null,
+    status: post.status ?? null,
+    password: post.password ?? null,
     href: post.href ?? null,
     summary: post.summary ?? null,
     category: post.category ?? null,

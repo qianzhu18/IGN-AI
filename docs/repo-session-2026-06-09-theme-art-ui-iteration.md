@@ -143,3 +143,17 @@
 - 首页后续区块的显隐节奏和完整性感知还需要继续 QA。
 - 成员目录页、成员详情页、首页成员区块仍在设计体验待办中。
 - 后续如果要合并到主线，需要单独检查资产体积、SEO 图标输出和线上 smoke。
+
+## 9. 生产域名对齐补充（2026-06-09）
+
+### 本次补充
+- 将 `blog.config.js` 的默认 `LINK` 从未绑定成功的 `https://ignai.community` 收束为当前 Vercel 生产别名 `https://www.yanglaishe.cn`。
+- 将 `src/content/links.ts` 的默认站点 URL 同步为 `https://www.yanglaishe.cn`。
+- 将 `pages/robots.txt.js` 的兜底 Sitemap 域名同步为 `https://www.yanglaishe.cn`。
+- 在 `.env.example` 中给出 `NEXT_PUBLIC_LINK=https://www.yanglaishe.cn` 示例，避免后续部署忘记显式配置。
+- 首页轻量 `latestPosts` 补回 RSS 必需的 `status` / `password` 字段，避免构建期 RSS 因缺少发布状态变成空 feed。
+- `generateRss` 改为使用克隆文章对象渲染 Notion 内容，避免把 RSS 用的 `blockMap` 反向挂回首页 props，造成首页 page data 膨胀。
+
+### 保留事项
+- `ignai.community` 还不是当前 Vercel 部署别名，后续完成 DNS / Vercel 绑定后再切换正式 canonical。
+- `/search` 与旧模板文章详情仍有 page data size 警告，需要后续单独瘦身。

@@ -21,7 +21,7 @@ const BLOG = {
   DESCRIPTION: process.env.NEXT_PUBLIC_DESCRIPTION || '长沙 AI 社区 — 连接创造者，点燃可能性', // 站点描述
   AUTHOR: process.env.NEXT_PUBLIC_AUTHOR || 'IGNAI', // 社区名称
   BIO: process.env.NEXT_PUBLIC_BIO || '长沙 AI 社区 — 连接创造者，点燃可能性', // 社区简介
-  LINK: process.env.NEXT_PUBLIC_LINK || 'https://ignai.community', // 网站地址
+  LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.yanglaishe.cn', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'IGNAI, AI社区, 长沙, 人工智能, 科技社区', // 网站关键词
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/brand/ignai/favicon-512.png', // IGNAI favicon
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
