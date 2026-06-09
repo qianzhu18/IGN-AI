@@ -56,7 +56,13 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
             </p>
           </div>
           <div className='flex gap-4'>
-            <SmartLink href='/events' className='ignai-cta-primary'>
+            <SmartLink
+              href='/events'
+              className='ignai-cta-primary'
+              data-analytics-event='click_view_events'
+              data-analytics-label='home_events_all'
+              data-analytics-prop-placement='home_events'
+            >
               查看全部活动
             </SmartLink>
           </div>
@@ -69,6 +75,11 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
                 href={getEventHref(event)}
                 target={isExternalEvent(event) ? '_blank' : undefined}
                 rel={isExternalEvent(event) ? 'noopener noreferrer' : undefined}
+                data-analytics-event='click_event_card'
+                data-analytics-label={event.title}
+                data-analytics-prop-placement='home_events'
+                data-analytics-prop-status={event.status}
+                data-analytics-prop-kind={event.kind}
                 className='group ignai-unified-card ignai-event-card flex h-full flex-col overflow-hidden rounded-lg'
               >
                 <div className='relative overflow-hidden'>

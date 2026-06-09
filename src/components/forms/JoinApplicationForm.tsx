@@ -49,6 +49,14 @@ const joinEmailHref = (contactEmailHref: string) => {
     : `${contactEmailHref}?subject=${subject}`;
 };
 
+function captureJoinEvent(eventName: string, properties: Record<string, unknown> = {}) {
+  if (typeof window === "undefined") return;
+  const capture = (window as unknown as {
+    ignaiAnalyticsCapture?: (eventName: string, properties?: Record<string, unknown>) => void;
+  }).ignaiAnalyticsCapture;
+  capture?.(eventName, properties);
+}
+
 function JoinFallbackPanel({
   contactEmailHref,
   externalFormUrl,
@@ -94,6 +102,10 @@ function JoinFallbackPanel({
           href={primaryHref}
           target={externalFormUrl ? "_blank" : undefined}
           rel={externalFormUrl ? "noreferrer" : undefined}
+          data-analytics-event="click_join_community"
+          data-analytics-label={externalFormUrl ? "join_external_form" : "join_email_primary"}
+          data-analytics-prop-placement="join_fallback"
+          data-analytics-prop-mode={experienceMode}
           className="inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5"
         >
           <span>{primaryLabel}</span>
@@ -102,6 +114,10 @@ function JoinFallbackPanel({
         {externalFormUrl ? (
           <a
             href={joinEmailHref(contactEmailHref)}
+            data-analytics-event="click_join_community"
+            data-analytics-label="join_email_backup"
+            data-analytics-prop-placement="join_fallback"
+            data-analytics-prop-mode={experienceMode}
             className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm text-white/70 transition hover:border-white/18 hover:text-white"
           >
             <span>Email 备用联系</span>
@@ -256,6 +272,11 @@ export function JoinApplicationForm({
     let avatarUrl = avatar.uploadedUrl || String(formData.get("avatarUrl") || "");
 
     setState({ status: "submitting", message: "正在提交..." });
+    captureJoinEvent("submit_join_application", {
+      mode: experienceMode,
+      interestsCount: interests.length,
+      hasAvatar: Boolean(selectedAvatarFile || avatarUrl),
+    });
 
     try {
       if (selectedAvatarFile && !avatarUrl) {
@@ -292,11 +313,25 @@ export function JoinApplicationForm({
         setAvatar(initialAvatarState);
       }
 
+      captureJoinEvent("join_application_result", {
+        mode: experienceMode,
+        status: response.ok ? "success" : "error",
+        interestsCount: interests.length,
+        hasAvatar: Boolean(avatarUrl),
+      });
+
       setState({
         status: response.ok ? "success" : "error",
         message: payload.message || (response.ok ? "提交成功。" : "提交失败。"),
       });
     } catch (error) {
+      captureJoinEvent("join_application_result", {
+        mode: experienceMode,
+        status: "error",
+        errorType: error instanceof Error ? error.name : "unknown",
+        interestsCount: interests.length,
+        hasAvatar: Boolean(avatarUrl),
+      });
       setState({
         status: "error",
         message: error instanceof Error ? error.message : "网络异常，请稍后再试或通过 Email 联系。",
@@ -531,6 +566,9 @@ export function JoinApplicationForm({
         <button
           type="submit"
           disabled={state.status === "submitting"}
+          data-analytics-event="click_join_submit"
+          data-analytics-label="join_form_submit"
+          data-analytics-prop-mode={experienceMode}
           className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-7 py-3.5 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[132px]"
         >
           {state.status === "submitting"

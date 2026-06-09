@@ -83,6 +83,7 @@
     "notion-client": "7.10.0",
     "notion-utils": "7.10.0",
     "p-limit": "^7.3.0",
+    "posthog-js": "^1.383.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-facebook": "^8.1.4",

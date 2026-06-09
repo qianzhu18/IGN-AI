@@ -707,10 +707,22 @@ function RigHeroSection() {
           </Reveal>
           <Reveal delay={0.2}>
             <div className='rig-hero-actions'>
-              <SmartLink href={cta1Url} className='rig-btn rig-btn--dark'>
+              <SmartLink
+                href={cta1Url}
+                className='rig-btn rig-btn--dark'
+                data-analytics-event='click_join_community'
+                data-analytics-label='home_hero_primary'
+                data-analytics-prop-placement='home_hero'
+              >
                 {cta1Text}
               </SmartLink>
-              <SmartLink href={cta2Url} className='rig-btn rig-btn--outline'>
+              <SmartLink
+                href={cta2Url}
+                className='rig-btn rig-btn--outline'
+                data-analytics-event='click_view_events'
+                data-analytics-label='home_hero_secondary'
+                data-analytics-prop-placement='home_hero'
+              >
                 {cta2Text}
               </SmartLink>
             </div>
@@ -960,7 +972,13 @@ function RigCTASection() {
         <p className='rig-cta-sub'>{sub}</p>
       </Reveal>
       <Reveal delay={0.2}>
-        <SmartLink href={btnUrl} className='rig-btn rig-btn--heat'>
+        <SmartLink
+          href={btnUrl}
+          className='rig-btn rig-btn--heat'
+          data-analytics-event='click_join_community'
+          data-analytics-label='home_bottom_cta'
+          data-analytics-prop-placement='home_bottom_cta'
+        >
           {btn}
         </SmartLink>
       </Reveal>

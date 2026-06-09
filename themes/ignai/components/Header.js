@@ -192,6 +192,9 @@ export const Header = props => {
                 prefetch={false}
                 onMouseEnter={() => prefetchOnIntent('/join')}
                 onTouchStart={() => prefetchOnIntent('/join')}
+                data-analytics-event='click_join_community'
+                data-analytics-label='header_desktop_join'
+                data-analytics-prop-placement='header_desktop'
                 className='ignai-header-join inline-flex items-center rounded-lg px-5 py-2 text-sm font-medium transition duration-200'>
                 加入社区
               </SmartLink>
@@ -325,6 +328,9 @@ export const Header = props => {
                     href='/join'
                     prefetch={false}
                     onTouchStart={() => prefetchOnIntent('/join')}
+                    data-analytics-event='click_join_community'
+                    data-analytics-label='header_mobile_join'
+                    data-analytics-prop-placement='header_mobile'
                     className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium transition-colors'>
                     加入社区
                   </SmartLink>

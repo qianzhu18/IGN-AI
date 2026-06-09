@@ -186,3 +186,32 @@
 - Playwright light mode 验证首页、活动页、记录页的桌面和移动端均无水平溢出：`overflow=0`。
 - 新截图保存于 `/tmp/ignai-light-ui-qa-final/`，包括 `home-mobile-light.png`、`events-mobile-light.png`、`records-mobile-light.png` 等。
 - `yarn build` 通过；仍保留旧模板文章 `article/example-1` 的 page data size 警告，和本轮 UI 样式无关。
+
+## 12. 数据埋点与运营分析补充（2026-06-09）
+
+### 本次补充
+- 接入 PostHog 客户端 SDK，新增全站 `ProductAnalytics` 组件，用于页面访问、点击埋点、后续 Feature Flag / A-B Testing。
+- 将主方案从「Clarity + PostHog」校准为「自托管 PostHog + Uptime Kuma + GlitchTip」，Clarity 仅保留为短期热力图辅助选项。
+- 复用现有 Clarity 配置入口 `NEXT_PUBLIC_CLARITY_ID`，并在 `.env.example` 中补齐自托管 PostHog / GlitchTip 上线变量。
+- 为首页首屏 CTA、Header 加入社区、首页活动 / 文章 / 记录、集合页卡片、加入社区表单和微信二维码补充业务事件。
+- 加入表单提交只记录模式、兴趣数量、是否带头像、成功 / 失败状态，不采集姓名、联系方式等敏感信息。
+- 新增 `/api/health` 给 Uptime Kuma 作为应用健康检查入口。
+- 新增 `docs/observability-stack.zh-CN.md`，记录主方案分工、Vercel 环境变量、首批事件、看板建议和 A/B 测试入口。
+
+### 首批事件
+- `click_join_community`
+- `click_join_submit`
+- `submit_join_application`
+- `join_application_result`
+- `click_wechat_qr`
+- `click_view_events`
+- `click_event_card`
+- `click_view_articles`
+- `click_article_card`
+- `click_view_records`
+- `click_record_card`
+
+### 保留事项
+- 需要部署自托管 PostHog、Uptime Kuma、GlitchTip，并把 PostHog key / host 配置到 Vercel。
+- GlitchTip 本轮仅预留 `NEXT_PUBLIC_GLITCHTIP_DSN` 和主方案文档，待确定实例域名、项目 DSN、source map 策略后再接 Sentry-compatible SDK。
+- A/B 测试还未接具体 feature flag，建议第一组实验从首页加入社区 CTA 文案或二维码展示方式开始。

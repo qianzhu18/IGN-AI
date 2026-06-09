@@ -135,6 +135,7 @@ const ExternalPlugin = props => {
 
   const UMAMI_HOST = siteConfig('UMAMI_HOST', null, NOTION_CONFIG)
   const UMAMI_ID = siteConfig('UMAMI_ID', null, NOTION_CONFIG)
+  const POSTHOG_KEY = siteConfig('POSTHOG_KEY', '', NOTION_CONFIG)
 
   // 自定义样式css和js引入
   if (isBrowser) {
@@ -203,6 +204,7 @@ const ExternalPlugin = props => {
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
+      {POSTHOG_KEY && <ProductAnalytics {...props} />}
       {ANALYTICS_ACKEE_TRACKER && <Ackee />}
       {ANALYTICS_GOOGLE_ID && <Gtag />}
       {ANALYTICS_VERCEL && <Analytics />}
@@ -525,6 +527,9 @@ const LA51 = dynamic(() => import('@/components/LA51'), {
   ssr: false
 })
 const TianliGPT = dynamic(() => import('@/components/TianliGPT'), {
+  ssr: false
+})
+const ProductAnalytics = dynamic(() => import('@/components/ProductAnalytics'), {
   ssr: false
 })
 

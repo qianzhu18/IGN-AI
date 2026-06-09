@@ -55,6 +55,11 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
                 prefetch={false}
                 target={isExternalEvent(event) ? '_blank' : undefined}
                 rel={isExternalEvent(event) ? 'noopener noreferrer' : undefined}
+                data-analytics-event='click_event_card'
+                data-analytics-label={event.title}
+                data-analytics-prop-placement='events_index'
+                data-analytics-prop-status={event.status}
+                data-analytics-prop-kind={event.kind}
                 className='group ignai-themed-card grid overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-white/15 hover:bg-white/[0.04] no-underline sm:grid-cols-[180px_1fr]'
               >
                 <div className='relative aspect-[16/9] overflow-hidden bg-white/[0.03] sm:aspect-auto'>

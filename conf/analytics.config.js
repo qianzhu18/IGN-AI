@@ -33,6 +33,19 @@ module.exports = {
   // 微软 Clarity 站点分析
   CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID || null, // 只需要复制Clarity脚本中的ID部分，ID是一个十位的英文数字组合
 
+  // PostHog 产品分析 / 事件埋点 / Feature Flag / A-B Testing
+  POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY || '',
+  POSTHOG_HOST:
+    process.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+  POSTHOG_UI_HOST:
+    process.env.NEXT_PUBLIC_POSTHOG_UI_HOST || 'https://us.posthog.com',
+  POSTHOG_CAPTURE_PAGEVIEW:
+    process.env.NEXT_PUBLIC_POSTHOG_CAPTURE_PAGEVIEW !== 'false',
+  POSTHOG_AUTOCAPTURE:
+    process.env.NEXT_PUBLIC_POSTHOG_AUTOCAPTURE !== 'false',
+  POSTHOG_SESSION_RECORDING:
+    process.env.NEXT_PUBLIC_POSTHOG_SESSION_RECORDING === 'true',
+
   UMAMI_HOST: process.env.NEXT_PUBLIC_UMAMI_HOST || 'https://cloud.umami.is/script.js', // umami的服务地址
   UMAMI_ID: process.env.NEXT_PUBLIC_UMAMI_ID || '', // umami的id
 

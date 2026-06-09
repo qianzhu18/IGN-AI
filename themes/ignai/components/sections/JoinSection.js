@@ -69,10 +69,22 @@ export function JoinSection({ notionConfig }) {
               </div>
 
               <div className='mt-10 flex flex-col gap-4 sm:flex-row'>
-                <SmartLink href='/join' className='ignai-cta-primary'>
+                <SmartLink
+                  href='/join'
+                  className='ignai-cta-primary'
+                  data-analytics-event='click_join_community'
+                  data-analytics-label='join_section_primary'
+                  data-analytics-prop-placement='join_section'
+                >
                   加入社区
                 </SmartLink>
-                <SmartLink href='/archive' className='ignai-cta-secondary'>
+                <SmartLink
+                  href='/archive'
+                  className='ignai-cta-secondary'
+                  data-analytics-event='click_view_articles'
+                  data-analytics-label='join_section_articles'
+                  data-analytics-prop-placement='join_section'
+                >
                   查看社区内容
                 </SmartLink>
               </div>
@@ -94,7 +106,12 @@ export function JoinSection({ notionConfig }) {
                     </p>
                   </div>
 
-                  <div className='rounded-[24px] border border-white/10 bg-[#f7f7f4] p-3 shadow-[0_22px_56px_rgba(0,0,0,0.24)] sm:p-4'>
+                  <div
+                    className='rounded-[24px] border border-white/10 bg-[#f7f7f4] p-3 shadow-[0_22px_56px_rgba(0,0,0,0.24)] sm:p-4'
+                    data-analytics-event='click_wechat_qr'
+                    data-analytics-label='join_section_qianzhu_wechat'
+                    data-analytics-prop-placement='join_section'
+                  >
                     <Image
                       src='/contact/qianzhu-wechat-qr.jpg'
                       alt='扫码添加千逐微信，联系 IGNAI 社区'

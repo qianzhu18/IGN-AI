@@ -49,6 +49,10 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
           {featuredRecord && (
             <Link
               href={`/records/${featuredRecord.slug}`}
+              data-analytics-event='click_record_card'
+              data-analytics-label={featuredRecord.title}
+              data-analytics-prop-placement='records_index_featured'
+              data-analytics-prop-type={featuredRecord.type}
               className='group ignai-themed-card mt-14 grid overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] no-underline transition hover:border-[#7cc8ff]/24 hover:bg-white/[0.055] lg:grid-cols-[1.1fr_0.9fr]'
             >
               <div className='p-6 sm:p-8 lg:p-10'>
@@ -104,6 +108,10 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
               <Link
                 key={record.slug}
                 href={`/records/${record.slug}`}
+                data-analytics-event='click_record_card'
+                data-analytics-label={record.title}
+                data-analytics-prop-placement='records_index'
+                data-analytics-prop-type={record.type}
                 className='group ignai-themed-card rounded-lg border border-white/[0.07] bg-white/[0.025] p-6 no-underline transition hover:border-white/15 hover:bg-white/[0.045]'
               >
                 <div className='flex items-center justify-between gap-4'>

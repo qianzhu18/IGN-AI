@@ -49,6 +49,10 @@ export function PostArticleCard({ post, featured = false }) {
   return (
     <SmartLink
       href={getPostHref(post)}
+      data-analytics-event='click_article_card'
+      data-analytics-label={compactText(post?.title, 'Untitled article')}
+      data-analytics-prop-featured={featured ? 'true' : 'false'}
+      data-analytics-prop-category={getPostCategory(post)}
       className={`ignai-article-card ${featured ? 'ignai-article-card--featured' : ''}`}
     >
       <div className='ignai-article-cover'>
@@ -105,7 +109,13 @@ export function HomeArticlesSection({ posts = [] }) {
               承接成员观点、活动复盘、工具实践和长期写作，让内容不只是发布，而是成为社区记忆。
             </p>
           </div>
-          <SmartLink href='/archive' className='ignai-cta-secondary'>
+          <SmartLink
+            href='/archive'
+            className='ignai-cta-secondary'
+            data-analytics-event='click_view_articles'
+            data-analytics-label='home_articles_all'
+            data-analytics-prop-placement='home_articles'
+          >
             查看全部文章
           </SmartLink>
         </div>

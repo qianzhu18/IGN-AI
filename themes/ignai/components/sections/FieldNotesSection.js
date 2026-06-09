@@ -29,7 +29,13 @@ export function FieldNotesSection() {
               把活动、项目、思考和成员故事沉淀成可以被继续阅读和传播的内容资产。
             </p>
           </div>
-          <SmartLink href='/records' className='ignai-cta-secondary'>
+          <SmartLink
+            href='/records'
+            className='ignai-cta-secondary'
+            data-analytics-event='click_view_records'
+            data-analytics-label='home_records_all'
+            data-analytics-prop-placement='home_records'
+          >
             查看现场记录
           </SmartLink>
         </Reveal>
@@ -39,6 +45,10 @@ export function FieldNotesSection() {
             <Reveal key={item.slug} delay={index * 0.08}>
               <SmartLink
                 href={item.href}
+                data-analytics-event='click_record_card'
+                data-analytics-label={item.title}
+                data-analytics-prop-placement='home_records'
+                data-analytics-prop-type={item.type}
                 className={`group ignai-unified-card ignai-record-card block overflow-hidden rounded-lg ${
                   index === 0 ? 'lg:col-span-2' : ''
                 }`}
