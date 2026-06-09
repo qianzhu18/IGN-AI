@@ -67,8 +67,12 @@
 - [x] 创建第二批数据层 upstream PR（#4169：Event 官方 data source API 补拉）
 - [x] 梳理社区基础设施 PR Stack、四周日程和面试 / 简历叙事
 - [x] 创建架构型 upstream PR（#4170：Content Type Registry）
+- [x] 重新拆小 issue 修复 PR（#4187：HEO_INFOCARD_GREETINGS Notion 配置字符串数组）
+- [x] 按 PR Stack 重新拆 Typed Collection Helpers PR（#4188）
+- [x] 拆社区站数据库模板文档 PR（#4189）
 - [ ] 持续记录开源贡献素材
-- [ ] 按 PR Stack 继续拆 Typed Collection Helpers
+- [ ] 跟进 #4187 / #4188 / #4189 CI 与 maintainer review
+- [ ] 下一步：Page Props Slimming / Member Data Contract 继续拆小 PR
 - [ ] 下一步：ignai 主题作为社区站示例贡献
 
 ## F. 长期运营支持

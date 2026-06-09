@@ -61,7 +61,10 @@
 - [ ] 域名绑定（ignai.community）
 - [x] 梳理 NotionNext 社区基础设施 PR Stack 与面试 / 简历叙事
 - [x] 拆架构型上游 PR：Content Type Registry（#4170）
-- [ ] 跟进 #4169 / #4170，并拆下一批架构型上游 PR：Typed Collection Helpers
+- [x] 重新拆更小的上游 issue 修复 PR：HEO_INFOCARD_GREETINGS 配置解析（#4187）
+- [x] 重新拆 Typed Collection Helpers 上游 PR（#4188）
+- [x] 拆社区站数据库模板文档 PR（#4189）
+- [ ] 跟进 #4187 / #4188 / #4189 CI 与 maintainer review
 
 ## 4. 近 4 周目标（06-16 ~ 07-14）
 
@@ -75,7 +78,7 @@
 - [ ] 上线检查清单通过
 - [ ] ignai 主题作为社区站示例贡献上游
 - [ ] Member 页面组件贡献上游
-- [ ] 完成社区基础设施 PR Stack 第一阶段：类型注册、集合 helper、pageProps 瘦身
+- [ ] 完成社区基础设施 PR Stack 第一阶段：类型注册、集合 helper、pageProps 瘦身（#4188 已开，继续跟进）
 - [ ] 形成一篇可对外发布的项目 case study：从博客到 AI 社区基础设施
 
 ## 5. 长期目标
