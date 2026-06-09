@@ -107,7 +107,7 @@
 - [x] **P0 / 9.5** SEO 基础输出修复：`robots.txt`、`sitemap.xml`、RSS、canonical 不出现 `undefined`，并收录成员 / 活动 / 记录 / 加入 / 关于页
 - [x] **P0 / 9.2** 公开危险接口收口：`/api/cache` 必须鉴权或关闭公开访问
 - [ ] **P0 / 9.0** 生产环境变量核对：`OPS_ACCESS_PASSWORD`、图床、Join 数据落点、正式域名、Notion Token
-- [ ] **P0 / 8.8** 轻量生产观测栈上线：PostHog Cloud、Clarity、UptimeRobot、Sentry / PostHog Error Tracking 完成配置和告警
+- [ ] **P0 / 8.8** 轻量生产观测栈上线：PostHog Cloud、Clarity、Umami、UptimeRobot、Sentry / PostHog Error Tracking 完成配置和告警
 - [x] **P1 / 8.2** 当前生产域（yanglaishe.cn）与 `NEXT_PUBLIC_LINK` / 站点默认 URL 对齐
 - [ ] **P1 / 8.2** 域名绑定（ignai.community）接入 Vercel，并在完成后切换正式 canonical
 - [ ] 国内访问优化

@@ -30,9 +30,22 @@ function readDatasetProperties(element) {
   return properties
 }
 
-function capturePostHogEvent(eventName, properties = {}) {
+function captureProductEvent(eventName, properties = {}) {
   if (typeof window === 'undefined') return
-  window.posthog?.capture?.(eventName, {
+
+  const eventProperties = {
+    site: 'ignai',
+    ...properties
+  }
+
+  window.posthog?.capture?.(eventName, eventProperties)
+  window.umami?.track?.(eventName, eventProperties)
+  window.clarity?.('event', eventName)
+}
+
+function capturePostHogPageview(properties = {}) {
+  if (typeof window === 'undefined') return
+  window.posthog?.capture?.('$pageview', {
     site: 'ignai',
     ...properties
   })
@@ -41,6 +54,7 @@ function capturePostHogEvent(eventName, properties = {}) {
 export default function ProductAnalytics({ NOTION_CONFIG }) {
   const router = useRouter()
   const posthogKey = siteConfig('POSTHOG_KEY', '', NOTION_CONFIG)
+  const umamiId = siteConfig('UMAMI_ID', '', NOTION_CONFIG)
   const posthogHost = siteConfig(
     'POSTHOG_HOST',
     DEFAULT_POSTHOG_HOST,
@@ -83,10 +97,10 @@ export default function ProductAnalytics({ NOTION_CONFIG }) {
         person_profiles: 'identified_only',
         loaded: instance => {
           window.posthog = instance
-          window.ignaiAnalyticsCapture = capturePostHogEvent
+          window.ignaiAnalyticsCapture = captureProductEvent
 
           if (capturePageview) {
-            capturePostHogEvent('$pageview', {
+            capturePostHogPageview({
               $current_url: window.location.href,
               path: window.location.pathname,
               title: document.title
@@ -112,7 +126,7 @@ export default function ProductAnalytics({ NOTION_CONFIG }) {
     if (!posthogKey || !capturePageview) return
 
     const handleRouteChange = url => {
-      capturePostHogEvent('$pageview', {
+      capturePostHogPageview({
         $current_url: window.location.href,
         path: url,
         title: document.title
@@ -124,13 +138,16 @@ export default function ProductAnalytics({ NOTION_CONFIG }) {
   }, [capturePageview, posthogKey, router.events])
 
   useEffect(() => {
-    if (!posthogKey || typeof document === 'undefined') return
+    if (!posthogKey && !umamiId) return
+    if (typeof window === 'undefined' || typeof document === 'undefined') return
+
+    window.ignaiAnalyticsCapture = captureProductEvent
 
     const handleClick = event => {
       const target = event.target?.closest?.('[data-analytics-event]')
       if (!target) return
 
-      capturePostHogEvent(target.dataset.analyticsEvent, {
+      captureProductEvent(target.dataset.analyticsEvent, {
         label:
           target.dataset.analyticsLabel ||
           target.getAttribute('aria-label') ||
@@ -143,7 +160,7 @@ export default function ProductAnalytics({ NOTION_CONFIG }) {
 
     document.addEventListener('click', handleClick)
     return () => document.removeEventListener('click', handleClick)
-  }, [posthogKey])
+  }, [posthogKey, umamiId])
 
   return null
 }

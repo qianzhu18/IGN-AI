@@ -204,7 +204,7 @@ const ExternalPlugin = props => {
       {MOUSE_FOLLOW && <MouseFollow />}
       {THEME_SWITCH && <ThemeSwitch />}
       {DEBUG && <DebugPanel />}
-      {POSTHOG_KEY && <ProductAnalytics {...props} />}
+      {(POSTHOG_KEY || UMAMI_ID) && <ProductAnalytics {...props} />}
       {ANALYTICS_ACKEE_TRACKER && <Ackee />}
       {ANALYTICS_GOOGLE_ID && <Gtag />}
       {ANALYTICS_VERCEL && <Analytics />}

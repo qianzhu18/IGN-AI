@@ -4,6 +4,7 @@
 
 - PostHog Cloud Free：页面访问、业务事件、转化漏斗、Feature Flag 和后续 A/B 测试。
 - Microsoft Clarity：热力图、滚动深度、点击分布和短期用户录屏。
+- Umami Cloud：轻量 Web Analytics，看页面访问、来源、国家 / 设备和基础事件。
 - UptimeRobot Free：站点可用性、核心路径监控和基础状态页。
 - Sentry Developer 或 PostHog Error Tracking：错误追踪和异常告警。
 
@@ -21,6 +22,8 @@ NEXT_PUBLIC_POSTHOG_UI_HOST=https://us.posthog.com
 NEXT_PUBLIC_POSTHOG_CAPTURE_PAGEVIEW=true
 NEXT_PUBLIC_POSTHOG_AUTOCAPTURE=true
 NEXT_PUBLIC_POSTHOG_SESSION_RECORDING=false
+NEXT_PUBLIC_UMAMI_HOST=https://cloud.umami.is/script.js
+NEXT_PUBLIC_UMAMI_ID=
 NEXT_PUBLIC_GLITCHTIP_DSN=
 ```
 
@@ -30,6 +33,8 @@ NEXT_PUBLIC_GLITCHTIP_DSN=
 - `NEXT_PUBLIC_POSTHOG_KEY` 填 PostHog project API key。
 - `NEXT_PUBLIC_POSTHOG_HOST` 和 `NEXT_PUBLIC_POSTHOG_UI_HOST` 默认使用 PostHog Cloud US；如果项目选择 EU 区域，改成控制台给出的 EU endpoint。
 - PostHog session recording 默认关闭；录屏先交给 Clarity，如果未来希望在 PostHog Insight 中直接看 replay，再改为 `true`。
+- `NEXT_PUBLIC_UMAMI_HOST` 默认使用 Umami Cloud 官方脚本地址。
+- `NEXT_PUBLIC_UMAMI_ID` 填 Umami tracking script 里的 `data-website-id`。
 - `NEXT_PUBLIC_GLITCHTIP_DSN` 当前仅预留。轻量方案下优先用 Sentry Developer 或 PostHog Error Tracking；GlitchTip 作为以后自托管错误追踪选项。
 
 ## 已接入事件
@@ -49,6 +54,8 @@ NEXT_PUBLIC_GLITCHTIP_DSN=
 
 加入表单事件不采集姓名、微信、邮箱等敏感信息，只记录模式、兴趣数量、是否带头像、成功 / 失败状态。
 
+业务事件会同时发送到 PostHog、Umami 和 Clarity API events。PostHog 用于漏斗和实验，Umami 用于轻量事件概览，Clarity 用于按事件过滤录屏。
+
 ## 首批看板
 
 建议在 PostHog 中先建 4 个 Insight：
@@ -63,6 +70,13 @@ Clarity 中先看：
 - 首页滚动热力图：用户是否看到活动、文章、加入社区区块。
 - 点击热力图：加入社区、二维码、活动卡片是否被点击。
 - 录屏筛选：rage click、dead click、快速退出。
+
+Umami 中先看：
+
+- 首页、活动页、记录页、加入页的访问趋势。
+- Referrers：用户来自朋友圈、公众号、搜索、社交平台还是直接访问。
+- Countries / Devices / Browsers：判断移动端和国内访问体验优先级。
+- Events：加入社区、活动卡片、文章卡片、微信二维码等轻量事件分布。
 
 ## A/B 测试入口
 
