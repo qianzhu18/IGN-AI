@@ -3,6 +3,7 @@ import { siteConfig } from '@/lib/config'
 import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import { DynamicLayout } from '@/themes/theme'
 import { useRouter } from 'next/router'
+import { mergeFixturePosts } from '@/lib/dev/contentFixtures'
 
 /**
  * 搜索路由
@@ -75,7 +76,8 @@ export async function getStaticProps({ locale }) {
   const { allPages } = props
   props.posts = allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
-  ).map(getSearchablePost)
+  )
+  props.posts = mergeFixturePosts(props.posts).map(getSearchablePost)
   delete props.allPages
   return {
     props,

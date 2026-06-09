@@ -2,11 +2,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
 import { records, recordTypeLabel } from '@/src/content/records'
+import { mergeFixtureRecords } from '@/lib/dev/contentFixtures'
 
 const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) => {
   if (!record) {
     return (
-      <main className='flex min-h-screen items-center justify-center bg-[#07080C] text-white'>
+      <main className='ignai-themed-page flex min-h-screen items-center justify-center bg-[var(--ignai-bg)] text-[var(--rig-paper)]'>
         <p className='text-white/40'>记录未找到</p>
       </main>
     )
@@ -18,7 +19,7 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
         <title>{pageTitle}</title>
         <meta name='description' content={pageDescription} />
       </Head>
-      <main className='min-h-screen bg-[#07080C] text-white'>
+      <main className='ignai-themed-page min-h-screen bg-[var(--ignai-bg)] text-[var(--rig-paper)]'>
         <article className='mx-auto max-w-4xl px-6 py-20'>
           <Link
             href='/records'
@@ -151,13 +152,14 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
 
 export function getStaticPaths() {
   return {
-    paths: records.map(record => ({ params: { slug: record.slug } })),
+    paths: mergeFixtureRecords(records).map(record => ({ params: { slug: record.slug } })),
     fallback: false
   }
 }
 
 export function getStaticProps({ params }) {
-  const record = records.find(item => item.slug === params.slug) || null
+  const allRecords = mergeFixtureRecords(records)
+  const record = allRecords.find(item => item.slug === params.slug) || null
 
   if (!record) {
     return { notFound: true }
@@ -166,7 +168,7 @@ export function getStaticProps({ params }) {
   return {
     props: {
       record,
-      moreRecords: records.filter(item => item.slug !== record.slug).slice(0, 2),
+      moreRecords: allRecords.filter(item => item.slug !== record.slug).slice(0, 2),
       pageTitle: `${record.title} - IGNAI`,
       pageDescription: record.excerpt
     }

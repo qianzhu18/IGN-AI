@@ -158,3 +158,31 @@
 ### 保留事项
 - `ignai.community` 还不是当前 Vercel 部署别名，后续完成 DNS / Vercel 绑定后再切换正式 canonical。
 - 旧模板文章详情 `article/example-1` 仍有 page data size 警告，需要后续通过隐藏模板文章或优化文章详情 props 单独处理。
+
+## 10. 内容密度压测补充（2026-06-09）
+
+### 本次补充
+- 新增本地显式开关 `IGNAI_CONTENT_FIXTURES=stress` / `NEXT_PUBLIC_IGNAI_CONTENT_FIXTURES=stress`，可注入虚拟内容压力测试数据，不污染正式 Notion，也不会默认进入生产构建。
+- 虚拟数据规模：36 篇 Post、24 条 Event、28 条 Record；叠加真实数据后，本地压测为文章 48 条、活动 27 条、记录 31 条。
+- `/events` 从单列活动列表升级为更适合多活动的双列密度列表，并增加「开放 / 进行中」「筹备中」「已复盘 / 结束」「已满员」统计。
+- `/records` 增加类型统计，并将次级记录从两列扩展为桌面三列，保留首条 featured 记录。
+- 首页 Field Notes、首页 Events、Archive、Search 均可在本地 fixture 模式下观察高密度内容排布。
+
+### 压测结论
+- 桌面和移动截图均未发现水平溢出：`scrollWidth === clientWidth`。
+- 首页只展示 3 条活动、4 篇文章、3 条记录，首屏之后不会被几十条内容直接淹没。
+- 集合页可以承载 20-50 条内容，但移动端会自然变成长列表；如果正式内容继续增长，下一阶段应增加筛选、分页或按月份 / 类型分组。
+
+## 11. 白天模式可读性补充（2026-06-09）
+
+### 本次补充
+- 修复 `section-title`、`display-title`、`section-body` 等首页通用标题 / 正文样式仍硬编码白色的问题，改为读取 `--rig-paper` / `--rig-paper-70`。
+- 为首页活动卡、记录卡和通用卡片补充 light mode 覆盖，避免 `text-white/*` Tailwind 类在浅色背景下继续保持低对比。
+- 将 `/events`、`/records` 及对应详情页根容器接入主题变量，避免白天模式进入集合页时突然回到纯暗色页面。
+- 为活动 / 记录集合页增加 `ignai-themed-page` / `ignai-themed-card` 样式承接，统一统计卡、列表卡、标签和边框的明暗表现。
+
+### 验证
+- `yarn lint --file themes/ignai/style.js --file pages/events/index.js --file 'pages/events/[slug].js' --file pages/records/index.js --file 'pages/records/[slug].js'` 通过；仅保留既有 `<img>` 性能警告。
+- Playwright light mode 验证首页、活动页、记录页的桌面和移动端均无水平溢出：`overflow=0`。
+- 新截图保存于 `/tmp/ignai-light-ui-qa-final/`，包括 `home-mobile-light.png`、`events-mobile-light.png`、`records-mobile-light.png` 等。
+- `yarn build` 通过；仍保留旧模板文章 `article/example-1` 的 page data size 警告，和本轮 UI 样式无关。

@@ -16,13 +16,14 @@ import {
   normalizeEventSlugValue,
   normalizeNotionEvent
 } from '@/lib/utils/event'
+import { mergeFixtureEvents } from '@/lib/dev/contentFixtures'
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
 
 const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
   if (!event) {
     return (
-      <div className='min-h-screen bg-[#07080C] text-white flex items-center justify-center'>
+      <div className='ignai-themed-page flex min-h-screen items-center justify-center bg-[var(--ignai-bg)] text-[var(--rig-paper)]'>
         <p className='text-white/40'>活动未找到</p>
       </div>
     )
@@ -34,7 +35,7 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
         <title>{pageTitle}</title>
         <meta name='description' content={pageDescription} />
       </Head>
-      <div className='min-h-screen bg-[#07080C] text-white'>
+      <div className='ignai-themed-page min-h-screen bg-[var(--ignai-bg)] text-[var(--rig-paper)]'>
         <div className='mx-auto max-w-3xl px-6 py-20'>
           <Link
             href='/events'
@@ -161,7 +162,7 @@ export async function getStaticPaths({ locales = [] } = {}) {
       fetchEventsFromOfficialAPI()
     ])
     events = normalizeEventList(
-      freshEvents.length > 0 ? freshEvents : props.allEvents || [],
+      mergeFixtureEvents(freshEvents.length > 0 ? freshEvents : props.allEvents || []),
       staticEvents
     )
   } catch (error) {
@@ -185,7 +186,9 @@ export async function getStaticProps({ params, locale }) {
   const from = 'event-detail'
   const props = await fetchGlobalAllData({ from, locale })
   const freshEvents = await fetchEventsFromOfficialAPI()
-  const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
+  const allEvents = mergeFixtureEvents(
+    freshEvents.length > 0 ? freshEvents : props.allEvents || []
+  )
 
   const normalizedSlug = normalizeEventSlugValue(slug)
   const notionEvent = allEvents.find(

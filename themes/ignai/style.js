@@ -130,6 +130,25 @@ const ignaiThemeCss = `
         --rig-footer-text: rgba(255, 248, 239, 0.72);
       }
 
+      html.light #theme-proxio {
+        --ignai-card-text: #20150e;
+        --ignai-card-muted: rgba(32, 21, 14, 0.62);
+        --ignai-card-faint: rgba(32, 21, 14, 0.46);
+        --ignai-chip-bg: rgba(255, 255, 255, 0.68);
+        --ignai-chip-border: rgba(145, 76, 31, 0.16);
+        --ignai-chip-text: rgba(32, 21, 14, 0.68);
+      }
+
+      html.dark #theme-proxio,
+      :root #theme-proxio {
+        --ignai-card-text: var(--rig-paper);
+        --ignai-card-muted: var(--rig-paper-70);
+        --ignai-card-faint: var(--rig-paper-50);
+        --ignai-chip-bg: rgba(255, 255, 255, 0.05);
+        --ignai-chip-border: rgba(255, 255, 255, 0.1);
+        --ignai-chip-text: rgba(255, 255, 255, 0.58);
+      }
+
       #theme-proxio {
         --tw-bg-opacity: 1;
         background: var(--ignai-bg);
@@ -1146,7 +1165,7 @@ const ignaiThemeCss = `
         font-size: clamp(2rem, 8vw, 3rem);
         font-weight: 700;
         line-height: 1.1;
-        color: #fff;
+        color: var(--rig-paper);
         letter-spacing: -0.02em;
       }
       @media (min-width: 640px) {
@@ -1163,7 +1182,7 @@ const ignaiThemeCss = `
       /* Section eyebrow */
       #theme-proxio .ignai-section-eyebrow {
         font-size: 0.8rem;
-        color: #f0d48d;
+        color: var(--rig-heat);
         opacity: 0.84;
         letter-spacing: 0.04em;
       }
@@ -1172,14 +1191,14 @@ const ignaiThemeCss = `
       #theme-proxio .ignai-section-lead {
         font-size: 1.125rem;
         line-height: 1.6;
-        color: #e4e4e7;
+        color: var(--rig-paper-70);
       }
 
       /* Section body */
       #theme-proxio .ignai-section-body {
         font-size: 0.9375rem;
         line-height: 1.7;
-        color: rgba(255, 255, 255, 0.72);
+        color: var(--rig-paper-70);
       }
 
       #theme-proxio .display-title,
@@ -1193,14 +1212,14 @@ const ignaiThemeCss = `
         font-size: clamp(3rem, 8vw, 5.6rem);
         font-weight: 600;
         line-height: 0.98;
-        color: #fff;
+        color: var(--rig-paper);
       }
 
       #theme-proxio .section-title {
         font-size: clamp(2.2rem, 5vw, 4rem);
         font-weight: 600;
         line-height: 1.02;
-        color: #fff;
+        color: var(--rig-paper);
       }
 
       #theme-proxio .section-copy {
@@ -1446,8 +1465,8 @@ const ignaiThemeCss = `
       }
 
       #theme-proxio .section-eyebrow {
-        color: #f0d48d;
-        opacity: 0.84;
+        color: var(--rig-heat);
+        opacity: 0.88;
         font-size: 0.8rem;
         text-transform: uppercase;
       }
@@ -1455,14 +1474,14 @@ const ignaiThemeCss = `
       #theme-proxio .section-lead {
         font-size: clamp(1.06rem, 2vw, 1.22rem);
         line-height: 1.62;
-        color: rgba(255, 255, 255, 0.9);
+        color: var(--rig-paper-70);
       }
 
       #theme-proxio .section-body,
       #theme-proxio .card-body {
         font-size: 0.95rem;
         line-height: 1.9;
-        color: rgba(255, 255, 255, 0.64);
+        color: var(--rig-paper-70);
       }
 
       #theme-proxio .card-title {
@@ -1470,13 +1489,13 @@ const ignaiThemeCss = `
         font-size: clamp(1.8rem, 3vw, 2.18rem);
         font-weight: 600;
         line-height: 1.02;
-        color: #fff;
+        color: var(--rig-paper);
       }
 
       #theme-proxio .card-eyebrow {
         font-size: 0.74rem;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.62);
+        color: var(--rig-paper-50);
       }
 
       #theme-proxio .eyebrow-label {
@@ -1523,12 +1542,8 @@ const ignaiThemeCss = `
       #theme-proxio .open-grid-item,
       #theme-proxio .ignai-unified-card {
         border-radius: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: linear-gradient(
-          180deg,
-          rgba(14, 18, 26, 0.94) 0%,
-          rgba(10, 13, 20, 0.92) 100%
-        );
+        border: 1px solid var(--rig-border);
+        background: var(--rig-card-bg);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.02),
           0 24px 70px rgba(0, 0, 0, 0.34);
@@ -1551,7 +1566,8 @@ const ignaiThemeCss = `
       #theme-proxio .ignai-unified-card:hover,
       #theme-proxio .open-grid-item:hover {
         transform: translateY(-4px);
-        border-color: rgba(255, 184, 121, 0.2);
+        border-color: color-mix(in srgb, var(--rig-heat) 30%, var(--rig-border));
+        background: var(--rig-card-hover-bg);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.03),
           0 30px 90px rgba(0, 0, 0, 0.42);
@@ -1572,11 +1588,70 @@ const ignaiThemeCss = `
 
       #theme-proxio .ignai-event-card,
       #theme-proxio .ignai-record-card {
-        background: linear-gradient(
-          180deg,
-          rgba(11, 14, 20, 0.92) 0%,
-          rgba(8, 11, 17, 0.96) 100%
-        );
+        background: var(--rig-card-bg);
+      }
+
+      html.light #theme-proxio .ignai-unified-card [class*="text-white"],
+      html.light #theme-proxio .open-grid-item [class*="text-white"],
+      html.light #theme-proxio .ignai-themed-page [class*="text-white"] {
+        color: var(--ignai-card-muted) !important;
+      }
+
+      html.light #theme-proxio .ignai-unified-card h2,
+      html.light #theme-proxio .ignai-unified-card h3,
+      html.light #theme-proxio .ignai-unified-card h2[class*="text-white"],
+      html.light #theme-proxio .ignai-unified-card h3[class*="text-white"],
+      html.light #theme-proxio .ignai-event-card h3,
+      html.light #theme-proxio .ignai-event-card h3[class*="text-white"],
+      html.light #theme-proxio .ignai-record-card h3,
+      html.light #theme-proxio .ignai-record-card h3[class*="text-white"],
+      html.light #theme-proxio .open-grid-item h2,
+      html.light #theme-proxio .open-grid-item h3,
+      html.light #theme-proxio .ignai-themed-page h1,
+      html.light #theme-proxio .ignai-themed-page h2,
+      html.light #theme-proxio .ignai-themed-page h3,
+      html.light #theme-proxio .ignai-themed-page .font-semibold {
+        color: var(--ignai-card-text) !important;
+      }
+
+      html.light #theme-proxio .ignai-unified-card [class*="border-white"],
+      html.light #theme-proxio .open-grid-item [class*="border-white"],
+      html.light #theme-proxio .ignai-themed-page [class*="border-white"] {
+        border-color: var(--ignai-chip-border) !important;
+      }
+
+      html.light #theme-proxio .ignai-unified-card [class*="bg-white/"],
+      html.light #theme-proxio .open-grid-item [class*="bg-white/"],
+      html.light #theme-proxio .ignai-themed-page [class*="bg-white/"] {
+        background-color: var(--ignai-chip-bg) !important;
+      }
+
+      html.light #theme-proxio .ignai-unified-card .rounded-full,
+      html.light #theme-proxio .open-grid-item .rounded-full,
+      html.light #theme-proxio .ignai-themed-page .rounded-full {
+        color: var(--ignai-chip-text) !important;
+      }
+
+      #theme-proxio .ignai-themed-page {
+        background:
+          radial-gradient(circle at 12% 7%, color-mix(in srgb, var(--rig-heat) 12%, transparent), transparent 30%),
+          radial-gradient(circle at 88% 9%, color-mix(in srgb, var(--rig-signal) 8%, transparent), transparent 24%),
+          var(--ignai-bg);
+      }
+
+      #theme-proxio .ignai-themed-card,
+      #theme-proxio .ignai-themed-page > * [class*="bg-white/"] {
+        background-color: var(--rig-card-bg);
+      }
+
+      #theme-proxio .ignai-themed-card {
+        border-color: var(--rig-border);
+        color: var(--rig-paper);
+      }
+
+      #theme-proxio .ignai-themed-card:hover {
+        border-color: color-mix(in srgb, var(--rig-heat) 32%, var(--rig-border));
+        background-color: var(--rig-card-hover-bg);
       }
 
 

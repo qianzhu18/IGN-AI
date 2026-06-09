@@ -2,9 +2,10 @@ import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
 import { records, recordTypeLabel } from '@/src/content/records'
 import { Reveal } from '../Reveal'
+import { mergeFixtureRecords } from '@/lib/dev/contentFixtures'
 
 export function FieldNotesSection() {
-  const displayItems = records.slice(0, 3).map(record => ({
+  const displayItems = mergeFixtureRecords(records).slice(0, 3).map(record => ({
     ...record,
     href: `/records/${record.slug}`
   }))

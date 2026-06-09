@@ -5,6 +5,7 @@ import { isBrowser } from '@/lib/utils'
 import { formatDateFmt } from '@/lib/utils/formatDate'
 import { DynamicLayout } from '@/themes/theme'
 import { useEffect } from 'react'
+import { mergeFixturePosts } from '@/lib/dev/contentFixtures'
 
 /**
  * 归档首页
@@ -36,6 +37,7 @@ export async function getStaticProps({ locale }) {
   props.posts = props.allPages?.filter(
     page => page.type === 'Post' && page.status === 'Published'
   )
+  props.posts = mergeFixturePosts(props.posts)
   delete props.allPages
 
   const postsSortByDate = Object.create(props.posts)

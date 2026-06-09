@@ -2,10 +2,15 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
 import { records, recordTypeLabel } from '@/src/content/records'
+import { mergeFixtureRecords } from '@/lib/dev/contentFixtures'
 
 const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) => {
   const featuredRecord = recordItems[0]
   const secondaryRecords = recordItems.slice(1)
+  const recordCounts = recordItems.reduce((acc, record) => {
+    acc[record.type] = (acc[record.type] || 0) + 1
+    return acc
+  }, {})
 
   return (
     <>
@@ -13,7 +18,7 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
         <title>{pageTitle}</title>
         <meta name='description' content={pageDescription} />
       </Head>
-      <main className='min-h-screen bg-[#07080C] text-white'>
+      <main className='ignai-themed-page min-h-screen bg-[var(--ignai-bg)] text-[var(--rig-paper)]'>
         <section className='mx-auto max-w-6xl px-6 py-20 lg:py-24'>
           <div className='grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-end'>
             <div>
@@ -32,10 +37,19 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
             </p>
           </div>
 
+          <div className='mt-10 grid gap-3 sm:grid-cols-4'>
+            {Object.entries(recordTypeLabel).map(([type, label]) => (
+              <div key={type} className='rounded-lg border border-white/[0.07] bg-white/[0.025] px-4 py-3'>
+                <div className='text-2xl font-semibold text-white'>{recordCounts[type] || 0}</div>
+                <div className='mt-1 text-xs text-white/42'>{label}</div>
+              </div>
+            ))}
+          </div>
+
           {featuredRecord && (
             <Link
               href={`/records/${featuredRecord.slug}`}
-              className='group mt-14 grid overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] no-underline transition hover:border-[#7cc8ff]/24 hover:bg-white/[0.055] lg:grid-cols-[1.1fr_0.9fr]'
+              className='group ignai-themed-card mt-14 grid overflow-hidden rounded-lg border border-white/10 bg-white/[0.035] no-underline transition hover:border-[#7cc8ff]/24 hover:bg-white/[0.055] lg:grid-cols-[1.1fr_0.9fr]'
             >
               <div className='p-6 sm:p-8 lg:p-10'>
                 <div className='flex flex-wrap items-center gap-3 text-sm text-white/48'>
@@ -85,12 +99,12 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
             </Link>
           )}
 
-          <div className='mt-8 grid gap-5 md:grid-cols-2'>
+          <div className='mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3'>
             {secondaryRecords.map(record => (
               <Link
                 key={record.slug}
                 href={`/records/${record.slug}`}
-                className='group rounded-lg border border-white/[0.07] bg-white/[0.025] p-6 no-underline transition hover:border-white/15 hover:bg-white/[0.045]'
+                className='group ignai-themed-card rounded-lg border border-white/[0.07] bg-white/[0.025] p-6 no-underline transition hover:border-white/15 hover:bg-white/[0.045]'
               >
                 <div className='flex items-center justify-between gap-4'>
                   <span className='inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-[#F0CB8A]/68'>
@@ -125,9 +139,10 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
 }
 
 export function getStaticProps() {
+  const recordItems = mergeFixtureRecords(records)
   return {
     props: {
-      records,
+      records: recordItems,
       pageTitle: 'IGNAI - 社区记录',
       pageDescription: 'IGNAI 社区记录、活动复盘、项目记录与 AI 工作流工具清单。'
     }
