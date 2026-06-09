@@ -2,11 +2,12 @@
 
 ## 工具分工
 
-- 自托管 PostHog：页面访问、业务事件、转化漏斗、Feature Flag 和后续 A/B 测试。
-- Uptime Kuma：站点可用性、SSL、核心路径监控和公开状态页。
-- GlitchTip：错误追踪、性能监控和异常告警。
+- PostHog Cloud Free：页面访问、业务事件、转化漏斗、Feature Flag 和后续 A/B 测试。
+- Microsoft Clarity：热力图、滚动深度、点击分布和短期用户录屏。
+- UptimeRobot Free：站点可用性、核心路径监控和基础状态页。
+- Sentry Developer 或 PostHog Error Tracking：错误追踪和异常告警。
 
-完整生产观测栈分工见 `docs/observability-stack.zh-CN.md`。Microsoft Clarity 只作为短期热力图辅助工具，不作为主数据源。
+完整生产观测栈分工见 `docs/observability-stack.zh-CN.md`。现阶段不推荐自托管 PostHog，避免过早承担服务器、数据库、备份和升级成本。
 
 ## Vercel 环境变量
 
@@ -15,8 +16,8 @@
 ```bash
 NEXT_PUBLIC_CLARITY_ID=
 NEXT_PUBLIC_POSTHOG_KEY=
-NEXT_PUBLIC_POSTHOG_HOST=https://posthog.example.com
-NEXT_PUBLIC_POSTHOG_UI_HOST=https://posthog.example.com
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+NEXT_PUBLIC_POSTHOG_UI_HOST=https://us.posthog.com
 NEXT_PUBLIC_POSTHOG_CAPTURE_PAGEVIEW=true
 NEXT_PUBLIC_POSTHOG_AUTOCAPTURE=true
 NEXT_PUBLIC_POSTHOG_SESSION_RECORDING=false
@@ -25,11 +26,11 @@ NEXT_PUBLIC_GLITCHTIP_DSN=
 
 说明：
 
-- `NEXT_PUBLIC_CLARITY_ID` 只填 Clarity tracking code 里的 project id；可选，不是主方案必需项。
+- `NEXT_PUBLIC_CLARITY_ID` 只填 Clarity tracking code 里的 project id。
 - `NEXT_PUBLIC_POSTHOG_KEY` 填 PostHog project API key。
-- 自托管 PostHog 时，`NEXT_PUBLIC_POSTHOG_HOST` 和 `NEXT_PUBLIC_POSTHOG_UI_HOST` 都指向自托管 PostHog 域名。
-- PostHog session recording 默认关闭；如果未来希望在 PostHog Insight 中直接看 replay，再改为 `true`。
-- `NEXT_PUBLIC_GLITCHTIP_DSN` 当前仅预留，待 GlitchTip 实例和 source map 策略确认后接 Sentry-compatible SDK。
+- `NEXT_PUBLIC_POSTHOG_HOST` 和 `NEXT_PUBLIC_POSTHOG_UI_HOST` 默认使用 PostHog Cloud US；如果项目选择 EU 区域，改成控制台给出的 EU endpoint。
+- PostHog session recording 默认关闭；录屏先交给 Clarity，如果未来希望在 PostHog Insight 中直接看 replay，再改为 `true`。
+- `NEXT_PUBLIC_GLITCHTIP_DSN` 当前仅预留。轻量方案下优先用 Sentry Developer 或 PostHog Error Tracking；GlitchTip 作为以后自托管错误追踪选项。
 
 ## 已接入事件
 
@@ -57,7 +58,7 @@ NEXT_PUBLIC_GLITCHTIP_DSN=
 - 内容兴趣：`click_view_articles` -> `click_article_card`
 - 记录兴趣：`click_view_records` -> `click_record_card`
 
-如果短期开启 Clarity，先看：
+Clarity 中先看：
 
 - 首页滚动热力图：用户是否看到活动、文章、加入社区区块。
 - 点击热力图：加入社区、二维码、活动卡片是否被点击。
