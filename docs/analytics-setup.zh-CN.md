@@ -1,9 +1,12 @@
-# IGNAI Clarity + PostHog 上线配置
+# IGNAI 产品分析上线配置
 
 ## 工具分工
 
-- Microsoft Clarity：热力图、滚动深度、点击分布、用户录屏。
-- PostHog：页面访问、业务事件、转化漏斗、Feature Flag 和后续 A/B 测试。
+- 自托管 PostHog：页面访问、业务事件、转化漏斗、Feature Flag 和后续 A/B 测试。
+- Uptime Kuma：站点可用性、SSL、核心路径监控和公开状态页。
+- GlitchTip：错误追踪、性能监控和异常告警。
+
+完整生产观测栈分工见 `docs/observability-stack.zh-CN.md`。Microsoft Clarity 只作为短期热力图辅助工具，不作为主数据源。
 
 ## Vercel 环境变量
 
@@ -12,19 +15,21 @@
 ```bash
 NEXT_PUBLIC_CLARITY_ID=
 NEXT_PUBLIC_POSTHOG_KEY=
-NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
-NEXT_PUBLIC_POSTHOG_UI_HOST=https://us.posthog.com
+NEXT_PUBLIC_POSTHOG_HOST=https://posthog.example.com
+NEXT_PUBLIC_POSTHOG_UI_HOST=https://posthog.example.com
 NEXT_PUBLIC_POSTHOG_CAPTURE_PAGEVIEW=true
 NEXT_PUBLIC_POSTHOG_AUTOCAPTURE=true
 NEXT_PUBLIC_POSTHOG_SESSION_RECORDING=false
+NEXT_PUBLIC_GLITCHTIP_DSN=
 ```
 
 说明：
 
-- `NEXT_PUBLIC_CLARITY_ID` 只填 Clarity tracking code 里的 project id。
+- `NEXT_PUBLIC_CLARITY_ID` 只填 Clarity tracking code 里的 project id；可选，不是主方案必需项。
 - `NEXT_PUBLIC_POSTHOG_KEY` 填 PostHog project API key。
-- 如果项目在 PostHog EU Cloud，把 host 改为控制台给出的 EU endpoint。
-- PostHog session recording 默认关闭，因为录屏先交给 Clarity；如果未来希望在 PostHog Insight 中直接看 replay，再改为 `true`。
+- 自托管 PostHog 时，`NEXT_PUBLIC_POSTHOG_HOST` 和 `NEXT_PUBLIC_POSTHOG_UI_HOST` 都指向自托管 PostHog 域名。
+- PostHog session recording 默认关闭；如果未来希望在 PostHog Insight 中直接看 replay，再改为 `true`。
+- `NEXT_PUBLIC_GLITCHTIP_DSN` 当前仅预留，待 GlitchTip 实例和 source map 策略确认后接 Sentry-compatible SDK。
 
 ## 已接入事件
 
@@ -52,7 +57,7 @@ NEXT_PUBLIC_POSTHOG_SESSION_RECORDING=false
 - 内容兴趣：`click_view_articles` -> `click_article_card`
 - 记录兴趣：`click_view_records` -> `click_record_card`
 
-Clarity 中先看：
+如果短期开启 Clarity，先看：
 
 - 首页滚动热力图：用户是否看到活动、文章、加入社区区块。
 - 点击热力图：加入社区、二维码、活动卡片是否被点击。

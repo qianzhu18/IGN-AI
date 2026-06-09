@@ -73,6 +73,7 @@
 
 ### 任务
 - [ ] SEO 优化（sitemap、RSS、正式 OG 图、结构化数据）
+- [ ] 生产观测栈上线（自托管 PostHog + Uptime Kuma + GlitchTip）
 - [ ] 国内访问优化（Vercel CNAME 或 Docker 部署）
 - [ ] 性能优化（图片压缩、ISR 缓存调优）
 - [ ] 上线检查清单通过
