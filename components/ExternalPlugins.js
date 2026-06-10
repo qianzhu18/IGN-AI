@@ -147,14 +147,12 @@ const ExternalPlugin = props => {
   const UMAMI_ID = siteConfig('UMAMI_ID', null, NOTION_CONFIG)
   const POSTHOG_KEY = siteConfig('POSTHOG_KEY', '', NOTION_CONFIG)
 
-  // 自定义样式css和js引入
-  if (isBrowser) {
-    // 初始化AOS动画
-    // 静态导入本地自定义样式
+  useEffect(() => {
+    if (DISABLE_PLUGIN || !isBrowser) return
+
     loadExternalResource('/css/custom.css', 'css')
     loadExternalResource('/js/custom.js', 'js')
 
-    // 自动添加图片阴影
     if (IMG_SHADOW) {
       loadExternalResource('/css/img-shadow.css', 'css')
     }
@@ -163,35 +161,50 @@ const ExternalPlugin = props => {
       loadExternalResource(ANIMATE_CSS_URL, 'css')
     }
 
-    // 导入外部自定义脚本
     if (CUSTOM_EXTERNAL_JS && CUSTOM_EXTERNAL_JS.length > 0) {
       for (const url of CUSTOM_EXTERNAL_JS) {
         loadExternalResource(url, 'js')
       }
     }
 
-    // 导入外部自定义样式
     if (CUSTOM_EXTERNAL_CSS && CUSTOM_EXTERNAL_CSS.length > 0) {
       for (const url of CUSTOM_EXTERNAL_CSS) {
         loadExternalResource(url, 'css')
       }
     }
-  }
+  }, [
+    ANIMATE_CSS_URL,
+    CUSTOM_EXTERNAL_CSS,
+    CUSTOM_EXTERNAL_JS,
+    DISABLE_PLUGIN,
+    IMG_SHADOW
+  ])
 
   const router = useRouter()
+  const allNavPages = props?.allNavPages
   useEffect(() => {
+    const timers = []
+
     // 异步渲染谷歌广告
     if (ADSENSE_GOOGLE_ID) {
-      setTimeout(() => {
-        initGoogleAdsense(ADSENSE_GOOGLE_ID)
-      }, 3000)
+      timers.push(
+        setTimeout(() => {
+          initGoogleAdsense(ADSENSE_GOOGLE_ID)
+        }, 3000)
+      )
     }
 
-    setTimeout(() => {
-      // 映射url
-      convertInnerUrl({ allPages: props?.allNavPages, lang: lang })
-    }, 500)
-  }, [router])
+    timers.push(
+      setTimeout(() => {
+        // 映射url
+        convertInnerUrl({ allPages: allNavPages, lang: lang })
+      }, 500)
+    )
+
+    return () => {
+      timers.forEach(timer => clearTimeout(timer))
+    }
+  }, [ADSENSE_GOOGLE_ID, allNavPages, lang, router.asPath])
 
   useEffect(() => {
     // 执行注入脚本

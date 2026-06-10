@@ -84,13 +84,13 @@ const ignaiThemeCss = `
         color-scheme: light;
         --ignai-heat: #f05a1a;
         --ignai-signal: #2457d6;
-        --ignai-bg: #fff8ef;
-        --ignai-card: #fffaf3;
-        --ignai-card-strong: rgba(255, 252, 246, 0.96);
-        --ignai-border: rgba(118, 67, 31, 0.16);
+        --ignai-bg: #fff7ec;
+        --ignai-card: #fffaf4;
+        --ignai-card-strong: rgba(255, 251, 244, 0.96);
+        --ignai-border: rgba(126, 71, 34, 0.16);
         --ignai-text: #19130e;
-        --ignai-text-dim: rgba(34, 24, 16, 0.58);
-        --ignai-text-soft: rgba(34, 24, 16, 0.72);
+        --ignai-text-dim: rgba(34, 24, 16, 0.66);
+        --ignai-text-soft: rgba(34, 24, 16, 0.78);
         --ignai-header-bg: linear-gradient(90deg, rgba(255, 250, 242, 0.9) 0%, rgba(255, 245, 232, 0.88) 54%, rgba(255, 239, 222, 0.9) 100%);
         --ignai-header-bg-sticky: linear-gradient(90deg, rgba(255, 250, 242, 0.96) 0%, rgba(255, 245, 232, 0.96) 54%, rgba(255, 239, 222, 0.97) 100%);
         --ignai-header-border: rgba(180, 91, 33, 0.18);
@@ -115,8 +115,8 @@ const ignaiThemeCss = `
         --rig-paper-06: rgba(32, 21, 14, 0.06);
         --rig-border: rgba(145, 76, 31, 0.18);
         --rig-section-bg: transparent;
-        --rig-card-bg: rgba(255, 255, 255, 0.56);
-        --rig-card-hover-bg: rgba(255, 255, 255, 0.8);
+        --rig-card-bg: rgba(255, 250, 242, 0.86);
+        --rig-card-hover-bg: rgba(255, 252, 246, 0.96);
         --rig-terminal-bg: rgba(30, 20, 13, 0.08);
         --rig-hero-bg: linear-gradient(135deg, #ff8a18 0%, #ff5f1f 46%, #e3252f 100%);
         --rig-hero-artwash: linear-gradient(90deg, rgba(255,138,24,0.1), transparent 42%), url('/brand/ignai/hero-gradient-brand.webp');
@@ -134,8 +134,8 @@ const ignaiThemeCss = `
 
       html.light #theme-proxio {
         --ignai-card-text: #20150e;
-        --ignai-card-muted: rgba(32, 21, 14, 0.62);
-        --ignai-card-faint: rgba(32, 21, 14, 0.46);
+        --ignai-card-muted: rgba(32, 21, 14, 0.7);
+        --ignai-card-faint: rgba(32, 21, 14, 0.56);
         --ignai-chip-bg: rgba(255, 255, 255, 0.68);
         --ignai-chip-border: rgba(145, 76, 31, 0.16);
         --ignai-chip-text: rgba(32, 21, 14, 0.68);
@@ -408,8 +408,12 @@ const ignaiThemeCss = `
       }
 
       @media (max-width: 767px) {
+        #theme-proxio .ud-header:not(.ignai-header--hidden) {
+          transform: translateY(0) !important;
+        }
+
         #theme-proxio .ud-header.ignai-header--hidden:not(.ignai-header--menu-open) {
-          transform: translateY(calc(-100% - 10px));
+          transform: translateY(calc(-100% - 10px)) !important;
         }
       }
 
@@ -1678,18 +1682,20 @@ const ignaiThemeCss = `
       }
 
       html.light #theme-proxio .ignai-event-card,
-      html.light #theme-proxio .ignai-record-card {
-        border-color: rgba(32, 21, 14, 0.18);
+      html.light #theme-proxio .ignai-record-card,
+      html.light #theme-proxio .ignai-article-card {
+        border-color: rgba(126, 71, 34, 0.18);
         background:
-          linear-gradient(180deg, rgba(18, 20, 29, 0.97) 0%, rgba(9, 11, 17, 0.99) 100%);
+          linear-gradient(180deg, rgba(255, 252, 246, 0.96) 0%, rgba(255, 247, 236, 0.9) 100%);
+        color: var(--ignai-card-text);
         box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.05),
-          0 28px 80px rgba(75, 47, 27, 0.22);
+          inset 0 1px 0 rgba(255, 255, 255, 0.7),
+          0 22px 70px rgba(117, 69, 35, 0.12);
       }
 
       html.light #theme-proxio .ignai-event-card [class*="text-white"],
       html.light #theme-proxio .ignai-record-card [class*="text-white"] {
-        color: rgba(255, 248, 239, 0.72) !important;
+        color: var(--ignai-card-muted) !important;
       }
 
       html.light #theme-proxio .ignai-event-card h3,
@@ -1698,13 +1704,14 @@ const ignaiThemeCss = `
       html.light #theme-proxio .ignai-record-card h3[class*="text-white"],
       html.light #theme-proxio .ignai-event-card .font-semibold,
       html.light #theme-proxio .ignai-record-card .font-semibold {
-        color: #fffaf3 !important;
+        color: var(--ignai-card-text) !important;
       }
 
       html.light #theme-proxio .ignai-event-card .rounded-full,
       html.light #theme-proxio .ignai-record-card .rounded-full {
-        border-color: rgba(255, 255, 255, 0.14) !important;
-        color: rgba(255, 248, 239, 0.7) !important;
+        border-color: rgba(202, 105, 49, 0.18) !important;
+        background: rgba(255, 248, 238, 0.86) !important;
+        color: rgba(32, 21, 14, 0.7) !important;
       }
 
       #theme-proxio .ignai-themed-page {
@@ -1727,6 +1734,186 @@ const ignaiThemeCss = `
       #theme-proxio .ignai-themed-card:hover {
         border-color: color-mix(in srgb, var(--rig-heat) 32%, var(--rig-border));
         background-color: var(--rig-card-hover-bg);
+      }
+
+      #theme-proxio .ignai-about-page {
+        position: relative;
+        background:
+          radial-gradient(circle at 18% 8%, color-mix(in srgb, var(--rig-heat) 14%, transparent), transparent 32%),
+          radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--rig-signal) 7%, transparent), transparent 26%),
+          var(--ignai-bg);
+        color: var(--rig-paper);
+      }
+
+      #theme-proxio .ignai-about-page::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.22;
+        background-image: var(--ignai-page-grid);
+        background-size: 92px 92px;
+        mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 86%, transparent 100%);
+      }
+
+      #theme-proxio .ignai-about-page > section {
+        position: relative;
+        z-index: 1;
+      }
+
+      #theme-proxio .ignai-about-hero-line--primary {
+        background-image: linear-gradient(90deg, #fff 0%, #fff8ef 54%, rgba(255, 248, 239, 0.58) 100%);
+      }
+
+      #theme-proxio .ignai-about-hero-line--accent,
+      #theme-proxio .ignai-about-stat-num {
+        background-image: linear-gradient(90deg, #ff7a18 0%, #ffd09a 58%, #5da9ff 100%);
+      }
+
+      #theme-proxio .ignai-about-eyebrow {
+        color: color-mix(in srgb, var(--rig-heat) 72%, var(--rig-paper) 28%);
+      }
+
+      #theme-proxio .ignai-about-eyebrow--signal {
+        color: color-mix(in srgb, var(--rig-signal) 72%, var(--rig-paper) 28%);
+      }
+
+      #theme-proxio .ignai-about-title,
+      #theme-proxio .ignai-about-value-title,
+      #theme-proxio .ignai-about-panel-question {
+        color: var(--rig-paper);
+      }
+
+      #theme-proxio .ignai-about-copy,
+      #theme-proxio .ignai-about-value-desc,
+      #theme-proxio .ignai-about-panel-answer,
+      #theme-proxio .ignai-about-stat-label {
+        color: var(--rig-paper-70);
+      }
+
+      #theme-proxio .ignai-about-stats {
+        border-color: var(--rig-border);
+        background: color-mix(in srgb, var(--rig-card-bg) 24%, transparent);
+      }
+
+      #theme-proxio .ignai-about-panel,
+      #theme-proxio .ignai-about-value-card {
+        border-color: var(--rig-border);
+        background: var(--rig-card-bg);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.03),
+          0 24px 70px rgba(0, 0, 0, 0.2);
+      }
+
+      #theme-proxio .ignai-about-value-card:hover {
+        border-color: color-mix(in srgb, var(--rig-heat) 34%, var(--rig-border));
+        background: var(--rig-card-hover-bg);
+      }
+
+      #theme-proxio .ignai-about-panel-row {
+        border-color: var(--rig-border);
+      }
+
+      #theme-proxio .ignai-about-value-icon {
+        border-color: color-mix(in srgb, var(--rig-heat) 28%, transparent);
+        background: color-mix(in srgb, var(--rig-heat) 12%, transparent);
+        color: var(--rig-heat);
+      }
+
+      html.light #theme-proxio .ignai-about-page {
+        background:
+          radial-gradient(circle at 10% 6%, rgba(255, 125, 43, 0.14), transparent 28%),
+          radial-gradient(circle at 86% 10%, rgba(40, 84, 214, 0.055), transparent 26%),
+          linear-gradient(180deg, #fff7ec 0%, #fffaf4 46%, #fff6ea 100%);
+        color: #20150e;
+      }
+
+      html.light #theme-proxio .ignai-about-page::before {
+        opacity: 0.42;
+      }
+
+      html.light #theme-proxio .ignai-about-hero-line--primary {
+        background-image: linear-gradient(90deg, #160d08 0%, #352113 64%, rgba(53, 33, 19, 0.72) 100%);
+      }
+
+      html.light #theme-proxio .ignai-about-hero-line--accent,
+      html.light #theme-proxio .ignai-about-stat-num {
+        background-image: linear-gradient(90deg, #e34f16 0%, #ff7a18 46%, #2457d6 100%);
+      }
+
+      html.light #theme-proxio .ignai-about-eyebrow {
+        color: #b94214;
+      }
+
+      html.light #theme-proxio .ignai-about-eyebrow--signal {
+        color: #2457d6;
+      }
+
+      html.light #theme-proxio .ignai-about-title,
+      html.light #theme-proxio .ignai-about-value-title,
+      html.light #theme-proxio .ignai-about-panel-question {
+        color: #20150e;
+      }
+
+      html.light #theme-proxio .ignai-about-copy,
+      html.light #theme-proxio .ignai-about-value-desc,
+      html.light #theme-proxio .ignai-about-panel-answer,
+      html.light #theme-proxio .ignai-about-stat-label {
+        color: rgba(32, 21, 14, 0.72);
+      }
+
+      html.light #theme-proxio .ignai-about-stats {
+        border-color: rgba(126, 71, 34, 0.14);
+        background: rgba(255, 248, 238, 0.48);
+      }
+
+      html.light #theme-proxio .ignai-about-panel,
+      html.light #theme-proxio .ignai-about-value-card {
+        border-color: rgba(126, 71, 34, 0.16);
+        background:
+          linear-gradient(180deg, rgba(255, 252, 246, 0.94) 0%, rgba(255, 247, 236, 0.86) 100%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.82),
+          0 24px 72px rgba(119, 68, 33, 0.1);
+      }
+
+      html.light #theme-proxio .ignai-about-value-card:hover {
+        border-color: rgba(227, 79, 22, 0.32);
+        background:
+          linear-gradient(180deg, rgba(255, 253, 248, 0.98) 0%, rgba(255, 241, 224, 0.92) 100%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          0 28px 84px rgba(119, 68, 33, 0.14);
+      }
+
+      html.light #theme-proxio .ignai-about-panel-row {
+        border-color: rgba(126, 71, 34, 0.14);
+      }
+
+      html.light #theme-proxio .ignai-about-value-icon {
+        border-color: rgba(227, 79, 22, 0.2);
+        background: rgba(255, 122, 24, 0.1);
+        color: #e34f16;
+      }
+
+      html.light #theme-proxio .ignai-cta-primary {
+        border-color: rgba(209, 86, 25, 0.3);
+        background: linear-gradient(135deg, #ff7a18 0%, #ff8f2e 52%, #df3822 100%);
+        color: #fffaf3;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 250, 243, 0.18),
+          0 16px 42px rgba(227, 79, 22, 0.22);
+      }
+
+      html.light #theme-proxio .ignai-cta-secondary {
+        border-color: rgba(126, 71, 34, 0.2);
+        background: rgba(255, 250, 242, 0.74);
+        color: #20150e;
+      }
+
+      html.light #theme-proxio .ignai-cta-secondary:hover {
+        border-color: rgba(227, 79, 22, 0.32);
+        background: rgba(255, 242, 226, 0.9);
       }
 
 

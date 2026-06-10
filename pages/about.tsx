@@ -4,8 +4,8 @@ import { useRef } from 'react'
 import SmartLink from '@/components/SmartLink'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' }
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 }
 }
 
 const stagger = {
@@ -75,7 +75,7 @@ export default function AboutPage() {
         <meta name='description' content='IGNAI 是一个 base 长沙、连接本地、面向全球的 AI 社区。了解我们的使命、价值观和社区文化。' />
       </Head>
 
-      <main className='min-h-screen bg-[#07080C] text-neutral-100 overflow-hidden'>
+      <main className='ignai-about-page min-h-screen overflow-hidden'>
 
         {/* Hero */}
         <section ref={heroRef} className='relative pt-32 pb-20 sm:pt-40 sm:pb-28'>
@@ -95,7 +95,7 @@ export default function AboutPage() {
             >
               <motion.p
                 variants={fadeUp}
-                className='text-xs font-medium tracking-wider uppercase text-[#F0CB8A]/72 mb-6'
+                className='ignai-about-eyebrow text-xs font-medium tracking-wider uppercase mb-6'
               >
                 About IGNAI
               </motion.p>
@@ -103,17 +103,17 @@ export default function AboutPage() {
                 variants={fadeUp}
                 className='text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight'
               >
-                <span className='bg-gradient-to-r from-white via-white to-white/60 bg-clip-text text-transparent'>
+                <span className='ignai-about-hero-line ignai-about-hero-line--primary bg-clip-text text-transparent'>
                   从长沙出发，
                 </span>
                 <br />
-                <span className='bg-gradient-to-r from-[#FF7A18] via-[#ffd09a] to-[#5DA9FF] bg-clip-text text-transparent'>
+                <span className='ignai-about-hero-line ignai-about-hero-line--accent bg-clip-text text-transparent'>
                   连接真实行动者。
                 </span>
               </motion.h1>
               <motion.p
                 variants={fadeUp}
-                className='mt-6 text-lg sm:text-xl text-neutral-400 leading-relaxed max-w-xl mx-auto'
+                className='ignai-about-copy mt-6 text-lg sm:text-xl leading-relaxed max-w-xl mx-auto'
               >
                 IGNAI 是一个关注 AI、Agent、Product、Startup 与真实行动的社区。
                 我们相信，在 AGI 到来之前，最值得做的事是点燃一群能行动的人。
@@ -123,7 +123,7 @@ export default function AboutPage() {
         </section>
 
         {/* Stats */}
-        <section className='relative py-16 border-y border-white/[0.06]'>
+        <section className='ignai-about-stats relative py-16 border-y border-white/[0.06]'>
           <div className='mx-auto max-w-4xl px-5 sm:px-8'>
             <motion.div
               initial='hidden'
@@ -138,10 +138,10 @@ export default function AboutPage() {
                   variants={fadeUp}
                   className='text-center'
                 >
-                  <p className='text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#FF7A18] to-[#ffd09a] bg-clip-text text-transparent'>
+                  <p className='ignai-about-stat-num text-3xl sm:text-4xl font-bold bg-clip-text text-transparent'>
                     {s.num}
                   </p>
-                  <p className='mt-2 text-sm text-neutral-500'>{s.label}</p>
+                  <p className='ignai-about-stat-label mt-2 text-sm'>{s.label}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -159,16 +159,16 @@ export default function AboutPage() {
               className='grid gap-16 lg:grid-cols-2 lg:gap-20 items-start'
             >
               <div>
-                <motion.p variants={fadeUp} className='text-xs font-medium tracking-wider uppercase text-[#5DA9FF]/70 mb-4'>
+                <motion.p variants={fadeUp} className='ignai-about-eyebrow ignai-about-eyebrow--signal text-xs font-medium tracking-wider uppercase mb-4'>
                   Mission
                 </motion.p>
-                <motion.h2 variants={fadeUp} className='text-3xl sm:text-4xl font-bold leading-tight'>
+                <motion.h2 variants={fadeUp} className='ignai-about-title text-3xl sm:text-4xl font-bold leading-tight'>
                   我们在做什么
                 </motion.h2>
-                <motion.p variants={fadeUp} className='mt-6 text-neutral-400 leading-relaxed'>
+                <motion.p variants={fadeUp} className='ignai-about-copy mt-6 leading-relaxed'>
                   IGNAI 聚集了一批关注 AI、产品、内容和创业的人。我们通过线下聚会、主题共创、项目实践和内容分享，让学习和连接持续发生。
                 </motion.p>
-                <motion.p variants={fadeUp} className='mt-4 text-neutral-400 leading-relaxed'>
+                <motion.p variants={fadeUp} className='ignai-about-copy mt-4 leading-relaxed'>
                   不是围观群，不是知识付费，是一个真正有行动力的本地 AI 社区。
                 </motion.p>
               </div>
@@ -176,7 +176,7 @@ export default function AboutPage() {
               <div className='relative'>
                 <motion.div
                   variants={fadeUp}
-                  className='rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8 backdrop-blur-sm'
+                  className='ignai-about-panel rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8 backdrop-blur-sm'
                 >
                   <div className='space-y-6'>
                     {[
@@ -184,9 +184,9 @@ export default function AboutPage() {
                       { q: '做什么？', a: '线下交流、主题工作坊、项目协作、内容共创、成员互助。' },
                       { q: '怎么加入？', a: '提交加入意向，参加一次线下活动，就是社区的一员。' }
                     ].map((item) => (
-                      <div key={item.q} className='border-b border-white/[0.06] pb-4 last:border-0 last:pb-0'>
-                        <p className='text-sm font-medium text-white/90 mb-1.5'>{item.q}</p>
-                        <p className='text-sm text-neutral-500 leading-relaxed'>{item.a}</p>
+                      <div key={item.q} className='ignai-about-panel-row border-b border-white/[0.06] pb-4 last:border-0 last:pb-0'>
+                        <p className='ignai-about-panel-question text-sm font-medium mb-1.5'>{item.q}</p>
+                        <p className='ignai-about-panel-answer text-sm leading-relaxed'>{item.a}</p>
                       </div>
                     ))}
                   </div>
@@ -209,27 +209,27 @@ export default function AboutPage() {
               viewport={{ once: true, margin: '-100px' }}
               variants={stagger}
             >
-              <motion.p variants={fadeUp} className='text-xs font-medium tracking-wider uppercase text-[#F0CB8A]/72 mb-4 text-center'>
+              <motion.p variants={fadeUp} className='ignai-about-eyebrow text-xs font-medium tracking-wider uppercase mb-4 text-center'>
                 Values
               </motion.p>
-              <motion.h2 variants={fadeUp} className='text-3xl sm:text-4xl font-bold text-center mb-12'>
+              <motion.h2 variants={fadeUp} className='ignai-about-title text-3xl sm:text-4xl font-bold text-center mb-12'>
                 社区价值观
               </motion.h2>
 
               <div className='grid gap-4 sm:grid-cols-2'>
-                {values.map((v, i) => (
+                {values.map((v) => (
                   <motion.div
                     key={v.title}
                     variants={fadeUp}
-                    className='group rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 sm:p-6 transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]'
+                    className='ignai-about-value-card group rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 sm:p-6 transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.04]'
                   >
                     <div className='flex items-center gap-3 mb-3'>
-                      <div className='flex h-9 w-9 items-center justify-center rounded-lg border border-[#FF7A18]/20 bg-[#FF7A18]/10 text-[#FF7A18]'>
+                      <div className='ignai-about-value-icon flex h-9 w-9 items-center justify-center rounded-lg border border-[#FF7A18]/20 bg-[#FF7A18]/10 text-[#FF7A18]'>
                         {v.icon}
                       </div>
-                      <h3 className='text-base font-semibold text-white'>{v.title}</h3>
+                      <h3 className='ignai-about-value-title text-base font-semibold'>{v.title}</h3>
                     </div>
-                    <p className='text-sm text-neutral-500 leading-relaxed'>{v.desc}</p>
+                    <p className='ignai-about-value-desc text-sm leading-relaxed'>{v.desc}</p>
                   </motion.div>
                 ))}
               </div>
@@ -251,7 +251,7 @@ export default function AboutPage() {
                   Ignite before AGI.
                 </span>
               </motion.h2>
-              <motion.p variants={fadeUp} className='mt-4 text-neutral-400'>
+              <motion.p variants={fadeUp} className='ignai-about-copy mt-4'>
                 如果你也想在 AI 时代做点什么，而不是只是看——欢迎加入。
               </motion.p>
               <motion.div variants={fadeUp} className='mt-8 flex flex-col sm:flex-row gap-4 justify-center'>
