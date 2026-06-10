@@ -32,6 +32,9 @@ module.exports = {
 
   // 微软 Clarity 站点分析
   CLARITY_ID: process.env.NEXT_PUBLIC_CLARITY_ID || null, // 只需要复制Clarity脚本中的ID部分，ID是一个十位的英文数字组合
+  CLARITY_IGNAI_CN_ID: process.env.NEXT_PUBLIC_CLARITY_IGNAI_CN_ID || '',
+  CLARITY_YANGLAISHE_CN_ID:
+    process.env.NEXT_PUBLIC_CLARITY_YANGLAISHE_CN_ID || '',
 
   // PostHog 产品分析 / 事件埋点 / Feature Flag / A-B Testing
   POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY || '',

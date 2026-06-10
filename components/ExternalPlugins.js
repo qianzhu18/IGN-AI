@@ -109,6 +109,16 @@ const ExternalPlugin = props => {
   const TIANLI_KEY = siteConfig('TianliGPT_KEY', null, NOTION_CONFIG)
   const GLOBAL_JS = siteConfig('GLOBAL_JS', '', NOTION_CONFIG)
   const CLARITY_ID = siteConfig('CLARITY_ID', null, NOTION_CONFIG)
+  const CLARITY_IGNAI_CN_ID = siteConfig(
+    'CLARITY_IGNAI_CN_ID',
+    '',
+    NOTION_CONFIG
+  )
+  const CLARITY_YANGLAISHE_CN_ID = siteConfig(
+    'CLARITY_YANGLAISHE_CN_ID',
+    '',
+    NOTION_CONFIG
+  )
   const IMG_SHADOW = siteConfig('IMG_SHADOW', null, NOTION_CONFIG)
   const ANIMATE_CSS_URL = siteConfig('ANIMATE_CSS_URL', null, NOTION_CONFIG)
   const MOUSE_FOLLOW = siteConfig('MOUSE_FOLLOW', null, NOTION_CONFIG)
@@ -261,12 +271,19 @@ const ExternalPlugin = props => {
         </>
       )}
 
-      {CLARITY_ID && (
+      {(CLARITY_ID || CLARITY_IGNAI_CN_ID || CLARITY_YANGLAISHE_CN_ID) && (
         <>
           <script
             async
             dangerouslySetInnerHTML={{
               __html: `
+                var clarityHost = window.location.hostname.replace(/^www\\./, "");
+                var clarityIds = {
+                  "ignai.cn": "${CLARITY_IGNAI_CN_ID}",
+                  "yanglaishe.cn": "${CLARITY_YANGLAISHE_CN_ID}"
+                };
+                var clarityProjectId = clarityIds[clarityHost] || "${CLARITY_ID || ''}";
+                if (clarityProjectId) {
                 (function(c, l, a, r, i, t, y) {
                   c[a] = c[a] || function() {
                     (c[a].q = c[a].q || []).push(arguments);
@@ -280,7 +297,8 @@ const ExternalPlugin = props => {
                   } else {
                     l.head.appendChild(t);
                   }
-                })(window, document, "clarity", "script", "${CLARITY_ID}");
+                })(window, document, "clarity", "script", clarityProjectId);
+                }
                 `
             }}
           />

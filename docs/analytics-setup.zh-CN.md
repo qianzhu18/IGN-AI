@@ -16,6 +16,8 @@
 
 ```bash
 NEXT_PUBLIC_CLARITY_ID=
+NEXT_PUBLIC_CLARITY_IGNAI_CN_ID=x4rao4aza8
+NEXT_PUBLIC_CLARITY_YANGLAISHE_CN_ID=x4rb4016lg
 NEXT_PUBLIC_POSTHOG_KEY=
 NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 NEXT_PUBLIC_POSTHOG_UI_HOST=https://us.posthog.com
@@ -29,12 +31,14 @@ NEXT_PUBLIC_GLITCHTIP_DSN=
 
 说明：
 
-- `NEXT_PUBLIC_CLARITY_ID` 只填 Clarity tracking code 里的 project id。
+- `NEXT_PUBLIC_CLARITY_ID` 是 Clarity 默认 project id；如果配置了下面两个域名专用 id，访问对应域名时会优先使用域名专用 id。
+- `NEXT_PUBLIC_CLARITY_IGNAI_CN_ID` 用于 `ignai.cn`。
+- `NEXT_PUBLIC_CLARITY_YANGLAISHE_CN_ID` 用于 `yanglaishe.cn` 和 `www.yanglaishe.cn`。
 - `NEXT_PUBLIC_POSTHOG_KEY` 填 PostHog project API key。
 - `NEXT_PUBLIC_POSTHOG_HOST` 和 `NEXT_PUBLIC_POSTHOG_UI_HOST` 默认使用 PostHog Cloud US；如果项目选择 EU 区域，改成控制台给出的 EU endpoint。
 - PostHog session recording 默认关闭；录屏先交给 Clarity，如果未来希望在 PostHog Insight 中直接看 replay，再改为 `true`。
 - `NEXT_PUBLIC_UMAMI_HOST` 默认使用 Umami Cloud 官方脚本地址。
-- `NEXT_PUBLIC_UMAMI_ID` 填 Umami tracking script 里的 `data-website-id`。
+- `NEXT_PUBLIC_UMAMI_ID` 填 Umami tracking script 里的 `data-website-id`，当前为 `64a883f4-b897-4e29-b88b-6cd9b748b452`。
 - `NEXT_PUBLIC_GLITCHTIP_DSN` 当前仅预留。轻量方案下优先用 Sentry Developer 或 PostHog Error Tracking；GlitchTip 作为以后自托管错误追踪选项。
 
 ## 已接入事件
