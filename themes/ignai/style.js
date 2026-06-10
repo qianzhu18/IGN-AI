@@ -55,6 +55,7 @@ const ignaiThemeCss = `
         --rig-paper: oklch(0.9465 0.0099 87.47);
         --rig-paper-70: rgba(240, 237, 230, 0.7);
         --rig-paper-50: rgba(240, 237, 230, 0.5);
+        --rig-paper-45: rgba(240, 237, 230, 0.45);
         --rig-paper-35: rgba(240, 237, 230, 0.35);
         --rig-paper-15: rgba(240, 237, 230, 0.15);
         --rig-paper-06: rgba(240, 237, 230, 0.06);
@@ -108,6 +109,7 @@ const ignaiThemeCss = `
         --rig-paper: #20150e;
         --rig-paper-70: rgba(32, 21, 14, 0.72);
         --rig-paper-50: rgba(32, 21, 14, 0.54);
+        --rig-paper-45: rgba(32, 21, 14, 0.5);
         --rig-paper-35: rgba(32, 21, 14, 0.38);
         --rig-paper-15: rgba(32, 21, 14, 0.14);
         --rig-paper-06: rgba(32, 21, 14, 0.06);
@@ -381,13 +383,34 @@ const ignaiThemeCss = `
 
       /* ========== 导航栏 ========== */
       #theme-proxio .ud-header {
+        position: sticky;
+        top: 0;
         background: var(--ignai-header-bg);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid var(--ignai-header-border);
+        transform: translateY(0);
+        transition:
+          transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+          background 220ms ease,
+          box-shadow 220ms ease,
+          border-color 220ms ease;
+        will-change: transform;
       }
-      #theme-proxio .ud-header.sticky {
+      #theme-proxio .ud-header.sticky,
+      #theme-proxio .ud-header.ignai-header--scrolled {
         background: var(--ignai-header-bg-sticky);
+        box-shadow: 0 14px 42px rgba(0, 0, 0, 0.18);
+      }
+
+      html.light #theme-proxio .ud-header.ignai-header--scrolled {
+        box-shadow: 0 14px 42px rgba(130, 75, 32, 0.12);
+      }
+
+      @media (max-width: 767px) {
+        #theme-proxio .ud-header.ignai-header--hidden:not(.ignai-header--menu-open) {
+          transform: translateY(calc(-100% - 10px));
+        }
       }
 
       #theme-proxio .ignai-header-shell {
@@ -1218,8 +1241,28 @@ const ignaiThemeCss = `
       #theme-proxio .section-title {
         font-size: clamp(2.2rem, 5vw, 4rem);
         font-weight: 600;
-        line-height: 1.02;
+        line-height: 1.06;
         color: var(--rig-paper);
+      }
+
+      html.light #theme-proxio .display-title,
+      html.light #theme-proxio .section-title,
+      html.light #theme-proxio .rig-section-title,
+      html.light #theme-proxio .ignai-articles-page-head h1 {
+        color: #20150e;
+      }
+
+      html.light #theme-proxio .section-lead,
+      html.light #theme-proxio .section-body,
+      html.light #theme-proxio .card-body,
+      html.light #theme-proxio .ignai-articles-page-head p {
+        color: rgba(32, 21, 14, 0.74);
+      }
+
+      html.light #theme-proxio .section-eyebrow,
+      html.light #theme-proxio .card-eyebrow {
+        color: #c44817;
+        opacity: 1;
       }
 
       #theme-proxio .section-copy {
@@ -1588,7 +1631,9 @@ const ignaiThemeCss = `
 
       #theme-proxio .ignai-event-card,
       #theme-proxio .ignai-record-card {
-        background: var(--rig-card-bg);
+        background:
+          linear-gradient(180deg, rgba(16, 18, 26, 0.96) 0%, rgba(10, 12, 18, 0.98) 100%);
+        color: #fff8ef;
       }
 
       html.light #theme-proxio .ignai-unified-card [class*="text-white"],
@@ -1630,6 +1675,36 @@ const ignaiThemeCss = `
       html.light #theme-proxio .open-grid-item .rounded-full,
       html.light #theme-proxio .ignai-themed-page .rounded-full {
         color: var(--ignai-chip-text) !important;
+      }
+
+      html.light #theme-proxio .ignai-event-card,
+      html.light #theme-proxio .ignai-record-card {
+        border-color: rgba(32, 21, 14, 0.18);
+        background:
+          linear-gradient(180deg, rgba(18, 20, 29, 0.97) 0%, rgba(9, 11, 17, 0.99) 100%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.05),
+          0 28px 80px rgba(75, 47, 27, 0.22);
+      }
+
+      html.light #theme-proxio .ignai-event-card [class*="text-white"],
+      html.light #theme-proxio .ignai-record-card [class*="text-white"] {
+        color: rgba(255, 248, 239, 0.72) !important;
+      }
+
+      html.light #theme-proxio .ignai-event-card h3,
+      html.light #theme-proxio .ignai-event-card h3[class*="text-white"],
+      html.light #theme-proxio .ignai-record-card h3,
+      html.light #theme-proxio .ignai-record-card h3[class*="text-white"],
+      html.light #theme-proxio .ignai-event-card .font-semibold,
+      html.light #theme-proxio .ignai-record-card .font-semibold {
+        color: #fffaf3 !important;
+      }
+
+      html.light #theme-proxio .ignai-event-card .rounded-full,
+      html.light #theme-proxio .ignai-record-card .rounded-full {
+        border-color: rgba(255, 255, 255, 0.14) !important;
+        color: rgba(255, 248, 239, 0.7) !important;
       }
 
       #theme-proxio .ignai-themed-page {
@@ -2214,7 +2289,7 @@ const rigStyle = `
   }
   #theme-proxio .rig-section-title {
     margin: 0; color: var(--rig-paper);
-    font: 400 clamp(2.6rem, 5vw, 4.7rem)/0.92 'Rig Chalet', sans-serif;
+    font: 400 clamp(2.6rem, 5vw, 4.7rem)/1.02 'Rig Chalet', sans-serif;
     letter-spacing: 0;
   }
   #theme-proxio .rig-section-title br + * { color: var(--rig-heat); }
@@ -2262,13 +2337,22 @@ const rigStyle = `
   }
   #theme-proxio .rig-hero h1 {
     max-width: 820px; margin: 0 0 2rem; color: var(--rig-hero-title);
-    font: 400 clamp(3.6rem, 7vw, 6.6rem)/0.88 'Rig Chalet', sans-serif;
+    font: 400 clamp(3.6rem, 7vw, 6.6rem)/0.98 'Rig Chalet', sans-serif;
     letter-spacing: 0;
     text-shadow: 0 18px 50px rgba(0,0,0,0.18);
   }
   #theme-proxio .rig-hero-sub {
     max-width: 620px; margin: 0 0 2.5rem; color: var(--rig-hero-copy);
     font-size: 1.1rem; line-height: 1.55; font-weight: 700; opacity: 0.86;
+  }
+
+  html.light #theme-proxio .rig-hero h1 {
+    text-shadow: none;
+  }
+
+  html.light #theme-proxio .rig-hero-sub {
+    color: rgba(25, 14, 8, 0.82);
+    opacity: 1;
   }
   #theme-proxio .rig-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
   #theme-proxio .rig-hero-visual-wrap {
@@ -2835,7 +2919,30 @@ const rigStyle = `
   @media (max-width: 768px) {
     #theme-proxio .rig-section { padding: 4rem 1.5rem; }
     #theme-proxio .rig-hero-inner { padding: 0 1.5rem; }
-    #theme-proxio .rig-hero h1 { font-size: clamp(2.4rem, 8vw, 3.5rem); }
+    #theme-proxio .rig-hero h1 {
+      font-size: clamp(3rem, 13vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 1.35rem;
+    }
+    #theme-proxio .rig-hero-sub {
+      max-width: 31rem;
+      margin-bottom: 2rem;
+      font-size: 1.02rem;
+      line-height: 1.78;
+    }
+    #theme-proxio .rig-hero-actions {
+      gap: 0.85rem;
+    }
+    #theme-proxio .rig-btn {
+      min-height: 3.5rem;
+      width: 100%;
+      padding: 1rem 1.4rem;
+      font-size: 0.88rem;
+    }
+    #theme-proxio .rig-section-title,
+    #theme-proxio .section-title {
+      line-height: 1.1;
+    }
     #theme-proxio .rig-hero-kicker { font-size: 0.66rem; }
     #theme-proxio .rig-hero-visual-caption { align-items: start; flex-direction: column; }
     html.light #theme-proxio .rig-hero-visual-caption,

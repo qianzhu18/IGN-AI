@@ -59,12 +59,12 @@ export function FieldNotesSection() {
                       <p className='text-sm font-semibold text-white'>
                         IGNAI Field Notes
                       </p>
-                      <p className='mt-1 text-xs text-white/42'>
+                      <p className='mt-1 text-xs text-white/66'>
                         {item.dateText}
                         {item.location ? ` · ${item.location}` : ''}
                       </p>
                     </div>
-                    <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'>
+                    <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/70'>
                       {recordTypeLabel[item.type] || '社区记录'}
                     </span>
                   </div>
@@ -72,7 +72,7 @@ export function FieldNotesSection() {
                   <h3 className='mt-6 text-[1.55rem] font-semibold leading-[1.28] text-white transition group-hover:text-[#d4ecff]'>
                     {item.title}
                   </h3>
-                  <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/58'>
+                  <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/72'>
                     {item.excerpt}
                   </p>
                 </div>

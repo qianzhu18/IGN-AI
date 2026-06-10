@@ -98,14 +98,14 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
                     <span className='rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>
                       {eventKindLabel[event.kind] || '社区活动'}
                     </span>
-                    <span className='rounded-full border border-white/10 bg-[#080b10]/72 px-3 py-1.5 text-xs font-medium text-white/70'>
+                    <span className='rounded-full border border-white/10 bg-[#080b10]/72 px-3 py-1.5 text-xs font-medium text-white/78'>
                       {eventStatusLabel[event.status]}
                     </span>
                   </div>
                 </div>
 
                 <div className='flex flex-1 flex-col p-5 sm:p-6'>
-                  <div className='flex flex-wrap gap-3 text-sm text-white/56'>
+                  <div className='flex flex-wrap gap-3 text-sm text-white/72'>
                     <span className='inline-flex items-center gap-2'>
                       <CalendarDays className='h-4 w-4 text-[#F0CB8A]/78' />
                       {event.dateText}
@@ -120,11 +120,11 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
                     {event.title}
                   </h3>
                   {event.subtitle ? (
-                    <p className='mt-2 min-h-5 text-sm text-white/42'>
+                    <p className='mt-2 min-h-5 text-sm text-white/64'>
                       {event.subtitle}
                     </p>
                   ) : null}
-                  <p className='mt-4 line-clamp-2 text-sm leading-7 text-white/62'>
+                  <p className='mt-4 line-clamp-2 text-sm leading-7 text-white/72'>
                     {event.excerpt}
                   </p>
 
@@ -132,7 +132,7 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
                     {event.tags.map(tag => (
                       <span
                         key={tag}
-                        className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/58'
+                        className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/70'
                       >
                         {tag}
                       </span>

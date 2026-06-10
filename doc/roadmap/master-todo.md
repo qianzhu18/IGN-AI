@@ -40,6 +40,7 @@
 - [x] 字体加载修复（Cormorant Garamond 已添加到 font.config.js）
 - [x] 首页 Hero / Header / CTA 品牌一致性首轮打磨（明暗主题切换 + 美术资料库接入 + Header/Hero/Footer 变量化）
 - [ ] 首页 Hero / Header / CTA 品牌一致性后续细节继续打磨
+  - [x] 2026-06-10：移动端 RIG Hero 行高、Header 上滑隐藏 / 下滑显示、浅色活动 / 文章对比度完成一轮修复
 - [ ] 首页后续区块完整性与显隐节奏复查（避免首屏之后出现“页面不完整”的感知）
 - [ ] 成员目录页视觉再打磨
 - [ ] 成员详情页层级再打磨
@@ -128,6 +129,9 @@
 - [x] **P1 / 8.0** 清理 `.worktrees` 对 Jest 的干扰，让上线前测试结果可信
 - [ ] **P1 / 7.8** 修复 `yarn lint` 中与上线主线相关的 error
 - [ ] **P2 / 6.5** 修复 `<link rel=preload> has an invalid href value` 控制台警告
+- [ ] **P2 / 6.3** 本地化或禁用外部动效 CDN（animate.css / wow.js），避免 cdnjs 连接失败在首页产生控制台错误
+- [ ] **P2 / 6.2** 处理旧模板文章 `/article/example-1` page data 超过 128k 构建告警（隐藏模板文章或精简文章详情 props）
+- [ ] **P2 / 6.1** 排查前台 / 管理页外部 Unsplash 随机图 503 警告，改为稳定图源 / 本地占位图或增加失败 fallback
 - [ ] **P2 / 6.0** 更新 Browserslist / caniuse-lite
 - [ ] **P2 / 5.5** 评估是否保留前台 HTML 中的 `NotionNext` generator 标记
 

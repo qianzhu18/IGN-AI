@@ -107,10 +107,50 @@ export const Header = props => {
     ? buildNavItems(props.customMenu, fallbackNavItems)
     : fallbackNavItems
   const [showMenu, setShowMenu] = useState(false)
+  const [hideOnScroll, setHideOnScroll] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     setShowMenu(false)
+    setHideOnScroll(false)
   }, [router.asPath])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    let lastY = window.scrollY
+    let frame = 0
+
+    const updateHeader = () => {
+      const currentY = window.scrollY
+      const delta = currentY - lastY
+
+      setIsScrolled(currentY > 8)
+
+      if (showMenu || currentY < 84) {
+        setHideOnScroll(false)
+      } else if (delta > 8 && currentY > 128) {
+        setHideOnScroll(true)
+      } else if (delta < -8) {
+        setHideOnScroll(false)
+      }
+
+      lastY = currentY
+      frame = 0
+    }
+
+    const handleScroll = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(updateHeader)
+    }
+
+    updateHeader()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [showMenu])
 
   const prefetchOnIntent = href => {
     if (typeof href !== 'string' || !href.startsWith('/')) return
@@ -132,7 +172,13 @@ export const Header = props => {
 
   return (
     <>
-      <div className='ud-header left-0 top-0 z-40 flex w-full items-center'>
+      <div
+        className={`ud-header left-0 top-0 z-40 flex w-full items-center ${
+          hideOnScroll ? 'ignai-header--hidden' : ''
+        } ${isScrolled ? 'ignai-header--scrolled' : ''} ${
+          showMenu ? 'ignai-header--menu-open' : ''
+        }`}
+      >
         <div className='container'>
           <div className='relative -mx-4 flex items-center justify-between ignai-header-shell'>
 
