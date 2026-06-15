@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-06-10T19:02:41.780Z",
+  "results": [
+    {
+      "name": "sahara",
+      "url": "https://saharaai.com/",
+      "status": 200,
+      "title": "Sahara AI",
+      "text": "ENTERPRISE Agentic Solutions Data Services PRODUCT USE AI Sorin ClawApp CONTRIBUTE TO AI Data Service Platform AI Marketplace BUILD AI AI Developer Platform Agentic Blockchain Agentic Protocols LEARN ECOSYSTEM & COMMUNITY Ecosystem Directory Community Hub RESOURCES Blog Research Documentation Careers COMPETITIONS ACTIVE COMPETITIONS $100k - AI Paper Trading $SAHARA SAHARA TOKEN Get $SAHARA Stake $SAHARA Tokenomics JOIN SORIN AI For Agentic Automati Your AI workforce across every app, every task, every day CONTACT US MEET SORIN TRUSTED BY ENTERPRISES RESEARCH LABS AI COMPANIES 01 EXPERIENCE SAHARA AI Sorin Your Personal Agent for Global Digital Markets. GET STARTED LEARN MORE BETA Sorin Desktop Fully autonomous trading execution available on the Sorin Desktop app  DOWNLOAD APP LEARN MORE ClawApp Easiest Way to Deploy OpenClaw Agents Locally. GET STARTED LEARN MORE Data Service Platform Collect, Label, and Validate AI Data. GET STARTED LEARN MORE 02 FOR ENTERPRISES Power Your Enterprise with Sahara AI Agentic Solutions Customizable, secure, and production-ready. Sahara AI builds enterprise-ready agents designed to solve real business problems, not just chat. Custom-Built for Your Industry and Stack Proven Across Use Cases Verifiable Data and Compute Secure Agent Workflows GET STARTED Data Services Access a global, on-demand workforce for high-quality data pipelines, spanning collection, labeling, enrichment, and validation. Global Talent, On Demand Multimodal Coverage Precision Task Matching Predictable Pricing Proven Results GET STARTED 03 CASE STUDIES How Global Brands Are",
+      "screenshot": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-visual-refs-2026-06-11/sahara.png",
+      "error": "",
+      "consoleErrors": [
+        "warning: Unrecognized feature: 'presentation'.",
+        "error: Failed to load resource: net::ERR_CONNECTION_CLOSED"
+      ],
+      "failed": [
+        "net::ERR_CONNECTION_CLOSED https://stats.g.doubleclick.net/g/collect?v=2&tid=G-8JY051HV2D&cid=1928178703.1781118116&gtm=45je6641v9179186120za200zb9225240121zd9225240121&rcb=8&aip=1&dma=0&",
+        "net::ERR_ABORTED https://www.google.com/rmkt/collect/17361100460/?random=1781118115694&cv=11&fst=1781118115694&fmt=8&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45be6641v922524",
+        "net::ERR_ABORTED https://www.google.com/ccm/collect?rcb=2&frm=0&auid=32558492.1781118116&dt=Sahara%20AI&en=page_view&dl=https%3A%2F%2Fsaharaai.com%2F&scrsrc=www.googletagmanager",
+        "net::ERR_ABORTED https://analytics.google.com/g/collect?v=2&tid=G-8JY051HV2D&gtm=45je6641v9179186120za200zb9225240121zd9225240121&_p=1781118114934&_gaz=1&gcd=13l3l3l3l1l1&npa=0&",
+        "net::ERR_ABORTED https://www.google.com/pagead/form-data/17361100460?gtm=45be6641v9225240121za200zd9225240121xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=0~115616986~115938465~115938468&r",
+        "net::ERR_ABORTED https://www.google.com/rmkt/collect/17361100460/?random=1781118116499&cv=11&fst=1781118116499&fmt=8&bg=ffffff&guid=ON&async=1&en=form_start&gtm=45be6641v9225240",
+        "net::ERR_ABORTED https://www.google.com/ccm/form-data/17361100460?gtm=45be6641v9225240121za200zd9225240121xec&gcd=13l3l3l3l1l1&dma=0&tag_exp=0~115616986~115938465~115938468&rcb="
+      ]
+    },
+    {
+      "name": "wisprflow",
+      "url": "https://wisprflow.ai/",
+      "status": 200,
+      "title": "Wispr Flow | Effortless Voice Dictation",
+      "text": "Product Individuals Business Resources Company Download for macOS Don’t type, just speak The voice-to-text AI that turns speech into clear, polished writing in every app. Download for macOS Available on Mac, Windows, iPhone, and Android Umm, hope your week has started well…I was talking to Cheyene earlier but reception was really bad and I think their going to handle the first part of the project, but I’m not totally sure. Also, I told the team the the new timeline should be ready by Friday, although it’s probably going to slip. There’s been a lot of back and forth and honestly the the whole thing’s been kind of chaotic, like nobody really knows what’s going on so can you check in with them and see if the notes from yesterday’s meeting were sent out, or if they’re still waiting. I think Cheyene mentioned it but didn’t confirm, and now I’m a little lost. Hope your week is off to a good start. I was talking to Cheyene earlier, but the reception was really bad. I think they’re going to handle the first part of the project, but I’m not totally sure. I also told the team the new timeline should be ready by Friday — although it might slip. There’s been a lot of back and forth, and honestly, the whole thing has been a bit chaotic. It feels like nobody really knows what’s going on. Can you check in with them and see if the notes from yesterday’s meeting were sent out, or if they’re still waiting? I think Cheyene mentioned it, but didn’t confirm — and now I’m a little lost! Mac Windows iPhone Android Write faster in all your apps, on any device Seamless speech-to-text in every appli",
+      "screenshot": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-visual-refs-2026-06-11/wisprflow.png",
+      "error": "",
+      "consoleErrors": [
+        "error: Error: <svg> attribute height: Expected length, \"auto\".",
+        "error: Error: <svg> attribute height: Expected length, \"auto\".",
+        "error: Error: <svg> attribute height: Expected length, \"auto\".",
+        "warning: Blocked message from unauthorized origin: https://wisprflow.ai",
+        "warning: AhrefsAnalytics script is already initialized, exiting... Did you install it twice? Please fix.",
+        "warning: Blocked message from unauthorized origin: https://wisprflow.ai"
+      ],
+      "failed": [
+        "net::ERR_ABORTED https://pagead2.googlesyndication.com/ccm/collect?rcb=5&frm=0&ae=g&en=page_view&dl=https%3A%2F%2Fwisprflow.ai%2F&scrsrc=www.googletagmanager.com&rnd=696487207.1",
+        "net::ERR_ABORTED https://pagead2.googlesyndication.com/ccm/collect?rcb=10&frm=0&en=page_view&dl=https%3A%2F%2Fwisprflow.ai%2F&scrsrc=www.googletagmanager.com&rnd=696487207.17811",
+        "net::ERR_ABORTED https://pagead2.googlesyndication.com/pagead/conversion/16683677581/?random=1781118122704&cv=11&fst=1781118122704&fmt=8&bg=ffffff&guid=ON&async=1&en=conversion&",
+        "net::ERR_ABORTED https://r2.vidzflow.com/source/44f574da-b662-4b71-b0b5-fa776d40a4e7.mp4",
+        "net::ERR_ABORTED https://www.google.com/rmkt/collect/16683677581/?random=1781118125384&cv=11&fst=1781118125384&fmt=8&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45be6641v921422",
+        "net::ERR_ABORTED https://www.google.com/ccm/collect?rcb=5&frm=0&ae=g&auid=1584158110.1781118125&dt=Wispr%20Flow%20%7C%20Effortless%20Voice%20Dictation&en=consent_update&dl=https",
+        "net::ERR_BLOCKED_BY_ORB https://verbiflow-customer-assets.s3.us-east-1.amazonaws.com/deanonymization.js",
+        "net::ERR_ABORTED https://consent-api.service.consent.usercentrics.eu/consent/uw/3"
+      ]
+    },
+    {
+      "name": "spline",
+      "url": "https://spline.design/",
+      "status": 200,
+      "title": "Spline - 3D Design tool in the browser with real-time collaboration",
+      "text": "Meet Omma Build interactive experiences, websites, 3d, and apps using natural language. Products Resources Community Customers Enterprise Pricing Log In Get Started The all-in-one platform for 3D and design Spline is a design platform to create and collaborate on interactive production-ready experiences in real-time. Get started — it’s free Press and drag to orbit A complete platform for real-time interactive design Get started by remixing a 3D design made by the Spline community. Interactive Websites @DesignGabor Product Design @heyvlad Brand & Marketing @sanny.verkissen Gamified Experiences @rluzmotion 3D Mockups @tanyadizone 3D Logos @samborek Animated Characters @aximoris Interactive Websites @DesignGabor Product Design @heyvlad Brand & Marketing @sanny.verkissen Gamified Experiences @rluzmotion 3D Mockups @tanyadizone 3D Logos @samborek Animated Characters @aximoris Animated Characters @heyvlad Industrial & Manufacturing @lionti 3D Icons @adriandaniluk Brand & Marketing @vladkolokolnikov Gamified Experiences @vladkolokolnikov Industrial & Manufacturing @gleb124 Animated Characters @heyvlad Industrial & Manufacturing @lionti 3D Icons @adriandaniluk Brand & Marketing @vladkolokolnikov Gamified Experiences @vladkolokolnikov Industrial & Manufacturing @gleb124 Empowering individuals and teams at world’s leading organizations Where ideas become production-ready experiences Supercharge your team to deliver production-ready interactive 2D & 3D experiences all-in-one platform. \"We wanted to appeal to an enterprise audience. That's where Spline comes in. It helps our brand feel",
+      "screenshot": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-visual-refs-2026-06-11/spline.png",
+      "error": "",
+      "consoleErrors": [
+        "warning: updating from  115 to  118",
+        "warning: updating from  119 to  118",
+        "warning: Your .splinecode file is more recent than the library. Please upgrade @splinetool/runtime to the latest version.",
+        "warning: [.WebGL-0x11400488c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x11400488c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: updating from  115 to  118",
+        "warning: [.WebGL-0x11400488c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x11400488c00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+      ],
+      "failed": [
+        "net::ERR_BLOCKED_BY_ORB https://ddwl4m2hdecbv.cloudfront.net/b/DNXY8HX41PO0/DNXY8HX41PO0.js.gz",
+        "net::ERR_ABORTED https://www.google.com/ccm/collect?rcb=7&frm=0&ae=g&auid=2097388036.1781118134&dt=Spline%20-%203D%20Design%20tool%20in%20the%20browser%20with%20real-time%20coll",
+        "net::ERR_ABORTED https://cdn.spline.design/_assets/_videos/usecase-1.mp4",
+        "net::ERR_ABORTED https://cdn.spline.design/_assets/_videos/usecase-6.mp4",
+        "net::ERR_ABORTED https://cdn.spline.design/_assets/_videos/usecase-4.mp4",
+        "net::ERR_ABORTED https://cdn.spline.design/_assets/_videos/usecase-5.mp4",
+        "net::ERR_ABORTED https://cdn.spline.design/_assets/_videos/usecase-3.mp4",
+        "net::ERR_ABORTED https://cdn.spline.design/_assets/_videos/usecase-2.mp4"
+      ]
+    },
+    {
+      "name": "ai-engineer",
+      "url": "https://www.ai.engineer/",
+      "status": 200,
+      "title": "AI Engineer",
+      "text": "UPCOMING FLAGSHIP EVENTS PARTNER EVENTS PAST EVENTS TOP TALKS ABOUT The Highest-Signal Technical AI Conferences Serving over a million AI Engineers, Founders of breakout AI startups, and AI Architects at the world's largest technology leaders. Meet the world's best AI engineers Get free talk & workshop videos, CFPs, and early bird discounts >_ SUBMIT 🔔 OPEN ON YOUTUBE & HIT NOTIFY ME Hit play to listen to our custom AI Engineer soundtrack! UPCOMING FLAGSHIP EVENTS JUN 29-JUL 2, SAN FRANCISCO The largest technical AI conference in the world, with 29 tracks, 300 speakers, 100 expo partners, 6,000+ AI Engineers, founders, and VPs of AI. Save the date - we're heading to Moscone in 2026! If your company would like to be featured, reach out at sponsorships@ai.engineer VIEW EVENT > OCT 12-14, NEW YORK Our first two New York conferences showed how strong the East Coast AI community is — so we're coming back to the Big Apple! Put email below to be notified! VIEW EVENT > NOV TBA, SAN FRANCISCO Our first dedicated code conference was a huge success, and this year we are bringing it home to Silicon Valley! VIEW EVENT > APR TBA · LONDON, UK AIE Europe 2026 welcomed over 1000 AI Engineers to London — and we're coming back even bigger in 2027, targeting 2000 AI Engineers. Sponsorships available soon! VIEW EVENT > Our Past Expo Partners > SPONSOR AN EVENT < Upcoming Partner Conferences INDEPENDENTLY-ORGANIZED AIE CONFERENCES FROM OUR GLOBAL COMMUNITY! 2026 -- FULL APRIL 20-21 AIEi Miami by React Miami VIEW DETAILS > MAY 15-17 AIEi Singapore by 65Labs VIEW DETAILS > JUNE 3-4 AIEi Melbourne",
+      "screenshot": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-visual-refs-2026-06-11/ai-engineer.png",
+      "error": "",
+      "consoleErrors": [],
+      "failed": []
+    },
+    {
+      "name": "runway",
+      "url": "https://runwayml.com/",
+      "status": 200,
+      "title": "Runway | Building AI to Simulate the World",
+      "text": "RESEARCH PRODUCT RESOURCES SOLUTIONS COMPANY Enterprise Sales Login Try Runway Building AI to Simulate the World Get Started RUNWAY CHARACTERS ↗ MEDIA AND ENTERTAINMENT ↗ ROBOTICS AND AUTONOMY ↗ GENERAL WORLD MODELS ↗ We partner with the world's leading organizations to advance their industries: AI is changing how stories are told, how scientific progress is made and how the next frontiers of humanity are reached. Learn more Gen-4.5: A New Frontier for Generative Video Gen-4.5 is the world's best video model, featuring state-of-the-art motion quality, prompt adherence and visual fidelity. Try now Learn more Learn more GWM Robotics: General World Models for Robotics Simulate physical interactions and robotic behaviors through learned world models. Learn and predicted how actions unfold. Explore the Research Learn more GWM Worlds: Interactive and Explorable World Models A new frontier for open-ended interactive world simulation. A way of building infinite explorable realities in real-time. Explore the Research Learn more GWM Avatars: Real-time Video Agents Fully autonomous and real-time virtual video agents capable of natural conversation and contextual awareness. Try now Learn more Runway Research We are building foundational General World Models that will be capable of simulating all possible worlds and experiences. The next frontier of intelligence will come from models that can understand, perceive, generate and act in the world. Learn more GWM-1 ↗ A state-of-the-art General World Model built to interact with the real world. And a major step towards universal simulation. ",
+      "screenshot": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-visual-refs-2026-06-11/runway.png",
+      "error": "",
+      "consoleErrors": [],
+      "failed": [
+        "net::ERR_ABORTED https://d3phaj0sisr2ct.cloudfront.net/site/images/homepage/gwm/Hero.mp4"
+      ]
+    },
+    {
+      "name": "storytelling-noomo",
+      "url": "https://storytelling.noomoagency.com/",
+      "status": 200,
+      "title": "Noomo | The power of digital Storytelling",
+      "text": "The power of digital storytelling In a world that’s constantly shifting, what guides us through change, reinvention, and the unknown– Stories emerge through The best stories don’t just speak to us. They invite us inside. Storytelling is much more than words. It is how a spark becomes a fire. Storytelling is what you see, feel, hear, interactwith. is narrative. Light Spirit Sound How can the story live at the heart of the experience? Start with clarity Know what you’re trying to say. Whether it’s launching a product or building emotional connections, the goal needs to be clear. Let the story guide design Every animation, interaction, and visual should serve the narrative. If it doesn’t help tell the story, it’s not needed. Experiment and iterate Some of the best ideas came from simply trying things out, seeing what clicked, and refining from there. Make it personal The best stories create emotional connections. Whether through AI personalization or custom design elements, find ways to make the experience unique for each user. Where stories become experiences Reimagine Phoenix Scroll to explore Let us help you tell your story the way it was meant hello@noomoagency.com x Instagram LinkedIn > Click to start Click to start Agency Labs Contact Home Agency Labs Contact Instagram x Linkedin",
+      "screenshot": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-visual-refs-2026-06-11/storytelling-noomo.png",
+      "error": "",
+      "consoleErrors": [],
+      "failed": [
+        "net::ERR_ABORTED https://www.google-analytics.com/g/collect?v=2&tid=G-7H4C5RTJQM&gtm=45je6641v9251503485za200zd9251503485&_p=1781118158498&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid"
+      ]
+    }
+  ]
+}

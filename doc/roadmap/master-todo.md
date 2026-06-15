@@ -1,7 +1,7 @@
 # IGNAI 社区官网总 TO DO
 
 记录日期：2026-05-11
-最近校准：2026-06-10
+最近校准：2026-06-13
 说明：这是总 TO DO。只要这里还有未完成项，就代表项目仍处于持续优化阶段。
 
 ## A. Member 体系 ✅ 基本完成
@@ -33,6 +33,11 @@
 - [ ] 文章、活动、成员之间的关系模型梳理
 - [ ] 内容分流导航更清晰
 - [ ] 组织表达层增强
+- [x] **P1 / 8.7** 官网内容资产层首版梳理：官方介绍、合作方案、PPT 母稿、社区运营缺口已记录到 `docs/content/ignai-official-content-assets.zh-CN.md`
+- [ ] **P1 / 8.6** 官网内容层补齐：把官方介绍、合作方案、活动材料、成员故事、项目案例逐步转成可上架内容
+- [ ] **P1 / 8.6** 明确“官号内容 vs 官网内容”分工：官号承载传播型长文，官网承载开源经历、社区经历、成员/活动/记录证明链路
+- [ ] **P1 / 8.4** 评论 / 讨论入口接入策略：文章、社区记录、活动详情可承接群友评论、补充照片、作品简介与活动反馈
+- [ ] **P1 / 8.2** 日报 / 群内高质量记录进入官网的筛选机制：不是把群聊全搬进官网，而是沉淀成可公开引用的 Field Notes / Records
 
 ## C. 设计与体验（进行中）
 - [x] 移动端基础适配（Hero 隐藏视觉面板、Header 缩小、scatter overflow、活动卡片高度）
@@ -49,6 +54,13 @@
 - [ ] 图片与加载体验优化
 - [x] Footer 改为 IGNAI 明暗主题变量样式
 - [ ] 二级社区页面（members/events/records/about）明暗主题一致性复查
+- [ ] **P1 / 8.8** 高级视觉门面探索：在现有 IGNAI 主题基础上加入 3D / WebGL / 视频 / 互动叙事层，而不是重写站点架构
+- [ ] **P1 / 8.6** 首页 Hero / 活动 / 记录区升级为更有记忆点的“AI 社区证明系统”：开源贡献、社区活动、成员项目、现场照片形成视觉证据
+- [ ] **P1 / 8.6** Proof Engine Hero 原型：3D / Canvas 动效必须由真实 Members / Events / Records / PR / Articles 数据驱动，避免做成可被简单复刻的装饰动效
+- [ ] **P1 / 8.5** IGNAI logo motion pack：基于现有 logo / torch / 主色调制作点火、扫描光、粒子重组、静态 fallback，不重绘品牌标识
+- [ ] **P1 / 8.4** Torch ignition loop：把 torch icon 升级为首页 Hero、CTA、loading、Footer 可复用的点火视觉符号
+- [ ] **P1 / 8.3** 品牌视频短循环：用真实活动、PR、成员作品、官号封面做 8-12 秒无声循环视频，提供 poster / mobile fallback
+- [ ] **P1 / 8.3** 活动封面、照片墙、作品截图与视频素材治理，避免活动页出现灰块 / 破图 / 占位感
 
 ## D. 工程与验证
 - [ ] Member 相关测试补齐
@@ -82,6 +94,8 @@
 - [ ] 多作者能力准备
 - [ ] 组织页 / 团队页能力
 - [ ] 后续后台与运营能力预留
+- [ ] 官网定位叙事沉淀：官网的最直接理由是证明真实开源经历与真实社区经历，而不是做一个无流量的普通内容站
+- [ ] 社区经历证明链路：Issue / PR / 活动 / 成员 / 记录 / 官号文章互相引用，形成可展示、可复盘、可对外讲述的案例
 
 ## F2. 成员资料上传与运营闭环（新增 — P0）
 - [x] 确认 OSS / S3 兼容图床配置可用于官网服务端
@@ -101,6 +115,8 @@
 
 ## G. 生产上线（新增 — 当前最优先）
 - [ ] **P0 / 10.0** Vercel 部署恢复正常：避免 Notion 拉取超时后生成空站或坏 RSS
+- [ ] **P0 / 10.0** 正式域名 `ignai.community` / `www.ignai.community` HTTPS 与 Vercel 绑定恢复，当前访问仍失败
+- [ ] **P0 / 9.95** 清理线上 NotionNext 模板文章污染：首页、归档、RSS、sitemap 不再出现「模板说明」「示例文章」「加锁文章 - 密码123456」「EMPTY-ARTICLE」
 - [x] 成员详情页构建期全量预渲染收敛，降低 Notion 429 风险
 - [x] 本地 `yarn build` 通过，生产构建阻断问题本地已解除
 - [x] Notion 生成成员清理 dry-run 工具就绪（默认不改数据，确认后可批量改为 `Invisible`）
@@ -109,17 +125,20 @@
 - [x] **P0 / 9.5** SEO 基础输出修复：`robots.txt`、`sitemap.xml`、RSS、canonical 不出现 `undefined`，并收录成员 / 活动 / 记录 / 加入 / 关于页
 - [x] **P0 / 9.2** 公开危险接口收口：`/api/cache` 必须鉴权或关闭公开访问
 - [ ] **P0 / 9.0** 生产环境变量核对：`OPS_ACCESS_PASSWORD`、图床、Join 数据落点、正式域名、Notion Token
+- [ ] **P0 / 9.0** 生产运行时配置核对：避免 `LINK=http://preview.tangly1024.com`、`THEME=endspace`、`LANG=en-US` 等旧配置进入线上 pageProps
 - [ ] **P0 / 8.8** 轻量生产观测栈上线：PostHog Cloud、Clarity、Umami、UptimeRobot、Sentry / PostHog Error Tracking 完成配置和告警
 - [x] **P1 / 8.2** 当前生产域（yanglaishe.cn）与 `NEXT_PUBLIC_LINK` / 站点默认 URL 对齐
 - [ ] **P1 / 8.2** 域名绑定（ignai.community）接入 Vercel，并在完成后切换正式 canonical
 - [ ] 国内访问优化
 - [ ] **P1 / 8.0** 上线检查清单通过：构建、核心页面、Join 提交、后台访问、SEO 输出、移动端 smoke
 - [ ] **P1 / 8.0** Vercel 新部署完成后线上 smoke：确认 `/members` 显示 3 位 Published 成员并包含「许全均」
+- [ ] **P1 / 7.8** 评论插件上线配置：优先决策 Giscus / Waline，完成环境变量配置，并验证文章 / 记录 / 活动详情页评论入口
 
 ## H. QA 发现问题池（2026-06-06 新增）
 - [ ] **P0 / 10.0** 修复 Notion 构建超时后的错误降级，避免 `allPages` 空值继续生成坏页面
 - [x] **P0 / 9.8** 恢复 `/members` 真实成员数据展示，并清理 QA 测试 / 生成成员数据
 - [ ] **P0 / 9.7** Join 生产级持久化保护：把限流 / 幂等 / Notion 写入队列从单实例内存升级为 Supabase / Redis / Vercel KV 等跨 Serverless 实例共享机制
+- [ ] **P0 / 9.6** 生产后台密码缺失：线上 `/manage*` 与 `/api/cache` 提示 `OPS_ACCESS_PASSWORD 未配置`，上线前必须补齐
 - [x] **P0 / 9.5** 修复 RSS 生成 `undefined`，避免 `public/rss.xml` 被坏内容覆盖
 - [x] **P0 / 9.4** 修复 `robots.txt` 中 `Host: undefined`、`Sitemap: undefined/sitemap.xml`
 - [x] **P0 / 9.35** 删除 `robots.txt` 中对 Google 无效的 `Host` 指令，仅保留标准 Sitemap
@@ -128,14 +147,26 @@
 - [x] **P0 / 9.0** Join 表单服务端限速、重复提交识别、Notion 失败后可追踪本地/数据库兜底
 - [x] **P1 / 8.4** 修复核心社区页面 canonical 全部指向根域名的问题
 - [x] **P1 / 8.0** 清理 `.worktrees` 对 Jest 的干扰，让上线前测试结果可信
-- [ ] **P1 / 7.8** 修复 `yarn lint` 中与上线主线相关的 error
+- [x] **P1 / 7.8** 修复 `yarn lint` 中与上线主线相关的 error
 - [ ] **P2 / 6.5** 修复 `<link rel=preload> has an invalid href value` 控制台警告
 - [ ] **P2 / 6.3** 本地化或禁用外部动效 CDN（animate.css / wow.js），避免 cdnjs 连接失败在首页产生控制台错误
 - [ ] **P2 / 6.2** 处理旧模板文章 `/article/example-1` page data 超过 128k 构建告警（隐藏模板文章或精简文章详情 props）
 - [ ] **P2 / 6.1** 排查前台 / 管理页外部 Unsplash 随机图 503 警告，改为稳定图源 / 本地占位图或增加失败 fallback
 - [ ] **P2 / 6.1** 排查生产 smoke 中 React hydration `#418` / `#423` 残留错误，重点检查全局脚本、主题状态和布局 SSR / CSR 不一致
+- [ ] **P2 / 6.1** 修复活动页封面灰块 / 移动端破图：Notion S3、Unsplash、外部活动图需要稳定代理或本地 fallback
+- [ ] **P2 / 5.8** 收紧生产安全响应头：补 CSP、X-Frame-Options / frame-ancestors、X-Content-Type-Options、Referrer-Policy、Permissions-Policy，并检查 CORS
+- [ ] **P2 / 5.6** 补 `/manifest.json` 或移除相关 PWA 入口，避免生产 404
 - [ ] **P2 / 6.0** 更新 Browserslist / caniuse-lite
 - [ ] **P2 / 5.5** 评估是否保留前台 HTML 中的 `NotionNext` generator 标记
+
+## I. 社区运营与高级表达（2026-06-11 新增）
+- [ ] **P1 / 8.9** 官网内容资产库持续维护：后续上传的社区文字、图片、活动记录、成员故事先进入内容资产层，再决定是否上架
+- [ ] **P1 / 8.8** 评论插件 PR / 配置线：确认 Giscus vs Waline；若选 Giscus，需要 GitHub Discussions repo、repo id、category id；若选 Waline，需要服务端 URL 与审核策略
+- [ ] **P1 / 8.6** 活动沉淀线：开放活动照片、作品简介、现场记录、群友评论的提交入口，但必须通过 Notion / 管理后台筛选后公开
+- [ ] **P1 / 8.6** 官网证明线：把开源 PR、社区活动、成员项目、公众号文章组织成“我真的做过开源和社区”的公开证据链
+- [ ] **P1 / 8.4** 高级视觉调研线：参考 3D / 视频 / WebGL / 高级动效网站，形成 IGNAI 可落地的视觉升级方案
+- [ ] **P2 / 6.8** 视觉升级原型：先做 Proof Engine Hero 或成员星图原型，验证真实性、性能、移动端表现和品牌一致性
+- [ ] **P2 / 6.6** 视觉素材库治理：整理 logo 处理版本、torch 动效帧、活动照片、PR 截图、成员作品图、视频 poster，建立可复用资产命名规则
 
 ## 结论
 

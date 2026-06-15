@@ -2,13 +2,14 @@ import fs from 'fs'
 import path from 'path'
 
 interface QueueItem<T> {
+  key: string
   requestFunc: () => Promise<T>
   resolve: (value: T) => void
-  reject: (err: any) => void
+  reject: (err: unknown) => void
 }
 
 export class RateLimiter {
-  private queue: QueueItem<any>[] = []
+  private queue: Array<QueueItem<unknown>> = []
   private inflight = new Set<string>()
   private isProcessing = false
   private lastRequestTime = 0
@@ -39,8 +40,11 @@ export class RateLimiter {
       try {
         fs.writeFileSync(this.lockFilePath, process.pid.toString(), { flag: 'wx' })
         return
-      } catch (err: any) {
-        if (err.code === 'EEXIST') await new Promise(res => setTimeout(res, 100))
+      } catch (err: unknown) {
+        const code = err && typeof err === 'object' && 'code' in err
+          ? (err as { code?: unknown }).code
+          : undefined
+        if (code === 'EEXIST') await new Promise(res => setTimeout(res, 100))
         else throw err
       }
     }
@@ -65,8 +69,13 @@ export class RateLimiter {
     }
 
     return new Promise((resolve, reject) => {
-      this.queue.push({ requestFunc, resolve, reject })
-      if (!this.isProcessing) this.processQueue()
+      this.queue.push({
+        key,
+        requestFunc,
+        resolve: resolve as (value: unknown) => void,
+        reject
+      })
+      if (!this.isProcessing) void this.processQueue()
     })
   }
 
@@ -91,8 +100,7 @@ export class RateLimiter {
       const waitTime = Math.max(0, minInterval - (now - this.lastRequestTime))
       if (waitTime > 0) await new Promise(res => setTimeout(res, waitTime))
 
-      const { requestFunc, resolve, reject } = this.queue.shift()!
-      const key = crypto.randomUUID()
+      const { key, requestFunc, resolve, reject } = this.queue.shift()!
       this.inflight.add(key)
 
       try {
@@ -107,7 +115,9 @@ export class RateLimiter {
       console.error('限流队列异常', err)
     } finally {
       this.releaseLock()
-      setTimeout(() => this.processQueue(), 0)
+      setTimeout(() => {
+        void this.processQueue()
+      }, 0)
     }
   }
 }

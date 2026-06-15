@@ -54,7 +54,7 @@ export interface BasePage {
   pageIcon?: string
   href?: string
   authors?: ResolvedAuthor[]
-  ext?: Record<string, any>
+  ext?: Record<string, unknown>
 }
 
 export interface NavPage {
@@ -69,7 +69,7 @@ export interface NavPage {
   href?: string
   publishDate?: number
   lastEditedDate?: number
-  ext?: Record<string, any>
+  ext?: Record<string, unknown>
 }
 
 export interface MenuItem {
@@ -82,7 +82,7 @@ export interface MenuItem {
 }
 
 export interface SiteData {
-  NOTION_CONFIG: Record<string, any>
+  NOTION_CONFIG: Record<string, unknown>
 
   siteInfo: SiteInfo
   notice: BasePage | null
@@ -93,8 +93,8 @@ export interface SiteData {
   allNavPages: NavPage[]
   latestPosts: BasePage[]
 
-  categoryOptions: any[]
-  tagOptions: any[]
+  categoryOptions: TagItem[]
+  tagOptions: TagItem[]
 
   customNav: MenuItem[]
   customMenu: MenuItem[]
@@ -102,8 +102,8 @@ export interface SiteData {
   postCount: number
 
   // 以下字段仅服务端使用
-  block?: any
-  schema?: any
-  rawMetadata?: any
+  block?: unknown
+  schema?: unknown
+  rawMetadata?: unknown
   pageIds?: string[]
 }

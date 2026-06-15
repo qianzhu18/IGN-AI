@@ -5,10 +5,10 @@ import {
   type CommunityProject,
 } from "@/src/content/platform";
 
-export async function getCommunityContentItems(): Promise<CommunityContentItem[]> {
+export function getCommunityContentItems(): CommunityContentItem[] {
   return fallbackContentItems;
 }
 
-export async function getCommunityProjects(): Promise<CommunityProject[]> {
+export function getCommunityProjects(): CommunityProject[] {
   return fallbackProjects;
 }

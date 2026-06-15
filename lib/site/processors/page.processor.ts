@@ -1,4 +1,4 @@
-import { cleanPages, cleanIds, shortenIds } from '@/lib/utils/clean.util'
+import { cleanPages, cleanIds } from '@/lib/utils/clean.util'
 import { applySchedulePublish } from '@/lib/site/processors/schedule.processor'
 import type { SiteData } from '@/lib/site/site.types'
 

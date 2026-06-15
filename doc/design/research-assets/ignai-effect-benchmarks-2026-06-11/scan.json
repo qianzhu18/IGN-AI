@@ -1,0 +1,365 @@
+{
+  "generatedAt": "2026-06-10T19:29:32.620Z",
+  "results": [
+    {
+      "name": "minitap",
+      "url": "https://minitap.ai/",
+      "status": 200,
+      "title": "minitap | Your fully managed AI QA engineer for mobile",
+      "text": "Product Resources Sign in Get access 🇬🇧 THE AI QA ENGINEER FOR MOBILE Mobile QA coverage you don't have to hire for. For mobile teams shipping AI-written code without a QA bench. mini tests every critical flow like a real user, including your AI features, and surfaces the bugs your scripts miss, with repro and a fix prompt. Book a demo AS SEEN ON app.minitap.ai Coverage that pays for itself. Stop paying for a QA bench you can't hire. mini owns your release suite for a fraction of manual QA, and hands the hours back to your engineers. 5h of engineer time saved, per release 100% on AndroidWorld. Finds more bugs than any E2E test or agentic solution ~30 min to your first release-ready run Estimate your savings → HOW IT WORKS mini gets your app ready for release. REQUEST TEST RELEASE FEATURES mini owns your mobile test suite from end to end Ship the fix. mini owns the rest. EMULATED USER TESTING mini tests whether users can achieve their goals on your product. mini runs highest-fidelity mobile tests, as close to your users' experience as possible, including the AI features scripts can't reach. Tests survive any refactor. 0 authoring. 0 maintenance. E2E TEST SCRIPT YAML / SCRIPT ONE CHECKOUT = 21 BRITTLE INSTRUCTIONS 1 appId: com.acme.wallet 2 flows: 3 - launchApp 4 - tapOn: \"Sign in\" 5 - inputText: 6 id: \"email-field\" 7 text: \"jane@acme.com\" 8 - inputText: 9 id: \"password-field\" 10 text: \"correct-horse\" 11 - tapOn: \"Continue\" 12 - assertVisible: \"Dashboard\" 13 - tapOn: \"Pay\" 14 - inputText: 15 id: \"amount\" 16 text: \"10.00\" 17 - tapOn: \"Confirm\" 18 - assertVisible: \"Payment successful\" 19 - waitForAnimationToEnd 20 - tapOn: \"Send\" 21 - assertVisible: \"Sent\" SEE MORE MINI TEST CRITERION: A user can sign in and complete a $10 payment. SOURCE your code your PRD a one-liner SE",
+      "metrics": {
+        "canvas": 0,
+        "video": 1,
+        "svg": 39,
+        "iframe": 1,
+        "buttons": [
+          "Open menu",
+          "Product",
+          "Resources",
+          "Get access",
+          "🇬🇧",
+          "Book a demo",
+          "Estimate your savings →",
+          "REQUEST",
+          "TEST",
+          "RELEASE",
+          "SEE MORE",
+          "Cancel",
+          "View Details",
+          "Cancel",
+          "View Details",
+          "Cancel",
+          "View Details",
+          "Can not open \"View details\"",
+          "COPY",
+          "Cancel"
+        ],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/minitap-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/minitap-scroll.png"
+      },
+      "error": "",
+      "failed": [],
+      "consoleIssues": [
+        "warning: The default export of @sanity/image-url has been deprecated. Use the named export `createImageUrlBuilder` instead."
+      ]
+    },
+    {
+      "name": "epiminds",
+      "url": "https://epiminds.com/",
+      "status": 200,
+      "title": "Epiminds — Agentic AI for Marketing",
+      "text": "Privacy Terms Careers Request Access MULTI AGENTIC TEAMS FOR MARKETING. Introducing Request Access A CONNECTED NETWORK OF AI AGENTS The operating system for marketing. Lucy orchestrates 20+ autonomous agents across data, creative, and strategy, forming a synchronized system that learns, adapts, and executes like your best marketing team, only faster. Lucy in the media Analyze Lucy dives into your data, uncovers insights, and explains performance in real time Execute Lucy can take action across every platform — adjusting budgets, optimizing ads, and launching updates. Hi Lucy! Every Monday at 9am, generate a weekly reports for all my clients and send me an email with a summary of the most important areas to look at. Absolutely! I will handle the weekly reporting going forward. Task Created Also make sure to filter out all irrelevant searches by updating our negative keyword structure for clients running Google Ads. On it! Adding that to my agenda each day. Task Updated Lucy adapts to you. Connected to Your Marketing Stack. Lucy integrates with your entire marketing ecosystem — channels, CRMs, eCommerce, analytics, data warehouses, and trend platforms — to deliver one holistic view of performance. Lucy Learns How You Work. Upload playbooks, training docs, and client context — Lucy adapts to your agency’s methods and preferences. Over time, she mirrors how your team thinks and operates, delivering results that feel truly yours. Native in Your Systems. Lucy is built to act like a colleague, she works where you work. You can chat with her in Slack or email her with questions or tasks. Lucy is Proactive. She constantly reviews performance, flags issues, and surfaces insights before they impact results. ”We’ve integrated Epiminds, a powerful stack of AI agents, into our advert",
+      "metrics": {
+        "canvas": 1,
+        "video": 2,
+        "svg": 1,
+        "iframe": 0,
+        "buttons": [],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/epiminds-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/epiminds-scroll.png"
+      },
+      "error": "",
+      "failed": [
+        {
+          "url": "https://fonts.googleapis.com/css?family=Calibri,%20sans-serif:100,200,300,400,500,600,700,800,900&display=swap",
+          "failure": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css?family=Noto%20Sans%20Symbols,%20sans-serif:100,200,300,400,500,600,700,800,900&display=swap",
+          "failure": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://claude.ai/api/533e8a57-4fc6-49b6-9b8c-062d65d8b2f6/files/019d44cd-7ea0-746f-a6ac-9b74bf01eaeb/preview",
+          "failure": "net::ERR_BLOCKED_BY_RESPONSE.NotSameOrigin"
+        },
+        {
+          "url": "https://ddwl4m2hdecbv.cloudfront.net/b/R6G5YH8D0Z65/R6G5YH8D0Z65.js.gz",
+          "failure": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.google.com/ccm/collect?rcb=7&frm=0&ae=g&auid=873825741.1781119696&dt=Epiminds%20%E2%80%94%20Agentic%20AI%20for%20Marketing&en=page_view&dl=https%3A%2F%2Fepiminds.com%2F",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://www.google.com/rmkt/collect/AW-18090421814/?random=1781119697962&cv=11&fst=1781119697962&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be6641z89249361427za20gzb9249361427zd92493614",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://www.google.com/ccm/collect?rcb=18&frm=0&ae=g&auid=873825741.1781119696&dt=Epiminds%20%E2%80%94%20Agentic%20AI%20for%20Marketing&dl=https%3A%2F%2Fepiminds.com%2F&scrsrc=www.",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://files.peachworlds.com/website/05561016-6a5f-4632-a46e-377f58ddd678/screen-recording-2025-10-10-at-15-43-01.mov",
+          "failure": "net::ERR_ABORTED"
+        }
+      ],
+      "consoleIssues": [
+        "error: Failed to load resource: net::ERR_BLOCKED_BY_RESPONSE.NotSameOrigin",
+        "warning: [.WebGL-0x10c004caa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x10c004caa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x10c004caa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+        "warning: [.WebGL-0x10c004caa00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)"
+      ]
+    },
+    {
+      "name": "vertex3d",
+      "url": "https://www.vertex3d.asia/",
+      "status": 200,
+      "title": "Vertex3D — Immersive WebGL Experience Studio",
+      "text": "HARDWARE ACCELERATION REQUIRED [ HOME ][ PROJECTS ][ CONTACT ] THE IMMERSIVE EXPERIENCESTUDIO Strategic UX with Real-Time 3D and WebGL. Featured on FWA & Awwwards. SCROLL TO DISCOVER GLOBAL VALIDATION TRUSTED BY INDUSTRY LEADERS From Fortune 500 energy giants like Schlumberger (SLB) to ambitious startups, Vertex3D helps organizations transform complex ideas into immersive digital experiences. Our work goes beyond aesthetics, backed by a US Patent in UX Innovation (No. EP3501007A4) — ensuring every interface we design is engineered for clarity, usability, and measurable performance. THE Z-AXIS THE WEB IS FLAT WE FIX THAT Brands are losing attention because everyone looks the same. At Vertex3D, we believe the next generation of the web is immersive. From real-time 3D configurators for luxury products to complex data visualization for the energy sector, we use motion and depth to create meaningful digital experiences. We don’t just show your product. We let users experience it. DIGITAL TWIN ‍EXPERIENCE [ INSPECT CASE ] DIGITAL REAL ESTATE [ INSPECT CASE ] COMPLEX SAAS UX/UI [ INSPECT CASE ] HQ / HONG KONG Unit 706, 7/F, South Seas Centre Tower 2, No.75 Mody Road, Tsim Sha Tsui East, HongKong DIRECTOR Yann Trévelot LEGAL © 2026 Vertex3D Patent No. EP3501007A4 Global validation The Z-axis 01 // Digital Twin 02 // Digital Real Estate 03 // Complex Saas UX Initiate",
+      "metrics": {
+        "canvas": 0,
+        "video": 6,
+        "svg": 7,
+        "iframe": 2,
+        "buttons": [],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/vertex3d-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/vertex3d-scroll.png"
+      },
+      "error": "",
+      "failed": [
+        {
+          "url": "https://www.vertex3d.asia/v2645sy3qzdjNjVjODNmYmI5ZjI3NTBkMTE5YjQzZmIz/ga/g/c?v=2&tid=G-PVXSNGTV8Y&gtm=45g92e6641v9191138100za204zd9191138100&_p=1781119713838&gcd=13l3l3l3l1l1&npa=",
+          "failure": "net::ERR_ABORTED"
+        }
+      ],
+      "consoleIssues": [
+        "error: ❌ Vertex3D: Connection Blocked - HARDWARE ACCELERATION REQUIRED"
+      ]
+    },
+    {
+      "name": "gentlerain",
+      "url": "https://www.gentlerain.ai/",
+      "status": null,
+      "title": "",
+      "text": "This site can’t be reached www.gentlerain.ai unexpectedly closed the connection. Try: Checking the connection Checking the proxy and the firewall ERR_CONNECTION_CLOSED Reload Details",
+      "metrics": {
+        "canvas": 0,
+        "video": 0,
+        "svg": 0,
+        "iframe": 0,
+        "buttons": [
+          "Reload",
+          "Details"
+        ],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/gentlerain-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/gentlerain-scroll.png"
+      },
+      "error": "page.goto: net::ERR_CONNECTION_CLOSED at https://www.gentlerain.ai/\nCall log:\n\u001b[2m  - navigating to \"https://www.gentlerain.ai/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "failed": [
+        {
+          "url": "https://www.gentlerain.ai/",
+          "failure": "net::ERR_CONNECTION_CLOSED"
+        }
+      ],
+      "consoleIssues": []
+    },
+    {
+      "name": "ponder",
+      "url": "https://ponder.ai/",
+      "status": 200,
+      "title": "Ponder",
+      "text": "Menu Early Access Video Editing, Reinvented Your Fastest Cut, Powered by AI Sign Up Testimonials Night_Taxi_Ride.mp4 GoldenHour_Clip.mov Subway_Motion.mov Concert_Night.mp4 What Ponder can do Powerful tools designed for real editors. All driven by a single prompt. 01 Raw footage to rough cut Ponder picks the strongest takes, assembles A-roll, layers in B-roll, holds the pacing, and shapes your footage into a watchable first cut in minutes, not hours. 02 Deep understanding of your footage Ponder reads camera motion and composition, subject focus and scene type, pacing and emotional tone, audio clarity and continuity in every clip. It transforms messy footage into structured, searchable metadata you can actually edit with. 03 Edit with natural language Tell Ponder what you want. Tighten pacing, reorder scenes, punch up energy, shorten pauses, swap B-roll, emphasize emotion, or smooth transitions, and the timeline updates while every cut stays yours. Trusted by editors who cares about speed and craft \"My footage is always real humans with real pauses and quirks. The editing is really finding those human moments, which sometimes don't come in the dialogue. To be able to train a tool to find those is incredible.\" Jamie Producer / Editor \"36 to 48 hours worth of work that I was able to get done in about half a day!\" Simo Motsa Producer, Editor \"It takes your raw footage and assembles a rough cut so editors can jump in and get to the next stage — taking out a lot of the manual time and putting us in a position to get content to agency even quicker.\" Cody D'Ambrosio Head of Studio, SERHANT. \"This is just crazy just to even have, because even if this is a clip that I'm not gonna use, it'll just inspire other ideas just to have the amount of detail. And it's insane that it has a ",
+      "metrics": {
+        "canvas": 0,
+        "video": 6,
+        "svg": 4,
+        "iframe": 0,
+        "buttons": [
+          "Go to last slide",
+          "Next slide",
+          "Go to slide 1",
+          "Go to slide 2",
+          "Go to slide 3",
+          "Go to slide 4"
+        ],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/ponder-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/ponder-scroll.png"
+      },
+      "error": "",
+      "failed": [],
+      "consoleIssues": []
+    },
+    {
+      "name": "mdnt-events",
+      "url": "https://www.mdntevents.com/",
+      "status": 200,
+      "title": "Experiential Marketing & Brand Activations in Nashville, TN | MDNT Events",
+      "text": "We use cookie to improve your experience on our site. By using our site you consent cookies. Learn more Got it FOR BRANDS FOR BRANDS FOR EVENTS FOR EVENTS CASE STUDIES CASE STUDIES WORK WITH US WORK WITH US GET IN TOUCH GET IN TOUCH WE CONNECT CONSUMER BRANDS TO THEIR CONSUMERS THROUGH UNIQUE IN-REAL-LIFE EXPERIENCES MDNT (midnight) translates brand values into experiences people actually talk about. GET IN TOUCH GET IN TOUCH VIEW OUR WORK VIEW OUR WORK From strategy to execution, we design culturally relevant moments that spark emotion, build loyalty, and turn audiences into communities. Combining creative direction with flawless execution, we help brands authentically show up in the communities that matter most to them. FOR BRANDS FOR BRANDS FOR BRANDS FOR BRANDS FOR BRANDS FOR BRANDS FOR BRANDS FOR BRANDS IN-REAL-LIFE (IRL) BRANDED EXPERIENCES LEARN MORE LEARN MORE / FOR EVENTS FOR EVENTS FOR EVENTS FOR EVENTS FOR EVENTS FOR EVENTS FOR EVENTS FOR EVENTS EVENT OPERATIONS YOU CAN COUNT ON LEARN MORE LEARN MORE VIEW PROJECT From pop-ups to large-scale productions. We turn ideas into moments that people actually talk about. VIEW OUR WORK VIEW OUR WORK BRANDS RED BULL JUKEBOX Engaged over 500 consumers in person, providing a polished show-day experience. BRANDS PATRON TEQUILA Offloading logistics and execution for the Patrón’s sales team. BRANDS BUONA BEEF More than 800 consumer conversations and samplings across seven activations in two weeks VIEW OUR WORK VIEW OUR WORK FOLLOW US FOLLOW US FOLLOW US FOLLOW US FOLLOW US FOLLOW US FOLLOW US FOLLOW US Enter the world we create after dark. Our Instagram is the unfiltered reality of the events world, including behind-the-scenes of branded activations and exciting events around TN. Nashville, TN 2023 Nashville, TN 2025 Nashvil",
+      "metrics": {
+        "canvas": 0,
+        "video": 1,
+        "svg": 36,
+        "iframe": 0,
+        "buttons": [],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/mdnt-events-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/mdnt-events-scroll.png"
+      },
+      "error": "",
+      "failed": [],
+      "consoleIssues": []
+    },
+    {
+      "name": "spline",
+      "url": "https://spline.design/",
+      "status": 200,
+      "title": "Spline - 3D Design tool in the browser with real-time collaboration",
+      "text": "Meet Omma Build interactive experiences, websites, 3d, and apps using natural language. Products Resources Community Customers Enterprise Pricing Log In Get Started The all-in-one platform for 3D and design Spline is a design platform to create and collaborate on interactive production-ready experiences in real-time. Get started — it’s free Press and drag to orbit A complete platform for real-time interactive design Get started by remixing a 3D design made by the Spline community. Interactive Websites @DesignGabor Product Design @heyvlad Brand & Marketing @sanny.verkissen Gamified Experiences @rluzmotion 3D Mockups @tanyadizone 3D Logos @samborek Animated Characters @aximoris Interactive Websites @DesignGabor Product Design @heyvlad Brand & Marketing @sanny.verkissen Gamified Experiences @rluzmotion 3D Mockups @tanyadizone 3D Logos @samborek Animated Characters @aximoris Animated Characters @heyvlad Industrial & Manufacturing @lionti 3D Icons @adriandaniluk Brand & Marketing @vladkolokolnikov Gamified Experiences @vladkolokolnikov Industrial & Manufacturing @gleb124 Animated Characters @heyvlad Industrial & Manufacturing @lionti 3D Icons @adriandaniluk Brand & Marketing @vladkolokolnikov Gamified Experiences @vladkolokolnikov Industrial & Manufacturing @gleb124 Empowering individuals and teams at world’s leading organizations Where ideas become production-ready experiences Supercharge your team to deliver production-ready interactive 2D & 3D experiences all-in-one platform. \"We wanted to appeal to an enterprise audience. That's where Spline comes in. It helps our brand feel more cutting-edge than our competition.\" Andrew Pons, Principal Brand Designer 3D Design Collaborative 3D Design, ready for production A web-based, collaborative 3D design platform to create producti",
+      "metrics": {
+        "canvas": 3,
+        "video": 12,
+        "svg": 98,
+        "iframe": 1,
+        "buttons": [
+          "Products",
+          "Resources",
+          "Community",
+          "Copy Code",
+          "Webflow",
+          "Framer",
+          "Wix Studio",
+          "HTML / JS",
+          "React",
+          "Next.js",
+          "Swift",
+          "Kotlin"
+        ],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/spline-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/spline-scroll.png"
+      },
+      "error": "",
+      "failed": [
+        {
+          "url": "https://cdn.spline.design/_assets/_videos/usecase-1.mp4",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://ddwl4m2hdecbv.cloudfront.net/b/DNXY8HX41PO0/DNXY8HX41PO0.js.gz",
+          "failure": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.google.com/ccm/collect?rcb=6&frm=0&ae=g&auid=319768388.1781119754&dt=Spline%20-%203D%20Design%20tool%20in%20the%20browser%20with%20real-time%20collaboration&en=page_vie",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://cdn.spline.design/_assets/_videos/usecase-2.mp4",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://px.ads.linkedin.com/wa/?medium=fetch&fmt=g",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://cdn.spline.design/_assets/_videos/usecase-3.mp4",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://www.google.com/rmkt/collect/16608887611/?random=1781119755715&cv=11&fst=1781119755715&fmt=8&bg=ffffff&guid=ON&async=1&gtm=45be6641v9208002085z89206809540za20gzb9206809540zd",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://www.google-analytics.com/g/collect?v=2&tid=G-ZQ4RYDGKW3&gtm=45je6641v9119041354z89206809540za20gzb9206809540zd9206809540&_p=1781119752773&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1",
+          "failure": "net::ERR_ABORTED"
+        }
+      ],
+      "consoleIssues": [
+        "error: Load failed, error in settings",
+        "error: No visitor ID available. Load may have failed.",
+        "warning: updating from  115 to  118",
+        "warning: updating from  115 to  118",
+        "warning: updating from  119 to  118",
+        "warning: Your .splinecode file is more recent than the library. Please upgrade @splinetool/runtime to the latest version."
+      ]
+    },
+    {
+      "name": "runway",
+      "url": "https://runwayml.com/",
+      "status": 200,
+      "title": "Runway | Building AI to Simulate the World",
+      "text": "RESEARCH PRODUCT RESOURCES SOLUTIONS COMPANY Enterprise Sales Login Try Runway Building AI to Simulate the World Get Started RUNWAY CHARACTERS ↗ MEDIA AND ENTERTAINMENT ↗ ROBOTICS AND AUTONOMY ↗ GENERAL WORLD MODELS ↗ We partner with the world's leading organizations to advance their industries: AI is changing how stories are told, how scientific progress is made and how the next frontiers of humanity are reached. Learn more Gen-4.5: A New Frontier for Generative Video Gen-4.5 is the world's best video model, featuring state-of-the-art motion quality, prompt adherence and visual fidelity. Try now Learn more Learn more GWM Robotics: General World Models for Robotics Simulate physical interactions and robotic behaviors through learned world models. Learn and predicted how actions unfold. Explore the Research Learn more GWM Worlds: Interactive and Explorable World Models A new frontier for open-ended interactive world simulation. A way of building infinite explorable realities in real-time. Explore the Research Learn more GWM Avatars: Real-time Video Agents Fully autonomous and real-time virtual video agents capable of natural conversation and contextual awareness. Try now Learn more Runway Research We are building foundational General World Models that will be capable of simulating all possible worlds and experiences. The next frontier of intelligence will come from models that can understand, perceive, generate and act in the world. Learn more GWM-1 ↗ A state-of-the-art General World Model built to interact with the real world. And a major step towards universal simulation. Gen-4.5 ↗ The world's best video model, featuring state-of-the-art motion quality, prompt adherence and visual fidelity. General World Models ↗ Our long-term research effort to build AI systems that u",
+      "metrics": {
+        "canvas": 0,
+        "video": 3,
+        "svg": 56,
+        "iframe": 0,
+        "buttons": [
+          "Learn more",
+          "Learn more",
+          "Learn more",
+          "Learn more",
+          "YOUR PRIVACY CHOICES",
+          "ENGLISH"
+        ],
+        "hasWebglText": true
+      },
+      "screenshots": {
+        "first": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/runway-first.png",
+        "scroll": "/Users/mac/qianzhu Vault/project/IGN AI 官网/doc/design/research-assets/ignai-effect-benchmarks-2026-06-11/runway-scroll.png"
+      },
+      "error": "",
+      "failed": [
+        {
+          "url": "https://inferred.litix.io/",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://inferred.litix.io/",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://www.google.co.jp/ads/ga-audiences?v=1&t=sr&slf_rd=1&_r=4&tid=G-CPKYPL7M14&cid=1612009118.1781119771&gtm=45je6641h1v9175977890za200zd9175977890&rcb=10&aip=1&dma=0&gcs=G111&g",
+          "failure": "csp"
+        },
+        {
+          "url": "https://inferred.litix.io/",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://inferred.litix.io/",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://inferred.litix.io/",
+          "failure": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://stats.g.doubleclick.net/g/collect?v=2&tid=G-CPKYPL7M14&cid=1612009118.1781119771&gtm=45je6641h1v9175977890za200zd9175977890&rcb=10&aip=1&dma=0&gcs=G111&gcd=13t3t3t3t5l1&npa",
+          "failure": "net::ERR_CONNECTION_CLOSED"
+        },
+        {
+          "url": "https://inferred.litix.io/",
+          "failure": "net::ERR_ABORTED"
+        }
+      ],
+      "consoleIssues": [
+        "error: Loading the image 'https://www.google.co.jp/ads/ga-audiences?v=1&t=sr&slf_rd=1&_r=4&tid=G-CPKYPL7M14&cid=1612009118.1781119771&gtm=45je6641h1v9175977890za200zd9175977890&rcb=10&aip=1&dma=0&gcs=G111&gcd=13t3t3t3t5l1&npa=0&frm=0&tag_exp=11561",
+        "error: Failed to load resource: net::ERR_CONNECTION_CLOSED",
+        "error: Loading the image 'https://www.google.co.jp/pagead/1p-user-list/412668611/?random=1781119770682&cv=11&fst=1781118000000&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45je6641h1v9175977890za200zd9175977890xec&gcd=13t3t3t3t5l1&dma=0&tag_exp=11",
+        "error: Connecting to 'https://pixel-config.reddit.com/pixels/a2_i47la0zqosc1/config' violates the following Content Security Policy directive: \"connect-src 'self' https://rest.iad-05.braze.com https://*.airtable.com https://*.salesforce.com https:",
+        "error: Loading the image 'https://www.google.co.jp/pagead/1p-user-list/AW-412668611/?random=1781119771291&cv=11&fst=1781118000000&bg=ffffff&guid=ON&async=1&gtm=45be6690h2z8867974106za20gzb867974106zd867974106xea&gcd=13t3t3t3t5l1&dma=0&tag_exp=0~11",
+        "error: Loading the script 'https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/capiParamBuilder/clientParamBuilder.bundle.js' violates the following Content Security Policy directive: \"script-src 'self' 'unsafe-eval' 'unsafe-inline"
+      ]
+    }
+  ]
+}

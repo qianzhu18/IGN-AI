@@ -93,7 +93,12 @@ export function OpsAccessGate({ mode, surface = "ops" }: OpsAccessGateProps) {
       </div>
 
       {mode === "login" ? (
-        <form onSubmit={handleSubmit} className="mt-7 space-y-4">
+        <form
+          onSubmit={(event) => {
+            void handleSubmit(event);
+          }}
+          className="mt-7 space-y-4"
+        >
           <label className="block">
             <span className="card-eyebrow">Password</span>
             <input

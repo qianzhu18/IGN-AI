@@ -1,9 +1,9 @@
 import { events, type EventItem } from "@/src/content/events";
 
-export async function getUpcomingEvents(limit = events.length): Promise<EventItem[]> {
+export function getUpcomingEvents(limit = events.length): EventItem[] {
   return events.slice(0, limit);
 }
 
-export async function getEventBySlug(slug: string): Promise<EventItem | null> {
+export function getEventBySlug(slug: string): EventItem | null {
   return events.find((event) => event.slug === slug) ?? null;
 }
