@@ -17,6 +17,9 @@ jest.mock('@/lib/plugins/wordCount', () => ({
 import {
   getMemberAuthoredPosts,
   getMemberPagePath,
+  isPasswordProtectedPost,
+  processPostData,
+  redactPasswordProtectedSummary,
   resolveRelatedEventsForPost,
   resolveRelatedMembersForPost,
   resolveAuthorsForPost
@@ -178,6 +181,75 @@ describe('getMemberAuthoredPosts', () => {
     expect(getMemberAuthoredPosts(member, posts).map(post => post.id)).toEqual([
       'post-1'
     ])
+  })
+})
+
+describe('password protected posts', () => {
+  it('detects non-empty password hashes', () => {
+    expect(isPasswordProtectedPost({ password: 'hash' })).toBe(true)
+    expect(isPasswordProtectedPost({ password: '   ' })).toBe(false)
+    expect(isPasswordProtectedPost({})).toBe(false)
+  })
+
+  it('redacts summaries from protected list items', () => {
+    expect(
+      redactPasswordProtectedSummary({
+        title: 'Locked',
+        password: 'hash',
+        summary: 'secret preview'
+      })
+    ).toMatchObject({
+      title: 'Locked',
+      password: 'hash',
+      summary: ''
+    })
+
+    expect(
+      redactPasswordProtectedSummary({
+        title: 'Public',
+        summary: 'public preview'
+      })
+    ).toMatchObject({
+      title: 'Public',
+      summary: 'public preview'
+    })
+  })
+
+  it('does not precompute content metadata for locked post details', async () => {
+    const props = {
+      post: {
+        id: 'post-1',
+        type: 'Post',
+        status: 'Published',
+        password: 'hash',
+        content: ['heading-1'],
+        toc: [{ id: 'heading-1', text: 'Private heading' }],
+        wordCount: 10,
+        readTime: 1,
+        blockMap: {
+          block: {
+            'post-1': { value: { id: 'post-1', type: 'page' } },
+            'heading-1': {
+              value: {
+                id: 'heading-1',
+                parent_id: 'post-1',
+                type: 'header',
+                properties: { title: [['Private heading']] }
+              }
+            }
+          }
+        }
+      },
+      allPages: []
+    }
+
+    await processPostData(props, 'test')
+
+    expect(props.post.blockMap).toBeTruthy()
+    expect(props.post.content).toBeUndefined()
+    expect(props.post.toc).toBeUndefined()
+    expect(props.post.wordCount).toBeUndefined()
+    expect(props.post.readTime).toBeUndefined()
   })
 })
 

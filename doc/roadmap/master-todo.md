@@ -90,7 +90,8 @@
 - [x] 按 PR Stack 重新拆 Typed Collection Helpers PR（#4188）
 - [x] 拆社区站数据库模板文档 PR（#4189）
 - [ ] 持续记录开源贡献素材
-- [ ] 跟进 #4187 / #4188 / #4189 CI 与 maintainer review
+- [x] 跟进 #4187 / #4188 / #4189 CI 与 maintainer review（均已于 2026-06-11 合并）
+- [ ] 根据 2026-06-19 上游 issue triage，优先评估 #4198、#3890/#3901、#3654/#3724、#3703 是否适合拆小修复
 - [ ] 下一步：Page Props Slimming / Member Data Contract 继续拆小 PR
 - [ ] 下一步：ignai 主题作为社区站示例贡献
 
