@@ -153,7 +153,7 @@ feat: add community content type registry
 
 ### PR 2：Typed Collection Helpers
 
-- 状态：已重新拆成小 PR
+- 状态：已重新拆成小 PR；2026-06-11 已合并
 - 链接：[#4188](https://github.com/notionnext-org/NotionNext/pull/4188)
 
 建议标题：
@@ -191,7 +191,7 @@ refactor: add typed collection helpers for Notion content
 
 ### PR 2.5：Community Site Database Template Docs
 
-- 状态：已创建
+- 状态：已创建；2026-06-11 已合并
 - 链接：[#4189](https://github.com/notionnext-org/NotionNext/pull/4189)
 
 建议标题：
@@ -724,9 +724,9 @@ Result：
 
 | 序号 | PR 方向 | 状态 | 优先级 | 本地依据 |
 |---|---|---|---|---|
-| 0 | Event 官方 API fallback | 已开 #4169 | P0 | Notion Event 补拉 |
-| 1 | Content Type Registry | 已开 #4170 | P0 | Member/Event 类型判断分散 |
-| 2 | Typed Collection Helpers | 待拆 | P0 | `getAllMembers/getAllEvents` 可复用 |
+| 0 | Event 官方 API fallback | #4169 已关闭，待缩小范围重提 | P0 | Notion Event 补拉 |
+| 1 | Content Type Registry | #4170 已关闭，待缩小范围重提 | P0 | Member/Event 类型判断分散 |
+| 2 | Typed Collection Helpers | #4188 已合并 | P0 | `getAllMembers/getAllEvents` 可复用 |
 | 3 | Page Props Slimming | 本地已验证，待拆 | P1 | 首页/成员/活动 pageProps 优化 |
 | 4 | Member Data Contract | 待拆 | P0 | 真实成员字段已验证 |
 | 5 | Member Directory Route | 待拆 | P1 | `/members` 已本地使用 |
@@ -735,15 +735,15 @@ Result：
 | 8 | Event Data Contract | 待拆 | P1 | `normalizeEvent` 已本地验证 |
 | 9 | Minimal Event Routes | 待拆 | P2 | `/events` 已本地使用 |
 | 10 | Record Content Type | 待文档化 | P2 | `/records` 已本地使用 |
-| 11 | Community Architecture Docs | 待写 | P1 | 面试/上游叙事需要 |
+| 11 | Community Architecture Docs | #4189 已合并首版，后续补 case study | P1 | 面试/上游叙事需要 |
 | 12 | Community Example Pattern | 待观察 | P3 | 等数据层 PR 合并后再推 |
 
 ## 16. 下一步建议
 
 最近 3 个最应该马上做的动作：
 
-1. 跟进 #4169 / #4170，争取合并或按维护者反馈缩小范围。
-2. 从 `notionnext/main` 拆 PR 2：Typed Collection Helpers。
+1. 先不要直接重开 #4169 / #4170，按维护者能快速 review 的粒度继续拆小。
+2. 基于 2026-06-19 issue triage，从 #4198、#3890/#3901、#3654/#3724、#3703 中选一个高价值 bugfix 线复现。
 3. 同步写一篇短复盘，把“从博客到 AI 社区基础设施”的叙事公开化。
 
-如果 #4169 和 #4170 合并，下一轮 PR 的可信度会明显更高；如果它们被要求缩小，也正好说明后续 PR Stack 要继续保持“小而硬”。
+#4188 / #4189 已经证明“小而硬”的拆法更容易进入上游；后续继续让每个 PR 只解决一个明确问题。

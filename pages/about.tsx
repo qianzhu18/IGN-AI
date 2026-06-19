@@ -52,7 +52,7 @@ const values = [
 ]
 
 const stats = [
-  { num: '200+', label: '社区成员' },
+  { num: '300+', label: '社区成员' },
   { num: '30+', label: '线下活动' },
   { num: '10+', label: '成员项目' },
   { num: '1', label: '真实社区' }

@@ -119,7 +119,7 @@ const CONFIG = {
 
   // -- Rig Stats --
   RIG_STATS: [
-    { label: '社区成员', value: '200+', note: '持续增长中' },
+    { label: '社区成员', value: '300+', note: '持续增长中' },
     { label: '线下活动', value: '20+', note: '分享会 × 黑客松' },
     { label: '城市', value: '长沙', note: 'Local roots' },
     { label: '成立', value: '2025', note: 'Ignite before AGI' },
@@ -131,7 +131,7 @@ const CONFIG = {
     { type: 'prompt', text: 'ignai init' },
     { type: 'ascii', text: '  ██████╗  ██╗  ██████╗\n  ██╔══██╗ ██║ ██╔════╝\n  ██████╔╝ ██║ ██║ ███╗\n  ██╔══██╗ ██║ ██║  ██║\n  ██║  ██║ ██║ ╚██████║\n  ╚═╝  ╚═╝ ╚═╝  ╚═════╝' },
     { type: 'plain', text: '> 扫描社区...' },
-    { type: 'plain', text: '> 发现 200+ 位行动者 · 长沙' },
+    { type: 'plain', text: '> 发现 300+ 位行动者 · 长沙' },
     { type: 'success', text: '> 加载 IGNAI 社区引擎 OK' },
     { type: 'plain', text: '> 已连接 20+ 场线下活动' },
     { type: 'success', text: '✓ 就绪。网络: ON · 社区: ACTIVE' },
