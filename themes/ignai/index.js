@@ -646,9 +646,6 @@ function WhatIsSection({ notionConfig }) {
             <SmartLink href='/join' className='ignai-cta-primary'>
               加入社区
             </SmartLink>
-            <SmartLink href='/members' className='ignai-cta-secondary'>
-              认识成员
-            </SmartLink>
           </div>
         </Reveal>
 
@@ -844,7 +841,7 @@ function RigCapabilitiesSection() {
 }
 
 function RigStatsStrip() {
-  const stats = siteConfig('RIG_STATS', CONFIG.RIG_STATS)
+  const stats = CONFIG.RIG_STATS
   return (
     <div style={{ maxWidth: 'var(--rig-max-w)', margin: '0 auto' }}>
       <Reveal>
@@ -864,7 +861,7 @@ function RigStatsStrip() {
 
 function RigTerminalBlock() {
   const title = siteConfig('RIG_TERM_TITLE', CONFIG.RIG_TERM_TITLE)
-  const lines = siteConfig('RIG_TERM_LINES', CONFIG.RIG_TERM_LINES)
+  const lines = CONFIG.RIG_TERM_LINES
   const [typingIdx, setTypingIdx] = useState(0)
   const [displayed, setDisplayed] = useState('')
   const typingLine = lines.find(l => l.type === 'typing')

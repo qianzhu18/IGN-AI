@@ -1,7 +1,7 @@
 # IGNAI 社区官网总 TO DO
 
 记录日期：2026-05-11
-最近校准：2026-06-13
+最近校准：2026-07-05
 说明：这是总 TO DO。只要这里还有未完成项，就代表项目仍处于持续优化阶段。
 
 ## A. Member 体系 ✅ 基本完成
@@ -14,6 +14,7 @@
 - [x] 作者链接到 Member
 - [x] Member 详情页展示相关文章
 - [x] member filtering / ordering tests
+- [x] 2026-06-29：公开成员资料不足时，先从主导航 / 页脚 / sitemap 下线成员目录入口，避免“300+ 社区规模”和“1 个公开成员”形成误解；后续完成授权与资料整理后再恢复公开成员墙
 - [ ] featured members 进一步增强（角色分组、组织表达）
 
 ## B. 社区内容系统（进行中）
@@ -34,7 +35,10 @@
 - [ ] 内容分流导航更清晰
 - [ ] 组织表达层增强
 - [x] **P1 / 8.7** 官网内容资产层首版梳理：官方介绍、合作方案、PPT 母稿、社区运营缺口已记录到 `docs/content/ignai-official-content-assets.zh-CN.md`
+- [x] 2026-07-05：从 `/Users/mac/qianzhu Vault/project/简历/12-社区` 同步第一批社区证据素材，补齐真实活动 fallback、Field Notes 记录、公开核心数字和 `public/images/community-evidence/` 静态资产
 - [ ] **P1 / 8.6** 官网内容层补齐：把官方介绍、合作方案、活动材料、成员故事、项目案例逐步转成可上架内容
+- [x] **P1 / 8.6** 2026-07-05：IGNAI 官网内容写作 MCP 协议层首版落地，支持状态检查、Notion 草稿 payload、草稿写入入口、后台读写工具和缓存刷新入口
+- [ ] **P1 / 8.5** MCP 真实发布链路复测：补齐 `NOTION_API_TOKEN`、Post / Event / Member / Record data source id 后，完成真实 Notion 读取 / 写入 / 更新 / 追加 blocks smoke
 - [ ] **P1 / 8.6** 明确“官号内容 vs 官网内容”分工：官号承载传播型长文，官网承载开源经历、社区经历、成员/活动/记录证明链路
 - [ ] **P1 / 8.4** 评论 / 讨论入口接入策略：文章、社区记录、活动详情可承接群友评论、补充照片、作品简介与活动反馈
 - [ ] **P1 / 8.2** 日报 / 群内高质量记录进入官网的筛选机制：不是把群聊全搬进官网，而是沉淀成可公开引用的 Field Notes / Records
@@ -53,6 +57,7 @@
 - [ ] 首页成员区块表达再增强
 - [ ] 图片与加载体验优化
 - [x] Footer 改为 IGNAI 明暗主题变量样式
+- [x] 2026-07-10：修复 `/join` 浅色模式对比度，二维码页和遗留报名表组件都补齐浅色卡片 / 输入框 / 文案颜色覆盖
 - [ ] 二级社区页面（members/events/records/about）明暗主题一致性复查
 - [ ] **P1 / 8.8** 高级视觉门面探索：在现有 IGNAI 主题基础上加入 3D / WebGL / 视频 / 互动叙事层，而不是重写站点架构
 - [ ] **P1 / 8.6** 首页 Hero / 活动 / 记录区升级为更有记忆点的“AI 社区证明系统”：开源贡献、社区活动、成员项目、现场照片形成视觉证据
@@ -112,6 +117,7 @@
 - [x] 不再单独实现成员审批后台，Notion `Published` / `Invisible` 作为发布开关
 - [x] 完成头像上传 API 并发烟测：12 路并发上传至 Cloudflare R2 全部成功
 - [x] **P0 / 9.6** Join 高并发保护：Notion 写入限速、失败重试、幂等去重，目标支撑 200+ 社区成员集中填写
+- [x] 2026-06-29：Join 入口从官网表单优先调整为微信二维码优先，降低成员加入摩擦，官网表单转为后续运营补资料能力
 - [ ] 图床资产治理：记录对象 key、准备 R2 / OSS 迁移脚本
 
 ## G. 生产上线（新增 — 当前最优先）
@@ -129,6 +135,7 @@
 - [ ] **P0 / 9.0** 生产运行时配置核对：避免 `LINK=http://preview.tangly1024.com`、`THEME=endspace`、`LANG=en-US` 等旧配置进入线上 pageProps
 - [ ] **P0 / 8.8** 轻量生产观测栈上线：PostHog Cloud、Clarity、Umami、UptimeRobot、Sentry / PostHog Error Tracking 完成配置和告警
 - [x] **P1 / 8.2** 当前生产域（yanglaishe.cn）与 `NEXT_PUBLIC_LINK` / 站点默认 URL 对齐
+- [x] 2026-07-10：首页 RIG 统计条和终端成员数字固定读取本地 IGNAI 配置，避免线上 Notion 旧配置继续覆盖为 `200+`
 - [ ] **P1 / 8.2** 域名绑定（ignai.community）接入 Vercel，并在完成后切换正式 canonical
 - [ ] 国内访问优化
 - [ ] **P1 / 8.0** 上线检查清单通过：构建、核心页面、Join 提交、后台访问、SEO 输出、移动端 smoke

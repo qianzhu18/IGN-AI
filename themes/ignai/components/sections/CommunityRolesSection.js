@@ -237,55 +237,12 @@ function AvatarShowcase({ members }) {
 
 /* ── 紧凑网格（≤3 人时） ─────────────────────────────────── */
 
-function CompactMemberGrid({ members }) {
-  return (
-    <div className='mx-auto grid max-w-4xl gap-4 sm:grid-cols-2 md:grid-cols-3'>
-      {members.map((member, index) => (
-        <Reveal key={member.id || member.slug || index} delay={index * 0.08}>
-          <Link
-            href={getMemberPagePath(member)}
-            prefetch={false}
-            className='block rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-left no-underline transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]'
-          >
-            <div className='flex items-center gap-4'>
-              <img
-                src={getMemberAvatar(member)}
-                alt={member.title}
-                className='h-14 w-14 rounded-full object-cover ring-1 ring-white/10'
-              />
-              <div className='min-w-0'>
-                <p className='truncate text-base font-semibold text-white'>
-                  {member.title}
-                </p>
-                {member.role && (
-                  <p className='truncate text-sm text-neutral-400'>{member.role}</p>
-                )}
-              </div>
-            </div>
-            {(member.bio || member.summary) && (
-              <p className='mt-4 line-clamp-3 text-sm leading-6 text-neutral-400'>
-                {member.bio || member.summary}
-              </p>
-            )}
-            {getMemberQuote(member) && (
-              <p className='mt-4 text-sm italic leading-6 text-[#F0CB8A]/78'>
-                &ldquo;{getMemberQuote(member)}&rdquo;
-              </p>
-            )}
-          </Link>
-        </Reveal>
-      ))}
-    </div>
-  )
-}
-
 /* ── 主组件 ────────────────────────────────────────────────── */
 
 export function CommunityRolesSection({ allMembers = [] }) {
   const publishedMembers = sortMembers(getPublishedMembers(allMembers))
   const displayMembers = publishedMembers.slice(0, 96)
-  const hasMembers = displayMembers.length > 0
-  const useCompactLayout = displayMembers.length > 0 && displayMembers.length <= 3
+  const showMemberWall = displayMembers.length >= 6
 
   return (
     <section id='community-roles' className='ignai-home-section'>
@@ -296,15 +253,13 @@ export function CommunityRolesSection({ allMembers = [] }) {
           <p className='section-eyebrow'>Community Members</p>
           <h2 className='section-title mt-6'>这里有谁？</h2>
           <p className='section-body mt-6 max-w-lg mx-auto'>
-            {hasMembers
+            {showMemberWall
               ? `IGNAI 聚集了 ${publishedMembers.length} 位关注 AI、产品、表达和行动的人。`
-              : 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。'}
+              : 'IGNAI 聚集了一群关注 AI、产品、表达和行动的人。公开成员墙会在完成授权和资料整理后逐步开放。'}
           </p>
         </Reveal>
 
-        {useCompactLayout ? (
-          <CompactMemberGrid members={displayMembers} />
-        ) : hasMembers ? (
+        {showMemberWall ? (
           <Reveal>
             <AvatarShowcase members={displayMembers} />
           </Reveal>
@@ -320,7 +275,7 @@ export function CommunityRolesSection({ allMembers = [] }) {
           </div>
         )}
 
-        {hasMembers && (
+        {showMemberWall && (
           <Reveal className='text-center mt-12'>
             <Link href='/members' className='text-sm text-neutral-400 hover:text-white transition no-underline'>
               View all members &rarr;

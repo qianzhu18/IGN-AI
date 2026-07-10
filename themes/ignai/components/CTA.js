@@ -55,9 +55,9 @@ export const CTA = () => {
                 {CONFIG.IGNAI_CTA_BUTTON_TEXT || '加入社区'}
               </SmartLink>
               <SmartLink
-                href='mailto:hello@ignai.community'
+                href='/join'
                 className='ignai-cta-secondary'>
-                联系合作
+                扫码联系
               </SmartLink>
             </div>
           )}

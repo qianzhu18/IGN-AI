@@ -1,19 +1,8 @@
 import Head from "next/head";
 
-import { JoinApplicationForm } from "@/src/components/forms/JoinApplicationForm";
 import { JoinContactCard } from "@/src/components/forms/JoinContactCard";
-import { getJoinExperienceMode } from "@/lib/join";
-import { siteLinks } from "@/src/content/links";
 
-type JoinPageProps = {
-  experienceMode: "database" | "local" | "external" | "email";
-  externalFormUrl: string;
-};
-
-export default function JoinPage({
-  experienceMode,
-  externalFormUrl,
-}: JoinPageProps) {
+export default function JoinPage() {
   return (
     <>
       <Head>
@@ -82,6 +71,83 @@ export default function JoinPage({
             border-color: rgba(255,184,121,0.36);
             background-color: rgba(255,255,255,0.06);
           }
+          html.light .join-page-kicker {
+            border-color: rgba(130, 84, 48, 0.14);
+          }
+          html.light .join-page-kicker h1 {
+            color: #21130b;
+          }
+          html.light .join-page-kicker p:not(.join-card-eyebrow) {
+            color: rgba(49, 35, 24, 0.68);
+          }
+          html.light .join-card-eyebrow {
+            color: #c65d1f;
+          }
+          html.light .join-surface-card-strong {
+            border-color: rgba(120, 76, 42, 0.18);
+            background-color: rgba(255, 252, 247, 0.88);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.82), 0 22px 58px rgba(119, 73, 38, 0.12);
+            color: #21130b;
+          }
+          html.light .join-surface-card-strong h2,
+          html.light .join-surface-card-strong h3,
+          html.light .join-surface-card-strong p,
+          html.light .join-surface-card-strong span,
+          html.light .join-surface-card-strong summary,
+          html.light .join-surface-card-strong legend {
+            color: rgba(49, 35, 24, 0.72);
+          }
+          html.light .join-surface-card-strong h2,
+          html.light .join-surface-card-strong h3,
+          html.light .join-surface-card-strong .join-card-title {
+            color: #21130b;
+          }
+          html.light .join-surface-card-strong .join-card-eyebrow {
+            color: #b9652a;
+          }
+          html.light .join-info-panel,
+          html.light .join-member-draft,
+          html.light .join-avatar-panel,
+          html.light .join-note-panel,
+          html.light .join-qr-frame,
+          html.light .join-generated-link {
+            border-color: rgba(120, 76, 42, 0.16);
+            background: rgba(255, 255, 255, 0.58);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
+          }
+          html.light .join-step-list {
+            border-color: rgba(120, 76, 42, 0.16);
+          }
+          html.light .join-step-list > div {
+            border-color: rgba(120, 76, 42, 0.14);
+          }
+          html.light .join-interest-pill,
+          html.light .join-secondary-button {
+            border-color: rgba(120, 76, 42, 0.18);
+            background-color: rgba(255, 255, 255, 0.7);
+            color: rgba(49, 35, 24, 0.72);
+          }
+          html.light .join-interest-pill:hover,
+          html.light .join-secondary-button:hover {
+            border-color: rgba(198, 93, 31, 0.32);
+            color: #21130b;
+          }
+          html.light .join-field,
+          html.light .join-textarea {
+            border-color: rgba(120, 76, 42, 0.18);
+            background-color: rgba(255, 255, 255, 0.78);
+            color: #21130b;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
+          }
+          html.light .join-field::placeholder,
+          html.light .join-textarea::placeholder {
+            color: rgba(49, 35, 24, 0.42);
+          }
+          html.light .join-field:focus,
+          html.light .join-textarea:focus {
+            border-color: rgba(198, 93, 31, 0.44);
+            background-color: #fffaf4;
+          }
         `}</style>
       </Head>
       <section className="relative z-10 px-5 py-16 sm:px-6 lg:py-24">
@@ -89,24 +155,17 @@ export default function JoinPage({
           <div className="join-page-kicker border-b border-white/10 pb-9">
             <p className="join-card-eyebrow">Join IGNAI</p>
             <h1 className="mt-5 text-[2.4rem] font-semibold leading-[1.1] text-white sm:text-[3.2rem]">
-              先建立连接，
+              先加微信，
               <br />
-              再慢慢成为成员。
+              再慢慢认识彼此。
             </h1>
             <p className="mt-5 text-base leading-8 text-white/60 sm:text-lg">
-              提交加入意向和成员资料草稿，和 IGNAI 社区建立第一层连接。
+              官网不再要求你先填完整资料。扫码添加社区管理者，先在微信里建立真实连接。
             </p>
           </div>
 
           <div className="mx-auto mt-10 w-full max-w-[680px] sm:mt-12">
-            <JoinApplicationForm
-              experienceMode={experienceMode}
-              contactEmailHref={siteLinks.contactEmailHref}
-              externalFormUrl={externalFormUrl}
-            />
-            <div className="mt-6">
-              <JoinContactCard />
-            </div>
+            <JoinContactCard />
           </div>
         </div>
       </section>
@@ -117,10 +176,10 @@ export default function JoinPage({
 export function getServerSideProps() {
   return {
     props: {
-      experienceMode: getJoinExperienceMode(),
+      experienceMode: "external",
       externalFormUrl: process.env.NEXT_PUBLIC_JOIN_FORM_URL?.trim() || "",
       pageTitle: "加入社区 | IGNAI",
-      pageDescription: "提交加入意向和成员资料草稿，和 IGNAI 社区建立第一层连接。",
+      pageDescription: "扫码添加社区管理者，先在微信里和 IGNAI 建立真实连接。",
     },
   };
 }

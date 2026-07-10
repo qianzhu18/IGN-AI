@@ -54,7 +54,6 @@ function generateLocalesSitemap(link, allPages, locale) {
   const dateNow = toSitemapDateString(new Date())
   const communitySlugs = [
     '',
-    'members',
     'events',
     'records',
     'join',

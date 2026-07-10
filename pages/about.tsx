@@ -52,10 +52,10 @@ const values = [
 ]
 
 const stats = [
-  { num: '300+', label: '社区成员' },
-  { num: '30+', label: '线下活动' },
-  { num: '10+', label: '成员项目' },
-  { num: '1', label: '真实社区' }
+  { num: '300+', label: '核心社群成员' },
+  { num: '2000+', label: '累计触达' },
+  { num: '20+', label: '线下 AI 活动' },
+  { num: '2025', label: '正式起跑' }
 ]
 
 export default function AboutPage() {
@@ -115,8 +115,8 @@ export default function AboutPage() {
                 variants={fadeUp}
                 className='ignai-about-copy mt-6 text-lg sm:text-xl leading-relaxed max-w-xl mx-auto'
               >
-                IGNAI 是一个关注 AI、Agent、Product、Startup 与真实行动的社区。
-                我们相信，在 AGI 到来之前，最值得做的事是点燃一群能行动的人。
+                IGNAI 是一个 base 长沙，连接学生、开发者、内容创作者与 AI 活动资源的青年社区。
+                我们相信，在 AGI 到来之前，最值得做的事是点燃一群真实行动的人。
               </motion.p>
             </motion.div>
           </motion.div>
@@ -166,10 +166,10 @@ export default function AboutPage() {
                   我们在做什么
                 </motion.h2>
                 <motion.p variants={fadeUp} className='ignai-about-copy mt-6 leading-relaxed'>
-                  IGNAI 聚集了一批关注 AI、产品、内容和创业的人。我们通过线下聚会、主题共创、项目实践和内容分享，让学习和连接持续发生。
+                  IGNAI 聚集了一批关注 AI、产品、内容和创业的人。我们通过线下活动、社群承接、项目展示和内容复盘，让一次性活动参与变成持续连接。
                 </motion.p>
                 <motion.p variants={fadeUp} className='ignai-about-copy mt-4 leading-relaxed'>
-                  不是围观群，不是知识付费，是一个真正有行动力的本地 AI 社区。
+                  不是围观群，不是知识付费，而是一个用真实活动、真实项目和真实关系持续积累信任的本地 AI 社区。
                 </motion.p>
               </div>
 
@@ -257,9 +257,6 @@ export default function AboutPage() {
               <motion.div variants={fadeUp} className='mt-8 flex flex-col sm:flex-row gap-4 justify-center'>
                 <SmartLink href='/join' className='ignai-cta-primary'>
                   加入社区
-                </SmartLink>
-                <SmartLink href='/members' className='ignai-cta-secondary'>
-                  认识成员
                 </SmartLink>
               </motion.div>
             </motion.div>

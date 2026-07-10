@@ -5,8 +5,6 @@ const joinUrl =
 const joinFormUrl = process.env.NEXT_PUBLIC_JOIN_FORM_URL?.trim() || "";
 const memberAvatarUploadUrl =
   process.env.NEXT_PUBLIC_MEMBER_AVATAR_UPLOAD_URL?.trim() || "";
-const contactEmail =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || "hello@ignai.community";
 const xiaohongshuUrl = process.env.NEXT_PUBLIC_XIAOHONGSHU_URL?.trim() || "";
 const wechatUrl = process.env.NEXT_PUBLIC_WECHAT_URL?.trim() || "";
 const feishuUrl = process.env.NEXT_PUBLIC_FEISHU_URL?.trim() || "";
@@ -34,8 +32,6 @@ export const siteLinks = {
   joinFormConfigured: Boolean(joinFormUrl),
   memberAvatarUploadUrl,
   memberAvatarUploadConfigured: Boolean(memberAvatarUploadUrl),
-  contactEmail,
-  contactEmailHref: `mailto:${contactEmail}`,
 };
 
 export const primaryLinks = {
@@ -44,7 +40,7 @@ export const primaryLinks = {
     configured: joinUrl !== "#join",
   },
   contact: {
-    href: `mailto:${contactEmail}`,
+    href: joinUrl,
     configured: true,
   },
   culture: {
@@ -58,5 +54,4 @@ export const socialLinkSlots: LinkSlot[] = [
   buildSlot("飞书", feishuUrl, Boolean(feishuUrl)),
   buildSlot("Telegram", telegramUrl, Boolean(telegramUrl)),
   buildSlot("小红书", xiaohongshuUrl, Boolean(xiaohongshuUrl)),
-  buildSlot("Email", `mailto:${contactEmail}`, true),
 ];

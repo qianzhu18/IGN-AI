@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { MessageCircleMore, ShieldCheck, Sparkles } from "lucide-react";
 
-import { siteLinks } from "@/src/content/links";
-
 const quickSteps = [
   "扫码添加社区管理者",
   "简单介绍你是谁、在做什么",
@@ -15,7 +13,7 @@ export function JoinContactCard() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="join-card-eyebrow">Direct contact</p>
-          <h2 className="mt-4 text-[1.6rem] font-semibold leading-[1.22] text-white">
+          <h2 className="join-card-title mt-4 text-[1.6rem] font-semibold leading-[1.22] text-white">
             直接加社区管理者，
             <br />
             不用先填一堆表。
@@ -30,7 +28,7 @@ export function JoinContactCard() {
       </div>
 
       <div className="mt-6 space-y-6">
-        <div className="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.02)_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-5">
+        <div className="join-qr-frame rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.02)_100%)] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-5">
           <div
             className="relative overflow-hidden rounded-[22px] border border-[#7cc8ff]/10 bg-[#f7f7f4] p-3 shadow-[0_22px_56px_rgba(0,0,0,0.24)] sm:p-4"
             data-analytics-event="click_wechat_qr"
@@ -50,7 +48,7 @@ export function JoinContactCard() {
         </div>
 
         <div>
-          <div className="rounded-[24px] border border-[#ffb879]/16 bg-[#0d1219]/90 p-5">
+          <div className="join-info-panel rounded-[24px] border border-[#ffb879]/16 bg-[#0d1219]/90 p-5">
             <div className="flex items-start gap-4">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/22 bg-[#ff9a3c]/10 text-[#ffd09a]">
                 <Sparkles className="h-4.5 w-4.5" />
@@ -64,7 +62,7 @@ export function JoinContactCard() {
             </div>
           </div>
 
-          <div className="mt-5 border-y border-white/10">
+          <div className="join-step-list mt-5 border-y border-white/10">
             {quickSteps.map((item) => (
               <div key={item} className="border-t border-white/10 py-4 first:border-t-0">
                 <p className="text-[1.02rem] text-white/82">{item}</p>
@@ -72,22 +70,13 @@ export function JoinContactCard() {
             ))}
           </div>
 
-          <div className="mt-5 rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
+          <div className="join-note-panel mt-5 rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
             <div className="flex items-start gap-3">
               <ShieldCheck className="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#9aceff]" />
               <p className="text-sm leading-7 text-white/58">
-                如果你当前正在手机上浏览本站，建议截图后用微信扫一扫识别；如果你在电脑上浏览，直接打开微信扫码即可。
+                如果你当前正在手机上浏览本站，建议截图后用微信扫一扫识别；如果你在电脑上浏览，直接打开微信扫码即可。成员资料、活动报名和项目协作，后续都可以在微信里继续沟通。
               </p>
             </div>
-            <a
-              href={siteLinks.contactEmailHref}
-              data-analytics-event="click_join_community"
-              data-analytics-label="join_page_email_backup"
-              data-analytics-prop-placement="join_page_contact_card"
-              className="mt-4 inline-flex items-center text-sm text-[#ffd09a] transition hover:text-white"
-            >
-              备用联系邮箱：{siteLinks.contactEmail}
-            </a>
           </div>
         </div>
       </div>

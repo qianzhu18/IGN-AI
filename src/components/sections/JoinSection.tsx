@@ -120,8 +120,8 @@ export function JoinSection() {
                     {slot.configured ? (
                       <a
                         href={slot.href}
-                        target={slot.href.startsWith("mailto:") ? undefined : "_blank"}
-                        rel={slot.href.startsWith("mailto:") ? undefined : "noreferrer"}
+                        target="_blank"
+                        rel="noreferrer"
                         className="rounded-full border border-[#ffb879]/16 bg-[#0d1118]/88 px-4 py-2 text-sm text-white/76 transition duration-300 hover:-translate-y-0.5 hover:border-[#ffb879]/28 hover:bg-[#121823]"
                       >
                         {slot.label}

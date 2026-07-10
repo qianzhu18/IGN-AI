@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { Camera, CircleAlert, Database, ExternalLink, Inbox, Loader2, Mail, Upload } from "lucide-react";
+import { Camera, CircleAlert, Database, ExternalLink, Inbox, Loader2, Upload } from "lucide-react";
 
 import type { JoinExperienceMode } from "@/lib/join";
 
@@ -9,7 +9,6 @@ const interestOptions = ["线下交流", "主题共创", "项目展示", "内容
 
 type JoinApplicationFormProps = {
   experienceMode: JoinExperienceMode;
-  contactEmailHref: string;
   externalFormUrl: string;
 };
 
@@ -42,13 +41,6 @@ const fileToDataUrl = (file: File) =>
     reader.readAsDataURL(file);
   });
 
-const joinEmailHref = (contactEmailHref: string) => {
-  const subject = encodeURIComponent("申请加入 IGNAI 社区");
-  return contactEmailHref.includes("?")
-    ? `${contactEmailHref}&subject=${subject}`
-    : `${contactEmailHref}?subject=${subject}`;
-};
-
 function captureJoinEvent(eventName: string, properties: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
   const capture = (window as unknown as {
@@ -58,26 +50,23 @@ function captureJoinEvent(eventName: string, properties: Record<string, unknown>
 }
 
 function JoinFallbackPanel({
-  contactEmailHref,
   externalFormUrl,
   experienceMode,
 }: {
-  contactEmailHref: string;
   externalFormUrl: string;
   experienceMode: JoinExperienceMode;
 }) {
-  const primaryHref = externalFormUrl || joinEmailHref(contactEmailHref);
-  const primaryLabel = externalFormUrl ? "填写加入表单" : "通过 Email 联系";
-  const PrimaryIcon = externalFormUrl ? ExternalLink : Mail;
+  const primaryHref = externalFormUrl || "/join";
+  const primaryLabel = externalFormUrl ? "填写加入表单" : "扫码加入社区";
   const modeCopy =
     experienceMode === "external"
       ? "当前已经配置了外部表单，这里会直接把人送进稳定入口。"
-      : "当前还没有可写入的申请后端，所以先保留 Email 作为最轻量的兜底入口。";
+      : "当前还没有可写入的申请后端，所以先使用微信二维码承接真实连接。";
 
   return (
     <div className="join-surface-card-strong mx-auto p-6 sm:p-8">
       <p className="join-card-eyebrow">Join entry</p>
-      <h2 className="mt-4 text-[1.7rem] font-semibold leading-[1.22] text-white">
+      <h2 className="join-card-title mt-4 text-[1.7rem] font-semibold leading-[1.22] text-white">
         先用一个稳定入口，
         <br />
         接住真实想加入的人。
@@ -90,7 +79,7 @@ function JoinFallbackPanel({
         {interestOptions.map((interest) => (
           <span
             key={interest}
-            className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-white/62"
+            className="join-interest-pill rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-white/62"
           >
             {interest}
           </span>
@@ -103,27 +92,14 @@ function JoinFallbackPanel({
           target={externalFormUrl ? "_blank" : undefined}
           rel={externalFormUrl ? "noreferrer" : undefined}
           data-analytics-event="click_join_community"
-          data-analytics-label={externalFormUrl ? "join_external_form" : "join_email_primary"}
+          data-analytics-label={externalFormUrl ? "join_external_form" : "join_wechat_primary"}
           data-analytics-prop-placement="join_fallback"
           data-analytics-prop-mode={experienceMode}
           className="inline-flex items-center justify-center gap-2 overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-6 py-3 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5"
         >
           <span>{primaryLabel}</span>
-          <PrimaryIcon className="h-4 w-4" />
+          <ExternalLink className="h-4 w-4" />
         </a>
-        {externalFormUrl ? (
-          <a
-            href={joinEmailHref(contactEmailHref)}
-            data-analytics-event="click_join_community"
-            data-analytics-label="join_email_backup"
-            data-analytics-prop-placement="join_fallback"
-            data-analytics-prop-mode={experienceMode}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-6 py-3 text-sm text-white/70 transition hover:border-white/18 hover:text-white"
-          >
-            <span>Email 备用联系</span>
-            <Mail className="h-4 w-4" />
-          </a>
-        ) : null}
       </div>
     </div>
   );
@@ -131,7 +107,6 @@ function JoinFallbackPanel({
 
 export function JoinApplicationForm({
   experienceMode,
-  contactEmailHref,
   externalFormUrl,
 }: JoinApplicationFormProps) {
   const [interests, setInterests] = useState<string[]>(["线下交流"]);
@@ -144,7 +119,6 @@ export function JoinApplicationForm({
   if (experienceMode === "external" || experienceMode === "email") {
     return (
       <JoinFallbackPanel
-        contactEmailHref={contactEmailHref}
         externalFormUrl={externalFormUrl}
         experienceMode={experienceMode}
       />
@@ -334,7 +308,7 @@ export function JoinApplicationForm({
       });
       setState({
         status: "error",
-        message: error instanceof Error ? error.message : "网络异常，请稍后再试或通过 Email 联系。",
+        message: error instanceof Error ? error.message : "网络异常，请稍后再试或通过微信二维码联系。",
       });
     }
   };
@@ -344,7 +318,7 @@ export function JoinApplicationForm({
       onSubmit={(event) => void handleSubmit(event)}
       className="join-surface-card-strong mx-auto p-5 sm:p-7"
     >
-      <div className="mb-7 flex items-start gap-4 rounded-2xl border border-[#ffb879]/16 bg-[#0d1219]/92 px-4 py-4 sm:px-5">
+      <div className="join-info-panel mb-7 flex items-start gap-4 rounded-2xl border border-[#ffb879]/16 bg-[#0d1219]/92 px-4 py-4 sm:px-5">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/22 bg-[#ff9a3c]/10 text-[#ffd09a]">
           <modeNotice.Icon className="h-5 w-5" />
         </div>
@@ -388,17 +362,17 @@ export function JoinApplicationForm({
 
       <div className="my-8 h-px bg-white/10" />
 
-      <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+      <div className="join-member-draft rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
         <div>
           <p className="join-card-eyebrow">Member draft</p>
-          <h3 className="mt-3 text-lg font-medium text-white">顺手留下成员页草稿</h3>
+          <h3 className="join-card-title mt-3 text-lg font-medium text-white">顺手留下成员页草稿</h3>
           <p className="mt-2 text-sm leading-7 text-white/58">
             这些都不是必填。你可以先上传一张头像或个人形象照，再留一句话和想展示的外部链接。
           </p>
         </div>
 
         <div className="mt-6 space-y-5">
-          <div className="rounded-2xl border border-[#ffb879]/14 bg-[#0f1219]/88 p-4 sm:p-5">
+          <div className="join-avatar-panel rounded-2xl border border-[#ffb879]/14 bg-[#0f1219]/88 p-4 sm:p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] text-white/36">
                 {avatar.previewUrl || avatar.uploadedUrl ? (
@@ -423,7 +397,7 @@ export function JoinApplicationForm({
             </div>
 
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <label className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-white/72 transition hover:border-white/22 hover:text-white">
+              <label className="join-secondary-button inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-white/72 transition hover:border-white/22 hover:text-white">
                 <Upload className="h-4 w-4" />
                 <span>选择图片</span>
                 <input
@@ -486,7 +460,7 @@ export function JoinApplicationForm({
           </div>
 
           {avatar.uploadedUrl ? (
-            <div className="rounded-2xl border border-[#9aceff]/14 bg-[#0f1720]/88 px-4 py-3 text-xs leading-6 text-white/46 break-all">
+            <div className="join-generated-link rounded-2xl border border-[#9aceff]/14 bg-[#0f1720]/88 px-4 py-3 text-xs leading-6 text-white/46 break-all">
               图片链接已生成：{avatar.uploadedUrl}
             </div>
           ) : null}
@@ -539,7 +513,7 @@ export function JoinApplicationForm({
                 key={interest}
                 type="button"
                 onClick={() => toggleInterest(interest)}
-                className={`rounded-full border px-4 py-2 text-sm transition ${
+                className={`join-interest-pill rounded-full border px-4 py-2 text-sm transition ${
                   selected
                     ? "border-[#ffb879]/36 bg-[#ff9a3c]/16 text-[#ffd09a]"
                     : "border-white/10 bg-white/[0.04] text-white/58 hover:text-white"
