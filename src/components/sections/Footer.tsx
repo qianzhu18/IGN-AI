@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { footerLines } from "@/src/content/community";
-import { siteLinks } from "@/src/content/links";
 import { siteContent } from "@/src/content/site";
 
 export function Footer() {
@@ -42,13 +41,6 @@ export function Footer() {
           <Link href="/manage" aria-label="页脚导航：Manage" className="transition hover:text-white">
             Manage
           </Link>
-          <a
-            href={`mailto:${siteLinks.contactEmail}`}
-            aria-label="页脚导航：联系邮箱"
-            className="transition hover:text-white"
-          >
-            {siteLinks.contactEmail}
-          </a>
           <p className="pt-2 text-xs uppercase text-white/34">
             Copyright © {new Date().getFullYear()} IGNAI
           </p>

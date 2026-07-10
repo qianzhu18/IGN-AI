@@ -85,7 +85,7 @@ const CONFIG = {
 
   // -- Rig Hero --
   RIG_HERO_TITLE: '连接创造者，<br/>点燃可能性。',
-  RIG_HERO_SUB: 'IGNAI — 长沙 AI 社区。本地连接、全球信号，让真实行动者聚在一起。',
+  RIG_HERO_SUB: 'IGNAI — 长沙青年 AI 社区。300+ 核心社群成员 / 2000+ 累计触达 / 20+ 线下 AI 活动。',
   RIG_HERO_CTA_1: '加入社区',
   RIG_HERO_CTA_1_URL: '/join',
   RIG_HERO_CTA_2: '查看活动',
@@ -119,9 +119,9 @@ const CONFIG = {
 
   // -- Rig Stats --
   RIG_STATS: [
-    { label: '社区成员', value: '200+', note: '持续增长中' },
+    { label: '核心社群成员', value: '300+', note: '持续增长中' },
+    { label: '累计触达', value: '2000+', note: '学生 × 开发者' },
     { label: '线下活动', value: '20+', note: '分享会 × 黑客松' },
-    { label: '城市', value: '长沙', note: 'Local roots' },
     { label: '成立', value: '2025', note: 'Ignite before AGI' },
   ],
 
@@ -131,7 +131,8 @@ const CONFIG = {
     { type: 'prompt', text: 'ignai init' },
     { type: 'ascii', text: '  ██████╗  ██╗  ██████╗\n  ██╔══██╗ ██║ ██╔════╝\n  ██████╔╝ ██║ ██║ ███╗\n  ██╔══██╗ ██║ ██║  ██║\n  ██║  ██║ ██║ ╚██████║\n  ╚═╝  ╚═╝ ╚═╝  ╚═════╝' },
     { type: 'plain', text: '> 扫描社区...' },
-    { type: 'plain', text: '> 发现 200+ 位行动者 · 长沙' },
+    { type: 'plain', text: '> 发现 300+ 位行动者 · 长沙' },
+    { type: 'plain', text: '> 累计触达 2000+ 学生与开发者' },
     { type: 'success', text: '> 加载 IGNAI 社区引擎 OK' },
     { type: 'plain', text: '> 已连接 20+ 场线下活动' },
     { type: 'success', text: '✓ 就绪。网络: ON · 社区: ACTIVE' },
@@ -146,7 +147,7 @@ const CONFIG = {
     { q: '谁可以加入？', a: '任何人。学生、开发者、设计师、创业者、产品经理——只要对 AI 有热情和好奇心，都欢迎。' },
     { q: '社区做什么活动？', a: '线下分享会、黑客松、学习小组、项目共创、社交聚会。主题围绕 AI 工具、Agent 开发、产品设计等。' },
     { q: '需要在长沙才能参加吗？', a: '线下活动主要在长沙，但线上内容和社区讨论对所有人开放。我们也鼓励远程成员参与。' },
-    { q: '怎么加入？', a: '点击「加入社区」按钮，填写简单信息即可。我们会通过微信或邮件邀请你进入社区。' },
+    { q: '怎么加入？', a: '点击「加入社区」按钮，扫码添加社区管理者。先在微信里建立真实连接，再根据你的兴趣拉到合适的活动、项目或讨论里。' },
   ],
 
   // -- Rig CTA --
@@ -168,7 +169,6 @@ const CONFIG = {
       name: '导航',
       menus: [
         { title: '首页', href: '/' },
-        { title: '成员', href: '/members' },
         { title: '活动', href: '/events' },
         { title: '记录', href: '/records' },
         { title: '关于社区', href: '/about' },
@@ -200,7 +200,6 @@ const CONFIG = {
   // 后续清理 Notion Menu 后，可通过配置中心开启 IGNAI_NAV_USE_NOTION_MENU。
   IGNAI_NAV_USE_NOTION_MENU: false,
   IGNAI_NAV_ITEMS: [
-    { label: '成员', href: '/members' },
     { label: '活动', href: '/events' },
     { label: '文章', href: '/archive' },
     { label: '记录', href: '/records' },
