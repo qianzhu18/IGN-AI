@@ -169,6 +169,7 @@ const CONFIG = {
       name: '导航',
       menus: [
         { title: '首页', href: '/' },
+        { title: '成员', href: '/members' },
         { title: '活动', href: '/events' },
         { title: '记录', href: '/records' },
         { title: '关于社区', href: '/about' },
@@ -200,6 +201,7 @@ const CONFIG = {
   // 后续清理 Notion Menu 后，可通过配置中心开启 IGNAI_NAV_USE_NOTION_MENU。
   IGNAI_NAV_USE_NOTION_MENU: false,
   IGNAI_NAV_ITEMS: [
+    { label: '成员', href: '/members' },
     { label: '活动', href: '/events' },
     { label: '文章', href: '/archive' },
     { label: '记录', href: '/records' },
