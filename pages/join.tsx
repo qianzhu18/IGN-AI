@@ -1,8 +1,18 @@
 import Head from "next/head";
 
+import { JoinApplicationForm } from "@/src/components/forms/JoinApplicationForm";
 import { JoinContactCard } from "@/src/components/forms/JoinContactCard";
+import { getJoinExperienceMode } from "@/lib/join";
 
-export default function JoinPage() {
+type JoinPageProps = {
+  experienceMode: "database" | "local" | "external" | "email";
+  externalFormUrl: string;
+};
+
+export default function JoinPage({
+  experienceMode,
+  externalFormUrl,
+}: JoinPageProps) {
   return (
     <>
       <Head>
@@ -155,17 +165,23 @@ export default function JoinPage() {
           <div className="join-page-kicker border-b border-white/10 pb-9">
             <p className="join-card-eyebrow">Join IGNAI</p>
             <h1 className="mt-5 text-[2.4rem] font-semibold leading-[1.1] text-white sm:text-[3.2rem]">
-              先加微信，
+              先建立连接，
               <br />
-              再慢慢认识彼此。
+              再慢慢成为成员。
             </h1>
             <p className="mt-5 text-base leading-8 text-white/60 sm:text-lg">
-              官网不再要求你先填完整资料。扫码添加社区管理者，先在微信里建立真实连接。
+              提交加入意向和成员资料草稿，和 IGNAI 社区建立第一层连接。也可以先用微信扫码联系社区管理者。
             </p>
           </div>
 
           <div className="mx-auto mt-10 w-full max-w-[680px] sm:mt-12">
-            <JoinContactCard />
+            <JoinApplicationForm
+              experienceMode={experienceMode}
+              externalFormUrl={externalFormUrl}
+            />
+            <div className="mt-6">
+              <JoinContactCard />
+            </div>
           </div>
         </div>
       </section>
@@ -176,10 +192,10 @@ export default function JoinPage() {
 export function getServerSideProps() {
   return {
     props: {
-      experienceMode: "external",
+      experienceMode: getJoinExperienceMode(),
       externalFormUrl: process.env.NEXT_PUBLIC_JOIN_FORM_URL?.trim() || "",
       pageTitle: "加入社区 | IGNAI",
-      pageDescription: "扫码添加社区管理者，先在微信里和 IGNAI 建立真实连接。",
+      pageDescription: "提交加入意向和成员资料草稿，和 IGNAI 社区建立第一层连接。",
     },
   };
 }
