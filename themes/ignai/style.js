@@ -65,7 +65,7 @@ const ignaiThemeCss = `
         --rig-card-hover-bg: rgba(240, 237, 230, 0.1);
         --rig-terminal-bg: rgba(10,10,10,0.7);
         --rig-hero-bg: radial-gradient(circle at 18% 12%, rgba(255,122,24,0.22), transparent 30%), radial-gradient(circle at 78% 18%, rgba(93,169,255,0.12), transparent 32%), linear-gradient(135deg, #07080c 0%, #111015 54%, #050608 100%);
-        --rig-hero-artwash: linear-gradient(90deg, rgba(255,122,24,0.1), transparent 42%), url('/brand/ignai/business-card-mockup.webp');
+        --rig-hero-artwash: linear-gradient(90deg, rgba(255,122,24,0.12), transparent 42%);
         --rig-hero-title: var(--rig-paper);
         --rig-hero-copy: var(--rig-paper-70);
         --rig-hero-visual-bg: rgba(6, 8, 12, 0.58);
@@ -118,8 +118,8 @@ const ignaiThemeCss = `
         --rig-card-bg: rgba(255, 250, 242, 0.86);
         --rig-card-hover-bg: rgba(255, 252, 246, 0.96);
         --rig-terminal-bg: rgba(30, 20, 13, 0.08);
-        --rig-hero-bg: radial-gradient(circle at 18% 12%, rgba(255, 122, 24, 0.22), transparent 30%), radial-gradient(circle at 72% 18%, rgba(255, 95, 31, 0.18), transparent 28%), linear-gradient(135deg, #fff6e9 0%, #ffe5cf 48%, #ff7a25 100%);
-        --rig-hero-artwash: linear-gradient(90deg, rgba(255,138,24,0.1), transparent 42%), url('/brand/ignai/hero-gradient-brand.webp');
+        --rig-hero-bg: radial-gradient(circle at 18% 16%, rgba(255, 122, 24, 0.16), transparent 32%), radial-gradient(circle at 78% 18%, rgba(255, 164, 92, 0.12), transparent 30%), linear-gradient(135deg, #fff8ef 0%, #fff0df 54%, #ffe3cc 100%);
+        --rig-hero-artwash: linear-gradient(90deg, rgba(255,138,24,0.1), transparent 42%);
         --rig-hero-title: #190e08;
         --rig-hero-copy: rgba(25, 14, 8, 0.78);
         --rig-hero-visual-bg: rgba(255, 244, 232, 0.28);
@@ -2497,7 +2497,7 @@ const rigStyle = `
   #theme-proxio .rig-hero-inner {
     position: relative; z-index: 1;
     max-width: calc(var(--rig-max-w) + 6rem); margin: 0 auto; padding: 0 3rem;
-    display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.78fr);
+    display: grid; grid-template-columns: minmax(0, 920px);
     gap: 3.5rem; align-items: center;
   }
   #theme-proxio .rig-hero-kicker {
@@ -2516,19 +2516,19 @@ const rigStyle = `
     box-shadow: 0 0 16px var(--rig-heat-glow);
   }
   #theme-proxio .rig-hero h1 {
-    max-width: 820px; margin: 0 0 2rem; color: var(--rig-hero-title);
+    max-width: 920px; margin: 0 0 2rem; color: var(--rig-hero-title);
     font: 400 clamp(3.6rem, 7vw, 6.6rem)/0.98 'Rig Chalet', sans-serif;
     letter-spacing: 0;
     text-shadow: 0 18px 50px rgba(0,0,0,0.18);
   }
   #theme-proxio .rig-hero-sub {
-    max-width: 620px; margin: 0 0 1.5rem; color: var(--rig-hero-copy);
+    max-width: 760px; margin: 0 0 1.5rem; color: var(--rig-hero-copy);
     font-size: 1.1rem; line-height: 1.55; font-weight: 700; opacity: 0.86;
   }
   #theme-proxio .rig-hero-proof-row {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-width: 620px;
+    max-width: 760px;
     margin: 0 0 2.5rem;
     border-top: 1px solid color-mix(in srgb, var(--rig-hero-title) 16%, transparent);
     border-bottom: 1px solid color-mix(in srgb, var(--rig-hero-title) 16%, transparent);

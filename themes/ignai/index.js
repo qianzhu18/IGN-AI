@@ -736,32 +736,6 @@ function RigHeroSection() {
             </div>
           </Reveal>
         </div>
-        <Reveal delay={0.16} className='rig-hero-visual-wrap'>
-          <div className='rig-hero-visual'>
-            <Image
-              src='/brand/ignai/hero-gradient-brand.webp'
-              alt='IGNAI brand gradient lockup'
-              width={1600}
-              height={893}
-              priority
-              sizes='(max-width: 960px) 100vw, 42vw'
-              className='rig-hero-brand-image rig-hero-brand-image--light'
-            />
-            <Image
-              src='/brand/ignai/storefront-sign.webp'
-              alt='IGNAI storefront sign'
-              width={1600}
-              height={893}
-              priority
-              sizes='(max-width: 960px) 100vw, 42vw'
-              className='rig-hero-brand-image rig-hero-brand-image--dark'
-            />
-            <div className='rig-hero-visual-caption'>
-              <span>Community Signal</span>
-              <strong>300+ MEMBERS · 20+ EVENTS</strong>
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   )
