@@ -2497,8 +2497,14 @@ const rigStyle = `
   #theme-proxio .rig-hero-inner {
     position: relative; z-index: 1;
     max-width: calc(var(--rig-max-w) + 6rem); margin: 0 auto; padding: 0 3rem;
-    display: grid; grid-template-columns: minmax(0, 920px);
-    gap: 3.5rem; align-items: center;
+    display: grid; grid-template-columns: minmax(0, 980px);
+    gap: 3.5rem; align-items: center; justify-content: center;
+  }
+  #theme-proxio .rig-hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   #theme-proxio .rig-hero-kicker {
     display: inline-flex; align-items: center; gap: 0.55rem;
@@ -2516,25 +2522,25 @@ const rigStyle = `
     box-shadow: 0 0 16px var(--rig-heat-glow);
   }
   #theme-proxio .rig-hero h1 {
-    max-width: 920px; margin: 0 0 2rem; color: var(--rig-hero-title);
+    max-width: 980px; margin: 0 auto 2rem; color: var(--rig-hero-title);
     font: 400 clamp(3.6rem, 7vw, 6.6rem)/0.98 'Rig Chalet', sans-serif;
     letter-spacing: 0;
     text-shadow: 0 18px 50px rgba(0,0,0,0.18);
   }
   #theme-proxio .rig-hero-sub {
-    max-width: 760px; margin: 0 0 1.5rem; color: var(--rig-hero-copy);
+    max-width: 760px; margin: 0 auto 1.5rem; color: var(--rig-hero-copy);
     font-size: 1.1rem; line-height: 1.55; font-weight: 700; opacity: 0.86;
   }
   #theme-proxio .rig-hero-proof-row {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-width: 760px;
-    margin: 0 0 2.5rem;
+    width: min(760px, 100%);
+    margin: 0 auto 2.5rem;
     border-top: 1px solid color-mix(in srgb, var(--rig-hero-title) 16%, transparent);
     border-bottom: 1px solid color-mix(in srgb, var(--rig-hero-title) 16%, transparent);
   }
   #theme-proxio .rig-hero-proof-item {
-    padding: 0.86rem 1rem 0.82rem 0;
+    padding: 0.86rem 1rem 0.82rem;
   }
   #theme-proxio .rig-hero-proof-item + .rig-hero-proof-item {
     padding-left: 1rem;
@@ -2573,62 +2579,7 @@ const rigStyle = `
   html.light #theme-proxio .rig-hero-proof-item span {
     color: rgba(25, 14, 8, 0.68);
   }
-  html.light #theme-proxio .rig-hero-visual {
-    box-shadow: 0 24px 60px rgba(75, 35, 10, 0.12);
-  }
-  #theme-proxio .rig-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-  #theme-proxio .rig-hero-visual-wrap {
-    min-width: 0;
-  }
-  #theme-proxio .rig-hero-visual {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--rig-hero-title) 20%, transparent);
-    background: var(--rig-hero-visual-bg);
-    box-shadow: 0 32px 80px rgba(0,0,0,0.22);
-    aspect-ratio: 16 / 10;
-    clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
-  }
-  #theme-proxio .rig-hero-brand-image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  #theme-proxio .rig-hero-brand-image--light {
-    display: none;
-  }
-  #theme-proxio .rig-hero-brand-image--dark {
-    display: block;
-  }
-  html.light #theme-proxio .rig-hero-brand-image--light {
-    display: block;
-  }
-  html.light #theme-proxio .rig-hero-brand-image--dark {
-    display: none;
-  }
-  #theme-proxio .rig-hero-visual-caption {
-    position: absolute;
-    left: 1rem;
-    right: 1rem;
-    bottom: 1rem;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 1rem;
-    color: #fff8ef;
-    text-shadow: 0 2px 14px rgba(0,0,0,0.36);
-  }
-  #theme-proxio .rig-hero-visual-caption span {
-    font: 800 0.7rem/1 'Rig Mono', monospace;
-    text-transform: uppercase;
-    opacity: 0.76;
-  }
-  #theme-proxio .rig-hero-visual-caption strong {
-    font: 800 0.78rem/1 'Rig Mono', monospace;
-    text-align: right;
-  }
+  #theme-proxio .rig-hero-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
   /* --- Ticker --- */
   #theme-proxio .rig-ticker {
@@ -3132,10 +3083,7 @@ const rigStyle = `
       gap: 2rem;
     }
     #theme-proxio .rig-hero h1 {
-      max-width: 760px;
-    }
-    #theme-proxio .rig-hero-visual {
-      max-width: 620px;
+      max-width: 820px;
     }
   }
 
@@ -3178,6 +3126,7 @@ const rigStyle = `
     }
     #theme-proxio .rig-hero-actions {
       gap: 0.85rem;
+      width: 100%;
     }
     #theme-proxio .rig-btn {
       min-height: 3.5rem;
@@ -3197,11 +3146,6 @@ const rigStyle = `
       text-align: left;
     }
     #theme-proxio .rig-hero-kicker { font-size: 0.66rem; }
-    #theme-proxio .rig-hero-visual-caption { align-items: start; flex-direction: column; }
-    html.light #theme-proxio .rig-hero-visual-caption,
-    html.dark #theme-proxio .rig-hero-visual-caption {
-      display: none;
-    }
     #theme-proxio .rig-problem-grid { grid-template-columns: 1fr; }
     #theme-proxio .rig-caps-grid { grid-template-columns: 1fr; }
     #theme-proxio .rig-stats { grid-template-columns: repeat(2, 1fr); }
