@@ -318,8 +318,8 @@ export function JoinApplicationForm({
       onSubmit={(event) => void handleSubmit(event)}
       className="join-surface-card-strong mx-auto p-5 sm:p-7"
     >
-      <div className="join-info-panel mb-7 flex items-start gap-4 rounded-2xl border border-[#ffb879]/16 bg-[#0d1219]/92 px-4 py-4 sm:px-5">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#ffb879]/22 bg-[#ff9a3c]/10 text-[#ffd09a]">
+      <div className="join-info-panel mb-7 flex items-start gap-4 border-b pb-5">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#ffb879]/22 text-[#ffd09a]">
           <modeNotice.Icon className="h-5 w-5" />
         </div>
         <div>
@@ -362,7 +362,7 @@ export function JoinApplicationForm({
 
       <div className="my-8 h-px bg-white/10" />
 
-      <div className="join-member-draft rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+      <div className="join-member-draft border-t pt-7">
         <div>
           <p className="join-card-eyebrow">Member draft</p>
           <h3 className="join-card-title mt-3 text-lg font-medium text-white">顺手留下成员页草稿</h3>
@@ -372,9 +372,9 @@ export function JoinApplicationForm({
         </div>
 
         <div className="mt-6 space-y-5">
-          <div className="join-avatar-panel rounded-2xl border border-[#ffb879]/14 bg-[#0f1219]/88 p-4 sm:p-5">
+          <div className="join-avatar-panel border-t pt-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] text-white/36">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] text-white/36">
                 {avatar.previewUrl || avatar.uploadedUrl ? (
                   <img
                     src={avatar.previewUrl || avatar.uploadedUrl}
@@ -397,7 +397,7 @@ export function JoinApplicationForm({
             </div>
 
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <label className="join-secondary-button inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-white/72 transition hover:border-white/22 hover:text-white">
+              <label className="join-secondary-button inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/12 bg-white/[0.04] px-5 py-3 text-sm text-white/72 transition-colors hover:border-white/22 hover:text-white">
                 <Upload className="h-4 w-4" />
                 <span>选择图片</span>
                 <input
@@ -412,7 +412,7 @@ export function JoinApplicationForm({
                 type="button"
                 onClick={(event) => void handleAvatarUpload(event.currentTarget.form)}
                 disabled={!avatar.previewUrl || avatar.status === "uploading"}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#ffd8ae]/34 bg-[#ff9a3c]/14 px-5 py-3 text-sm text-[#ffd09a] transition hover:bg-[#ff9a3c]/20 disabled:cursor-not-allowed disabled:opacity-45"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#ffd8ae]/34 bg-[#ff9a3c]/14 px-5 py-3 text-sm text-[#ffd09a] transition-colors hover:bg-[#ff9a3c]/20 disabled:cursor-not-allowed disabled:opacity-45"
               >
                 {avatar.status === "uploading" ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -460,7 +460,7 @@ export function JoinApplicationForm({
           </div>
 
           {avatar.uploadedUrl ? (
-            <div className="join-generated-link rounded-2xl border border-[#9aceff]/14 bg-[#0f1720]/88 px-4 py-3 text-xs leading-6 text-white/46 break-all">
+            <div className="join-generated-link rounded-lg border px-4 py-3 text-xs leading-6 text-white/46 break-all">
               图片链接已生成：{avatar.uploadedUrl}
             </div>
           ) : null}
@@ -543,7 +543,7 @@ export function JoinApplicationForm({
           data-analytics-event="click_join_submit"
           data-analytics-label="join_form_submit"
           data-analytics-prop-mode={experienceMode}
-          className="relative inline-flex items-center justify-center overflow-hidden rounded-full border border-[#ffd8ae]/40 bg-[linear-gradient(135deg,#ffb062_0%,#ff9a3c_34%,#ffc56b_100%)] px-7 py-3.5 text-sm font-medium text-[#111111] shadow-[0_20px_48px_rgba(255,122,24,0.28)] transition duration-300 hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[132px]"
+          className="relative inline-flex items-center justify-center overflow-hidden rounded-lg border border-[#ffd8ae]/34 bg-[#ff9a3c] px-7 py-3.5 text-sm font-medium text-[#111111] transition-colors duration-200 hover:bg-[#ffb062] disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[132px]"
         >
           {state.status === "submitting"
             ? "提交中"

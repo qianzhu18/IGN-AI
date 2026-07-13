@@ -19,11 +19,16 @@ export default function JoinPage({
         <style>{`
           .join-surface-card-strong {
             width: 100%;
-            border-radius: 1rem;
+            border-radius: 0.875rem;
             border: 1px solid rgba(255,255,255,0.1);
-            background-color: rgba(8,12,18,0.74);
-            backdrop-filter: blur(20px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 22px 58px rgba(0,0,0,0.28);
+            background-color: rgba(8,12,18,0.86);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+          }
+          .join-info-panel,
+          .join-member-draft,
+          .join-avatar-panel,
+          .join-generated-link {
+            border-color: rgba(255,255,255,0.1);
           }
           .join-page-shell {
             width: min(100%, 760px);
@@ -95,8 +100,8 @@ export default function JoinPage({
           }
           html.light .join-surface-card-strong {
             border-color: rgba(120, 76, 42, 0.18);
-            background-color: rgba(255, 252, 247, 0.88);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.82), 0 22px 58px rgba(119, 73, 38, 0.12);
+            background-color: rgba(255, 252, 247, 0.92);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.76);
             color: #21130b;
           }
           html.light .join-surface-card-strong h2,
@@ -118,12 +123,15 @@ export default function JoinPage({
           html.light .join-info-panel,
           html.light .join-member-draft,
           html.light .join-avatar-panel,
-          html.light .join-note-panel,
-          html.light .join-qr-frame,
           html.light .join-generated-link {
             border-color: rgba(120, 76, 42, 0.16);
-            background: rgba(255, 255, 255, 0.58);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
+            background: transparent;
+            box-shadow: none;
+          }
+          html.light .join-note-panel,
+          html.light .join-qr-frame {
+            border-color: rgba(120, 76, 42, 0.16);
+            background: rgba(255, 255, 255, 0.54);
           }
           html.light .join-step-list {
             border-color: rgba(120, 76, 42, 0.16);

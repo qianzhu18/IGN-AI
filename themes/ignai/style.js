@@ -1762,20 +1762,16 @@ const ignaiThemeCss = `
       }
 
       #theme-proxio .ignai-about-hero-line--primary {
-        background-image: linear-gradient(90deg, #fff 0%, #fff8ef 54%, rgba(255, 248, 239, 0.58) 100%);
+        color: var(--rig-paper);
       }
 
       #theme-proxio .ignai-about-hero-line--accent,
       #theme-proxio .ignai-about-stat-num {
-        background-image: linear-gradient(90deg, #ff7a18 0%, #ffd09a 58%, #5da9ff 100%);
+        color: var(--rig-heat);
       }
 
       #theme-proxio .ignai-about-eyebrow {
         color: color-mix(in srgb, var(--rig-heat) 72%, var(--rig-paper) 28%);
-      }
-
-      #theme-proxio .ignai-about-eyebrow--signal {
-        color: color-mix(in srgb, var(--rig-signal) 72%, var(--rig-paper) 28%);
       }
 
       #theme-proxio .ignai-about-title,
@@ -1787,7 +1783,8 @@ const ignaiThemeCss = `
       #theme-proxio .ignai-about-copy,
       #theme-proxio .ignai-about-value-desc,
       #theme-proxio .ignai-about-panel-answer,
-      #theme-proxio .ignai-about-stat-label {
+      #theme-proxio .ignai-about-stat-label,
+      #theme-proxio .ignai-about-stat-note {
         color: var(--rig-paper-70);
       }
 
@@ -1800,9 +1797,7 @@ const ignaiThemeCss = `
       #theme-proxio .ignai-about-value-card {
         border-color: var(--rig-border);
         background: var(--rig-card-bg);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.03),
-          0 24px 70px rgba(0, 0, 0, 0.2);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
       }
 
       #theme-proxio .ignai-about-value-card:hover {
@@ -1823,7 +1818,6 @@ const ignaiThemeCss = `
       html.light #theme-proxio .ignai-about-page {
         background:
           radial-gradient(circle at 10% 6%, rgba(255, 125, 43, 0.14), transparent 28%),
-          radial-gradient(circle at 86% 10%, rgba(40, 84, 214, 0.055), transparent 26%),
           linear-gradient(180deg, #fff7ec 0%, #fffaf4 46%, #fff6ea 100%);
         color: #20150e;
       }
@@ -1833,20 +1827,16 @@ const ignaiThemeCss = `
       }
 
       html.light #theme-proxio .ignai-about-hero-line--primary {
-        background-image: linear-gradient(90deg, #160d08 0%, #352113 64%, rgba(53, 33, 19, 0.72) 100%);
+        color: #20150e;
       }
 
       html.light #theme-proxio .ignai-about-hero-line--accent,
       html.light #theme-proxio .ignai-about-stat-num {
-        background-image: linear-gradient(90deg, #e34f16 0%, #ff7a18 46%, #2457d6 100%);
+        color: #e34f16;
       }
 
       html.light #theme-proxio .ignai-about-eyebrow {
         color: #b94214;
-      }
-
-      html.light #theme-proxio .ignai-about-eyebrow--signal {
-        color: #2457d6;
       }
 
       html.light #theme-proxio .ignai-about-title,
@@ -1858,7 +1848,8 @@ const ignaiThemeCss = `
       html.light #theme-proxio .ignai-about-copy,
       html.light #theme-proxio .ignai-about-value-desc,
       html.light #theme-proxio .ignai-about-panel-answer,
-      html.light #theme-proxio .ignai-about-stat-label {
+      html.light #theme-proxio .ignai-about-stat-label,
+      html.light #theme-proxio .ignai-about-stat-note {
         color: rgba(32, 21, 14, 0.72);
       }
 
@@ -1870,20 +1861,14 @@ const ignaiThemeCss = `
       html.light #theme-proxio .ignai-about-panel,
       html.light #theme-proxio .ignai-about-value-card {
         border-color: rgba(126, 71, 34, 0.16);
-        background:
-          linear-gradient(180deg, rgba(255, 252, 246, 0.94) 0%, rgba(255, 247, 236, 0.86) 100%);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.82),
-          0 24px 72px rgba(119, 68, 33, 0.1);
+        background: rgba(255, 252, 246, 0.84);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
       }
 
       html.light #theme-proxio .ignai-about-value-card:hover {
         border-color: rgba(227, 79, 22, 0.32);
-        background:
-          linear-gradient(180deg, rgba(255, 253, 248, 0.98) 0%, rgba(255, 241, 224, 0.92) 100%);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.9),
-          0 28px 84px rgba(119, 68, 33, 0.14);
+        background: rgba(255, 248, 238, 0.92);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.82);
       }
 
       html.light #theme-proxio .ignai-about-panel-row {
