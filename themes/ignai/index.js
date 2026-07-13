@@ -684,6 +684,7 @@ function RigHeroSection() {
   const cta1Url = siteConfig('RIG_HERO_CTA_1_URL', CONFIG.RIG_HERO_CTA_1_URL)
   const cta2Text = siteConfig('RIG_HERO_CTA_2', CONFIG.RIG_HERO_CTA_2)
   const cta2Url = siteConfig('RIG_HERO_CTA_2_URL', CONFIG.RIG_HERO_CTA_2_URL)
+  const heroStats = CONFIG.RIG_STATS.slice(0, 3)
 
   return (
     <section className='rig-hero'>
@@ -701,6 +702,16 @@ function RigHeroSection() {
           </Reveal>
           <Reveal delay={0.12}>
             <p className='rig-hero-sub'>{sub}</p>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <div className='rig-hero-proof-row'>
+              {heroStats.map(stat => (
+                <div key={stat.label} className='rig-hero-proof-item'>
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                </div>
+              ))}
+            </div>
           </Reveal>
           <Reveal delay={0.2}>
             <div className='rig-hero-actions'>
@@ -746,8 +757,8 @@ function RigHeroSection() {
               className='rig-hero-brand-image rig-hero-brand-image--dark'
             />
             <div className='rig-hero-visual-caption'>
-              <span>Brand Assets</span>
-              <strong>IGNITE BEFORE AGI</strong>
+              <span>Community Signal</span>
+              <strong>300+ MEMBERS · 20+ EVENTS</strong>
             </div>
           </div>
         </Reveal>
