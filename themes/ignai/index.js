@@ -802,6 +802,11 @@ function RigProblemSection() {
       <Reveal delay={0.08}>
         <h2 className='rig-section-title' style={{ textAlign: 'center' }} dangerouslySetInnerHTML={{ __html: title }} />
       </Reveal>
+      <Reveal delay={0.12}>
+        <p className='rig-section-subline'>
+          问题不是信息不够多，而是缺少能把人、场景和行动接起来的本地网络。
+        </p>
+      </Reveal>
       <div className='rig-problem-grid' style={{ marginTop: '3rem' }}>
         {cards.map((card, i) => (
           <Reveal key={card.number} delay={i * 0.08}>
@@ -835,6 +840,11 @@ function RigCapabilitiesSection() {
       </Reveal>
       <Reveal delay={0.08}>
         <h2 className='rig-section-title' style={{ textAlign: 'center' }}>{title}</h2>
+      </Reveal>
+      <Reveal delay={0.12}>
+        <p className='rig-section-subline'>
+          每个动作都对应一种可沉淀的社区资产：活动、关系、内容、项目和公开记录。
+        </p>
       </Reveal>
       <div className='rig-caps-grid' style={{ marginTop: '3rem' }}>
         {cards.map((card, i) => (
