@@ -1,5 +1,12 @@
 export type RecordType = 'recap' | 'story' | 'resource' | 'project'
 
+export type RecordMedia = {
+  src: string
+  alt: string
+  caption: string
+  orientation?: 'portrait'
+}
+
 export type RecordItem = {
   slug: string
   title: string
@@ -10,7 +17,7 @@ export type RecordItem = {
   excerpt: string
   outcomes?: string[]
   tags: string[]
-  content: Array<{ heading: string; body: string }>
+  content: Array<{ heading: string; body: string; media?: RecordMedia[] }>
   links?: Array<{ label: string; href: string }>
 }
 
@@ -62,15 +69,36 @@ export const records: RecordItem[] = [
     content: [
       {
         heading: '最早的可记录现场',
-        body: '在极客松发生时，IGNAI 还没有正式成立。但这是这群小伙伴第一次一起对外做事，也成为后来社区正式运营的起点。'
+        body: '在极客松发生时，IGNAI 还没有正式成立。但这是这群小伙伴第一次一起对外做事，也成为后来社区正式运营的起点。',
+        media: [
+          {
+            src: '/images/activity-records/stories/geekathon-first-huddle.webp',
+            alt: '极客松现场合影',
+            caption: '极客松现场合影。'
+          }
+        ]
       },
       {
         heading: '从熟人，到更多新人',
-        body: '在此之前，大家只是一批彼此认识的熟人。极客松让我们触达了许多新人，也让更多人看见：这里可以有一个愿意一起折腾 AI 的组织。'
+        body: '在此之前，大家只是一批彼此认识的熟人。极客松让我们触达了许多新人，也让更多人看见：这里可以有一个愿意一起折腾 AI 的组织。',
+        media: [
+          {
+            src: '/images/activity-records/stories/geekathon-audience.webp',
+            alt: '极客松活动现场',
+            caption: '极客松活动现场。'
+          }
+        ]
       },
       {
         heading: '不是重运营，而是继续相聚',
-        body: '活动之后，社区正式成立。这群“just for fun”的同学有了组织，但依然主要靠线下活动汇聚，不把关系做成冷冰冰的运营指标。'
+        body: '活动之后，社区正式成立。这群“just for fun”的同学有了组织，但依然主要靠线下活动汇聚，不把关系做成冷冰冰的运营指标。',
+        media: [
+          {
+            src: '/images/activity-records/stories/geekathon-group.webp',
+            alt: '极客松活动结束后的合影',
+            caption: '活动结束后的合影。'
+          }
+        ]
       }
     ]
   },
@@ -86,11 +114,25 @@ export const records: RecordItem[] = [
     content: [
       {
         heading: '热闹散场之后',
-        body: '很多活动结束后，参与者很快就散了。我们想承接的，正是热情退去之后仍然愿意继续交流、继续相遇的人。'
+        body: '很多活动结束后，参与者很快就散了。我们想承接的，正是热情退去之后仍然愿意继续交流、继续相遇的人。',
+        media: [
+          {
+            src: '/images/activity-records/stories/early-dinner.webp',
+            alt: '早期活动结束后的聚餐交流',
+            caption: '活动结束后，大家仍在继续交流。'
+          }
+        ]
       },
       {
         heading: '不只办一场活动',
-        body: '不少场域完成活动就结束了。IGNAI 更在意活动的长尾：让在现场认识的人，之后还能聊工具、聊项目、聊生活，也能继续一起去下一场。'
+        body: '不少场域完成活动就结束了。IGNAI 更在意活动的长尾：让在现场认识的人，之后还能聊工具、聊项目、聊生活，也能继续一起去下一场。',
+        media: [
+          {
+            src: '/images/activity-records/stories/early-aigc-meetup.webp',
+            alt: '早期活动参与者合影',
+            caption: '早期活动现场的参与者合影。'
+          }
+        ]
       },
       {
         heading: '关系不是临时拼出来的',
@@ -112,11 +154,30 @@ export const records: RecordItem[] = [
     content: [
       {
         heading: '带着还不完美的项目来',
-        body: '这场黑客松欢迎能运行、能演示、能说清楚问题的 AI Demo、智能体、工作流与行业解决方案。重点不是等到完美，而是让项目走出群聊，接受真实的提问和反馈。'
+        body: '这场黑客松欢迎能运行、能演示、能说清楚问题的 AI Demo、智能体、工作流与行业解决方案。重点不是等到完美，而是让项目走出群聊，接受真实的提问和反馈。',
+        media: [
+          {
+            src: '/images/activity-records/stories/sanrenxing-venue.webp',
+            alt: '三人行必有 AI 长沙赛区活动现场',
+            caption: '“三人行必有 AI”长沙赛区活动现场。'
+          }
+        ]
       },
       {
         heading: '长沙赛区的一个下午',
-        body: '活动于 2026 年 5 月 30 日 13:30 至 18:00 在湖南省科学技术馆 B 馆实验教育中心一楼报告厅举行，由 Google Cloud 独家赞助。'
+        body: '活动于 2026 年 5 月 30 日 13:30 至 18:00 在湖南省科学技术馆 B 馆实验教育中心一楼报告厅举行，由 Google Cloud 独家赞助。',
+        media: [
+          {
+            src: '/images/activity-records/stories/sanrenxing-group.webp',
+            alt: '三人行必有 AI 长沙赛区合影',
+            caption: '长沙赛区现场合影。'
+          },
+          {
+            src: '/images/activity-records/stories/sanrenxing-attendees.webp',
+            alt: '三人行必有 AI 长沙赛区参与者',
+            caption: '来到长沙赛区的参与者。'
+          }
+        ]
       },
       {
         heading: 'IGNAI 的角色',
@@ -137,11 +198,27 @@ export const records: RecordItem[] = [
     content: [
       {
         heading: '不只研究工具',
-        body: '越常使用 AI，越会遇到产品问题：用户为什么愿意用，一个功能怎样解决真实问题，一个想法怎样成为产品。产品思维因此成了技术、运营、设计、内容和独立项目都绕不开的能力。'
+        body: '越常使用 AI，越会遇到产品问题：用户为什么愿意用，一个功能怎样解决真实问题，一个想法怎样成为产品。产品思维因此成了技术、运营、设计、内容和独立项目都绕不开的能力。',
+        media: [
+          {
+            src: '/images/activity-records/stories/guanchai-camp-poster.webp',
+            alt: '观猹与 IGNAI AI 产品经理共学营海报',
+            caption: '观猹 x IGNAI AI 产品经理共学营。',
+            orientation: 'portrait'
+          }
+        ]
       },
       {
         heading: '一起学，也一起做',
-        body: '共学营以 7 天为期，每晚 20:00 线上直播并配合作业打卡。参与者和一线嘉宾一起拆解 AI 产品、理解岗位能力、完成实践项目。'
+        body: '共学营以 7 天为期，每晚 20:00 线上直播并配合作业打卡。参与者和一线嘉宾一起拆解 AI 产品、理解岗位能力、完成实践项目。',
+        media: [
+          {
+            src: '/images/activity-records/stories/guanchai-camp-program.webp',
+            alt: 'AI 产品经理共学营课程安排',
+            caption: '共学营课程与嘉宾信息。',
+            orientation: 'portrait'
+          }
+        ]
       },
       {
         heading: '进群就是开始',
@@ -161,11 +238,30 @@ export const records: RecordItem[] = [
     content: [
       {
         heading: '先做一个能带去现场的东西',
-        body: '“智能打印吧唧”是社区一起做的项目。我们把它带到现场，让路过的人能看见、体验，也能和我们聊聊它是怎么做出来的。'
+        body: '“智能打印吧唧”是社区一起做的项目。我们把它带到现场，让路过的人能看见、体验，也能和我们聊聊它是怎么做出来的。',
+        media: [
+          {
+            src: '/images/activity-records/stories/huamao-badge-booth.webp',
+            alt: '智能打印吧唧项目在活动现场',
+            caption: '“智能打印吧唧”项目在活动现场。'
+          }
+        ]
       },
       {
         heading: '不是主办，也值得记录',
-        body: '这次没有组织一场活动，而是作为参与者去摆摊和参展。恰恰因为这样，它成了社区有了名字之后第一次真正走进别人的现场。'
+        body: '这次没有组织一场活动，而是作为参与者去摆摊和参展。恰恰因为这样，它成了社区有了名字之后第一次真正走进别人的现场。',
+        media: [
+          {
+            src: '/images/activity-records/stories/huamao-community-group.webp',
+            alt: 'AI 花猫社区活动现场合影',
+            caption: 'AI 花猫社区活动现场合影。'
+          },
+          {
+            src: '/images/activity-records/stories/huamao-event-stage.webp',
+            alt: 'AI 花猫社区活动现场',
+            caption: '活动现场。'
+          }
+        ]
       }
     ]
   },
@@ -181,11 +277,25 @@ export const records: RecordItem[] = [
     content: [
       {
         heading: '把正在做的事讲出来',
-        body: '我们接受邀请，在现场分享了一个基于 OpenClaw 的项目。这是一次把项目从日常开发和讨论里带到台上的尝试。'
+        body: '我们接受邀请，在现场分享了一个基于 OpenClaw 的项目。这是一次把项目从日常开发和讨论里带到台上的尝试。',
+        media: [
+          {
+            src: '/images/activity-records/stories/openclaw-stage.webp',
+            alt: 'OpenClaw 项目现场分享',
+            caption: '现场分享环节，屏幕展示 ClawNet 项目。'
+          }
+        ]
       },
       {
         heading: '留一份真实的记录',
-        body: '现有材料确认了受邀分享与项目主题；活动名称、时间、地点和项目细节仍在补充。我们先把已经发生的这一次交流如实留下。'
+        body: '现有材料确认了受邀分享与项目主题；活动名称、时间、地点和项目细节仍在补充。我们先把已经发生的这一次交流如实留下。',
+        media: [
+          {
+            src: '/images/activity-records/stories/openclaw-forum-invite.webp',
+            alt: '长沙马栏山 AI 智能体企业级应用论坛邀请海报',
+            caption: '长沙马栏山 AI 智能体企业级应用论坛邀请海报。'
+          }
+        ]
       }
     ]
   },
@@ -201,7 +311,14 @@ export const records: RecordItem[] = [
     content: [
       {
         heading: '一份已确认的结果',
-        body: '现有活动材料记录了社区参与 LEV0 miniCamp 黑客松，并有获奖结果。这是我们可以确认、也值得先留下的一件事。'
+        body: '现有活动材料记录了社区参与 LEV0 miniCamp 黑客松，并有获奖结果。这是我们可以确认、也值得先留下的一件事。',
+        media: [
+          {
+            src: '/images/activity-records/stories/lev0-award.webp',
+            alt: 'LEV0 miniCamp 黑客松三等奖记录',
+            caption: 'LEV0 miniCamp 1Day Hackathon 三等奖记录。'
+          }
+        ]
       },
       {
         heading: '把细节留给事实',

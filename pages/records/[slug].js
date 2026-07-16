@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
 import { records, recordTypeLabel } from '@/src/content/records'
@@ -52,11 +53,14 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
           </p>
 
           {record.cover && (
-            <div className='mt-10 overflow-hidden rounded-lg border border-white/10'>
-              <img
+            <div className='relative mt-10 aspect-[16/9] overflow-hidden rounded-lg border border-white/10'>
+              <Image
                 src={record.cover}
                 alt=''
-                className='aspect-[16/9] w-full object-cover'
+                fill
+                priority
+                sizes='(max-width: 896px) 100vw, 896px'
+                className='object-cover'
               />
             </div>
           )}
@@ -85,6 +89,29 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
                 <section key={`${block.heading}-${index}`}>
                   <h2 className='text-2xl font-semibold text-white'>{block.heading}</h2>
                   <p className='mt-4 text-base leading-8 text-white/56'>{block.body}</p>
+                  {block.media?.length > 0 && (
+                    <div className={`mt-6 grid gap-4 ${block.media.length > 1 ? 'sm:grid-cols-2' : ''}`}>
+                      {block.media.map(media => (
+                        <figure
+                          key={media.src}
+                          className={`overflow-hidden rounded-lg border border-white/[0.09] bg-[#070b10]/70 ${media.orientation === 'portrait' ? 'mx-auto w-full max-w-md' : ''}`}
+                        >
+                          <div className={`relative bg-black/20 ${media.orientation === 'portrait' ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
+                            <Image
+                              src={media.src}
+                              alt={media.alt}
+                              fill
+                              sizes={block.media.length > 1 ? '(max-width: 640px) 100vw, 50vw' : '(max-width: 896px) 100vw, 896px'}
+                              className='object-contain'
+                            />
+                          </div>
+                          <figcaption className='border-t border-white/[0.07] px-4 py-3 text-xs leading-5 text-white/45'>
+                            {media.caption}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  )}
                 </section>
               ))}
             </div>
