@@ -123,13 +123,6 @@ const CONFIG = {
     { label: '[ 03 ]', title: '把长沙带到别处。', desc: '在 2050 大会等跨城现场，介绍来自长沙的朋友与正在发生的事。' },
   ],
 
-  // -- Rig Stats --
-  RIG_STATS: [
-    { label: '2050 青年团聚', value: '7 人', note: '最初同行' },
-    { label: '后来相见', value: '70+', note: '更多伙伴参与' },
-    { label: '社区起点', value: '极客松', note: '第一次对外影响' },
-  ],
-
   // -- Rig Terminal --
   RIG_TERM_TITLE: 'Built for builders',
   RIG_TERM_LINES: [

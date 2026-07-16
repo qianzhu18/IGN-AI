@@ -675,7 +675,6 @@ function RigHeroSection() {
   const cta1Url = siteConfig('RIG_HERO_CTA_1_URL', CONFIG.RIG_HERO_CTA_1_URL)
   const cta2Text = siteConfig('RIG_HERO_CTA_2', CONFIG.RIG_HERO_CTA_2)
   const cta2Url = siteConfig('RIG_HERO_CTA_2_URL', CONFIG.RIG_HERO_CTA_2_URL)
-  const heroStats = CONFIG.RIG_STATS.slice(0, 3)
   const quickPaths = siteConfig('RIG_HERO_PATHS', CONFIG.RIG_HERO_PATHS)
 
   return (
@@ -696,16 +695,6 @@ function RigHeroSection() {
             <p className='rig-hero-sub'>{sub}</p>
           </Reveal>
           <Reveal delay={0.16}>
-            <div className='rig-hero-proof-row'>
-              {heroStats.map(stat => (
-                <div key={stat.label} className='rig-hero-proof-item'>
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-          <Reveal delay={0.2}>
             <div className='rig-hero-actions'>
               <SmartLink
                 href={cta1Url}
@@ -727,7 +716,7 @@ function RigHeroSection() {
               </SmartLink>
             </div>
           </Reveal>
-          <Reveal delay={0.24}>
+          <Reveal delay={0.2}>
             <div className='rig-hero-paths' aria-label='选择你的下一步'>
               {quickPaths.map(path => (
                 <SmartLink key={path.label} href={path.href} className='rig-hero-path'>
@@ -848,25 +837,6 @@ function RigCapabilitiesSection() {
         ))}
       </div>
     </section>
-  )
-}
-
-function RigStatsStrip() {
-  const stats = CONFIG.RIG_STATS
-  return (
-    <div style={{ maxWidth: 'var(--rig-max-w)', margin: '0 auto' }}>
-      <Reveal>
-        <div className='rig-stats'>
-          {stats.map(s => (
-            <div key={s.label} className='rig-stat'>
-              <p className='rig-stat-value'>{s.value}</p>
-              <p className='rig-stat-label'>{s.label}</p>
-              <p className='rig-stat-note'>{s.note}</p>
-            </div>
-          ))}
-        </div>
-      </Reveal>
-    </div>
   )
 }
 
