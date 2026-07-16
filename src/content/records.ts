@@ -266,6 +266,31 @@ export const records: RecordItem[] = [
     ]
   },
   {
+    slug: 'guanchai-changli-ai-garden',
+    title: '在长沙理工大学，先让愿意折腾 AI 的人彼此认识',
+    type: 'story',
+    dateText: '高校社区入口',
+    location: '长沙理工大学',
+    cover: '/images/activity-records/guanchai-changli-ai-garden.webp',
+    excerpt: 'IGNAI 与观猹一起，为长沙理工大学的同学建立一个围绕 AI 工具、项目、比赛与真实体验的交流入口。这里不设标准答案，先让不同阶段的人找到彼此。',
+    outcomes: ['高校社区入口', '工具与项目交流', '长期社群连接'],
+    tags: ['长沙理工大学', '高校社群', '观猹'],
+    content: [
+      {
+        heading: '不是再建一个信息群',
+        body: '很多人都在使用 AI：有人研究 Agent、工作流和编程工具，有人因为一个新产品兴奋，也有人刚刚开始好奇。这个入口不是为了制造更多通知，而是让愿意交流和实践的人有一个可以出现的地方。'
+      },
+      {
+        heading: '不同阶段的人，都可以进来',
+        body: '有人刚接触 AI，有人已经做出自己的产品；有人在研究技术，有人在琢磨商业模式，也有人只是想更认真地理解正在发生的变化。大家可以分享工具、讨论产品、聊项目、比赛、实习和机会。'
+      },
+      {
+        heading: '把好奇心留在长期关系里',
+        body: '比起追一阵热点，我们更希望认识那些愿意长期思考和实践的人。先从一次交流开始，再把好奇心变成下一次共学、项目和见面。'
+      }
+    ]
+  },
+  {
     slug: 'openclaw-sharing-record',
     title: '受邀分享：把一个 OpenClaw 项目带到台上',
     type: 'recap',

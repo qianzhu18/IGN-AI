@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Image from 'next/image'
 import {
   fetchEventsFromOfficialAPI,
   fetchGlobalAllData
@@ -106,6 +107,31 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
                 <div key={i}>
                   <h2 className='text-xl font-semibold mb-3'>{block.heading}</h2>
                   <p className='text-white/55 leading-relaxed'>{block.body}</p>
+                  {block.media?.length > 0 && (
+                    <div className={`mt-5 grid gap-4 ${block.media.length > 1 ? 'sm:grid-cols-2' : ''}`}>
+                      {block.media.map(media => (
+                        <figure
+                          key={media.src}
+                          className={`overflow-hidden rounded-lg border border-white/[0.09] bg-[#070b10]/70 ${media.orientation === 'portrait' ? 'mx-auto w-full max-w-md' : ''}`}
+                        >
+                          <div className={`relative bg-black/20 ${media.orientation === 'portrait' ? 'aspect-[1/2]' : 'aspect-[4/3]'}`}>
+                            <Image
+                              src={media.src}
+                              alt={media.alt}
+                              fill
+                              sizes={block.media.length > 1 ? '(max-width: 640px) 100vw, 50vw' : '(max-width: 768px) 100vw, 768px'}
+                              className='object-contain'
+                            />
+                          </div>
+                          {media.caption && (
+                            <figcaption className='border-t border-white/[0.07] px-4 py-3 text-xs leading-5 text-white/45'>
+                              {media.caption}
+                            </figcaption>
+                          )}
+                        </figure>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -119,6 +145,19 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
                   <li key={i} className='text-white/50 text-sm flex items-start gap-2'>
                     <span className='text-[#F0CB8A]/60 mt-0.5'>-</span>
                     {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {event.notes?.length > 0 && (
+            <div className='mb-8 rounded-lg border border-white/[0.08] bg-white/[0.025] p-5'>
+              <h2 className='text-xl font-semibold mb-4'>参与说明</h2>
+              <ul className='space-y-2'>
+                {event.notes.map((note, i) => (
+                  <li key={i} className='text-sm leading-7 text-white/52'>
+                    {note}
                   </li>
                 ))}
               </ul>
