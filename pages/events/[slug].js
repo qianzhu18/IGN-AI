@@ -177,7 +177,7 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
                 )}
                 <div>
                   <p className='mb-4 text-sm leading-7 text-white/50'>
-                    报名链接和二维码由 Notion Event 字段维护，修改后会同步到前台。
+                    报名入口由活动方提供，并在 IGNAI 官网同步展示。
                   </p>
                   {event.registrationUrl && (
                     <Link
