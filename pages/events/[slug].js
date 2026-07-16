@@ -14,9 +14,10 @@ import {
 import {
   normalizeEventList,
   normalizeEventSlugValue,
-  normalizeNotionEvent
+  normalizeNotionEvent,
+  isMockEvent,
+  getEventCoverFallback
 } from '@/lib/utils/event'
-import { mergeFixtureEvents } from '@/lib/dev/contentFixtures'
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
 
@@ -47,10 +48,14 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
 
           {event.cover && (
             <img
-              src={event.cover}
+              src={event.cover || getEventCoverFallback(event)}
               alt=''
               style={{ objectPosition: event.coverPosition || 'center' }}
               className='w-full rounded-lg object-cover aspect-[16/9] mb-8'
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null
+                currentTarget.src = getEventCoverFallback(event)
+              }}
             />
           )}
 
@@ -162,7 +167,7 @@ export async function getStaticPaths({ locales = [] } = {}) {
       fetchEventsFromOfficialAPI()
     ])
     events = normalizeEventList(
-      mergeFixtureEvents(freshEvents.length > 0 ? freshEvents : props.allEvents || []),
+      freshEvents.length > 0 ? freshEvents : props.allEvents || [],
       staticEvents
     )
   } catch (error) {
@@ -170,7 +175,7 @@ export async function getStaticPaths({ locales = [] } = {}) {
   }
 
   const slugs = [
-    ...new Set(events.map(event => normalizeEventSlugValue(event.slug)).filter(Boolean))
+    ...new Set(events.filter(event => !isMockEvent(event)).map(event => normalizeEventSlugValue(event.slug)).filter(Boolean))
   ]
   const paths = locales.length > 0
     ? locales.flatMap(locale =>
@@ -186,9 +191,7 @@ export async function getStaticProps({ params, locale }) {
   const from = 'event-detail'
   const props = await fetchGlobalAllData({ from, locale })
   const freshEvents = await fetchEventsFromOfficialAPI()
-  const allEvents = mergeFixtureEvents(
-    freshEvents.length > 0 ? freshEvents : props.allEvents || []
-  )
+  const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
 
   const normalizedSlug = normalizeEventSlugValue(slug)
   const notionEvent = allEvents.find(
@@ -207,7 +210,7 @@ export async function getStaticProps({ params, locale }) {
       ) || null
   }
 
-  if (!event) {
+  if (!event || isMockEvent(event)) {
     return { notFound: true }
   }
 

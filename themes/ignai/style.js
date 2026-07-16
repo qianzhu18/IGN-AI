@@ -2580,6 +2580,80 @@ const rigStyle = `
     color: rgba(25, 14, 8, 0.68);
   }
   #theme-proxio .rig-hero-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  #theme-proxio .rig-hero-paths {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    width: min(860px, 100%);
+    margin: 1.4rem auto 0;
+    background: color-mix(in srgb, var(--rig-hero-title) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--rig-hero-title) 14%, transparent);
+  }
+  #theme-proxio .rig-hero-path {
+    display: flex;
+    min-height: 6.2rem;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: color-mix(in srgb, var(--rig-hero-visual-bg) 84%, transparent);
+    color: var(--rig-hero-title);
+    text-align: left;
+    transition: background 0.18s ease, transform 0.18s ease;
+  }
+  #theme-proxio .rig-hero-path:hover,
+  #theme-proxio .rig-hero-path:focus-visible {
+    background: color-mix(in srgb, var(--rig-heat) 14%, var(--rig-hero-visual-bg));
+    outline: none;
+    transform: translateY(-1px);
+  }
+  #theme-proxio .rig-hero-path-label {
+    font: 800 0.72rem/1.25 'Rig Mono', monospace;
+    color: var(--rig-heat);
+  }
+  #theme-proxio .rig-hero-path-desc {
+    color: var(--rig-hero-copy);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  html.light #theme-proxio .rig-hero-paths {
+    background: rgba(25, 14, 8, 0.13);
+    border-color: rgba(25, 14, 8, 0.16);
+  }
+  html.light #theme-proxio .rig-hero-path {
+    background: rgba(255, 255, 255, 0.32);
+  }
+  html.light #theme-proxio .rig-hero-path:hover,
+  html.light #theme-proxio .rig-hero-path:focus-visible {
+    background: rgba(255, 255, 255, 0.54);
+  }
+
+  /* --- Trust strip --- */
+  #theme-proxio .rig-trust-strip {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1px;
+    width: min(var(--rig-max-w), calc(100% - 3rem));
+    margin: -1.25rem auto 0;
+    border: 1px solid var(--rig-border);
+    background: var(--rig-border);
+  }
+  #theme-proxio .rig-trust-item {
+    flex: 1 1 12rem;
+    min-height: 3.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1rem;
+    background: var(--ignai-card-strong);
+    color: var(--rig-paper-70);
+    font: 800 0.68rem/1.35 'Rig Mono', monospace;
+    text-align: center;
+  }
 
   /* --- Ticker --- */
   #theme-proxio .rig-ticker {
@@ -3127,6 +3201,26 @@ const rigStyle = `
     #theme-proxio .rig-hero-actions {
       gap: 0.85rem;
       width: 100%;
+    }
+    #theme-proxio .rig-hero-paths {
+      grid-template-columns: 1fr;
+      width: 100%;
+      margin-top: 1.1rem;
+    }
+    #theme-proxio .rig-hero-path {
+      min-height: auto;
+      padding: 0.95rem 1rem;
+    }
+    #theme-proxio .rig-trust-strip {
+      width: calc(100% - 3rem);
+      margin-top: -0.5rem;
+    }
+    #theme-proxio .rig-trust-item {
+      flex-basis: 100%;
+      min-height: 2.8rem;
+      justify-content: flex-start;
+      text-align: left;
+      font-size: 0.66rem;
     }
     #theme-proxio .rig-btn {
       min-height: 3.5rem;

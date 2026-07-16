@@ -79,13 +79,13 @@ export function JoinSection({ notionConfig }) {
                   加入社区
                 </SmartLink>
                 <SmartLink
-                  href='/archive'
+                  href='/records'
                   className='ignai-cta-secondary'
-                  data-analytics-event='click_view_articles'
-                  data-analytics-label='join_section_articles'
+                  data-analytics-event='click_view_records'
+                  data-analytics-label='join_section_records'
                   data-analytics-prop-placement='join_section'
                 >
-                  查看社区内容
+                  看看社区现场
                 </SmartLink>
               </div>
             </Reveal>

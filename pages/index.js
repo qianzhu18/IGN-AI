@@ -13,11 +13,9 @@ import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
+import { isMockEvent, normalizeEventList } from '@/lib/utils/event'
 import pLimit from 'p-limit'
-import {
-  mergeFixtureEvents,
-  mergeFixturePosts
-} from '@/lib/dev/contentFixtures'
+import { mergeFixturePosts } from '@/lib/dev/contentFixtures'
 
 /**
  * 首页布局
@@ -76,6 +74,11 @@ export async function getStaticProps(req) {
   if (freshEvents.length > 0) {
     props.allEvents = freshEvents
   }
+  // Do not serialize template/mock events into homepage data. The home layout
+  // only needs publishable events and must not leak old demo rows in page props.
+  props.allEvents = normalizeEventList(props.allEvents || []).filter(
+    event => !isMockEvent(event)
+  )
   if (process.env.NODE_ENV === 'development') {
     const configTheme = BLOG.THEME
     const notionTheme = props?.NOTION_CONFIG?.THEME || null
@@ -162,8 +165,6 @@ export async function getStaticProps(req) {
   if (props.allMembers) {
     props.allMembers = getMembersForScatter({ allMembers: props.allMembers })
   }
-  props.allEvents = mergeFixtureEvents(props.allEvents)
-
   delete props.allPages
   delete props.posts
   delete props.allNavPages

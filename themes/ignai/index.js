@@ -221,18 +221,9 @@ const LayoutIndex = props => {
   return (
     <main className='ignai-home-shell'>
       <RigHeroSection />
-      <RigTicker />
-      <div className='rig-divider' />
-      <RigProblemSection />
-      <div className='rig-divider' />
-      <RigCapabilitiesSection />
-      <RigStatsStrip />
-      <RigTerminalBlock />
+      <RigTrustStrip />
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
-      {siteConfig('IGNAI_ARTICLES_ENABLE', CONFIG.IGNAI_ARTICLES_ENABLE) && <HomeArticlesSection posts={props.latestPosts || []} />}
       {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection />}
-      {siteConfig('IGNAI_MEMBERS_ENABLE', CONFIG.IGNAI_MEMBERS_ENABLE) && <CommunityRolesSection allMembers={props.allMembers || []} />}
-      <RigFAQSection />
       <RigCTASection />
     </main>
   )
@@ -685,6 +676,7 @@ function RigHeroSection() {
   const cta2Text = siteConfig('RIG_HERO_CTA_2', CONFIG.RIG_HERO_CTA_2)
   const cta2Url = siteConfig('RIG_HERO_CTA_2_URL', CONFIG.RIG_HERO_CTA_2_URL)
   const heroStats = CONFIG.RIG_STATS.slice(0, 3)
+  const quickPaths = siteConfig('RIG_HERO_PATHS', CONFIG.RIG_HERO_PATHS)
 
   return (
     <section className='rig-hero'>
@@ -735,8 +727,32 @@ function RigHeroSection() {
               </SmartLink>
             </div>
           </Reveal>
+          <Reveal delay={0.24}>
+            <div className='rig-hero-paths' aria-label='选择你的下一步'>
+              {quickPaths.map(path => (
+                <SmartLink key={path.label} href={path.href} className='rig-hero-path'>
+                  <span className='rig-hero-path-label'>{path.label}</span>
+                  <span className='rig-hero-path-desc'>{path.desc}</span>
+                </SmartLink>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </div>
+    </section>
+  )
+}
+
+function RigTrustStrip() {
+  const items = siteConfig('RIG_TRUST_ITEMS', CONFIG.RIG_TRUST_ITEMS)
+
+  return (
+    <section className='rig-trust-strip' aria-label='社区可信证据'>
+      {items.map(item => (
+        <span key={item} className='rig-trust-item'>
+          {item}
+        </span>
+      ))}
     </section>
   )
 }

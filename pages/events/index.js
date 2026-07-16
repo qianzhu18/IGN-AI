@@ -6,16 +6,19 @@ import {
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import { eventStatusLabel, eventFormatLabel, eventKindLabel } from '@/src/content/events'
-import { getEventHref, isExternalEvent, normalizeEventList } from '@/lib/utils/event'
+import {
+  getEventHref,
+  getEventCoverFallback,
+  isExternalEvent,
+  isMockEvent,
+  isPublicUpcomingEvent,
+  normalizeEventList
+} from '@/lib/utils/event'
 import Link from 'next/link'
 import { CalendarDays, ExternalLink, MapPin } from 'lucide-react'
-import { mergeFixtureEvents } from '@/lib/dev/contentFixtures'
 
 const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
-  const openEvents = events.filter(event => event.status === 'open' || event.status === 'ongoing')
-  const planningEvents = events.filter(event => event.status === 'planning')
-  const recapEvents = events.filter(event => event.status === 'recap' || event.status === 'finished')
-  const closedEvents = events.filter(event => event.status === 'closed')
+  const visibleEvents = events.filter(event => isPublicUpcomingEvent(event))
 
   return (
     <>
@@ -28,17 +31,15 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
           <p className='text-xs font-medium tracking-wider uppercase text-[#F0CB8A]/72 mb-4'>
             Events
           </p>
-          <h1 className='text-3xl font-bold mb-2'>近期活动</h1>
+          <h1 className='text-3xl font-bold mb-2'>活动与见面</h1>
           <p className='max-w-2xl text-white/50 mb-8'>
-            这里整理 IGNAI 成员组织、联动、参与和协助宣发的活动。
+            这里是 IGNAI 正在发生的线下见面、共创和合作活动。每一场都会标明时间、地点、IGNAI 的角色和参与方式。
           </p>
 
-          <div className='mb-10 grid gap-3 sm:grid-cols-4'>
+          <div className='mb-10 grid gap-3 sm:grid-cols-2'>
             {[
-              ['开放 / 进行中', openEvents.length],
-              ['筹备中', planningEvents.length],
-              ['已复盘 / 结束', recapEvents.length],
-              ['已满员', closedEvents.length]
+              ['开放 / 进行中', visibleEvents.filter(event => event.status === 'open' || event.status === 'ongoing').length],
+              ['筹备中', visibleEvents.filter(event => event.status === 'planning').length]
             ].map(([label, count]) => (
               <div key={label} className='rounded-lg border border-white/[0.07] bg-white/[0.025] px-4 py-3'>
                 <div className='text-2xl font-semibold text-white'>{count}</div>
@@ -48,7 +49,7 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
           </div>
 
           <div className='grid gap-5 md:grid-cols-2'>
-            {events.map(event => (
+            {visibleEvents.map(event => (
               <Link
                 key={event.slug}
                 href={getEventHref(event)}
@@ -64,10 +65,14 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
               >
                 <div className='relative aspect-[16/9] overflow-hidden bg-white/[0.03] sm:aspect-auto'>
                   <img
-                    src={event.cover || '/images/generated/ignite-core.png'}
+                    src={event.cover || getEventCoverFallback(event)}
                     alt=''
                     style={{ objectPosition: event.coverPosition || 'center' }}
                     className='h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]'
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null
+                      currentTarget.src = getEventCoverFallback(event)
+                    }}
                   />
                 </div>
 
@@ -109,10 +114,19 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
               </Link>
             ))}
 
-            {events.length === 0 && (
-              <p className='text-white/30 text-sm py-12 text-center'>
-                暂无活动，敬请期待。
-              </p>
+            {visibleEvents.length === 0 && (
+              <div className='col-span-full border-y border-white/[0.08] py-14 text-center'>
+                <p className='text-xl font-semibold text-white'>下一次见面正在准备。</p>
+                <p className='mx-auto mt-3 max-w-lg text-sm leading-7 text-white/52'>
+                  先来认识社区。你可以带着一个项目、一个问题，或者想参与活动的心情来；我们会把下一次机会告诉你。
+                </p>
+                <Link href='/join' className='mt-7 inline-flex rounded-lg border border-[#ffb879]/30 px-5 py-3 text-sm font-medium text-[#ffd09a] no-underline transition hover:border-[#ffb879]/60'>
+                  加入社区
+                </Link>
+                <Link href='/records' className='mt-4 block text-sm text-white/50 hover:text-white'>
+                  先看看我们一起做过的事
+                </Link>
+              </div>
             )}
           </div>
         </div>
@@ -125,11 +139,9 @@ export async function getStaticProps({ locale }) {
   const from = 'events-index'
   const props = await fetchGlobalAllData({ from, locale })
   const freshEvents = await fetchEventsFromOfficialAPI()
-  const allEvents = mergeFixtureEvents(
-    freshEvents.length > 0 ? freshEvents : props.allEvents || []
-  )
+  const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
 
-  const events = normalizeEventList(allEvents)
+  const events = normalizeEventList(allEvents).filter(event => !isMockEvent(event))
   const pageTitle = 'IGNAI - 活动'
   const pageDescription = 'IGNAI 社区活动 — 线下聚会、工作坊、Demo 和共创'
 

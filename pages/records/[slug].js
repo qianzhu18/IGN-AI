@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
 import { records, recordTypeLabel } from '@/src/content/records'
-import { mergeFixtureRecords } from '@/lib/dev/contentFixtures'
 
 const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) => {
   if (!record) {
@@ -152,13 +151,13 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
 
 export function getStaticPaths() {
   return {
-    paths: mergeFixtureRecords(records).map(record => ({ params: { slug: record.slug } })),
+    paths: records.map(record => ({ params: { slug: record.slug } })),
     fallback: false
   }
 }
 
 export function getStaticProps({ params }) {
-  const allRecords = mergeFixtureRecords(records)
+  const allRecords = records
   const record = allRecords.find(item => item.slug === params.slug) || null
 
   if (!record) {

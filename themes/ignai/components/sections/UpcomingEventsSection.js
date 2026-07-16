@@ -1,17 +1,36 @@
 import { CalendarDays, MapPin } from 'lucide-react'
 import Image from 'next/image'
+import { useState } from 'react'
 import SmartLink from '@/components/SmartLink'
 import { eventFormatLabel, eventKindLabel, eventStatusLabel } from '@/src/content/events'
 import {
   getEventHref,
-  getVisibleUpcomingEvents,
+  getEventCoverFallback,
   isExternalEvent,
+  isPublicUpcomingEvent,
   normalizeEventList
 } from '@/lib/utils/event'
 import { Reveal } from '../Reveal'
 
+function EventCover({ event }) {
+  const fallback = getEventCoverFallback(event)
+  const [src, setSrc] = useState(event.cover || fallback)
+
+  return (
+    <Image
+      src={src}
+      alt=''
+      fill
+      sizes='(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw'
+      style={{ objectPosition: event.coverPosition || 'center' }}
+      className='object-cover transition duration-500 group-hover:scale-[1.03]'
+      onError={() => setSrc(fallback)}
+    />
+  )
+}
+
 export function UpcomingEventsSection({ notionEvents = [] }) {
-  const mergedEvents = getVisibleUpcomingEvents(normalizeEventList(notionEvents))
+  const mergedEvents = normalizeEventList(notionEvents).filter(event => isPublicUpcomingEvent(event))
 
   if (mergedEvents.length === 0) {
     return (
@@ -21,11 +40,9 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
         <div className='ignai-home-container'>
           <Reveal className='text-center'>
             <p className='section-eyebrow'>Events</p>
-            <h2 className='section-title mt-6'>活动筹备中</h2>
+            <h2 className='section-title mt-6'>下一次见面，<br />正在准备。</h2>
             <p className='section-body mt-6 max-w-md mx-auto'>
-              我们正在策划下一场活动，敬请期待。
-              <br />
-              加入社区，第一时间获取活动通知。
+              现在还没有开放报名的活动。先来认识我们，下一次活动、项目共创或合作机会有消息时，我们会优先告诉你。
             </p>
             <div className='mt-8'>
               <SmartLink href='/join' className='ignai-cta-primary'>
@@ -45,14 +62,14 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
       <div className='ignai-home-container'>
         <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
           <div>
-            <p className='section-eyebrow'>Upcoming Events</p>
+            <p className='section-eyebrow'>Next up</p>
             <h2 className='section-title mt-6 max-w-[13ch]'>
-              近期活动，
+              下一场见面，
               <br />
-              真实发生。
+              在这里开始。
             </h2>
             <p className='section-body mt-6'>
-              成员组织、联动参与、线下宣发和社区实验，都会在这里持续更新。
+              这里放正在报名、即将发生和需要寻找同伴的活动。已经结束的故事，会进入“社区现场”。
             </p>
           </div>
           <div className='flex gap-4'>
@@ -63,7 +80,7 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
               data-analytics-label='home_events_all'
               data-analytics-prop-placement='home_events'
             >
-              查看全部活动
+              查看活动
             </SmartLink>
           </div>
         </Reveal>
@@ -83,16 +100,9 @@ export function UpcomingEventsSection({ notionEvents = [] }) {
                 className='group ignai-unified-card ignai-event-card flex h-full flex-col overflow-hidden rounded-lg'
               >
                 <div className='relative overflow-hidden'>
-                <div className='relative aspect-[16/9] w-full overflow-hidden'>
-                  <Image
-                    src={event.cover}
-                    alt=''
-                    fill
-                    sizes='(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw'
-                    style={{ objectPosition: event.coverPosition || 'center' }}
-                    className='object-cover transition duration-500 group-hover:scale-[1.03]'
-                  />
-                </div>
+                  <div className='relative aspect-[16/9] w-full overflow-hidden'>
+                    <EventCover event={event} />
+                  </div>
                   <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]' />
                   <div className='absolute left-4 top-4 flex flex-wrap gap-2'>
                     <span className='rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1.5 text-xs font-medium text-[#ffd09a]'>

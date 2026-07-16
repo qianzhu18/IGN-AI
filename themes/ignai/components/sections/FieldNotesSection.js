@@ -2,10 +2,14 @@ import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
 import { records, recordTypeLabel } from '@/src/content/records'
 import { Reveal } from '../Reveal'
-import { mergeFixtureRecords } from '@/lib/dev/contentFixtures'
 
 export function FieldNotesSection() {
-  const displayItems = mergeFixtureRecords(records).slice(0, 3).map(record => ({
+  const featuredSlugs = [
+    '2050-cross-city-showcase',
+    'geekathon-community-launch-node',
+    'sanrenxing-ai-community-bridge'
+  ]
+  const displayItems = featuredSlugs.map(slug => records.find(record => record.slug === slug)).filter(Boolean).map(record => ({
     ...record,
     href: `/records/${record.slug}`
   }))
@@ -19,14 +23,14 @@ export function FieldNotesSection() {
       <div className='ignai-home-container'>
         <Reveal className='flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between'>
           <div>
-            <p className='section-eyebrow'>Field Notes</p>
+            <p className='section-eyebrow'>From the community</p>
             <h2 className='section-title mt-6 max-w-[13ch]'>
-              社区现场，
+              我们一起做过的事，
               <br />
-              沉淀成记录。
+              留在这里。
             </h2>
             <p className='section-body mt-6'>
-              把活动、项目、思考和成员故事沉淀成可以被继续阅读和传播的内容资产。
+              从一场活动，到一次跨城见面，再到一个被推进的想法。这里讲的是已经真实发生的现场。
             </p>
           </div>
           <SmartLink
@@ -36,7 +40,7 @@ export function FieldNotesSection() {
             data-analytics-label='home_records_all'
             data-analytics-prop-placement='home_records'
           >
-            查看现场记录
+            查看全部现场
           </SmartLink>
         </Reveal>
 
@@ -57,7 +61,7 @@ export function FieldNotesSection() {
                   <div className='flex flex-wrap items-center justify-between gap-3'>
                     <div>
                       <p className='text-sm font-semibold text-white'>
-                        IGNAI Field Notes
+                        IGNAI 社区现场
                       </p>
                       <p className='mt-1 text-xs text-white/66'>
                         {item.dateText}
@@ -65,7 +69,7 @@ export function FieldNotesSection() {
                       </p>
                     </div>
                     <span className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/70'>
-                      {recordTypeLabel[item.type] || '社区记录'}
+                      {recordTypeLabel[item.type] || '现场故事'}
                     </span>
                   </div>
 

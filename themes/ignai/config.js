@@ -17,10 +17,10 @@ const CONFIG = {
   IGNAI_WHATIS_ENABLE: true,
   IGNAI_CULTURE_ENABLE: true,
   IGNAI_EVENTS_ENABLE: true,
-  IGNAI_ARTICLES_ENABLE: true,
+  IGNAI_ARTICLES_ENABLE: false,
   IGNAI_ARTICLES_HOME_COUNT: 4,
   IGNAI_FIELDNOTES_ENABLE: true,
-  IGNAI_MEMBERS_ENABLE: true,
+  IGNAI_MEMBERS_ENABLE: false,
   IGNAI_JOIN_ENABLE: true,
 
   // ========================================================================
@@ -84,12 +84,22 @@ const CONFIG = {
   // ========================================================================
 
   // -- Rig Hero --
-  RIG_HERO_TITLE: '连接创造者，<br/>点燃可能性。',
-  RIG_HERO_SUB: 'IGNAI — 长沙青年 AI 社区。300+ 核心社群成员 / 2000+ 累计触达 / 20+ 线下 AI 活动。',
-  RIG_HERO_CTA_1: '加入社区',
-  RIG_HERO_CTA_1_URL: '/join',
-  RIG_HERO_CTA_2: '查看活动',
-  RIG_HERO_CTA_2_URL: '/events',
+  RIG_HERO_TITLE: '在长沙，和愿意把<br/>AI 做出来的人见面。',
+  RIG_HERO_SUB: 'IGNAI 连接学生、开发者、产品人与创作者。我们一起参加活动、推动想法，把一次见面变成下一次行动。',
+  RIG_HERO_CTA_1: '看看我们做过什么',
+  RIG_HERO_CTA_1_URL: '/records',
+  RIG_HERO_CTA_2: '加入社区',
+  RIG_HERO_CTA_2_URL: '/join',
+  RIG_HERO_PATHS: [
+    { label: '我想参加活动', desc: '看看下一次线下见面，或者先认识社区。', href: '/events' },
+    { label: '我有项目想聊', desc: '带着想法来，认识愿意一起推进的人。', href: '/join' },
+    { label: '我想一起合作', desc: '从一场活动、一次共创或一个具体问题开始。', href: '/join' },
+  ],
+  RIG_TRUST_ITEMS: [
+    '长沙的青年 AI 社区',
+    '活动、项目与跨城见面',
+    '每一条故事都来自真实现场',
+  ],
   RIG_HERO_TICKER: [
     '连接创造者', '点燃可能性', 'Local roots · Global signal', '真实行动',
     'AI · Agent · Product', '长沙 AI 社区', 'Ignite before AGI', '做项目 · 分享观点',
@@ -97,32 +107,27 @@ const CONFIG = {
 
   // -- Rig Problem Section --
   RIG_PROBLEM_BADGE: 'The Problem',
-  RIG_PROBLEM_TITLE: 'AI 很热，<br/>但真正的连接很少。',
+  RIG_PROBLEM_TITLE: '活动很热闹，<br/>但结束后人常常散掉。',
   RIG_PROBLEM_CARDS: [
-    { label: '信息过载', number: '001', title: '刷不完的 AI 资讯，却不知道从哪开始。', desc: '每天海量信息涌来，缺少本地化的筛选和实践场景。' },
-    { label: '孤独学习', number: '002', title: '一个人学 AI，进度缓慢、方向模糊。', desc: '没有同伴互相激励，遇到问题无处讨论，容易半途而废。' },
-    { label: '纸上谈兵', number: '003', title: '看了一百篇教程，还是没有做出东西。', desc: '缺乏真实项目实践和反馈，知识停留在理论层面。' },
-    { label: '资源分散', number: '004', title: '本地有人才，但没有聚合的场景。', desc: '开发者、设计者、创业者在同一个城市却不认识彼此。' },
+    { label: '一次性见面', number: '001', title: '加了微信，活动结束后却没有下一次。', desc: 'IGNAI 想把一次见面的余温，变成还能继续联系的人。' },
+    { label: '想法没人接', number: '002', title: '想做点什么，却不知道该和谁聊。', desc: '现场、群聊和小项目可以成为认识同伴的开始。' },
+    { label: '城市里的陌生人', number: '003', title: '同一座城市里，很多愿意行动的人彼此不认识。', desc: '我们把高校、开发者、产品人和创作者带到同一张桌子旁。' },
   ],
 
   // -- Rig Capabilities --
   RIG_CAPS_BADGE: 'Capabilities',
-  RIG_CAPS_TITLE: '我们怎么行动。',
+  RIG_CAPS_TITLE: '我们一起做过什么。',
   RIG_CAPS_CARDS: [
-    { label: '[ 01 ]', title: '线下活动，真实碰撞。', desc: '分享会、黑客松、项目路演——面对面的交流，激发真实的想法和行动。' },
-    { label: '[ 02 ]', title: '学习小组，一起往前走。', desc: 'AI 工具、Agent 开发、产品设计——有主题、有节奏、有同伴。' },
-    { label: '[ 03 ]', title: '项目共创，从 0 到 1。', desc: '社区成员组队做真实项目，边做边学，成果公开展示。' },
-    { label: '[ 04 ]', title: '内容输出，放大信号。', desc: '社区成员的观点、实践记录、教程——让好内容被更多人看到。' },
-    { label: '[ 05 ]', title: '本地连接，全球视野。', desc: '扎根长沙，关注全球 AI 趋势——把外部信号带回来，把本地声音传出去。' },
-    { label: '[ 06 ]', title: '开放文化，人人可参与。', desc: '无论你是学生、开发者、设计师还是创业者——只要对 AI 有热情，这里就有你的位置。' },
+    { label: '[ 01 ]', title: '把人带到现场。', desc: '从黑客松、校园活动到主题分享，让原本分散的人真的见上一面。' },
+    { label: '[ 02 ]', title: '把想法推往下一步。', desc: '有人带着项目、Demo 或一个问题来，现场常常就是合作的起点。' },
+    { label: '[ 03 ]', title: '把长沙带到别处。', desc: '在 2050 大会等跨城现场，介绍来自长沙的朋友与正在发生的事。' },
   ],
 
   // -- Rig Stats --
   RIG_STATS: [
-    { label: '核心社群成员', value: '300+', note: '持续增长中' },
-    { label: '累计触达', value: '2000+', note: '学生 × 开发者' },
-    { label: '线下活动', value: '20+', note: '分享会 × 黑客松' },
-    { label: '成立', value: '2025', note: 'Ignite before AGI' },
+    { label: '2050 青年团聚', value: '7 人', note: '最初同行' },
+    { label: '后来相见', value: '70+', note: '更多伙伴参与' },
+    { label: '社区起点', value: '极客松', note: '第一次对外影响' },
   ],
 
   // -- Rig Terminal --
@@ -169,18 +174,17 @@ const CONFIG = {
       name: '导航',
       menus: [
         { title: '首页', href: '/' },
-        { title: '成员', href: '/members' },
         { title: '活动', href: '/events' },
-        { title: '记录', href: '/records' },
+        { title: '社区现场', href: '/records' },
         { title: '关于社区', href: '/about' },
         { title: '加入我们', href: '/join' }
       ]
     },
     {
-      name: '内容',
+      name: '了解 IGNAI',
       menus: [
-        { title: '文章', href: '/archive' },
-        { title: '社区记录', href: '/records' }
+        { title: '社区现场', href: '/records' },
+        { title: '关于社区', href: '/about' }
       ]
     }
   ],
@@ -201,11 +205,9 @@ const CONFIG = {
   // 后续清理 Notion Menu 后，可通过配置中心开启 IGNAI_NAV_USE_NOTION_MENU。
   IGNAI_NAV_USE_NOTION_MENU: false,
   IGNAI_NAV_ITEMS: [
-    { label: '成员', href: '/members' },
     { label: '活动', href: '/events' },
-    { label: '文章', href: '/archive' },
-    { label: '记录', href: '/records' },
-    { label: '关于', href: '/about' }
+    { label: '社区现场', href: '/records' },
+    { label: '关于 IGNAI', href: '/about' }
   ],
 
   // ========================================================================

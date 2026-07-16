@@ -52,10 +52,10 @@ const values = [
 ]
 
 const stats = [
-  { num: '300+', label: '核心社群成员' },
-  { num: '2000+', label: '累计触达' },
-  { num: '20+', label: '线下 AI 活动' },
-  { num: '2025', label: '正式起跑' }
+  { num: '7 人', label: '2050 最初同行者' },
+  { num: '70+', label: '后来参与青年团聚' },
+  { num: '极客松', label: '第一次对外建立影响' },
+  { num: 'Just for fun', label: '愿意再聚的理由' }
 ]
 
 export default function AboutPage() {
@@ -72,7 +72,7 @@ export default function AboutPage() {
     <>
       <Head>
         <title>关于 IGNAI</title>
-        <meta name='description' content='IGNAI 是一个 base 长沙、连接本地、面向全球的 AI 社区。了解我们的使命、价值观和社区文化。' />
+        <meta name='description' content='IGNAI 是一个从长沙出发的青年 AI 社区。我们让活动之后的人继续相遇，让想法有下一次行动。' />
       </Head>
 
       <main className='ignai-about-page min-h-screen overflow-hidden'>
@@ -103,19 +103,19 @@ export default function AboutPage() {
                 className='text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight'
               >
                 <span className='ignai-about-hero-line ignai-about-hero-line--primary'>
-                  从长沙出发，
+                  为什么会有
                 </span>
                 <br />
                 <span className='ignai-about-hero-line ignai-about-hero-line--accent'>
-                  连接真实行动者。
+                  IGNAI？
                 </span>
               </motion.h1>
               <motion.p
                 variants={fadeUp}
                 className='ignai-about-copy mt-6 text-lg sm:text-xl leading-relaxed max-w-xl mx-auto'
               >
-                IGNAI 是一个 base 长沙，连接学生、开发者、内容创作者与 AI 活动资源的青年社区。
-                我们相信，在 AGI 到来之前，最值得做的事是点燃一群真实行动的人。
+                很多人是在活动中认识的。可一场活动结束之后，热情往往很快散开。
+                IGNAI 从这个瞬间开始：让愿意再聚的人，有一个继续出现的理由。
               </motion.p>
             </motion.div>
           </motion.div>
@@ -144,9 +144,6 @@ export default function AboutPage() {
                 </motion.div>
               ))}
             </motion.div>
-            <p className='ignai-about-stat-note mt-8 text-center text-xs leading-6'>
-              数据口径来自社区运营记录与公开活动沉淀，后续会随 Notion 内容资产持续校准。
-            </p>
           </div>
         </section>
 
@@ -168,10 +165,10 @@ export default function AboutPage() {
                   我们在做什么
                 </motion.h2>
                 <motion.p variants={fadeUp} className='ignai-about-copy mt-6 leading-relaxed'>
-                  IGNAI 聚集了一批关注 AI、产品、内容和创业的人。我们通过线下活动、社群承接、项目展示和内容复盘，让一次性活动参与变成持续连接。
+                  IGNAI 聚集学生、开发者、产品人与创作者。我们在活动里认识彼此，也把一次见面之后还值得继续聊的工具、项目和想法留下来。
                 </motion.p>
                 <motion.p variants={fadeUp} className='ignai-about-copy mt-4 leading-relaxed'>
-                  不是围观群，不是知识付费，而是一个用真实活动、真实项目和真实关系持续积累信任的本地 AI 社区。
+                  我们不把每次活动做成一次性相遇，也不要求每个人都带着成熟项目来。对 AI 有好奇、愿意参与真实现场，就已经足够成为开始。
                 </motion.p>
               </div>
 
@@ -182,9 +179,9 @@ export default function AboutPage() {
                 >
                   <div className='space-y-6'>
                     {[
-                      { q: '谁在参与？', a: '开发者、产品经理、设计师、学生、创业者——任何对 AI 和真实行动感兴趣的人。' },
-                      { q: '做什么？', a: '线下交流、主题工作坊、项目协作、内容共创、成员互助。' },
-                      { q: '怎么加入？', a: '提交加入意向，参加一次线下活动，就是社区的一员。' }
+                      { q: '谁会在这里？', a: '学生、开发者、产品人与创作者。有人刚接触 AI，有人已经在做产品，也有人只是想认识同频的人。' },
+                      { q: '这里会发生什么？', a: '一起去活动、做小项目、参加分享和跨城见面。活动结束后，关系和讨论还能继续。' },
+                      { q: '怎么进入？', a: '从一次活动或一段具体交流开始。带着你正在做的事、一个问题，或者单纯的好奇来都可以。' }
                     ].map((item) => (
                       <div key={item.q} className='ignai-about-panel-row border-b border-white/[0.06] pb-4 last:border-0 last:pb-0'>
                         <p className='ignai-about-panel-question text-sm font-medium mb-1.5'>{item.q}</p>
@@ -211,7 +208,7 @@ export default function AboutPage() {
                 Values
               </motion.p>
               <motion.h2 variants={fadeUp} className='ignai-about-title text-3xl sm:text-4xl font-bold text-center mb-12'>
-                社区价值观
+                我们相信什么
               </motion.h2>
 
               <div className='grid gap-4 sm:grid-cols-2'>
@@ -248,7 +245,7 @@ export default function AboutPage() {
                 Ignite before AGI.
               </motion.h2>
               <motion.p variants={fadeUp} className='ignai-about-copy mt-4'>
-                如果你也想在 AI 时代做点什么，而不是只是看——欢迎加入。
+                如果你也不想让一次活动变成一次性见面，来认识我们。带着好奇、项目或一个还没想清楚的问题都可以。
               </motion.p>
               <motion.div variants={fadeUp} className='mt-8 flex flex-col sm:flex-row gap-4 justify-center'>
                 <SmartLink href='/join' className='ignai-cta-primary'>
