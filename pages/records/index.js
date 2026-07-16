@@ -1,11 +1,14 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
-import { records, recordTypeLabel } from '@/src/content/records'
+import { getAllRecords } from '@/lib/records'
+import { recordTypeLabel } from '@/src/content/records'
 
 const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) => {
-  const featuredRecord = recordItems[0]
-  const secondaryRecords = recordItems.slice(1)
+  const datedRecords = recordItems.filter(record => record.timelineDate)
+  const undatedRecords = recordItems.filter(record => !record.timelineDate)
+  const featuredRecord = datedRecords[0]
+  const secondaryRecords = datedRecords.slice(1)
 
   return (
     <>
@@ -27,7 +30,7 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
               </h1>
             </div>
             <p className='max-w-2xl text-base leading-8 text-white/56'>
-              从极客松出发，到青年团聚、项目分享和合作共学。这里保留那些让人重新相遇、把想法推往下一步的真实现场。
+              按已经确认的发生时间排列。从极客松到跨城见面、项目分享与合作活动，这里只写材料能够证明的真实现场。
             </p>
           </div>
 
@@ -125,6 +128,60 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
               </Link>
             ))}
           </div>
+
+          {undatedRecords.length > 0 && (
+            <section className='mt-20 border-t border-white/10 pt-12'>
+              <div className='grid gap-5 lg:grid-cols-[0.75fr_1.25fr] lg:items-end'>
+                <div>
+                  <p className='text-xs font-medium uppercase tracking-wider text-[#F0CB8A]/72'>
+                    Date pending
+                  </p>
+                  <h2 className='mt-4 text-3xl font-semibold text-white'>日期待补的真实记录</h2>
+                </div>
+                <p className='max-w-2xl text-sm leading-7 text-white/52'>
+                  这些项目和现场有真实图文材料，但现有资料不足以确认发生日期。它们不会被塞进一条虚构的时间线，待当事人或完整记录补证后再归位。
+                </p>
+              </div>
+
+              <div className='mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3'>
+                {undatedRecords.map(record => (
+                  <Link
+                    key={record.slug}
+                    href={`/records/${record.slug}`}
+                    data-analytics-event='click_record_card'
+                    data-analytics-label={record.title}
+                    data-analytics-prop-placement='records_index_date_pending'
+                    data-analytics-prop-type={record.type}
+                    className='group ignai-themed-card rounded-lg border border-white/[0.07] bg-white/[0.025] p-6 no-underline transition hover:border-white/15 hover:bg-white/[0.045]'
+                  >
+                    <div className='flex items-center justify-between gap-4'>
+                      <span className='inline-flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-[#F0CB8A]/68'>
+                        <BookOpen className='h-4 w-4' />
+                        {recordTypeLabel[record.type]}
+                      </span>
+                      <span className='text-right text-xs text-white/35'>{record.dateText}</span>
+                    </div>
+                    <h3 className='mt-5 text-xl font-semibold text-white transition group-hover:text-[#d4ecff]'>
+                      {record.title}
+                    </h3>
+                    <p className='mt-3 line-clamp-2 text-sm leading-7 text-white/54'>
+                      {record.excerpt}
+                    </p>
+                    <div className='mt-6 flex flex-wrap gap-2'>
+                      {record.tags.map(tag => (
+                        <span
+                          key={tag}
+                          className='rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/48'
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
         </section>
       </main>
     </>
@@ -134,7 +191,7 @@ const RecordsIndexPage = ({ records: recordItems, pageTitle, pageDescription }) 
 export function getStaticProps() {
   return {
     props: {
-      records,
+      records: getAllRecords(),
       pageTitle: 'IGNAI - 社区现场',
       pageDescription: 'IGNAI 在长沙与不同城市真实发生过的活动、见面和项目故事。'
     }

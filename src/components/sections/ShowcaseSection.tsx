@@ -6,8 +6,8 @@ import { CTAButton } from "@/src/components/ui/CTAButton";
 import { platformContent } from "@/src/content/platform";
 import { getCommunityContentItems } from "@/lib/sanity";
 
-export async function ShowcaseSection() {
-  const items = await getCommunityContentItems();
+export function ShowcaseSection() {
+  const items = getCommunityContentItems();
   const events = items.filter((item) => item.type === "event").slice(0, 3);
   const publications = items.filter((item) => item.type !== "event").slice(0, 3);
 

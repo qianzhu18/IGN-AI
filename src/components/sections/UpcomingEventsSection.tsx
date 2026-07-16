@@ -3,8 +3,8 @@ import { EventCard } from "@/src/components/cards/EventCard";
 import { CTAButton } from "@/src/components/ui/CTAButton";
 import { getUpcomingEvents } from "@/lib/events";
 
-export async function UpcomingEventsSection() {
-  const events = await getUpcomingEvents();
+export function UpcomingEventsSection() {
+  const events = getUpcomingEvents();
 
   return (
     <section id="upcoming-events" className="relative z-10 border-t border-white/8">

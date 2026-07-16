@@ -1,15 +1,11 @@
 import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
-import { records, recordTypeLabel } from '@/src/content/records'
+import { getFeaturedRecords } from '@/lib/records'
+import { recordTypeLabel } from '@/src/content/records'
 import { Reveal } from '../Reveal'
 
 export function FieldNotesSection() {
-  const featuredSlugs = [
-    '2050-cross-city-showcase',
-    'geekathon-community-launch-node',
-    'sanrenxing-ai-community-bridge'
-  ]
-  const displayItems = featuredSlugs.map(slug => records.find(record => record.slug === slug)).filter(Boolean).map(record => ({
+  const displayItems = getFeaturedRecords(3).map(record => ({
     ...record,
     href: `/records/${record.slug}`
   }))

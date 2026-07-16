@@ -56,13 +56,16 @@
 - 后续开启：清理 Notion Menu 后，将 `IGNAI_NAV_USE_NOTION_MENU` 设为 true，即可让 Header 读取 Notion customMenu
 - 友链准备：`友链` / `友情链接` / `Link` 不再被标题过滤；清理模板菜单并开启开关后，可作为真实 Menu 接入
 
-## 2. 已有前台，但还不是 Notion 主源
+## 2. 已有 Notion 记录，但前台仍以版本库事实稿为渲染源
 
 ### 社区记录
 
 - 当前前台：`/records`、`/records/[slug]`、首页 Field Notes
-- 当前数据源：`src/content/records.ts`
-- 后续建议：迁移为 Notion `type=Record` 或继续复用 Post + category/tag，取决于是否需要独立字段
+- 前台渲染源：`src/content/records.ts`，用于保存经过核验的图文段落与本地图片映射
+- Notion 镜像：共享数据源中的 `type=Record`；2026-07-17 已将 7 条错误旧记录设为 `Invisible`，并写入 9 条与前台同 slug 的真实记录
+- 时间规则：5 条可确认记录使用 `date` + `ext.timelineDate`；4 条日期不足的材料不填 `date`，统一使用 `ext.dateStatus=unknown`
+- 当前边界：Notion 可以自由读写和维护发布状态，但 Record 前台尚未像 Event 一样直接补拉官方 data source；修改记录正文后仍需同步 `src/content/records.ts`
+- 后续建议：实现 Record 官方 API 读取与正文 block 规范化，让 Notion 成为唯一主源，并保留本地图片作为稳定降级
 
 ## 3. 仍需上线前关注
 

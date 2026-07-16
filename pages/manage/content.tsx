@@ -30,11 +30,13 @@ const contentCards = [
   },
   {
     title: "社区记录",
-    body: "活动复盘、成员故事、项目记录和工具清单当前已在前台开放 Records 入口，后续再把编辑源从静态内容迁移到 Notion 或轻量后台。",
+    body: "活动复盘、成员故事和项目记录已经写入 Notion Record，并与前台使用相同 slug。当前图文详情仍由版本库事实稿渲染。",
     bullets: [
       "查看记录前台：/records 与 /records/[slug]",
-      "当前内容源：src/content/records.ts",
-      "后续增强：将 Record 字段迁入 Notion 并接入刷新入口",
+      "后台镜像：Notion type=Record，Published 展示，Invisible 隐藏",
+      "前台图文源：src/content/records.ts，按 timelineDate 排序",
+      "日期无法确认的记录不填 date，并在 ext 标记 dateStatus=unknown",
+      "后续增强：前台直接读取 Notion Record blocks 并接入刷新入口",
     ],
   },
 ];

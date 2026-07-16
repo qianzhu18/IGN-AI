@@ -3,8 +3,8 @@ import { RecordCard } from "@/src/components/cards/RecordCard";
 import { CTAButton } from "@/src/components/ui/CTAButton";
 import { getFeaturedRecords } from "@/lib/records";
 
-export async function FieldNotesSection() {
-  const records = await getFeaturedRecords();
+export function FieldNotesSection() {
+  const records = getFeaturedRecords();
 
   return (
     <section id="field-notes" className="relative z-10 border-t border-white/8">
