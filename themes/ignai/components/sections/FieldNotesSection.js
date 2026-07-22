@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import SmartLink from '@/components/SmartLink'
 import { getFeaturedRecords } from '@/lib/records'
-import { recordTypeLabel } from '@/src/content/records'
+import { recordTypeLabel } from '@/lib/records'
 import { Reveal } from '../Reveal'
 
-export function FieldNotesSection() {
-  const displayItems = getFeaturedRecords(3).map(record => ({
+export function FieldNotesSection({ records = [] }) {
+  const displayItems = getFeaturedRecords(records, 3).map(record => ({
     ...record,
     href: `/records/${record.slug}`
   }))

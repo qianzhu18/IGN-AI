@@ -7,9 +7,7 @@ import {
   getPostBlocks,
   getMembersForScatter
 } from '@/lib/db/SiteDataApi'
-import { generateRobotsTxt } from '@/lib/utils/robots.txt'
 import { generateRss } from '@/lib/utils/rss'
-import { generateSitemapXml } from '@/lib/utils/sitemap.xml'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
@@ -145,12 +143,8 @@ export async function getStaticProps(req) {
     process.env.npm_lifecycle_event
   )
   if (isBuildLifecycle) {
-    // 生成robotTxt
-    generateRobotsTxt(props)
     // 生成Feed订阅
     await generateRss(props)
-    // 生成
-    generateSitemapXml(props)
     // 检查数据是否需要从algolia删除
     checkDataFromAlgolia(props)
     if (siteConfig('UUID_REDIRECT', false, props?.NOTION_CONFIG)) {

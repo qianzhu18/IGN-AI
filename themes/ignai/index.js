@@ -223,7 +223,7 @@ const LayoutIndex = props => {
       <RigHeroSection />
       <RigTrustStrip />
       {siteConfig('IGNAI_EVENTS_ENABLE', CONFIG.IGNAI_EVENTS_ENABLE) && <UpcomingEventsSection notionEvents={props.allEvents || []} />}
-      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection />}
+      {siteConfig('IGNAI_FIELDNOTES_ENABLE', CONFIG.IGNAI_FIELDNOTES_ENABLE) && <FieldNotesSection records={props.allRecords || []} />}
       <RigCTASection />
     </main>
   )

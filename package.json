@@ -21,6 +21,7 @@
     "build": "cross-env BUILD_MODE=true next build",
     "start": "next start",
     "notion:members:smoke": "node scripts/notion-member-api-smoke.js",
+    "notion:records:smoke": "node scripts/notion-records-smoke.js",
     "notion:members:cleanup": "node scripts/hide-generated-members.js",
     "notion:members:cleanup:apply": "node scripts/hide-generated-members.js --apply",
     "post-build": "next-sitemap --config next-sitemap.config.js",

@@ -90,6 +90,7 @@ export interface SiteData {
   allPages: BasePage[]
   allMembers: BasePage[]
   allEvents: BasePage[]
+  allRecords: BasePage[]
   allNavPages: NavPage[]
   latestPosts: BasePage[]
 

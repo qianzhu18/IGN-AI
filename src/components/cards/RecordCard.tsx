@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { recordTypeLabel, type RecordItem } from "@/src/content/records";
+import { recordTypeLabel, type RecordItem } from "@/lib/records";
 
 type RecordCardProps = {
   record: RecordItem;

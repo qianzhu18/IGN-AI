@@ -2,9 +2,14 @@ import { Reveal } from "@/src/components/motion/Reveal";
 import { RecordCard } from "@/src/components/cards/RecordCard";
 import { CTAButton } from "@/src/components/ui/CTAButton";
 import { getFeaturedRecords } from "@/lib/records";
+import type { BasePage } from "@/lib/site/site.types";
 
-export function FieldNotesSection() {
-  const records = getFeaturedRecords();
+type FieldNotesSectionProps = {
+  records?: BasePage[];
+};
+
+export function FieldNotesSection({ records = [] }: FieldNotesSectionProps = {}) {
+  const featured = getFeaturedRecords(records, 3);
 
   return (
     <section id="field-notes" className="relative z-10 border-t border-white/8">
@@ -29,7 +34,7 @@ export function FieldNotesSection() {
         </Reveal>
 
         <div className="mt-16 grid gap-6 lg:grid-cols-3">
-          {records.map((record, index) => (
+          {featured.map((record, index) => (
             <Reveal key={record.slug} delay={index * 0.06}>
               <RecordCard record={record} featured={index === 0} />
             </Reveal>

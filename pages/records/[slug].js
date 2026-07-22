@@ -1,8 +1,21 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
-import { records, recordTypeLabel } from '@/src/content/records'
+import {
+  fetchGlobalAllData,
+  fetchRecordsFromOfficialAPI,
+  getPostBlocks
+} from '@/lib/db/SiteDataApi'
+import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
+import { formatNotionBlock } from '@/lib/db/notion/getPostBlocks'
+import { siteConfig } from '@/lib/config'
+import BLOG from '@/blog.config'
+import {
+  getAllRecords,
+  getRecordBySlug,
+  recordTypeLabel
+} from '@/lib/records'
+import { adaptRecordBlocks } from '@/lib/records.blocks'
 
 const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) => {
   if (!record) {
@@ -35,7 +48,7 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
             </span>
             <span className='inline-flex items-center gap-2'>
               <CalendarDays className='h-4 w-4 text-[#F0CB8A]/72' />
-              {record.dateText}
+              {record.dateText || '日期未确认'}
             </span>
             {record.location && (
               <span className='inline-flex items-center gap-2'>
@@ -53,14 +66,11 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
           </p>
 
           {record.cover && (
-            <div className='relative mt-10 aspect-[16/9] overflow-hidden rounded-lg border border-white/10'>
-              <Image
+            <div className='mt-10 overflow-hidden rounded-lg border border-white/10'>
+              <img
                 src={record.cover}
                 alt=''
-                fill
-                priority
-                sizes='(max-width: 896px) 100vw, 896px'
-                className='object-cover'
+                className='aspect-[16/9] w-full object-cover'
               />
             </div>
           )}
@@ -86,28 +96,38 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
           {record.content?.length > 0 && (
             <div className='mt-12 space-y-10'>
               {record.content.map((block, index) => (
-                <section key={`${block.heading}-${index}`}>
-                  <h2 className='text-2xl font-semibold text-white'>{block.heading}</h2>
-                  <p className='mt-4 text-base leading-8 text-white/56'>{block.body}</p>
+                <section key={`${block.heading || 'section'}-${index}`}>
+                  {block.heading && (
+                    <h2 className='text-2xl font-semibold text-white'>
+                      {block.heading}
+                    </h2>
+                  )}
+                  {block.body && (
+                    <p className='mt-4 whitespace-pre-line text-base leading-8 text-white/56'>
+                      {block.body}
+                    </p>
+                  )}
                   {block.media?.length > 0 && (
-                    <div className={`mt-6 grid gap-4 ${block.media.length > 1 ? 'sm:grid-cols-2' : ''}`}>
-                      {block.media.map(media => (
+                    <div className='mt-6 grid gap-4 sm:grid-cols-2'>
+                      {block.media.map((media, mediaIndex) => (
                         <figure
-                          key={media.src}
-                          className={`overflow-hidden rounded-lg border border-white/[0.09] bg-[#070b10]/70 ${media.orientation === 'portrait' ? 'mx-auto w-full max-w-md' : ''}`}
+                          key={`${media.src}-${mediaIndex}`}
+                          className={
+                            media.orientation === 'portrait'
+                              ? 'overflow-hidden rounded-lg border border-white/10'
+                              : 'sm:col-span-2 overflow-hidden rounded-lg border border-white/10'
+                          }
                         >
-                          <div className={`relative bg-black/20 ${media.orientation === 'portrait' ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
-                            <Image
-                              src={media.src}
-                              alt={media.alt}
-                              fill
-                              sizes={block.media.length > 1 ? '(max-width: 640px) 100vw, 50vw' : '(max-width: 896px) 100vw, 896px'}
-                              className='object-contain'
-                            />
-                          </div>
-                          <figcaption className='border-t border-white/[0.07] px-4 py-3 text-xs leading-5 text-white/45'>
-                            {media.caption}
-                          </figcaption>
+                          <img
+                            src={media.src}
+                            alt={media.alt}
+                            className='h-full w-full object-cover'
+                          />
+                          {media.caption && (
+                            <figcaption className='px-4 py-2 text-xs text-white/42'>
+                              {media.caption}
+                            </figcaption>
+                          )}
                         </figure>
                       ))}
                     </div>
@@ -160,7 +180,7 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
                     className='rounded-lg border border-white/[0.07] bg-white/[0.025] p-5 no-underline transition hover:border-white/15 hover:bg-white/[0.045]'
                   >
                     <p className='text-xs text-[#F0CB8A]/68'>
-                      {recordTypeLabel[item.type]} · {item.dateText}
+                      {recordTypeLabel[item.type]} · {item.dateText || '日期未确认'}
                     </p>
                     <h3 className='mt-3 text-lg font-semibold text-white'>
                       {item.title}
@@ -176,28 +196,95 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
   )
 }
 
-export function getStaticPaths() {
-  return {
-    paths: records.map(record => ({ params: { slug: record.slug } })),
-    fallback: false
+export async function getStaticPaths() {
+  let records = []
+
+  try {
+    const [props, freshRecords] = await Promise.all([
+      fetchGlobalAllData({ from: 'record-paths' }),
+      fetchRecordsFromOfficialAPI()
+    ])
+    const allRecords = freshRecords.length > 0 ? freshRecords : props.allRecords || []
+    records = allRecords
+      .filter(r => Boolean(r?.slug))
+      .map(r => ({ slug: r.slug }))
+  } catch (error) {
+    console.warn('[RECORD-PATHS] Failed to fetch Notion Record paths:', error.message)
   }
+
+  const paths = records.map(r => ({ params: { slug: r.slug } }))
+  return { paths, fallback: 'blocking' }
 }
 
-export function getStaticProps({ params }) {
-  const allRecords = records
-  const record = allRecords.find(item => item.slug === params.slug) || null
+export async function getStaticProps({ params, locale }) {
+  const { slug } = params
+  const from = 'record-detail'
+  const props = await fetchGlobalAllData({ from, locale })
+  const freshRecords = await fetchRecordsFromOfficialAPI()
+  const allRecords = freshRecords.length > 0 ? freshRecords : props.allRecords || []
 
-  if (!record) {
+  const recordItem = getRecordBySlug(allRecords, slug)
+  if (!recordItem) {
     return { notFound: true }
   }
 
+  let content = []
+  if (recordItem.id) {
+    try {
+      const rawBlockMap = await getPostBlocks(recordItem.id, from)
+      if (rawBlockMap) {
+        const adapted = adapterNotionBlockMap(rawBlockMap)
+        const formatted = formatNotionBlock(adapted.block || {})
+        content = adaptRecordBlocks(formatted, recordItem.id)
+      }
+    } catch (err) {
+      console.warn('[RECORD-DETAIL] fetchNotionPageBlocks failed:', recordItem.id, err.message)
+    }
+  }
+
+  const record = { ...recordItem, content }
+
+  const allRecordItems = getAllRecords(allRecords)
+  const moreRecords = allRecordItems
+    .filter(item => item.slug !== recordItem.slug)
+    .slice(0, 2)
+
+  const pageTitle = `${record.title} - IGNAI`
+  const pageDescription = record.excerpt || 'IGNAI 社区现场记录。'
+
+  delete props.allPages
+  delete props.allMembers
+  delete props.allEvents
+  delete props.allRecords
+  delete props.latestPosts
+  delete props.allNavPages
+  delete props.notice
+  delete props.customMenu
+  delete props.customNav
+  delete props.tagOptions
+  delete props.categoryOptions
+  delete props.postCount
+
   return {
     props: {
+      ...props,
       record,
-      moreRecords: allRecords.filter(item => item.slug !== record.slug).slice(0, 2),
-      pageTitle: `${record.title} - IGNAI`,
-      pageDescription: record.excerpt
-    }
+      moreRecords,
+      pageTitle,
+      pageDescription
+    },
+    revalidate: process.env.EXPORT
+      ? undefined
+      : Math.min(
+          Number(
+            siteConfig(
+              'NEXT_REVALIDATE_SECOND',
+              BLOG.NEXT_REVALIDATE_SECOND,
+              props.NOTION_CONFIG
+            )
+          ) || 600,
+          60
+        )
   }
 }
 
