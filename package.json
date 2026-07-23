@@ -22,6 +22,8 @@
     "start": "next start",
     "notion:members:smoke": "node scripts/notion-member-api-smoke.js",
     "notion:records:smoke": "node scripts/notion-records-smoke.js",
+    "notion:community:contract": "node scripts/sync-notion-community-contract.js",
+    "notion:community:contract:apply": "node scripts/sync-notion-community-contract.js --apply",
     "notion:members:cleanup": "node scripts/hide-generated-members.js",
     "notion:members:cleanup:apply": "node scripts/hide-generated-members.js --apply",
     "post-build": "next-sitemap --config next-sitemap.config.js",

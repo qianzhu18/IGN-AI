@@ -1,6 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, MapPin } from 'lucide-react'
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  MapPin
+} from 'lucide-react'
 import {
   fetchGlobalAllData,
   fetchRecordsFromOfficialAPI,
@@ -10,14 +16,21 @@ import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
 import { formatNotionBlock } from '@/lib/db/notion/getPostBlocks'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
-import {
-  getAllRecords,
-  getRecordBySlug,
-  recordTypeLabel
-} from '@/lib/records'
+import { getAllRecords, getRecordBySlug, recordTypeLabel } from '@/lib/records'
 import { adaptRecordBlocks } from '@/lib/records.blocks'
+import {
+  getEventHref,
+  isExternalEvent,
+  normalizeEventList
+} from '@/lib/utils/event'
 
-const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) => {
+const RecordDetailPage = ({
+  record,
+  moreRecords,
+  relatedEvents,
+  pageTitle,
+  pageDescription
+}) => {
   if (!record) {
     return (
       <main className='ignai-themed-page flex min-h-screen items-center justify-center bg-[var(--ignai-bg)] text-[var(--rig-paper)]'>
@@ -169,6 +182,33 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
             </div>
           )}
 
+          {relatedEvents?.length > 0 && (
+            <section className='mt-12 border-t border-white/10 pt-8'>
+              <h2 className='mb-5 inline-flex items-center gap-2 text-xl font-semibold'>
+                <CalendarDays className='h-5 w-5 text-[#F0CB8A]/72' />
+                关联活动
+              </h2>
+              <div className='flex flex-wrap gap-3'>
+                {relatedEvents.map(event => {
+                  const href = getEventHref(event)
+                  const external = isExternalEvent(event)
+                  return (
+                    <Link
+                      key={event.slug}
+                      href={href}
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noopener noreferrer' : undefined}
+                      className='inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-white/62 no-underline transition hover:border-white/20 hover:text-white'
+                    >
+                      {event.title}
+                      <ArrowRight className='h-4 w-4' />
+                    </Link>
+                  )
+                })}
+              </div>
+            </section>
+          )}
+
           {moreRecords.length > 0 && (
             <section className='mt-16 border-t border-white/10 pt-8'>
               <h2 className='text-xl font-semibold'>更多记录</h2>
@@ -180,7 +220,8 @@ const RecordDetailPage = ({ record, moreRecords, pageTitle, pageDescription }) =
                     className='rounded-lg border border-white/[0.07] bg-white/[0.025] p-5 no-underline transition hover:border-white/15 hover:bg-white/[0.045]'
                   >
                     <p className='text-xs text-[#F0CB8A]/68'>
-                      {recordTypeLabel[item.type]} · {item.dateText || '日期未确认'}
+                      {recordTypeLabel[item.type]} ·{' '}
+                      {item.dateText || '日期未确认'}
                     </p>
                     <h3 className='mt-3 text-lg font-semibold text-white'>
                       {item.title}
@@ -204,12 +245,16 @@ export async function getStaticPaths() {
       fetchGlobalAllData({ from: 'record-paths' }),
       fetchRecordsFromOfficialAPI()
     ])
-    const allRecords = freshRecords.length > 0 ? freshRecords : props.allRecords || []
+    const allRecords =
+      freshRecords.length > 0 ? freshRecords : props.allRecords || []
     records = allRecords
       .filter(r => Boolean(r?.slug))
       .map(r => ({ slug: r.slug }))
   } catch (error) {
-    console.warn('[RECORD-PATHS] Failed to fetch Notion Record paths:', error.message)
+    console.warn(
+      '[RECORD-PATHS] Failed to fetch Notion Record paths:',
+      error.message
+    )
   }
 
   const paths = records.map(r => ({ params: { slug: r.slug } }))
@@ -221,7 +266,8 @@ export async function getStaticProps({ params, locale }) {
   const from = 'record-detail'
   const props = await fetchGlobalAllData({ from, locale })
   const freshRecords = await fetchRecordsFromOfficialAPI()
-  const allRecords = freshRecords.length > 0 ? freshRecords : props.allRecords || []
+  const allRecords =
+    freshRecords.length > 0 ? freshRecords : props.allRecords || []
 
   const recordItem = getRecordBySlug(allRecords, slug)
   if (!recordItem) {
@@ -238,13 +284,21 @@ export async function getStaticProps({ params, locale }) {
         content = adaptRecordBlocks(formatted, recordItem.id)
       }
     } catch (err) {
-      console.warn('[RECORD-DETAIL] fetchNotionPageBlocks failed:', recordItem.id, err.message)
+      console.warn(
+        '[RECORD-DETAIL] fetchNotionPageBlocks failed:',
+        recordItem.id,
+        err.message
+      )
     }
   }
 
   const record = { ...recordItem, content }
 
   const allRecordItems = getAllRecords(allRecords)
+  const relatedEventSlugs = new Set(recordItem.relatedEventSlugs || [])
+  const relatedEvents = normalizeEventList(props.allEvents || []).filter(
+    event => relatedEventSlugs.has(event.slug)
+  )
   const moreRecords = allRecordItems
     .filter(item => item.slug !== recordItem.slug)
     .slice(0, 2)
@@ -270,6 +324,7 @@ export async function getStaticProps({ params, locale }) {
       ...props,
       record,
       moreRecords,
+      relatedEvents,
       pageTitle,
       pageDescription
     },

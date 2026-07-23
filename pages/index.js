@@ -11,7 +11,7 @@ import { generateRss } from '@/lib/utils/rss'
 import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
-import { isMockEvent, normalizeEventList } from '@/lib/utils/event'
+import { normalizeEventList } from '@/lib/utils/event'
 import pLimit from 'p-limit'
 import { mergeFixturePosts } from '@/lib/dev/contentFixtures'
 
@@ -26,32 +26,35 @@ const Index = props => {
 }
 
 function getHomeArticlePosts(posts = [], limit = 4) {
-  return posts.filter(Boolean).slice(0, limit).map(post => ({
-    id: post.id ?? null,
-    title: post.title ?? null,
-    slug: post.slug ?? null,
-    status: post.status ?? null,
-    password: post.password ?? null,
-    href: post.href ?? null,
-    summary: post.summary ?? null,
-    category: post.category ?? null,
-    tags: Array.isArray(post.tags) ? post.tags.filter(Boolean) : [],
-    publishDay: post.publishDay ?? null,
-    publishDate: post.publishDate ?? null,
-    lastEditedDate: post.lastEditedDate ?? null,
-    pageCover: post.pageCover ?? null,
-    pageCoverThumbnail: post.pageCoverThumbnail ?? null,
-    author: post.author ?? null,
-    authors: Array.isArray(post.authors)
-      ? post.authors.map(author => ({
-          id: author.id ?? null,
-          title: author.title ?? null,
-          slug: author.slug ?? null,
-          href: author.href ?? null,
-          role: author.role ?? null
-        }))
-      : []
-  }))
+  return posts
+    .filter(Boolean)
+    .slice(0, limit)
+    .map(post => ({
+      id: post.id ?? null,
+      title: post.title ?? null,
+      slug: post.slug ?? null,
+      status: post.status ?? null,
+      password: post.password ?? null,
+      href: post.href ?? null,
+      summary: post.summary ?? null,
+      category: post.category ?? null,
+      tags: Array.isArray(post.tags) ? post.tags.filter(Boolean) : [],
+      publishDay: post.publishDay ?? null,
+      publishDate: post.publishDate ?? null,
+      lastEditedDate: post.lastEditedDate ?? null,
+      pageCover: post.pageCover ?? null,
+      pageCoverThumbnail: post.pageCoverThumbnail ?? null,
+      author: post.author ?? null,
+      authors: Array.isArray(post.authors)
+        ? post.authors.map(author => ({
+            id: author.id ?? null,
+            title: author.title ?? null,
+            slug: author.slug ?? null,
+            href: author.href ?? null,
+            role: author.role ?? null
+          }))
+        : []
+    }))
 }
 
 /**
@@ -72,11 +75,8 @@ export async function getStaticProps(req) {
   if (freshEvents.length > 0) {
     props.allEvents = freshEvents
   }
-  // Do not serialize template/mock events into homepage data. The home layout
-  // only needs publishable events and must not leak old demo rows in page props.
-  props.allEvents = normalizeEventList(props.allEvents || []).filter(
-    event => !isMockEvent(event)
-  )
+  // 首页只序列化 Notion 中已发布的活动；不再混入仓库里的示例数据。
+  props.allEvents = normalizeEventList(props.allEvents || [])
   if (process.env.NODE_ENV === 'development') {
     const configTheme = BLOG.THEME
     const notionTheme = props?.NOTION_CONFIG?.THEME || null
@@ -123,13 +123,17 @@ export async function getStaticProps(req) {
     const previewLimit = pLimit(
       siteConfig('POST_PREVIEW_CONCURRENCY', 5, props?.NOTION_CONFIG)
     )
-    const previewTargets = props.posts.filter(
-      post => !post.password || post.password === ''
-    ).slice(0, POST_PREVIEW_MAX_COUNT)
+    const previewTargets = props.posts
+      .filter(post => !post.password || post.password === '')
+      .slice(0, POST_PREVIEW_MAX_COUNT)
     await Promise.all(
       previewTargets.map(post =>
         previewLimit(async () => {
-          post.blockMap = await getPostBlocks(post.id, 'slug', POST_PREVIEW_LINES)
+          post.blockMap = await getPostBlocks(
+            post.id,
+            'slug',
+            POST_PREVIEW_LINES
+          )
         })
       )
     )

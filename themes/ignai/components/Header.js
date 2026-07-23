@@ -15,28 +15,68 @@ const HIDDEN_SLUGS = ['/en']
 
 // NotionNext 模板默认菜单标题 — 这些不是 IGNAI 的真实导航
 const TEMPLATE_TITLES = new Set([
-  '什么是洋来', 'What', 'what',
-  '创始人', 'Founder',
-  '关于', 'About',
-  '标签', 'Tags', '分类', 'Categories',
-  'home', 'Home', '首页',
+  '什么是洋来',
+  'What',
+  'what',
+  '创始人',
+  'Founder',
+  '关于',
+  'About',
+  '标签',
+  'Tags',
+  '分类',
+  'Categories',
+  'home',
+  'Home',
+  '首页'
 ])
 
 function buildNavItems(customMenu, fallback) {
   if (!customMenu || customMenu.length === 0) return fallback
   const filtered = customMenu
     .filter(item => !HIDDEN_SLUGS.includes(item.slug || item.href))
-    .filter(item => !TEMPLATE_TITLES.has((item.title || item.name || '').trim()))
+    .filter(
+      item => !TEMPLATE_TITLES.has((item.title || item.name || '').trim())
+    )
     .map(item => ({
       label: item.title || item.name || '',
       href: item.slug || item.href || '#',
-      subMenus: item.subMenus?.map(sub => ({
-        label: sub.title || sub.name || '',
-        href: sub.slug || sub.href || '#'
-      })) || []
+      subMenus:
+        item.subMenus?.map(sub => ({
+          label: sub.title || sub.name || '',
+          href: sub.slug || sub.href || '#'
+        })) || []
     }))
   // 如果 Notion Menu 过滤后为空，使用 fallback
   return filtered.length > 0 ? filtered : fallback
+}
+
+function buildConfiguredNavItems(sectionConfig) {
+  const items = sectionConfig?.items
+  if (!Array.isArray(items)) return []
+
+  return items
+    .map(item => {
+      if (!item || typeof item !== 'object') return null
+      const label = typeof item.label === 'string' ? item.label.trim() : ''
+      const href = typeof item.href === 'string' ? item.href.trim() : ''
+      if (!label || !href) return null
+      const subMenus = Array.isArray(item.subMenus)
+        ? item.subMenus
+            .map(sub => {
+              const subLabel =
+                typeof sub?.label === 'string' ? sub.label.trim() : ''
+              const subHref =
+                typeof sub?.href === 'string' ? sub.href.trim() : ''
+              return subLabel && subHref
+                ? { label: subLabel, href: subHref }
+                : null
+            })
+            .filter(Boolean)
+        : []
+      return { label, href, subMenus }
+    })
+    .filter(Boolean)
 }
 
 function DesktopNavItem({ item, onIntent }) {
@@ -58,7 +98,8 @@ function DesktopNavItem({ item, onIntent }) {
         prefetch={false}
         onMouseEnter={() => onIntent(item.href)}
         onTouchStart={() => onIntent(item.href)}
-        className='ignai-nav-link text-sm transition duration-200'>
+        className='ignai-nav-link text-sm transition duration-200'
+      >
         {item.label}
       </SmartLink>
     )
@@ -69,10 +110,21 @@ function DesktopNavItem({ item, onIntent }) {
       <button
         type='button'
         onClick={() => setOpen(v => !v)}
-        className='ignai-nav-link flex items-center gap-1 text-sm transition duration-200'>
+        className='ignai-nav-link flex items-center gap-1 text-sm transition duration-200'
+      >
         {item.label}
-        <svg className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`} viewBox='0 0 12 12' fill='none'>
-          <path d='M2 4l4 4 4-4' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
+        <svg
+          className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`}
+          viewBox='0 0 12 12'
+          fill='none'
+        >
+          <path
+            d='M2 4l4 4 4-4'
+            stroke='currentColor'
+            strokeWidth='1.5'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          />
         </svg>
       </button>
       {open && (
@@ -85,7 +137,8 @@ function DesktopNavItem({ item, onIntent }) {
               onMouseEnter={() => onIntent(sub.href)}
               onTouchStart={() => onIntent(sub.href)}
               onClick={() => setOpen(false)}
-              className='ignai-nav-dropdown-link block px-4 py-2 text-sm transition'>
+              className='ignai-nav-dropdown-link block px-4 py-2 text-sm transition'
+            >
               {sub.label}
             </SmartLink>
           ))}
@@ -103,9 +156,15 @@ export const Header = props => {
     'IGNAI_NAV_USE_NOTION_MENU',
     CONFIG.IGNAI_NAV_USE_NOTION_MENU
   )
-  const navItems = useNotionMenu
-    ? buildNavItems(props.customMenu, fallbackNavItems)
-    : fallbackNavItems
+  const notionNavItems = buildConfiguredNavItems(
+    props?.NOTION_CONFIG?.IGNAI_SECTION_NAVIGATION
+  )
+  const navItems =
+    notionNavItems.length > 0
+      ? notionNavItems
+      : useNotionMenu
+        ? buildNavItems(props.customMenu, fallbackNavItems)
+        : fallbackNavItems
   const [showMenu, setShowMenu] = useState(false)
   const [hideOnScroll, setHideOnScroll] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -160,7 +219,7 @@ export const Header = props => {
   // 点击外部关闭移动端菜单
   useEffect(() => {
     if (!showMenu) return
-    const handler = (e) => {
+    const handler = e => {
       // 点击菜单按钮本身不关闭（它自己处理 toggle）
       if (e.target.closest('button[aria-label]')) return
       if (e.target.closest('nav.ignai-mobile-menu')) return
@@ -181,14 +240,14 @@ export const Header = props => {
       >
         <div className='container'>
           <div className='relative -mx-4 flex items-center justify-between ignai-header-shell'>
-
             {/* Logo */}
             <div className='max-w-full px-4'>
               <div
                 className='navbar-logo ignai-header-brand-lockup flex w-full cursor-pointer items-center gap-3 py-4 sm:py-5'
                 onClick={() => {
                   void router.push('/')
-                }}>
+                }}
+              >
                 <span aria-hidden='true' className='ignai-header-logo-frame'>
                   <Image
                     src='/brand/ignai/torch-icon-transparent.png'
@@ -200,9 +259,7 @@ export const Header = props => {
                   />
                 </span>
                 <div className='flex min-w-0 flex-col justify-center'>
-                  <span className='ignai-header-wordmark'>
-                    IGNAI
-                  </span>
+                  <span className='ignai-header-wordmark'>IGNAI</span>
                   <span className='ignai-header-subtitle hidden min-[360px]:block'>
                     Ignite before AGI
                   </span>
@@ -241,7 +298,8 @@ export const Header = props => {
                 data-analytics-event='click_join_community'
                 data-analytics-label='header_desktop_join'
                 data-analytics-prop-placement='header_desktop'
-                className='ignai-header-join inline-flex items-center rounded-lg px-5 py-2 text-sm font-medium transition duration-200'>
+                className='ignai-header-join inline-flex items-center rounded-lg px-5 py-2 text-sm font-medium transition duration-200'
+              >
                 加入社区
               </SmartLink>
             </div>
@@ -252,14 +310,16 @@ export const Header = props => {
               onClick={() => setShowMenu(!showMenu)}
               className='ignai-mobile-toggle absolute right-4 top-1/2 -translate-y-1/2 rounded-2xl p-3 md:hidden'
               aria-label={showMenu ? '关闭菜单' : '打开菜单'}
-              aria-expanded={showMenu}>
+              aria-expanded={showMenu}
+            >
               <svg
                 aria-hidden='true'
                 width='22'
                 height='22'
                 viewBox='0 0 22 22'
                 fill='none'
-                style={{ display: 'block' }}>
+                style={{ display: 'block' }}
+              >
                 {showMenu ? (
                   <>
                     <path
@@ -318,13 +378,20 @@ export const Header = props => {
                 opacity: showMenu ? 1 : 0,
                 visibility: showMenu ? 'visible' : 'hidden',
                 pointerEvents: showMenu ? 'auto' : 'none',
-                transform: showMenu ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(-8px)'
-              }}>
+                transform: showMenu
+                  ? 'scale(1) translateY(0)'
+                  : 'scale(0.95) translateY(-8px)'
+              }}
+            >
               <div className='ignai-mobile-menu-header px-5 pb-3 pt-4'>
-                <p className='ignai-mobile-menu-kicker'>CHANGSHA AI COMMUNITY</p>
+                <p className='ignai-mobile-menu-kicker'>
+                  CHANGSHA AI COMMUNITY
+                </p>
                 <div className='mt-3 flex items-center gap-3'>
                   <span className='ignai-mobile-menu-title'>IGNAI</span>
-                  <span className='ignai-mobile-menu-title-glow'>Ignite before AGI.</span>
+                  <span className='ignai-mobile-menu-title-glow'>
+                    Ignite before AGI.
+                  </span>
                 </div>
                 <p className='ignai-mobile-menu-copy mt-3 text-sm leading-6'>
                   连接本地、面向全球，把真实行动者组织在一起。
@@ -338,7 +405,8 @@ export const Header = props => {
                       href={item.href}
                       prefetch={false}
                       onTouchStart={() => prefetchOnIntent(item.href)}
-                      className='ignai-mobile-menu-link block rounded-xl px-5 py-3 text-sm transition-colors'>
+                      className='ignai-mobile-menu-link block rounded-xl px-5 py-3 text-sm transition-colors'
+                    >
                       {item.label}
                     </SmartLink>
                     {item.subMenus?.map((sub, si) => (
@@ -347,7 +415,8 @@ export const Header = props => {
                         href={sub.href}
                         prefetch={false}
                         onTouchStart={() => prefetchOnIntent(sub.href)}
-                        className='ignai-mobile-menu-sub-link block rounded-xl px-8 py-2 text-[13px] transition-colors'>
+                        className='ignai-mobile-menu-sub-link block rounded-xl px-8 py-2 text-[13px] transition-colors'
+                      >
                         {sub.label}
                       </SmartLink>
                     ))}
@@ -377,13 +446,13 @@ export const Header = props => {
                     data-analytics-event='click_join_community'
                     data-analytics-label='header_mobile_join'
                     data-analytics-prop-placement='header_mobile'
-                    className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium transition-colors'>
+                    className='ignai-mobile-menu-cta mx-5 block rounded-xl px-5 py-3 text-sm font-medium transition-colors'
+                  >
                     加入社区
                   </SmartLink>
                 </li>
               </ul>
             </nav>
-
           </div>
         </div>
       </div>

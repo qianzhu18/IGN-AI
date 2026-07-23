@@ -5,20 +5,30 @@ import {
 } from '@/lib/db/SiteDataApi'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
-import { eventStatusLabel, eventFormatLabel, eventKindLabel } from '@/src/content/events'
+import {
+  eventStatusLabel,
+  eventFormatLabel,
+  eventKindLabel
+} from '@/src/content/events'
 import {
   getEventHref,
   getEventCoverFallback,
   isExternalEvent,
-  isMockEvent,
-  isPublicUpcomingEvent,
   normalizeEventList
 } from '@/lib/utils/event'
 import Link from 'next/link'
 import { CalendarDays, ExternalLink, MapPin } from 'lucide-react'
 
 const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
-  const visibleEvents = events.filter(event => isPublicUpcomingEvent(event))
+  // /events 是已发布活动的完整公开索引。首页可以按时间与报名信息挑选“即将
+  // 发生”，但这里不能再用第二套前端规则隐藏 Notion 的 Published 行。
+  const visibleEvents = events
+  const activeEvents = events.filter(
+    event =>
+      event.status === 'planning' ||
+      event.status === 'open' ||
+      event.status === 'ongoing'
+  )
 
   return (
     <>
@@ -33,15 +43,28 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
           </p>
           <h1 className='text-3xl font-bold mb-2'>活动与见面</h1>
           <p className='max-w-2xl text-white/50 mb-8'>
-            这里是 IGNAI 正在发生的线下见面、共创和合作活动。每一场都会标明时间、地点、IGNAI 的角色和参与方式。
+            这里是 IGNAI
+            正在发生的线下见面、共创和合作活动。每一场都会标明时间、地点、IGNAI
+            的角色和参与方式。
           </p>
 
           <div className='mb-10 grid gap-3 sm:grid-cols-2'>
             {[
-              ['开放 / 进行中', visibleEvents.filter(event => event.status === 'open' || event.status === 'ongoing').length],
-              ['筹备中', visibleEvents.filter(event => event.status === 'planning').length]
+              [
+                '开放 / 进行中',
+                activeEvents.filter(
+                  event => event.status === 'open' || event.status === 'ongoing'
+                ).length
+              ],
+              [
+                '筹备中',
+                activeEvents.filter(event => event.status === 'planning').length
+              ]
             ].map(([label, count]) => (
-              <div key={label} className='rounded-lg border border-white/[0.07] bg-white/[0.025] px-4 py-3'>
+              <div
+                key={label}
+                className='rounded-lg border border-white/[0.07] bg-white/[0.025] px-4 py-3'
+              >
                 <div className='text-2xl font-semibold text-white'>{count}</div>
                 <div className='mt-1 text-xs text-white/42'>{label}</div>
               </div>
@@ -81,11 +104,13 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
                     <span className='rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1 text-xs font-medium text-[#ffd09a]'>
                       {eventKindLabel[event.kind] || '社区活动'}
                     </span>
-                    <span className={`rounded-full border px-3 py-1 text-xs font-medium ${
-                      event.status === 'open' || event.status === 'ongoing'
-                        ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
-                        : 'border-white/10 bg-white/5 text-white/50'
-                    }`}>
+                    <span
+                      className={`rounded-full border px-3 py-1 text-xs font-medium ${
+                        event.status === 'open' || event.status === 'ongoing'
+                          ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
+                          : 'border-white/10 bg-white/5 text-white/50'
+                      }`}
+                    >
                       {eventStatusLabel[event.status] || event.status}
                     </span>
                     {isExternalEvent(event) && (
@@ -98,7 +123,9 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
                     {event.title}
                   </h3>
                   <p className='mt-2 line-clamp-2 text-sm leading-6 text-white/52'>
-                    {event.excerpt || event.subtitle || '查看活动详情与参与方式。'}
+                    {event.excerpt ||
+                      event.subtitle ||
+                      '查看活动详情与参与方式。'}
                   </p>
                   <div className='mt-4 flex flex-wrap gap-4 text-xs text-white/45'>
                     <span className='inline-flex items-center gap-1.5'>
@@ -107,7 +134,8 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
                     </span>
                     <span className='inline-flex items-center gap-1.5'>
                       <MapPin className='h-3.5 w-3.5 text-[#9aceff]/60' />
-                      {event.location} · {eventFormatLabel[event.format] || event.format}
+                      {event.location} ·{' '}
+                      {eventFormatLabel[event.format] || event.format}
                     </span>
                   </div>
                 </div>
@@ -116,14 +144,22 @@ const EventsIndexPage = ({ events, pageTitle, pageDescription }) => {
 
             {visibleEvents.length === 0 && (
               <div className='col-span-full border-y border-white/[0.08] py-14 text-center'>
-                <p className='text-xl font-semibold text-white'>下一次见面正在准备。</p>
+                <p className='text-xl font-semibold text-white'>
+                  下一次见面正在准备。
+                </p>
                 <p className='mx-auto mt-3 max-w-lg text-sm leading-7 text-white/52'>
                   先来认识社区。你可以带着一个项目、一个问题，或者想参与活动的心情来；我们会把下一次机会告诉你。
                 </p>
-                <Link href='/join' className='mt-7 inline-flex rounded-lg border border-[#ffb879]/30 px-5 py-3 text-sm font-medium text-[#ffd09a] no-underline transition hover:border-[#ffb879]/60'>
+                <Link
+                  href='/join'
+                  className='mt-7 inline-flex rounded-lg border border-[#ffb879]/30 px-5 py-3 text-sm font-medium text-[#ffd09a] no-underline transition hover:border-[#ffb879]/60'
+                >
                   加入社区
                 </Link>
-                <Link href='/records' className='mt-4 block text-sm text-white/50 hover:text-white'>
+                <Link
+                  href='/records'
+                  className='mt-4 block text-sm text-white/50 hover:text-white'
+                >
                   先看看我们一起做过的事
                 </Link>
               </div>
@@ -141,7 +177,7 @@ export async function getStaticProps({ locale }) {
   const freshEvents = await fetchEventsFromOfficialAPI()
   const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
 
-  const events = normalizeEventList(allEvents).filter(event => !isMockEvent(event))
+  const events = normalizeEventList(allEvents)
   const pageTitle = 'IGNAI - 活动'
   const pageDescription = 'IGNAI 社区活动 — 线下聚会、工作坊、Demo 和共创'
 

@@ -5,6 +5,7 @@
 说明：这是总 TO DO。只要这里还有未完成项，就代表项目仍处于持续优化阶段。
 
 ## A. Member 体系 ✅ 基本完成
+
 - [x] 支持 `Member` 作为 page type
 - [x] 暴露 `allMembers`
 - [x] 建立 `/members`
@@ -18,6 +19,7 @@
 - [ ] featured members 进一步增强（角色分组、组织表达）
 
 ## B. 社区内容系统（进行中）
+
 - [x] 活动详情页结构定制（`pages/events/` 已就位）
 - [x] Event 类型字段基本收敛
 - [x] 活动发布主源收束为 Notion Event
@@ -52,6 +54,7 @@
 - [ ] **P1 / 8.2** 日报 / 群内高质量记录进入官网的筛选机制：不是把群聊全搬进官网，而是沉淀成可公开引用的 Field Notes / Records
 
 ## C. 设计与体验（进行中）
+
 - [x] 移动端基础适配（Hero 隐藏视觉面板、Header 缩小、scatter overflow、活动卡片高度）
 - [x] Hero 区域改为 Notion 驱动（`resolveSection` 模式已就位）
 - [x] 字体加载修复（Cormorant Garamond 已添加到 font.config.js）
@@ -77,6 +80,7 @@
 - [ ] **P1 / 8.3** 活动封面、照片墙、作品截图与视频素材治理，避免活动页出现灰块 / 破图 / 占位感
 
 ## D. 工程与验证
+
 - [ ] Member 相关测试补齐
 - [ ] 关键页面 lint / build 验证常态化
 - [ ] 逐步清理与当前主线相关的类型债
@@ -88,6 +92,7 @@
 - [x] SEO canonical / OG fallback 避免 `/undefined`
 
 ## E. 上游贡献 ✅ 核心 PR 已落地
+
 - [x] 整理 `Member` 支持的最小通用 diff
 - [x] 整理对应 issue / PR 叙事（#4035 → #4113）
 - [x] 拆第一版 upstream PR（#4113 已合并，2026-05-27）
@@ -105,6 +110,7 @@
 - [ ] 下一步：ignai 主题作为社区站示例贡献
 
 ## F. 长期运营支持
+
 - [ ] 活动和成员关系打通
 - [ ] 多作者能力准备
 - [ ] 组织页 / 团队页能力
@@ -113,6 +119,7 @@
 - [ ] 社区经历证明链路：Issue / PR / 活动 / 成员 / 记录 / 官号文章互相引用，形成可展示、可复盘、可对外讲述的案例
 
 ## F2. 成员资料上传与运营闭环（新增 — P0）
+
 - [x] 确认 OSS / S3 兼容图床配置可用于官网服务端
 - [x] 实现头像上传、压缩、公开 URL 返回
 - [x] 管理员可将头像 URL 回写 Notion `avatar`
@@ -130,6 +137,7 @@
 - [ ] 图床资产治理：记录对象 key、准备 R2 / OSS 迁移脚本
 
 ## G. 生产上线（新增 — 当前最优先）
+
 - [ ] **P0 / 10.0** Vercel 部署恢复正常：避免 Notion 拉取超时后生成空站或坏 RSS
 - [ ] **P0 / 10.0** 正式域名 `ignai.community` / `www.ignai.community` HTTPS 与 Vercel 绑定恢复，当前访问仍失败
 - [x] **P0 / 9.95** 清理线上 NotionNext 模板文章污染：首页、归档、RSS、sitemap 不再出现「模板说明」「示例文章」「加锁文章 - 密码123456」「EMPTY-ARTICLE」
@@ -152,6 +160,7 @@
 - [ ] **P1 / 7.8** 评论插件上线配置：优先决策 Giscus / Waline，完成环境变量配置，并验证文章 / 记录 / 活动详情页评论入口
 
 ## H. QA 发现问题池（2026-06-06 新增）
+
 - [ ] **P0 / 10.0** 修复 Notion 构建超时后的错误降级，避免 `allPages` 空值继续生成坏页面
 - [x] **P0 / 9.8** 恢复 `/members` 真实成员数据展示，并清理 QA 测试 / 生成成员数据
 - [ ] **P0 / 9.7** Join 生产级持久化保护：把限流 / 幂等 / Notion 写入队列从单实例内存升级为 Supabase / Redis / Vercel KV 等跨 Serverless 实例共享机制
@@ -178,10 +187,12 @@
 - [ ] **P2 / 5.5** 评估是否保留前台 HTML 中的 `NotionNext` generator 标记
 
 ## I. 社区运营与高级表达（2026-06-11 新增）
+
 - [x] 2026-07-16：重做首轮对外内容事实底稿，唯一依据切换为 `活动记录/`；已上架 9 条有原文支撑的社区记录，图证不足的 Datawhale、百万博主与智极松进行中内容暂不编写为往期文章
 - [x] 2026-07-17：将“智极松 AI Skillathon（线上主赛）”与“智极松线下 miniCamp（长沙站）”分别写入 Notion Event 主数据源；前台通过 `ext` 映射各自的报名入口、状态、正文与线下图组
 - [x] 2026-07-17：按 `活动记录/` 重写社区往期时间线；确认日期的 5 条记录按发生时间倒序，日期不足的 4 条单列待补；Notion 旧 7 条错误 Record 已隐藏，并新建 9 条同 slug 事实记录
-- [ ] **P1 / 8.7** Record 前台改为官方 Notion data source 主源：读取 Published Record、规范化正文 blocks，并以本地图文事实稿作稳定降级
+- [x] **P1 / 8.7** Record 前台改为官方 Notion data source 主源：读取 Published Record、规范化正文 blocks，并以本地图文事实稿作稳定降级
+- [x] 2026-07-23：完成 Notion 前后端契约收束：Event / Record 只读取 Published Notion 行，About / 导航迁入 Config，9 组活动记录双向关联、公开 Member slug 回写，Join 写入目标改为环境变量优先。
 - [ ] **P1 / 8.9** 官网内容资产库持续维护：后续上传的社区文字、图片、活动记录、成员故事先进入内容资产层，再决定是否上架
 - [ ] **P1 / 8.8** 评论插件 PR / 配置线：确认 Giscus vs Waline；若选 Giscus，需要 GitHub Discussions repo、repo id、category id；若选 Waline，需要服务端 URL 与审核策略
 - [ ] **P1 / 8.6** 活动沉淀线：开放活动照片、作品简介、现场记录、群友评论的提交入口，但必须通过 Notion / 管理后台筛选后公开

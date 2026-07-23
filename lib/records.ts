@@ -25,6 +25,7 @@ export type RecordItem = {
   excerpt: string
   outcomes?: string[]
   tags: string[]
+  relatedEventSlugs?: string[]
   content: Array<{ heading: string; body: string; media?: RecordMedia[] }>
   links?: Array<{ label: string; href: string }>
 }
@@ -46,6 +47,8 @@ type RecordExt = {
   outcomes?: unknown[]
   cover?: string
   sourceFolder?: string
+  relatedEventSlug?: string
+  relatedEventSlugs?: unknown[]
 }
 
 function asRecordType(value: unknown): RecordType {
@@ -74,7 +77,26 @@ function asStringArray(value: unknown): string[] | undefined {
     )
     return filtered.length > 0 ? filtered : undefined
   }
+  if (typeof value === 'string') {
+    const values = value
+      .split(/[,，、\n]/)
+      .map(item => item.trim())
+      .filter(Boolean)
+    return values.length > 0 ? values : undefined
+  }
   return undefined
+}
+
+function normalizeRelatedSlug(value: string): string {
+  return (
+    value
+      .trim()
+      .replace(/^https?:\/\/[^/]+/i, '')
+      .replace(/^\/+|\/+$/g, '')
+      .split('/')
+      .filter(Boolean)
+      .pop() || ''
+  )
 }
 
 export function normalizeRecord(page: BasePage): RecordItem {
@@ -98,6 +120,15 @@ export function normalizeRecord(page: BasePage): RecordItem {
   if (ext.location) record.location = ext.location
   const outcomes = asStringArray(ext.outcomes)
   if (outcomes) record.outcomes = outcomes
+  const relatedEventSlugs = [
+    ...(asStringArray(ext.relatedEventSlugs) || []),
+    ...(asStringArray(ext.relatedEventSlug) || [])
+  ]
+    .map(normalizeRelatedSlug)
+    .filter(Boolean)
+  if (relatedEventSlugs.length > 0) {
+    record.relatedEventSlugs = Array.from(new Set(relatedEventSlugs))
+  }
 
   return record
 }

@@ -2,12 +2,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import {
   fetchEventsFromOfficialAPI,
+  fetchRecordsFromOfficialAPI,
   fetchGlobalAllData
 } from '@/lib/db/SiteDataApi'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import {
-  events as staticEvents,
   eventKindLabel,
   eventStatusLabel,
   eventFormatLabel
@@ -16,13 +16,18 @@ import {
   normalizeEventList,
   normalizeEventSlugValue,
   normalizeNotionEvent,
-  isMockEvent,
   getEventCoverFallback
 } from '@/lib/utils/event'
+import { getAllRecords } from '@/lib/records'
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
 
-const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
+const EventDetailPage = ({
+  event,
+  relatedRecords,
+  pageTitle,
+  pageDescription
+}) => {
   if (!event) {
     return (
       <div className='ignai-themed-page flex min-h-screen items-center justify-center bg-[var(--ignai-bg)] text-[var(--rig-paper)]'>
@@ -64,11 +69,13 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
             <span className='inline-block rounded-full border border-[#ffb879]/20 bg-[#140b07]/74 px-3 py-1 text-xs font-medium text-[#ffd09a]'>
               {eventKindLabel[event.kind] || '社区活动'}
             </span>
-            <span className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
-              event.status === 'open' || event.status === 'ongoing'
-                ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
-                : 'border-white/10 bg-white/5 text-white/50'
-            }`}>
+            <span
+              className={`inline-block rounded-full border px-3 py-1 text-xs font-medium ${
+                event.status === 'open' || event.status === 'ongoing'
+                  ? 'border-[#ffb879]/20 bg-[#140b07]/74 text-[#ffd09a]'
+                  : 'border-white/10 bg-white/5 text-white/50'
+              }`}
+            >
               {eventStatusLabel[event.status] || event.status}
             </span>
             <span className='inline-flex items-center gap-1.5'>
@@ -77,7 +84,8 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
             </span>
             <span className='inline-flex items-center gap-1.5'>
               <MapPin className='h-4 w-4 text-[#9aceff]/60' />
-              {event.location} · {eventFormatLabel[event.format] || event.format}
+              {event.location} ·{' '}
+              {eventFormatLabel[event.format] || event.format}
             </span>
           </div>
 
@@ -105,21 +113,31 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
             <div className='space-y-8 mb-12'>
               {event.content.map((block, i) => (
                 <div key={i}>
-                  <h2 className='text-xl font-semibold mb-3'>{block.heading}</h2>
+                  <h2 className='text-xl font-semibold mb-3'>
+                    {block.heading}
+                  </h2>
                   <p className='text-white/55 leading-relaxed'>{block.body}</p>
                   {block.media?.length > 0 && (
-                    <div className={`mt-5 grid gap-4 ${block.media.length > 1 ? 'sm:grid-cols-2' : ''}`}>
+                    <div
+                      className={`mt-5 grid gap-4 ${block.media.length > 1 ? 'sm:grid-cols-2' : ''}`}
+                    >
                       {block.media.map(media => (
                         <figure
                           key={media.src}
                           className={`overflow-hidden rounded-lg border border-white/[0.09] bg-[#070b10]/70 ${media.orientation === 'portrait' ? 'mx-auto w-full max-w-md' : ''}`}
                         >
-                          <div className={`relative bg-black/20 ${media.orientation === 'portrait' ? 'aspect-[1/2]' : 'aspect-[4/3]'}`}>
+                          <div
+                            className={`relative bg-black/20 ${media.orientation === 'portrait' ? 'aspect-[1/2]' : 'aspect-[4/3]'}`}
+                          >
                             <Image
                               src={media.src}
                               alt={media.alt}
                               fill
-                              sizes={block.media.length > 1 ? '(max-width: 640px) 100vw, 50vw' : '(max-width: 768px) 100vw, 768px'}
+                              sizes={
+                                block.media.length > 1
+                                  ? '(max-width: 640px) 100vw, 50vw'
+                                  : '(max-width: 768px) 100vw, 768px'
+                              }
                               className='object-contain'
                             />
                           </div>
@@ -142,7 +160,10 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
               <h2 className='text-xl font-semibold mb-4'>议程</h2>
               <ul className='space-y-2'>
                 {event.agenda.map((item, i) => (
-                  <li key={i} className='text-white/50 text-sm flex items-start gap-2'>
+                  <li
+                    key={i}
+                    className='text-white/50 text-sm flex items-start gap-2'
+                  >
                     <span className='text-[#F0CB8A]/60 mt-0.5'>-</span>
                     {item}
                   </li>
@@ -162,6 +183,23 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
                 ))}
               </ul>
             </div>
+          )}
+
+          {relatedRecords?.length > 0 && (
+            <section className='mb-8 border-t border-white/10 pt-8'>
+              <h2 className='text-xl font-semibold mb-4'>关联社区记录</h2>
+              <div className='flex flex-wrap gap-3'>
+                {relatedRecords.map(record => (
+                  <Link
+                    key={record.slug}
+                    href={`/records/${record.slug}`}
+                    className='inline-flex rounded-full border border-white/10 px-4 py-2 text-sm text-white/62 no-underline transition hover:border-white/20 hover:text-white'
+                  >
+                    {record.title}
+                  </Link>
+                ))}
+              </div>
+            </section>
           )}
 
           {(event.registrationUrl || event.registrationQrImage) && (
@@ -198,7 +236,7 @@ const EventDetailPage = ({ event, pageTitle, pageDescription }) => {
 }
 
 export async function getStaticPaths({ locales = [] } = {}) {
-  let events = staticEvents
+  let events = []
 
   try {
     const [props, freshEvents] = await Promise.all([
@@ -206,21 +244,26 @@ export async function getStaticPaths({ locales = [] } = {}) {
       fetchEventsFromOfficialAPI()
     ])
     events = normalizeEventList(
-      freshEvents.length > 0 ? freshEvents : props.allEvents || [],
-      staticEvents
+      freshEvents.length > 0 ? freshEvents : props.allEvents || []
     )
   } catch (error) {
-    console.warn('[EVENT-PATHS] Failed to fetch Notion Event paths:', error.message)
+    console.warn(
+      '[EVENT-PATHS] Failed to fetch Notion Event paths:',
+      error.message
+    )
   }
 
   const slugs = [
-    ...new Set(events.filter(event => !isMockEvent(event)).map(event => normalizeEventSlugValue(event.slug)).filter(Boolean))
+    ...new Set(
+      events.map(event => normalizeEventSlugValue(event.slug)).filter(Boolean)
+    )
   ]
-  const paths = locales.length > 0
-    ? locales.flatMap(locale =>
-        slugs.map(slug => ({ params: { slug }, locale }))
-      )
-    : slugs.map(slug => ({ params: { slug } }))
+  const paths =
+    locales.length > 0
+      ? locales.flatMap(locale =>
+          slugs.map(slug => ({ params: { slug }, locale }))
+        )
+      : slugs.map(slug => ({ params: { slug } }))
 
   return { paths, fallback: 'blocking' }
 }
@@ -229,8 +272,13 @@ export async function getStaticProps({ params, locale }) {
   const { slug } = params
   const from = 'event-detail'
   const props = await fetchGlobalAllData({ from, locale })
-  const freshEvents = await fetchEventsFromOfficialAPI()
+  const [freshEvents, freshRecords] = await Promise.all([
+    fetchEventsFromOfficialAPI(),
+    fetchRecordsFromOfficialAPI()
+  ])
   const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
+  const allRecords =
+    freshRecords.length > 0 ? freshRecords : props.allRecords || []
 
   const normalizedSlug = normalizeEventSlugValue(slug)
   const notionEvent = allEvents.find(
@@ -239,26 +287,27 @@ export async function getStaticProps({ params, locale }) {
       normalizeEventSlugValue(e.id) === normalizedSlug
   )
 
-  let event
-  if (notionEvent) {
-    event = normalizeNotionEvent(notionEvent)
-  } else {
-    event =
-      normalizeEventList([], staticEvents).find(
-        e => normalizeEventSlugValue(e.slug) === normalizedSlug
-      ) || null
-  }
+  const event = notionEvent ? normalizeNotionEvent(notionEvent) : null
 
-  if (!event || isMockEvent(event)) {
+  if (!event) {
     return { notFound: true }
   }
 
+  const explicitRelatedRecordSlugs = new Set(event.relatedRecordSlugs || [])
+  const relatedRecords = getAllRecords(allRecords).filter(
+    record =>
+      explicitRelatedRecordSlugs.has(record.slug) ||
+      record.relatedEventSlugs?.includes(event.slug)
+  )
+
   const pageTitle = `${event.title} - IGNAI`
-  const pageDescription = event.excerpt || event.subtitle || 'IGNAI 社区活动详情与参与方式。'
+  const pageDescription =
+    event.excerpt || event.subtitle || 'IGNAI 社区活动详情与参与方式。'
 
   return {
     props: {
       event,
+      relatedRecords,
       pageTitle,
       pageDescription
     },
