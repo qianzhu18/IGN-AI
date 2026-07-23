@@ -16,11 +16,13 @@ export type PageStatus = 'Published' | 'Invisible'
 export type PageType = 'Post' | 'Page' | 'Notice' | 'Menu' | 'SubMenu' | 'Member' | 'Event'
 
 export interface PageDate {
+  start?: string
+  end?: string
+  time_zone?: string
   start_date?: string
   start_time?: string
   end_date?: string
   end_time?: string
-  time_zone?: string
   lastEditedDay?: string
 }
 
@@ -54,6 +56,8 @@ export interface BasePage {
   pageIcon?: string
   href?: string
   authors?: ResolvedAuthor[]
+  location?: string
+  website?: string
   ext?: Record<string, unknown>
 }
 

@@ -98,13 +98,29 @@ function normalizeRelatedSlug(value: string): string {
   )
 }
 
+function categoryLabelToType(label: string | undefined): RecordType | null {
+  if (!label) return null
+  const map: Record<string, RecordType> = {
+    活动现场: 'recap',
+    社区故事: 'story',
+    社区观察: 'resource',
+    项目与见面: 'project'
+  }
+  return map[label] || null
+}
+
 export function normalizeRecord(page: BasePage): RecordItem {
   const ext = (page?.ext ?? {}) as RecordExt
+
+  // Prefer top-level category (Chinese labels), map to English recordType.
+  // Fall back to ext.recordType for backward compat.
+  const categoryType = categoryLabelToType(page?.category)
+  const recordType = categoryType || asRecordType(ext.recordType)
 
   const record: RecordItem = {
     slug: page?.slug ?? '',
     title: page?.title ?? '',
-    type: asRecordType(ext.recordType),
+    type: recordType,
     dateText: ext.dateText ?? '',
     dateStatus: asDateStatus(ext.dateStatus),
     cover: page?.pageCoverThumbnail || ext.cover || '',
@@ -113,9 +129,18 @@ export function normalizeRecord(page: BasePage): RecordItem {
   }
 
   if (page?.id) record.id = page.id
-  if (ext.timelineDate) record.timelineDate = ext.timelineDate
-  if (ext.timelineEndDate) record.timelineEndDate = ext.timelineEndDate
-  if (ext.location) record.location = ext.location
+
+  // Prefer top-level date property (Notion date with optional end),
+  // fall back to ext.timelineDate/timelineEndDate.
+  if (page?.date?.start) record.timelineDate = page.date.start
+  if (page?.date?.end) record.timelineEndDate = page.date.end
+  if (!record.timelineDate && ext.timelineDate) record.timelineDate = ext.timelineDate
+  if (!record.timelineEndDate && ext.timelineEndDate) record.timelineEndDate = ext.timelineEndDate
+
+  // Prefer top-level location property, fall back to ext.location.
+  const location = page?.location || ext.location
+  if (location) record.location = location
+
   const outcomes = asStringArray(ext.outcomes)
   if (outcomes) record.outcomes = outcomes
   const relatedEventSlugs = [
