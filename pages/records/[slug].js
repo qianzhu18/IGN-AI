@@ -292,7 +292,12 @@ export async function getStaticProps({ params, locale }) {
     }
   }
 
-  const record = { ...recordItem, content }
+  const fallbackExcerpt = content[0]?.body?.split('\n\n')[0] || ''
+  const record = {
+    ...recordItem,
+    content,
+    excerpt: recordItem.excerpt || fallbackExcerpt
+  }
 
   const allRecordItems = getAllRecords(allRecords)
   const relatedEventSlugs = new Set(recordItem.relatedEventSlugs || [])

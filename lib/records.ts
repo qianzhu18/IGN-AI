@@ -108,7 +108,7 @@ export function normalizeRecord(page: BasePage): RecordItem {
     type: asRecordType(ext.recordType),
     dateText: ext.dateText ?? '',
     dateStatus: asDateStatus(ext.dateStatus),
-    cover: ext.cover || page?.pageCoverThumbnail || '',
+    cover: page?.pageCoverThumbnail || ext.cover || '',
     excerpt: page?.summary ?? '',
     tags: Array.isArray(page?.tags) ? page.tags : [],
     content: []
