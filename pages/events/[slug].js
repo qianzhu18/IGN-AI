@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import {
   fetchEventsFromOfficialAPI,
   fetchRecordsFromOfficialAPI,
@@ -8,7 +7,7 @@ import {
 } from '@/lib/db/SiteDataApi'
 import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
 import { formatNotionBlock } from '@/lib/db/notion/getPostBlocks'
-import { adaptRecordBlocks } from '@/lib/records.blocks'
+import NotionPage from '@/components/NotionPage'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import {
@@ -113,50 +112,10 @@ const EventDetailPage = ({
             </div>
           )}
 
-          {event.content?.length > 0 && (
-            <div className='space-y-8 mb-12'>
-              {event.content.map((block, i) => (
-                <div key={i}>
-                  <h2 className='text-xl font-semibold mb-3'>
-                    {block.heading}
-                  </h2>
-                  <p className='text-white/55 leading-relaxed'>{block.body}</p>
-                  {block.media?.length > 0 && (
-                    <div
-                      className={`mt-5 grid gap-4 ${block.media.length > 1 ? 'sm:grid-cols-2' : ''}`}
-                    >
-                      {block.media.map(media => (
-                        <figure
-                          key={media.src}
-                          className={`overflow-hidden rounded-lg border border-white/[0.09] bg-[#070b10]/70 ${media.orientation === 'portrait' ? 'mx-auto w-full max-w-md' : ''}`}
-                        >
-                          <div
-                            className={`relative bg-black/20 ${media.orientation === 'portrait' ? 'aspect-[1/2]' : 'aspect-[4/3]'}`}
-                          >
-                            <Image
-                              src={media.src}
-                              alt={media.alt}
-                              fill
-                              sizes={
-                                block.media.length > 1
-                                  ? '(max-width: 640px) 100vw, 50vw'
-                                  : '(max-width: 768px) 100vw, 768px'
-                              }
-                              className='object-contain'
-                            />
-                          </div>
-                          {media.caption && (
-                            <figcaption className='border-t border-white/[0.07] px-4 py-3 text-xs leading-5 text-white/45'>
-                              {media.caption}
-                            </figcaption>
-                          )}
-                        </figure>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+          {event.blockMap && (
+            <article className='mb-12 ignai-event-body'>
+              <NotionPage post={{ blockMap: event.blockMap }} />
+            </article>
           )}
 
           {event.agenda?.length > 0 && (
@@ -298,17 +257,17 @@ export async function getStaticProps({ params, locale }) {
   }
 
   // Pull Notion page blocks so edits made in the Notion page body surface on
-  // the site (NotionNext default editing model). Falls back to ext.content
-  // (JSON in the database property) only when the page has no blocks.
+  // the site (NotionNext default editing model). Rendered via <NotionRenderer>
+  // so all Notion block types (headings, paragraphs, lists, images, callouts,
+  // etc.) are faithfully represented — same pipeline [prefix] uses.
   if (event.id) {
     try {
       const rawBlockMap = await getPostBlocks(event.id, from)
       if (rawBlockMap) {
         const adapted = adapterNotionBlockMap(rawBlockMap)
-        const formatted = formatNotionBlock(adapted.block || {})
-        const blockSections = adaptRecordBlocks(formatted, event.id)
-        if (blockSections.length > 0) {
-          event.content = blockSections
+        event.blockMap = {
+          ...adapted,
+          block: formatNotionBlock(adapted.block)
         }
       }
     } catch (err) {

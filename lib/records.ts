@@ -26,7 +26,6 @@ export type RecordItem = {
   outcomes?: string[]
   tags: string[]
   relatedEventSlugs?: string[]
-  content: Array<{ heading: string; body: string; media?: RecordMedia[] }>
   links?: Array<{ label: string; href: string }>
 }
 
@@ -110,8 +109,7 @@ export function normalizeRecord(page: BasePage): RecordItem {
     dateStatus: asDateStatus(ext.dateStatus),
     cover: page?.pageCoverThumbnail || ext.cover || '',
     excerpt: page?.summary ?? '',
-    tags: Array.isArray(page?.tags) ? page.tags : [],
-    content: []
+    tags: Array.isArray(page?.tags) ? page.tags : []
   }
 
   if (page?.id) record.id = page.id

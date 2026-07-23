@@ -17,12 +17,34 @@ import { formatNotionBlock } from '@/lib/db/notion/getPostBlocks'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import { getAllRecords, getRecordBySlug, recordTypeLabel } from '@/lib/records'
-import { adaptRecordBlocks } from '@/lib/records.blocks'
+import NotionPage from '@/components/NotionPage'
 import {
   getEventHref,
   isExternalEvent,
   normalizeEventList
 } from '@/lib/utils/event'
+
+// Walk a Notion blockMap and return the first child paragraph's plain text.
+// Used as a fallback excerpt when the Notion `summary` property is empty,
+// so editors can skip the summary property and still get a header excerpt.
+function extractLeadParagraph(blockMap, pageId) {
+  const blocks = blockMap?.block
+  if (!blocks || !pageId) return ''
+  for (const block of Object.values(blocks)) {
+    const value = block?.value
+    if (!value || value.type !== 'text') continue
+    if (value.parent_id !== pageId) continue
+    const title = value?.properties?.title
+    if (!Array.isArray(title)) continue
+    const text = title
+      .flat(Infinity)
+      .filter(chunk => typeof chunk === 'string')
+      .join('')
+      .trim()
+    if (text) return text
+  }
+  return ''
+}
 
 const RecordDetailPage = ({
   record,
@@ -106,47 +128,9 @@ const RecordDetailPage = ({
             </section>
           )}
 
-          {record.content?.length > 0 && (
-            <div className='mt-12 space-y-10'>
-              {record.content.map((block, index) => (
-                <section key={`${block.heading || 'section'}-${index}`}>
-                  {block.heading && (
-                    <h2 className='text-2xl font-semibold text-white'>
-                      {block.heading}
-                    </h2>
-                  )}
-                  {block.body && (
-                    <p className='mt-4 whitespace-pre-line text-base leading-8 text-white/56'>
-                      {block.body}
-                    </p>
-                  )}
-                  {block.media?.length > 0 && (
-                    <div className='mt-6 grid gap-4 sm:grid-cols-2'>
-                      {block.media.map((media, mediaIndex) => (
-                        <figure
-                          key={`${media.src}-${mediaIndex}`}
-                          className={
-                            media.orientation === 'portrait'
-                              ? 'overflow-hidden rounded-lg border border-white/10'
-                              : 'sm:col-span-2 overflow-hidden rounded-lg border border-white/10'
-                          }
-                        >
-                          <img
-                            src={media.src}
-                            alt={media.alt}
-                            className='h-full w-full object-cover'
-                          />
-                          {media.caption && (
-                            <figcaption className='px-4 py-2 text-xs text-white/42'>
-                              {media.caption}
-                            </figcaption>
-                          )}
-                        </figure>
-                      ))}
-                    </div>
-                  )}
-                </section>
-              ))}
+          {record.blockMap && (
+            <div className='ignai-record-body mt-12'>
+              <NotionPage post={{ blockMap: record.blockMap }} />
             </div>
           )}
 
@@ -274,14 +258,20 @@ export async function getStaticProps({ params, locale }) {
     return { notFound: true }
   }
 
-  let content = []
+  // Pull Notion page blocks so edits made in the Notion page body surface on
+  // the site (NotionNext default editing model). Rendered via <NotionRenderer>
+  // so all Notion block types are faithfully represented — same pipeline
+  // [prefix] uses.
+  let blockMap = null
   if (recordItem.id) {
     try {
       const rawBlockMap = await getPostBlocks(recordItem.id, from)
       if (rawBlockMap) {
         const adapted = adapterNotionBlockMap(rawBlockMap)
-        const formatted = formatNotionBlock(adapted.block || {})
-        content = adaptRecordBlocks(formatted, recordItem.id)
+        blockMap = {
+          ...adapted,
+          block: formatNotionBlock(adapted.block)
+        }
       }
     } catch (err) {
       console.warn(
@@ -292,10 +282,10 @@ export async function getStaticProps({ params, locale }) {
     }
   }
 
-  const fallbackExcerpt = content[0]?.body?.split('\n\n')[0] || ''
+  const fallbackExcerpt = extractLeadParagraph(blockMap, recordItem.id)
   const record = {
     ...recordItem,
-    content,
+    blockMap,
     excerpt: recordItem.excerpt || fallbackExcerpt
   }
 
