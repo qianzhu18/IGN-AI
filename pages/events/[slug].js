@@ -3,8 +3,12 @@ import Image from 'next/image'
 import {
   fetchEventsFromOfficialAPI,
   fetchRecordsFromOfficialAPI,
-  fetchGlobalAllData
+  fetchGlobalAllData,
+  getPostBlocks
 } from '@/lib/db/SiteDataApi'
+import { adapterNotionBlockMap } from '@/lib/utils/notion.util'
+import { formatNotionBlock } from '@/lib/db/notion/getPostBlocks'
+import { adaptRecordBlocks } from '@/lib/records.blocks'
 import { siteConfig } from '@/lib/config'
 import BLOG from '@/blog.config'
 import {
@@ -291,6 +295,29 @@ export async function getStaticProps({ params, locale }) {
 
   if (!event) {
     return { notFound: true }
+  }
+
+  // Pull Notion page blocks so edits made in the Notion page body surface on
+  // the site (NotionNext default editing model). Falls back to ext.content
+  // (JSON in the database property) only when the page has no blocks.
+  if (event.id) {
+    try {
+      const rawBlockMap = await getPostBlocks(event.id, from)
+      if (rawBlockMap) {
+        const adapted = adapterNotionBlockMap(rawBlockMap)
+        const formatted = formatNotionBlock(adapted.block || {})
+        const blockSections = adaptRecordBlocks(formatted, event.id)
+        if (blockSections.length > 0) {
+          event.content = blockSections
+        }
+      }
+    } catch (err) {
+      console.warn(
+        '[EVENT-DETAIL] fetchNotionPageBlocks failed:',
+        event.id,
+        err.message
+      )
+    }
   }
 
   const explicitRelatedRecordSlugs = new Set(event.relatedRecordSlugs || [])
