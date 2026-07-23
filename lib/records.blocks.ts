@@ -129,12 +129,14 @@ function walkBlocks(blockMap: NotionBlockMap, ids: string[]): RecordContentSecti
 
     if (TEXT_TYPES.has(block.type)) {
       const text = flattenRichText(block.properties?.title)
-      if (current.body) {
-        current.body = `${current.body}\n\n${text}`
-      } else {
-        current.body = text
-      }
+      if (!text) continue
+      // Each text block becomes its own section so the page renders them
+      // as separate paragraphs (NotionNext's default block rendering),
+      // instead of merging consecutive paragraphs into one body string.
+      flush()
+      current.body = text
       hasContent = true
+      flush()
       continue
     }
 
