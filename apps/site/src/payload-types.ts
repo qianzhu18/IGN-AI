@@ -327,12 +327,18 @@ export interface Event {
   organizers?: (number | Member)[] | null;
   participants?: (number | Member)[] | null;
   /**
-   * 用于 /events/:slug。为空时由活动名称生成。
+   * 公开 URL 的稳定标识。为空时由标题生成。
    */
   slug: string;
   featured?: boolean | null;
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
   /**
-   * 只读迁移追踪信息；新内容可留空。
+   * 迁移追踪信息；新内容可留空。
    */
   source?: {
     notionPageId?: string | null;
@@ -1009,6 +1015,14 @@ export interface EventsSelect<T extends boolean = true> {
   participants?: T;
   slug?: T;
   featured?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
   source?:
     | T
     | {

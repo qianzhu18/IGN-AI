@@ -1,15 +1,13 @@
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
-import config from '@payload-config'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
 
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RichText } from '@/components/RichText'
 import { SiteNav } from '@/components/SiteNav'
-import { fallbackSettings, getMediaURL, getSiteSettings } from '@/lib/content'
+import { fallbackSettings, getDocumentBySlug, getMediaURL, getSiteSettings } from '@/lib/content'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,16 +17,8 @@ type Args = {
 
 async function getEvent(slug: string) {
   const { isEnabled: draft } = await draftMode()
-  const payload = await getPayload({ config })
-  const result = await payload.find({
-    collection: 'events',
-    draft,
-    limit: 1,
-    overrideAccess: draft,
-    pagination: false,
-    where: { slug: { equals: decodeURIComponent(slug) } },
-  })
-  return { draft, event: result.docs[0] || null }
+  const event = await getDocumentBySlug('events', decodeURIComponent(slug), draft)
+  return { draft, event }
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {

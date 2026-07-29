@@ -3,7 +3,10 @@ import type { CollectionConfig } from 'payload'
 import { admins, contentContributors, publishedOrAuthenticated } from '@/access/roles'
 import { contentEditor, seoFields, slugField, sourceFields } from '@/fields/shared'
 import { enforceAIServiceDrafts } from '@/hooks/enforceAIServiceDrafts'
+import { ensureSEO } from '@/hooks/ensureSEO'
 import { ensureSlug } from '@/hooks/ensureSlug'
+import { protectReferencedDocument, recordReferences } from '@/hooks/protectReferencedDocument'
+import { previewAdmin } from '@/lib/contentCollections'
 
 export const Records: CollectionConfig = {
   slug: 'records',
@@ -16,6 +19,7 @@ export const Records: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'recordType', 'timelineDate', '_status', 'updatedAt'],
     group: '内容',
+    ...previewAdmin('records'),
     useAsTitle: 'title',
   },
   fields: [
@@ -105,7 +109,8 @@ export const Records: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [enforceAIServiceDrafts],
-    beforeValidate: [ensureSlug],
+    beforeDelete: [protectReferencedDocument(recordReferences)],
+    beforeValidate: [ensureSlug, ensureSEO],
   },
   versions: {
     drafts: { autosave: true, schedulePublish: true },

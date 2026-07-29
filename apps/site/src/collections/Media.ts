@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { admins, editors } from '@/access/roles'
+import { mediaReferences, protectReferencedDocument } from '@/hooks/protectReferencedDocument'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -28,6 +29,9 @@ export const Media: CollectionConfig = {
       label: '说明',
     },
   ],
+  hooks: {
+    beforeDelete: [protectReferencedDocument(mediaReferences)],
+  },
   upload: {
     adminThumbnail: 'thumbnail',
     imageSizes: [

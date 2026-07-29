@@ -34,6 +34,13 @@
 - `apps/site/src/hooks/`
 - `apps/site/src/components/admin/AdminBrand.tsx`
 - `apps/site/src/components/admin/AdminDashboardOverview.tsx`
+- `apps/site/src/components/PreviewDocument.tsx`
+- `apps/site/src/app/(frontend)/cms-preview/`
+- `apps/site/src/lib/contentCollections.ts`
+- `apps/site/src/hooks/ensureSEO.ts`
+- `apps/site/src/hooks/protectReferencedDocument.ts`
+- `apps/site/src/hooks/reserveSlug.ts`
+- `apps/site/src/hooks/validateRedirect.ts`
 - `apps/site/src/app/(payload)/custom.scss`
 
 ## Community-facing value delivered
@@ -52,6 +59,9 @@
 - 从独立空数据库顺序执行 M0 + M1 migrations，55 张表创建成功，避免把开发模式 schema push 当成迁移验证。
 - 修复 Admin 主题变量污染：深色 elevation 不再覆盖 light theme，首用户页不再出现黑色加载幕和黑底黑字。
 - 后台默认切换为简体中文，并增加 IGNAI 品牌标识、内容运营总览、四类核心内容实时统计和发布流程提示。
+- 完成 M1 数据完整性阶段门：Pages 保留系统路由，重定向路径阻止非法地址和自环，被引用的 Member/Event/Record/Media 删除时返回明确 409。
+- Members、Events、Records、Posts、Pages 共用生成类型、Local API 查询层与认证预览工作台；五类后台编辑器均提供 Preview / Live Preview。
+- Event 补齐统一 SEO 字段，SEO 标题和描述可由内容自动补全，并通过第三条 PostgreSQL migration 管理。
 
 ## Upstreamable pieces identified
 
@@ -63,18 +73,17 @@
 
 ## Remaining work
 
-1. 完成 M1：补齐 Members、Records、Posts、Pages、Join Submissions、Redirects 与跨集合关系。
-2. 完成 M2：构建 Notion 数据、正文、关系和媒体的幂等迁移工具及校验报告。
-3. 完成 M3/M4：按完整路由迁移、staging 验收、生产切换与旧站退出。
-4. 配置生产邮件适配器、对象存储和正式密钥；当前本地邮件只输出到控制台。
-5. 基础路由稳定后，以 About 为第一个 Hubtown 级交互原型，不提前重做整站。
+1. 完成 M2：构建 Notion 数据、正文、关系和媒体的幂等迁移工具及校验报告。
+2. 完成 M3/M4：按完整路由迁移、staging 验收、生产切换与旧站退出。
+3. 配置生产邮件适配器、对象存储和正式密钥；当前本地邮件只输出到控制台。
+4. 基础路由稳定后，以 About 为第一个 Hubtown 级交互原型，不提前重做整站。
 
 ## Verification evidence
 
 - `pnpm typecheck`：通过。
 - `pnpm lint`：通过。
-- `pnpm test`：4 个测试文件、11 个测试通过。
-- `payload migrate:status`：`20260729_131637` 已执行，batch 1。
+- `pnpm test`：9 个测试文件、24 个测试通过。
+- `payload migrate:status`：3 条 migration 全部已执行；独立空数据库重放建立 55 张表，Event 4 个 SEO 列完整存在。
 - `/api/health`：Payload 与 PostgreSQL 均返回 `ok`。
 - 未认证访问 Event 草稿：API 返回 0 条，公开页面返回 404。
 - 认证预览草稿：预览入口返回 307，草稿页面返回 200。
@@ -82,3 +91,6 @@
 - 浏览器验证：后台 Dashboard、Event Lexical 编辑器和左右分栏 Live Preview 均正常，无应用级控制台错误。
 - M1 关系验证：Event 通过 relationship 展开关联 Member；AI Service Account 请求发布 Post 时被保存为 draft，公开查询返回 0 条。
 - Admin 可视验证：`/admin` 正确进入首用户页；light/dark 均可读；390px 下 `scrollWidth === viewport`；创建草稿后 Dashboard 动态显示 1 个活动草稿，Event 编辑器无控制台错误。
+- M1 API 验证：SEO 自动补全成功；保留 Page slug 返回 400；重定向自环返回 400；Member 被 Record/Post 引用时删除返回 409。
+- M1 预览验证：Members / Events / Records / Posts / Pages 五类草稿均经认证入口返回 200；Page 后台的 Preview 链接指向 `/cms-preview/pages/:slug`。
+- M1 浏览器验证：Page 编辑器、桌面预览和 390px 移动预览均无控制台错误，移动端 `scrollWidth === viewport`。

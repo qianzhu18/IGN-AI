@@ -40,7 +40,7 @@ pnpm build
 
 The health endpoint is `/api/health`. It returns HTTP 200 only after Payload can connect to PostgreSQL.
 
-The verified M0 content loop is:
+The verified M0/M1 content loop is:
 
 1. Create or sign in as an administrator at `/admin`.
 2. Create an Event as a draft.
@@ -48,10 +48,12 @@ The verified M0 content loop is:
 4. Publish the Event.
 5. Confirm it appears at `/events/:slug`.
 
+Members, Events, Records, Posts, and Pages now share one generated Payload type contract and one authenticated preview workspace at `/cms-preview/:collection/:slug`. Their Admin editors expose both Preview and Live Preview. Root Pages cannot claim system routes such as `events`, `members`, or `cms-preview`, and referenced Members, Events, Records, or Media must be detached before deletion.
+
 ## Safety boundaries
 
 - Production database schema push is disabled.
 - Public queries explicitly enforce Payload access control.
-- MCP is read-only for Events and Site Settings.
+- MCP is read-only for Members, Events, Records, Posts, Pages, and Site Settings.
 - R2 is optional locally and enabled only when every required credential is present.
 - This app does not write back to Notion and does not replace the current production deployment.

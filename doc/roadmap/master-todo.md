@@ -19,7 +19,7 @@
 - [x] **M1** 补齐 Members / Records / Posts / Pages / Join Submissions / Redirects
 - [x] **M1** 用 Payload relationship 取代 slug / `ext` JSON 关系模拟
 - [x] **M1** 建立 Pages Blocks 注册表、统一 SEO/source 字段和 Admin / Editor / AI Service Account 角色
-- [ ] **M1** 完成 slug reservation、删除保护、全实体预览与前台同类型读取阶段门
+- [x] **M1** 完成 slug reservation、删除保护、全实体预览与前台同类型读取阶段门
 - [ ] **M2** 建立 Notion -> Payload 幂等导入器和字段/数量/关系校验报告
 - [ ] **M2** 将本地、Notion 临时媒体和现有 R2 资产统一到对象存储
 - [ ] **M3** 按 Events -> Records -> Members -> 首页/About -> Join -> Posts 顺序迁移路由

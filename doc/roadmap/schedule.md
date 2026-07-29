@@ -14,6 +14,8 @@
 4. M3：按完整路由切换前台，不制造半迁移页面。
 5. M4：staging 验收后切换生产，NotionNext 转为限时只读回滚点。
 
+当前进度：M0/M1 已通过阶段门；当前执行焦点进入 M2 幂等数据与媒体迁移。
+
 Hubtown 级场景交互进入迁移后的设计迭代池，不占用 M0-M2 的关键路径。详细阶段门见 `docs/architecture/payload-unified-migration-plan.zh-CN.md`。
 
 ## 1. 排期方法

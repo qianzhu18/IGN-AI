@@ -86,11 +86,12 @@ Hubtown 级交互前端已记录为后续迭代参考，必须等待统一内容
 
 按优先级：
 
-1. 让 `apps/site` 的 Payload 垂直切片完成首次 build、后台编辑、草稿和预览闭环
-2. 固定 Members / Events / Records / Posts / Pages / Join 的 Payload 关系模型
-3. 建立 Notion -> Payload 的幂等导入与校验工具
-4. 按路由迁移新前台并完成生产切换
-5. 统一架构稳定后，再启动 Hubtown DNA 的交互场景原型
+1. 建立 Notion -> Payload 的幂等导入与校验工具
+2. 完成正文、关系与媒体迁移，并输出人工复核报告
+3. 按路由迁移新前台并完成生产切换
+4. 统一架构稳定后，再启动 Hubtown DNA 的交互场景原型
+
+M0/M1 已于 2026-07-29 通过：后台、草稿/版本、五类实体预览、统一类型读取、slug reservation、删除保护和空库 migration 重放均已验证。
 
 ## 6. 执行原则
 

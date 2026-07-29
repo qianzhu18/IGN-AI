@@ -222,10 +222,12 @@ Page   -> layout Blocks
 - [x] 把导航、SEO、首页基础内容收进 Site Settings / Pages。
 - [x] 生成并提交 `payload-types.ts`，前端禁止手写重复实体类型。
 - [x] 建立 `blocks/` 注册表，内容 block 与交互 scene block 分离。
-- [ ] 建立 SEO、redirect、slug reservation 和删除保护 hooks。
+- [x] 建立 SEO、redirect、slug reservation 和删除保护 hooks。
 - [x] 建立 Editor/Admin/AI Service Account 三类最小权限；AI Service Account 写入被强制保存为草稿。
 
 阶段门：管理员能在后台完成草稿、预览、发布、定时发布和关系编辑；前台能使用同一类型读取所有核心实体。
+
+M1 阶段门已于 2026-07-29 通过：五类实体共用 `Config['collections']` 生成类型与 Local API 查询层，后台 Preview / Live Preview 指向认证的 `/cms-preview/:collection/:slug` 工作台；真实 API 验证保留 slug 返回 400、被引用实体删除返回 409，五类草稿预览均返回 200。
 
 ### M2：幂等数据与媒体迁移
 

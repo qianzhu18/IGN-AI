@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { admins, editors } from '@/access/roles'
+import { validateRedirect } from '@/hooks/validateRedirect'
 
 export const Redirects: CollectionConfig = {
   slug: 'redirects',
@@ -47,5 +48,8 @@ export const Redirects: CollectionConfig = {
     },
     { name: 'active', type: 'checkbox', defaultValue: true, index: true, label: '启用' },
   ],
+  hooks: {
+    beforeValidate: [validateRedirect],
+  },
   timestamps: true,
 }

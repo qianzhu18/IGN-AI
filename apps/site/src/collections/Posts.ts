@@ -3,7 +3,9 @@ import type { CollectionConfig } from 'payload'
 import { admins, contentContributors, publishedOrAuthenticated } from '@/access/roles'
 import { contentEditor, seoFields, slugField, sourceFields } from '@/fields/shared'
 import { enforceAIServiceDrafts } from '@/hooks/enforceAIServiceDrafts'
+import { ensureSEO } from '@/hooks/ensureSEO'
 import { ensureSlug } from '@/hooks/ensureSlug'
+import { previewAdmin } from '@/lib/contentCollections'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -16,6 +18,7 @@ export const Posts: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'publishedAt', '_status', 'updatedAt'],
     group: '内容',
+    ...previewAdmin('posts'),
     useAsTitle: 'title',
   },
   fields: [
@@ -72,7 +75,7 @@ export const Posts: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [enforceAIServiceDrafts],
-    beforeValidate: [ensureSlug],
+    beforeValidate: [ensureSlug, ensureSEO],
   },
   versions: {
     drafts: { autosave: true, schedulePublish: true },

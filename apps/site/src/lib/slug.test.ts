@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { slugify } from './slug'
+import { RESERVED_ROOT_SLUGS, slugify, validateReservedSlug } from './slug'
 
 describe('slugify', () => {
   it('normalizes Latin titles into stable URL segments', () => {
@@ -13,5 +13,15 @@ describe('slugify', () => {
 
   it('removes leading and trailing separators', () => {
     expect(slugify('--- Field Notes ---')).toBe('field-notes')
+  })
+
+  it('rejects root slugs owned by application routes', () => {
+    expect(validateReservedSlug('Events', RESERVED_ROOT_SLUGS)).toContain('系统保留路径')
+    expect(validateReservedSlug('_preview', RESERVED_ROOT_SLUGS)).toContain('系统保留路径')
+  })
+
+  it('allows editorial page slugs outside the reserved set', () => {
+    expect(validateReservedSlug('about', RESERVED_ROOT_SLUGS)).toBe(true)
+    expect(validateReservedSlug('join', RESERVED_ROOT_SLUGS)).toBe(true)
   })
 })

@@ -4,7 +4,11 @@ import { admins, contentContributors, publishedOrAuthenticated } from '@/access/
 import { CallToActionBlock, CommunityCollectionBlock, RichTextBlock } from '@/blocks'
 import { seoFields, slugField, sourceFields } from '@/fields/shared'
 import { enforceAIServiceDrafts } from '@/hooks/enforceAIServiceDrafts'
+import { ensureSEO } from '@/hooks/ensureSEO'
 import { ensureSlug } from '@/hooks/ensureSlug'
+import { reserveSlugs } from '@/hooks/reserveSlug'
+import { previewAdmin } from '@/lib/contentCollections'
+import { RESERVED_ROOT_SLUGS } from '@/lib/slug'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -17,6 +21,7 @@ export const Pages: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
     group: '站点',
+    ...previewAdmin('pages'),
     useAsTitle: 'title',
   },
   fields: [
@@ -35,7 +40,7 @@ export const Pages: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [enforceAIServiceDrafts],
-    beforeValidate: [ensureSlug],
+    beforeValidate: [ensureSlug, reserveSlugs(RESERVED_ROOT_SLUGS), ensureSEO],
   },
   versions: {
     drafts: { autosave: true, schedulePublish: true },

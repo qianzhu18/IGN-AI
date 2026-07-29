@@ -33,7 +33,7 @@ export default buildConfig({
         { label: 'Tablet', name: 'tablet', width: 768, height: 1024 },
         { label: 'Desktop', name: 'desktop', width: 1440, height: 960 },
       ],
-      collections: ['events'],
+      collections: ['events', 'members', 'pages', 'posts', 'records'],
     },
     meta: {
       titleSuffix: ' — IGNAI 内容后台',

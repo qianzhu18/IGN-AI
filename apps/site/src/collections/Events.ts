@@ -1,25 +1,12 @@
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload'
 
 import { admins, contentContributors, publishedOrAuthenticated } from '@/access/roles'
+import { contentEditor, seoFields, slugField, sourceFields } from '@/fields/shared'
 import { enforceAIServiceDrafts } from '@/hooks/enforceAIServiceDrafts'
-import { slugify } from '@/lib/slug'
-
-const ensureSlug: CollectionBeforeValidateHook = ({ data, originalDoc }) => {
-  if (!data) return data
-
-  const explicitSlug = typeof data.slug === 'string' ? data.slug : ''
-  const title = typeof data.title === 'string' ? data.title : ''
-  data.slug = slugify(explicitSlug || originalDoc?.slug || title)
-  return data
-}
-
-const serverURL = () => process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+import { ensureSEO } from '@/hooks/ensureSEO'
+import { ensureSlug } from '@/hooks/ensureSlug'
+import { eventReferences, protectReferencedDocument } from '@/hooks/protectReferencedDocument'
+import { previewAdmin } from '@/lib/contentCollections'
 
 export const Events: CollectionConfig = {
   slug: 'events',
@@ -33,17 +20,7 @@ export const Events: CollectionConfig = {
     defaultColumns: ['title', 'startAt', '_status', 'updatedAt'],
     description: '从草稿、预览到发布，管理 IGNAI 的真实活动。',
     group: '社区',
-    livePreview: {
-      url: ({ data }) => `${serverURL()}/events/${data?.slug || 'preview'}`,
-    },
-    preview: (data) => {
-      const path = `/events/${data?.slug || 'preview'}`
-      const params = new URLSearchParams({
-        path,
-        previewSecret: process.env.PREVIEW_SECRET || '',
-      })
-      return `${serverURL()}/next/preview?${params.toString()}`
-    },
+    ...previewAdmin('events'),
     useAsTitle: 'title',
   },
   defaultPopulate: {
@@ -83,14 +60,7 @@ export const Events: CollectionConfig = {
             {
               name: 'content',
               type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => [
-                  ...rootFeatures,
-                  HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-                  FixedToolbarFeature(),
-                  InlineToolbarFeature(),
-                ],
-              }),
+              editor: contentEditor,
               label: '活动详情',
               required: true,
             },
@@ -159,43 +129,24 @@ export const Events: CollectionConfig = {
         {
           label: '发布与迁移',
           fields: [
-            {
-              name: 'slug',
-              type: 'text',
-              admin: {
-                description: '用于 /events/:slug。为空时由活动名称生成。',
-              },
-              index: true,
-              label: 'URL Slug',
-              required: true,
-              unique: true,
-            },
+            slugField(),
             {
               name: 'featured',
               type: 'checkbox',
               defaultValue: false,
               label: '首页重点展示',
             },
-            {
-              name: 'source',
-              type: 'group',
-              admin: {
-                description: '只读迁移追踪信息；新内容可留空。',
-              },
-              fields: [
-                { name: 'notionPageId', type: 'text', label: 'Notion Page ID', unique: true },
-                { name: 'lastSyncedAt', type: 'date', label: '上次导入时间' },
-              ],
-              label: '迁移来源',
-            },
+            seoFields(),
+            sourceFields(),
           ],
         },
       ],
     },
   ],
   hooks: {
-    beforeValidate: [ensureSlug],
     beforeChange: [enforceAIServiceDrafts],
+    beforeDelete: [protectReferencedDocument(eventReferences)],
+    beforeValidate: [ensureSlug, ensureSEO],
   },
   versions: {
     drafts: {

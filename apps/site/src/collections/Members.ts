@@ -3,7 +3,10 @@ import type { CollectionConfig } from 'payload'
 import { admins, contentContributors, publishedOrAuthenticated } from '@/access/roles'
 import { contentEditor, seoFields, slugField, sourceFields } from '@/fields/shared'
 import { enforceAIServiceDrafts } from '@/hooks/enforceAIServiceDrafts'
+import { ensureSEO } from '@/hooks/ensureSEO'
 import { ensureSlug } from '@/hooks/ensureSlug'
+import { memberReferences, protectReferencedDocument } from '@/hooks/protectReferencedDocument'
+import { previewAdmin } from '@/lib/contentCollections'
 
 export const Members: CollectionConfig = {
   slug: 'members',
@@ -16,6 +19,7 @@ export const Members: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'role', 'city', '_status', 'updatedAt'],
     group: '社区',
+    ...previewAdmin('members'),
     useAsTitle: 'title',
   },
   fields: [
@@ -60,7 +64,8 @@ export const Members: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [enforceAIServiceDrafts],
-    beforeValidate: [ensureSlug],
+    beforeDelete: [protectReferencedDocument(memberReferences)],
+    beforeValidate: [ensureSlug, ensureSEO],
   },
   versions: {
     drafts: { autosave: true, schedulePublish: true },
