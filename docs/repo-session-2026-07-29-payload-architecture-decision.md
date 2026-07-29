@@ -49,6 +49,9 @@
 - `apps/site/vitest.config.ts`
 - `apps/site/.gitignore`
 - `docs/architecture/domestic-deployment-and-openship-evaluation.zh-CN.md`
+- `docs/README.zh-CN.md`
+- `docs/architecture/why-payload-migration.zh-CN.md`
+- `docs/architecture/branch-and-legacy-code-policy.zh-CN.md`
 
 ## Community-facing value delivered
 
@@ -72,6 +75,8 @@
 - 建立默认只读的 Notion -> Payload 迁移 CLI，统一输出 source ID、target ID、checksum、action、关系、正文和媒体候选校验结果；只有显式 `--apply --confirm=NOTION_TO_PAYLOAD` 才允许写入。
 - 为所有内容集合与 Media 增加 Notion source tracking，临时库真实写入与三次幂等重放通过；Notion/S3 临时签名参数不再造成 checksum 漂移。
 - Payload S3 存储层现在支持 provider-specific `region` 和 virtual-host/path-style 配置，可在不改变内容模型的前提下兼容 R2、腾讯 COS 与阿里 OSS。
+- 建立文档地图，明确 roadmap、架构、部署、设计与历史 session 的权威层级；不通过大规模移动或删除历史资料来制造“整洁”。
+- 固化迁移技术理由和分支政策：旧 NotionNext 根目录在 M4 前作为可运行回退冻结，新功能只进入 `apps/site/`，避免两套架构继续混写。
 
 ## Upstreamable pieces identified
 
@@ -87,13 +92,13 @@
 2. 完成 M3/M4：按完整路由迁移、staging 验收、生产切换与旧站退出。
 3. 配置生产邮件适配器、对象存储和正式密钥；当前本地邮件只输出到控制台。
 4. 为官网建立专用公开媒体 bucket 与自有媒体域名；已验证的杭州 OSS bucket 当前匿名读取为 403，不能直接用于官网前台。
-4. 基础路由稳定后，以 About 为第一个 Hubtown 级交互原型，不提前重做整站。
+5. 基础路由稳定后，以 About 为第一个 Hubtown 级交互原型，不提前重做整站。
 
 ## Verification evidence
 
 - `pnpm typecheck`：通过。
 - `pnpm lint`：通过。
-- `pnpm test`：14 个测试文件、35 个测试通过。
+- `pnpm test`：14 个测试文件、37 个测试通过。
 - `payload migrate:status`：4 条 migration 全部已执行；独立空数据库重放建立 55 张表，Event SEO 与所有集合/Media source tracking 列完整存在。
 - `/api/health`：Payload 与 PostgreSQL 均返回 `ok`。
 - 未认证访问 Event 草稿：API 返回 0 条，公开页面返回 404。

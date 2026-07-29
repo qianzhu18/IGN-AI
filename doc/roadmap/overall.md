@@ -115,7 +115,10 @@ M0/M1 已于 2026-07-29 通过：后台、草稿/版本、五类实体预览、�
 - `doc/roadmap/master-todo.md`
 
 ### 架构与设计决策
+- `docs/README.zh-CN.md`
 - `docs/architecture/payload-unified-migration-plan.zh-CN.md`
+- `docs/architecture/why-payload-migration.zh-CN.md`
+- `docs/architecture/branch-and-legacy-code-policy.zh-CN.md`
 - `docs/architecture/cms-options-research-2026-07-29.zh-CN.md`
 - `docs/design/hubtown-interaction-reference.zh-CN.md`
 
