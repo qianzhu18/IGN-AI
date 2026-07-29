@@ -14,6 +14,7 @@
 - [x] 完成 Hubtown About 技术信号、IGNAI 品牌转译和场景组件底座说明
 - [x] **M0** 修复 `apps/site` 当前不完整状态并完成首次 lint / typecheck / test / build
 - [x] **M0** 验证 Payload Admin、Event 草稿、版本与 Live Preview 闭环
+- [x] **M0** 修复 Admin 首用户页暗色遮罩与低对比度，完成中文化、IGNAI 运营总览和移动端可视验证
 - [x] **M0** 建立可提交、可回滚的 PostgreSQL migration
 - [x] **M1** 补齐 Members / Records / Posts / Pages / Join Submissions / Redirects
 - [x] **M1** 用 Payload relationship 取代 slug / `ext` JSON 关系模拟

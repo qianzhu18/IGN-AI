@@ -32,6 +32,9 @@
 - `apps/site/src/collections/Redirects.ts`
 - `apps/site/src/fields/shared.ts`
 - `apps/site/src/hooks/`
+- `apps/site/src/components/admin/AdminBrand.tsx`
+- `apps/site/src/components/admin/AdminDashboardOverview.tsx`
+- `apps/site/src/app/(payload)/custom.scss`
 
 ## Community-facing value delivered
 
@@ -47,6 +50,8 @@
 - 完成 M1 六个集合、Pages Blocks、SEO/source 共享字段与 Member/Event/Record/Post 原生关系，后台已显示全部运营入口。
 - 增加 AI Service Account 角色并强制其内容写入为草稿；匿名 Join 申请不能伪造审核状态、内部备注或幂等键。
 - 从独立空数据库顺序执行 M0 + M1 migrations，55 张表创建成功，避免把开发模式 schema push 当成迁移验证。
+- 修复 Admin 主题变量污染：深色 elevation 不再覆盖 light theme，首用户页不再出现黑色加载幕和黑底黑字。
+- 后台默认切换为简体中文，并增加 IGNAI 品牌标识、内容运营总览、四类核心内容实时统计和发布流程提示。
 
 ## Upstreamable pieces identified
 
@@ -76,3 +81,4 @@
 - 发布 Event 后：公开 API 返回 1 条，公开页面返回 200。
 - 浏览器验证：后台 Dashboard、Event Lexical 编辑器和左右分栏 Live Preview 均正常，无应用级控制台错误。
 - M1 关系验证：Event 通过 relationship 展开关联 Member；AI Service Account 请求发布 Post 时被保存为 draft，公开查询返回 0 条。
+- Admin 可视验证：`/admin` 正确进入首用户页；light/dark 均可读；390px 下 `scrollWidth === viewport`；创建草稿后 Dashboard 动态显示 1 个活动草稿，Event 编辑器无控制台错误。

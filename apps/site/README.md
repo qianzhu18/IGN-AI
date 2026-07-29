@@ -20,6 +20,8 @@ pnpm dev
 
 Open `http://localhost:3000/admin` and create the first administrator. The public event surface is available at `/events` and `/events/:slug`.
 
+The Admin panel defaults to Simplified Chinese and includes an IGNAI operations overview with live totals for Members, Events, Records, and Posts. Both light and dark themes are supported.
+
 If port 3000 is occupied, start on another port and keep the public server URL aligned:
 
 ```bash

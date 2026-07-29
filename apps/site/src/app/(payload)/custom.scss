@@ -1,9 +1,242 @@
 :root {
-  --theme-elevation-800: #151512;
-  --theme-elevation-900: #0f100e;
-  --theme-elevation-1000: #0a0b09;
+  --ignai-admin-accent: #f47b20;
+  --ignai-admin-accent-strong: #d95f0e;
+  --ignai-admin-ink: #151512;
+  --ignai-admin-surface: #ffffff;
+  --ignai-admin-canvas: #f5f5f1;
+  --ignai-admin-border: #d9d9d2;
+}
+
+html[data-theme='dark'] {
+  --ignai-admin-ink: #f7f7f3;
+  --ignai-admin-surface: #171815;
+  --ignai-admin-canvas: #0f100e;
+  --ignai-admin-border: #3b3c36;
+  --theme-elevation-800: #d9d9d2;
+  --theme-elevation-900: #f0f0eb;
+  --theme-elevation-1000: #ffffff;
+}
+
+.template-minimal {
+  background:
+    linear-gradient(90deg, var(--ignai-admin-accent) 0 88px, transparent 88px) top / 100% 4px no-repeat,
+    var(--ignai-admin-canvas);
+  color: var(--ignai-admin-ink);
+}
+
+.template-minimal__wrap {
+  background: var(--ignai-admin-surface);
+  border: 1px solid var(--ignai-admin-border);
+  border-radius: 4px;
+  box-shadow: 0 18px 60px rgb(0 0 0 / 8%);
+  padding: 40px;
+}
+
+.template-minimal h1 {
+  color: var(--ignai-admin-ink);
+  font-size: 32px;
+  letter-spacing: 0;
+  line-height: 1.15;
+}
+
+.create-first-user::before {
+  color: var(--ignai-admin-ink);
+  content: '◆  IGNAI  /  内容后台';
+  display: block;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 24px;
+}
+
+.template-minimal .btn--style-primary {
+  background: var(--ignai-admin-accent);
+  border-color: var(--ignai-admin-accent);
+  color: #151512;
+  font-weight: 700;
+}
+
+.template-minimal .btn--style-primary:hover,
+.template-minimal .btn--style-primary:focus-visible {
+  background: var(--ignai-admin-accent-strong);
+  border-color: var(--ignai-admin-accent-strong);
+  color: #ffffff;
+}
+
+.ignai-admin-brand {
+  align-items: center;
+  color: var(--ignai-admin-ink);
+  display: inline-flex;
+  letter-spacing: 0;
+}
+
+.ignai-admin-brand--logo {
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.ignai-admin-brand__mark {
+  background: var(--ignai-admin-accent);
+  display: inline-block;
+  height: 12px;
+  rotate: 45deg;
+  width: 12px;
+}
+
+.ignai-admin-brand__name {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.ignai-admin-brand__context {
+  border-left: 1px solid var(--ignai-admin-border);
+  color: var(--theme-elevation-600);
+  font-size: 13px;
+  margin-left: 2px;
+  padding-left: 12px;
+}
+
+.ignai-admin-brand--icon {
+  height: 24px;
+  justify-content: center;
+  width: 24px;
 }
 
 .template-default__wrap {
   --color-success-500: #f47b20;
+}
+
+.ignai-admin-overview {
+  background: var(--ignai-admin-ink);
+  border-top: 4px solid var(--ignai-admin-accent);
+  color: var(--ignai-admin-canvas);
+  margin: 24px 0 40px;
+  padding: 32px;
+}
+
+.ignai-admin-overview__heading {
+  align-items: end;
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.ignai-admin-overview__heading h1 {
+  color: inherit;
+  font-size: 32px;
+  letter-spacing: 0;
+  line-height: 1.1;
+  margin: 4px 0 0;
+}
+
+.ignai-admin-overview__heading > p {
+  color: #b8b8af;
+  margin: 0;
+  max-width: 420px;
+}
+
+.ignai-admin-overview__eyebrow {
+  color: var(--ignai-admin-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0;
+}
+
+.ignai-admin-overview__metrics {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ignai-admin-metric {
+  background: #242520;
+  color: #f7f7f3;
+  display: flex;
+  flex-direction: column;
+  min-height: 148px;
+  padding: 20px;
+  text-decoration: none;
+  transition: background-color 120ms ease;
+}
+
+.ignai-admin-metric:hover,
+.ignai-admin-metric:focus-visible {
+  background: #30312b;
+  outline: 2px solid var(--ignai-admin-accent);
+  outline-offset: -2px;
+}
+
+.ignai-admin-metric__label {
+  color: #b8b8af;
+  font-size: 13px;
+}
+
+.ignai-admin-metric strong {
+  color: var(--ignai-admin-accent);
+  font-size: 44px;
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 16px 0 10px;
+}
+
+.ignai-admin-metric > span:last-child {
+  color: #b8b8af;
+  font-size: 12px;
+}
+
+.ignai-admin-workflow {
+  border-top: 1px solid #3b3c36;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 24px;
+  padding-top: 20px;
+}
+
+.ignai-admin-workflow span {
+  color: #d9d9d2;
+  font-size: 13px;
+}
+
+.ignai-admin-workflow b {
+  color: var(--ignai-admin-accent);
+  margin-right: 8px;
+}
+
+@media (max-width: 600px) {
+  .template-minimal__wrap {
+    border-left: 0;
+    border-radius: 0;
+    border-right: 0;
+    padding: 28px 22px;
+  }
+}
+
+@media (max-width: 900px) {
+  .ignai-admin-overview {
+    padding: 24px;
+  }
+
+  .ignai-admin-overview__heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .ignai-admin-overview__metrics,
+  .ignai-admin-workflow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .ignai-admin-overview {
+    padding: 22px 20px;
+  }
+
+  .ignai-admin-overview__metrics,
+  .ignai-admin-workflow {
+    grid-template-columns: 1fr;
+  }
 }

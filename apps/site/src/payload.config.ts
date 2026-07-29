@@ -2,6 +2,7 @@ import { postgresAdapter } from '@payloadcms/db-postgres'
 import { mcpPlugin } from '@payloadcms/plugin-mcp'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { zh } from '@payloadcms/translations/languages/zh'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { buildConfig } from 'payload'
@@ -37,6 +38,13 @@ export default buildConfig({
     meta: {
       titleSuffix: ' — IGNAI 内容后台',
     },
+    components: {
+      beforeDashboard: ['@/components/admin/AdminDashboardOverview#AdminDashboardOverview'],
+      graphics: {
+        Icon: '@/components/admin/AdminBrand#AdminIcon',
+        Logo: '@/components/admin/AdminBrand#AdminLogo',
+      },
+    },
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
@@ -63,6 +71,10 @@ export default buildConfig({
   }),
   editor: lexicalEditor(),
   globals: [SiteSettings],
+  i18n: {
+    fallbackLanguage: 'zh',
+    supportedLanguages: { zh },
+  },
   plugins: [
     s3Storage({
       bucket: environment.r2.bucket || 'disabled',
