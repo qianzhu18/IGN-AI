@@ -91,7 +91,7 @@ Hubtown 级交互前端已记录为后续迭代参考，必须等待统一内容
 3. 按路由迁移新前台并完成生产切换
 4. 统一架构稳定后，再启动 Hubtown DNA 的交互场景原型
 
-M0/M1 已于 2026-07-29 通过：后台、草稿/版本、五类实体预览、统一类型读取、slug reservation、删除保护和空库 migration 重放均已验证。
+M0/M1 已于 2026-07-29 通过：后台、草稿/版本、五类实体预览、统一类型读取、slug reservation、删除保护和空库 migration 重放均已验证。M2 导入器基础已完成：Notion 只读抽取、checksum、manifest、validation report、默认 dry-run 和临时库幂等重放已验证；媒体对象存储、重复成员合并和文章作者映射仍在 M2 剩余工作中。
 
 ## 6. 执行原则
 

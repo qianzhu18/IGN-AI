@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { admins, editors } from '@/access/roles'
+import { sourceFields } from '@/fields/shared'
 import { mediaReferences, protectReferencedDocument } from '@/hooks/protectReferencedDocument'
 
 export const Media: CollectionConfig = {
@@ -28,6 +29,7 @@ export const Media: CollectionConfig = {
       type: 'textarea',
       label: '说明',
     },
+    sourceFields(),
   ],
   hooks: {
     beforeDelete: [protectReferencedDocument(mediaReferences)],

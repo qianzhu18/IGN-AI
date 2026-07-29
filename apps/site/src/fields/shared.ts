@@ -23,6 +23,8 @@ export const sourceFields = (): Field => ({
   },
   fields: [
     { name: 'notionPageId', type: 'text', label: 'Notion Page ID', unique: true },
+    { name: 'notionLastEditedAt', type: 'date', label: 'Notion 最后修改时间' },
+    { name: 'checksum', type: 'text', label: '导入校验值' },
     { name: 'lastSyncedAt', type: 'date', label: '上次导入时间' },
   ],
   label: '迁移来源',

@@ -4,3 +4,4 @@ node_modules/
 media/
 test-results/
 coverage/
+migration-output/

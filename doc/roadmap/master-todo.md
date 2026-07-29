@@ -21,6 +21,8 @@
 - [x] **M1** 建立 Pages Blocks 注册表、统一 SEO/source 字段和 Admin / Editor / AI Service Account 角色
 - [x] **M1** 完成 slug reservation、删除保护、全实体预览与前台同类型读取阶段门
 - [ ] **M2** 建立 Notion -> Payload 幂等导入器和字段/数量/关系校验报告
+  - [x] 2026-07-29：只读 Notion 抽取、字段映射、checksum、manifest、validation report、默认 dry-run 与显式确认 `--apply` 已落地；临时库验证 Config/Event/Record/Page 第三遍 dry-run 全部 `unchanged`。
+  - [ ] 处理 11 条源数据阻断项：重复 Member slug、重复模板 Post slug、缺标题 Post、缺少可解析作者映射的 Post。
 - [ ] **M2** 将本地、Notion 临时媒体和现有 R2 资产统一到对象存储
 - [ ] **M3** 按 Events -> Records -> Members -> 首页/About -> Join -> Posts 顺序迁移路由
 - [ ] **M3** 基础路由稳定后建立 StoryRenderer / SceneRegistry / SceneShell / ScrollDirector

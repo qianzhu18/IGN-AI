@@ -42,6 +42,12 @@
 - `apps/site/src/hooks/reserveSlug.ts`
 - `apps/site/src/hooks/validateRedirect.ts`
 - `apps/site/src/app/(payload)/custom.scss`
+- `apps/site/scripts/migrate-notion.ts`
+- `apps/site/src/lib/migrations/notion/`
+- `apps/site/src/migrations/20260729_152845_m2_source_tracking.ts`
+- `apps/site/src/migrations/20260729_152845_m2_source_tracking.json`
+- `apps/site/vitest.config.ts`
+- `apps/site/.gitignore`
 
 ## Community-facing value delivered
 
@@ -62,6 +68,8 @@
 - 完成 M1 数据完整性阶段门：Pages 保留系统路由，重定向路径阻止非法地址和自环，被引用的 Member/Event/Record/Media 删除时返回明确 409。
 - Members、Events、Records、Posts、Pages 共用生成类型、Local API 查询层与认证预览工作台；五类后台编辑器均提供 Preview / Live Preview。
 - Event 补齐统一 SEO 字段，SEO 标题和描述可由内容自动补全，并通过第三条 PostgreSQL migration 管理。
+- 建立默认只读的 Notion -> Payload 迁移 CLI，统一输出 source ID、target ID、checksum、action、关系、正文和媒体候选校验结果；只有显式 `--apply --confirm=NOTION_TO_PAYLOAD` 才允许写入。
+- 为所有内容集合与 Media 增加 Notion source tracking，临时库真实写入与三次幂等重放通过；Notion/S3 临时签名参数不再造成 checksum 漂移。
 
 ## Upstreamable pieces identified
 
@@ -73,7 +81,7 @@
 
 ## Remaining work
 
-1. 完成 M2：构建 Notion 数据、正文、关系和媒体的幂等迁移工具及校验报告。
+1. 完成 M2 剩余项：处理 11 条源数据阻断项，将 32 个媒体候选及本地/R2 资产统一上传对象存储，并完成正式全量导入前抽样复核。
 2. 完成 M3/M4：按完整路由迁移、staging 验收、生产切换与旧站退出。
 3. 配置生产邮件适配器、对象存储和正式密钥；当前本地邮件只输出到控制台。
 4. 基础路由稳定后，以 About 为第一个 Hubtown 级交互原型，不提前重做整站。
@@ -82,8 +90,8 @@
 
 - `pnpm typecheck`：通过。
 - `pnpm lint`：通过。
-- `pnpm test`：9 个测试文件、24 个测试通过。
-- `payload migrate:status`：3 条 migration 全部已执行；独立空数据库重放建立 55 张表，Event 4 个 SEO 列完整存在。
+- `pnpm test`：14 个测试文件、35 个测试通过。
+- `payload migrate:status`：4 条 migration 全部已执行；独立空数据库重放建立 55 张表，Event SEO 与所有集合/Media source tracking 列完整存在。
 - `/api/health`：Payload 与 PostgreSQL 均返回 `ok`。
 - 未认证访问 Event 草稿：API 返回 0 条，公开页面返回 404。
 - 认证预览草稿：预览入口返回 307，草稿页面返回 200。
@@ -94,3 +102,7 @@
 - M1 API 验证：SEO 自动补全成功；保留 Page slug 返回 400；重定向自环返回 400；Member 被 Record/Post 引用时删除返回 409。
 - M1 预览验证：Members / Events / Records / Posts / Pages 五类草稿均经认证入口返回 200；Page 后台的 Preview 链接指向 `/cms-preview/pages/:slug`。
 - M1 浏览器验证：Page 编辑器、桌面预览和 390px 移动预览均无控制台错误，移动端 `scrollWidth === viewport`。
+- M2 导入器验证：`pnpm migrate:notion` 默认 dry-run，写出 `manifest.json` 与 `validation-report.json`，有源数据错误时以退出码 2 结束且不会写入正式验证库。
+- M2 全量 dry-run：从 74 个 Notion source pages 中抽取 58 条支持的内容，结果为 40 create、1 update、11 error、32 个 media candidates、13 warnings；错误集中在重复 Member slug、重复模板 Post slug、缺标题 Post 与缺少可解析作者映射的 Post。
+- M2 临时库重放：`ignai_payload_m2_replay` 应用全部 migrations 后，用 `--apply --confirm=NOTION_TO_PAYLOAD --types=Config,Event,Record,Page --skip-blocks` 导入 11 个 Events、20 个 Records、6 个 Pages 并更新 Site Settings；修复 Notion/S3 临时封面 URL checksum 后，第三遍 dry-run 返回 38 条 `unchanged`。
+- M2 安全验证：正式验证库 `members/events/records/posts/pages` 在 dry-run 与临时库验证后均保持 0 条；临时库验证完成后已删除。

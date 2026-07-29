@@ -50,6 +50,26 @@ The verified M0/M1 content loop is:
 
 Members, Events, Records, Posts, and Pages now share one generated Payload type contract and one authenticated preview workspace at `/cms-preview/:collection/:slug`. Their Admin editors expose both Preview and Live Preview. Root Pages cannot claim system routes such as `events`, `members`, or `cms-preview`, and referenced Members, Events, Records, or Media must be detached before deletion.
 
+## Notion migration dry-run
+
+The Notion migration CLI is default-safe: it reads Notion, writes local reports, and does not change Payload unless `--apply` is explicitly confirmed.
+
+```bash
+pnpm migrate:notion
+pnpm migrate:notion -- --types=Config,Event,Record,Page --skip-blocks
+pnpm migrate:notion -- --apply --confirm=NOTION_TO_PAYLOAD --types=Config,Event,Record,Page --skip-blocks
+```
+
+Reports are written to `migration-output/<run-id>/manifest.json` and `migration-output/<run-id>/validation-report.json`. Exit code `0` means the run has no blocking validation errors. Exit code `2` means source data needs manual review, while still writing the reports. Exit code `1` means the CLI itself failed before producing a valid migration result.
+
+The verified M2 foundation behavior is:
+
+1. Full dry-run extracts 58 supported source rows from 74 Notion pages and reports 40 creates, 1 Site Settings update, and 11 blocking source-data errors.
+2. A temporary replay database can apply Config/Event/Record/Page with `--apply --confirm=NOTION_TO_PAYLOAD`, creating 11 Events, 20 Records, 6 Pages, and updating Site Settings.
+3. Re-running the same subset against that replay database returns 38 `unchanged` entries.
+
+Known unresolved source-data blockers remain: two duplicate Member rows for the same slug, six duplicate template Post slugs, and Posts that are missing title or resolvable author mapping. Media candidates are reported but are not yet uploaded into object storage.
+
 ## Safety boundaries
 
 - Production database schema push is disabled.
@@ -57,3 +77,4 @@ Members, Events, Records, Posts, and Pages now share one generated Payload type 
 - MCP is read-only for Members, Events, Records, Posts, Pages, and Site Settings.
 - R2 is optional locally and enabled only when every required credential is present.
 - This app does not write back to Notion and does not replace the current production deployment.
+- Notion migration output is ignored by git; inspect reports locally before applying to any non-temporary database.

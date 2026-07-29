@@ -199,6 +199,15 @@ export interface Media {
   id: number;
   alt: string;
   caption?: string | null;
+  /**
+   * 迁移追踪信息；新内容可留空。
+   */
+  source?: {
+    notionPageId?: string | null;
+    notionLastEditedAt?: string | null;
+    checksum?: string | null;
+    lastSyncedAt?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -287,6 +296,8 @@ export interface Member {
    */
   source?: {
     notionPageId?: string | null;
+    notionLastEditedAt?: string | null;
+    checksum?: string | null;
     lastSyncedAt?: string | null;
   };
   updatedAt: string;
@@ -342,6 +353,8 @@ export interface Event {
    */
   source?: {
     notionPageId?: string | null;
+    notionLastEditedAt?: string | null;
+    checksum?: string | null;
     lastSyncedAt?: string | null;
   };
   updatedAt: string;
@@ -415,6 +428,8 @@ export interface Record {
    */
   source?: {
     notionPageId?: string | null;
+    notionLastEditedAt?: string | null;
+    checksum?: string | null;
     lastSyncedAt?: string | null;
   };
   updatedAt: string;
@@ -477,6 +492,8 @@ export interface Post {
    */
   source?: {
     notionPageId?: string | null;
+    notionLastEditedAt?: string | null;
+    checksum?: string | null;
     lastSyncedAt?: string | null;
   };
   updatedAt: string;
@@ -549,6 +566,8 @@ export interface Page {
    */
   source?: {
     notionPageId?: string | null;
+    notionLastEditedAt?: string | null;
+    checksum?: string | null;
     lastSyncedAt?: string | null;
   };
   updatedAt: string;
@@ -912,6 +931,14 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
+  source?:
+    | T
+    | {
+        notionPageId?: T;
+        notionLastEditedAt?: T;
+        checksum?: T;
+        lastSyncedAt?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -991,6 +1018,8 @@ export interface MembersSelect<T extends boolean = true> {
     | T
     | {
         notionPageId?: T;
+        notionLastEditedAt?: T;
+        checksum?: T;
         lastSyncedAt?: T;
       };
   updatedAt?: T;
@@ -1027,6 +1056,8 @@ export interface EventsSelect<T extends boolean = true> {
     | T
     | {
         notionPageId?: T;
+        notionLastEditedAt?: T;
+        checksum?: T;
         lastSyncedAt?: T;
       };
   updatedAt?: T;
@@ -1083,6 +1114,8 @@ export interface RecordsSelect<T extends boolean = true> {
     | T
     | {
         notionPageId?: T;
+        notionLastEditedAt?: T;
+        checksum?: T;
         lastSyncedAt?: T;
       };
   updatedAt?: T;
@@ -1128,6 +1161,8 @@ export interface PostsSelect<T extends boolean = true> {
     | T
     | {
         notionPageId?: T;
+        notionLastEditedAt?: T;
+        checksum?: T;
         lastSyncedAt?: T;
       };
   updatedAt?: T;
@@ -1190,6 +1225,8 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         notionPageId?: T;
+        notionLastEditedAt?: T;
+        checksum?: T;
         lastSyncedAt?: T;
       };
   updatedAt?: T;

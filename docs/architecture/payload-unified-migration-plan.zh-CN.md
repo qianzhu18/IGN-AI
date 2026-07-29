@@ -231,16 +231,18 @@ M1 阶段门已于 2026-07-29 通过：五类实体共用 `Config['collections']
 
 ### M2：幂等数据与媒体迁移
 
-- [ ] 建立只读 Notion 抽取器和字段映射清单。
+- [x] 建立只读 Notion 抽取器和字段映射清单。
 - [ ] 先迁移 Config/Media，再迁移 Members/Events/Records/Posts。
-- [ ] 迁移 Notion blocks 到 Lexical，生成无法自动转换的人工复核报告。
+- [x] 迁移 Notion blocks 到 Lexical，生成无法自动转换的人工复核报告。
 - [ ] 把本地文件、Notion 临时图片和现有 R2 资产统一到对象存储。
-- [ ] 输出数量、slug、状态、关系、正文与媒体校验报告。
-- [ ] 每次导入生成 manifest，记录来源 ID、目标 ID、checksum 和结果。
-- [ ] 所有写入先支持 `--dry-run`，失败项进入人工复核清单。
+- [x] 输出数量、slug、状态、关系、正文与媒体校验报告。
+- [x] 每次导入生成 manifest，记录来源 ID、目标 ID、checksum 和结果。
+- [x] 所有写入先支持 `--dry-run`，失败项进入人工复核清单。
 - [ ] 验证中文 slug、历史 URL、Notion block 和 R2 object key。
 
 阶段门：重复执行导入结果不变；Published 数量、稳定 slug、关系和核心正文通过抽样比对；无页面依赖 Notion 临时媒体 URL。
+
+M2 导入器基础已于 2026-07-29 通过本地验证：默认 dry-run 不写正式验证库；临时重放库导入 Config/Event/Record/Page 后第三次 dry-run 返回 38 条 `unchanged`。M2 仍未整体完成，因为媒体上传对象存储、重复成员合并、文章作者映射和正式全量导入尚未完成。
 
 ### M3：按路由切换新前台
 
