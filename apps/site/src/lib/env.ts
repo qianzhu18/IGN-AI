@@ -6,6 +6,13 @@ const r2Keys = [
   'R2_PUBLIC_URL',
 ] as const
 
+const optionalBoolean = (value: string | undefined, key: string, defaultValue: boolean) => {
+  if (!value?.trim()) return defaultValue
+  if (value === 'true') return true
+  if (value === 'false') return false
+  throw new Error(`${key} must be either true or false`)
+}
+
 type Environment = Record<string, string | undefined>
 type RequiredKey = 'DATABASE_URL' | 'PAYLOAD_SECRET' | 'PREVIEW_SECRET'
 
@@ -55,7 +62,9 @@ export function resolveEnvironment(source: Environment = process.env) {
       accessKeyID: source.R2_ACCESS_KEY_ID?.trim() || '',
       bucket: source.R2_BUCKET?.trim() || '',
       endpoint: source.R2_ENDPOINT?.trim() || undefined,
+      forcePathStyle: optionalBoolean(source.R2_FORCE_PATH_STYLE, 'R2_FORCE_PATH_STYLE', true),
       publicURL: source.R2_PUBLIC_URL?.trim() || '',
+      region: source.R2_REGION?.trim() || 'auto',
       secretAccessKey: source.R2_SECRET_ACCESS_KEY?.trim() || '',
     },
     serverURL,

@@ -39,5 +39,28 @@ describe('resolveEnvironment', () => {
     })
     expect(environment.hasR2).toBe(true)
     expect(environment.r2.bucket).toBe('ignai-media')
+    expect(environment.r2.forcePathStyle).toBe(true)
+    expect(environment.r2.region).toBe('auto')
+  })
+
+  it('supports S3-compatible providers that require virtual-host addressing', () => {
+    const environment = resolveEnvironment({
+      ...validEnvironment,
+      R2_ACCESS_KEY_ID: 'access',
+      R2_BUCKET: 'ignai-media',
+      R2_ENDPOINT: 'https://s3.oss-cn-hangzhou.aliyuncs.com',
+      R2_FORCE_PATH_STYLE: 'false',
+      R2_PUBLIC_URL: 'https://media.example.com',
+      R2_REGION: 'cn-hangzhou',
+      R2_SECRET_ACCESS_KEY: 'secret',
+    })
+    expect(environment.r2.forcePathStyle).toBe(false)
+    expect(environment.r2.region).toBe('cn-hangzhou')
+  })
+
+  it('rejects an invalid S3 addressing setting', () => {
+    expect(() => resolveEnvironment({ ...validEnvironment, R2_FORCE_PATH_STYLE: 'maybe' })).toThrow(
+      'R2_FORCE_PATH_STYLE must be either true or false',
+    )
   })
 })
