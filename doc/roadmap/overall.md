@@ -1,9 +1,9 @@
 # IGNAI 社区官网整体规划
 
 记录日期：2026-05-11
-最近校准：2026-05-26
+最近校准：2026-07-29
 负责人：IGNAI / Codex 协作线
-当前主分支方向：`main`
+当前架构迁移分支：`codex/payload-architecture-migration`
 
 仓库协作基线：
 
@@ -23,6 +23,14 @@
 4. 让本地产品建设和上游开源贡献同步推进
 
 ## 2. 当前长期主线
+
+### 2026-07-29 架构决策更新
+
+当前最高优先级调整为：从 NotionNext + Notion 迁移到 Next.js + Payload CMS 的统一应用架构。旧 NotionNext 站继续作为生产回退，直到新应用通过数据、预览、路由和上线阶段门；不再把 Notion 映射层作为长期后台继续扩展。
+
+详细方案：`docs/architecture/payload-unified-migration-plan.zh-CN.md`
+
+Hubtown 级交互前端已记录为后续迭代参考，必须等待统一内容模型与基础前台通过后再启动：`docs/design/hubtown-interaction-reference.zh-CN.md`
 
 当前项目不再只是“把官网做出来”，而是三条线并行：
 
@@ -78,11 +86,11 @@
 
 按优先级：
 
-1. 收束 Member MVP 的剩余体验项
-2. 增强 featured members / 角色分组 / 组织表达
-3. 预埋 Event / Member / Author 关系模型
-4. 准备第一版 upstreamable diff / PR 叙事
-5. 持续保持 `main` 为清晰可继续协作的主线
+1. 让 `apps/site` 的 Payload 垂直切片完成首次 build、后台编辑、草稿和预览闭环
+2. 固定 Members / Events / Records / Posts / Pages / Join 的 Payload 关系模型
+3. 建立 Notion -> Payload 的幂等导入与校验工具
+4. 按路由迁移新前台并完成生产切换
+5. 统一架构稳定后，再启动 Hubtown DNA 的交互场景原型
 
 ## 6. 执行原则
 
@@ -104,6 +112,11 @@
 - `doc/roadmap/overall.md`
 - `doc/roadmap/schedule.md`
 - `doc/roadmap/master-todo.md`
+
+### 架构与设计决策
+- `docs/architecture/payload-unified-migration-plan.zh-CN.md`
+- `docs/architecture/cms-options-research-2026-07-29.zh-CN.md`
+- `docs/design/hubtown-interaction-reference.zh-CN.md`
 
 ### Member 执行层
 - `docs/member-execution-roadmap.zh-CN.md`

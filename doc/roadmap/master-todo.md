@@ -1,8 +1,36 @@
 # IGNAI 社区官网总 TO DO
 
 记录日期：2026-05-11
-最近校准：2026-07-05
+最近校准：2026-07-29
 说明：这是总 TO DO。只要这里还有未完成项，就代表项目仍处于持续优化阶段。
+
+## 0. Payload 统一架构迁移（当前最高优先级）
+
+- [x] 确认 Next.js + Payload CMS + PostgreSQL + 对象存储为目标架构
+- [x] 创建 `codex/payload-architecture-migration` 分支与 `apps/site` 独立迁移切片
+- [x] 记录 Hubtown 交互设计 DNA，降级为后端迁移完成后的前端迭代参考
+- [x] 建立统一迁移计划、唯一事实源规则、阶段门和旧站退出条件
+- [x] 完成 Payload / Directus / Strapi / WordPress / Sanity 官方能力调研与加权选型
+- [x] 完成 Hubtown About 技术信号、IGNAI 品牌转译和场景组件底座说明
+- [x] **M0** 修复 `apps/site` 当前不完整状态并完成首次 lint / typecheck / test / build
+- [x] **M0** 验证 Payload Admin、Event 草稿、版本与 Live Preview 闭环
+- [x] **M0** 建立可提交、可回滚的 PostgreSQL migration
+- [x] **M1** 补齐 Members / Records / Posts / Pages / Join Submissions / Redirects
+- [x] **M1** 用 Payload relationship 取代 slug / `ext` JSON 关系模拟
+- [x] **M1** 建立 Pages Blocks 注册表、统一 SEO/source 字段和 Admin / Editor / AI Service Account 角色
+- [ ] **M1** 完成 slug reservation、删除保护、全实体预览与前台同类型读取阶段门
+- [ ] **M2** 建立 Notion -> Payload 幂等导入器和字段/数量/关系校验报告
+- [ ] **M2** 将本地、Notion 临时媒体和现有 R2 资产统一到对象存储
+- [ ] **M3** 按 Events -> Records -> Members -> 首页/About -> Join -> Posts 顺序迁移路由
+- [ ] **M3** 基础路由稳定后建立 StoryRenderer / SceneRegistry / SceneShell / ScrollDirector
+- [ ] **M3** 以 About 为首个 Hubtown 级原型并完成移动端、无障碍和性能降级
+- [ ] **M4** 完成 staging、最终增量导入、正式域名切换和旧站退出
+
+执行文档：
+
+- `docs/architecture/payload-unified-migration-plan.zh-CN.md`
+- `docs/architecture/cms-options-research-2026-07-29.zh-CN.md`
+- `docs/design/hubtown-interaction-reference.zh-CN.md`
 
 ## A. Member 体系 ✅ 基本完成
 
