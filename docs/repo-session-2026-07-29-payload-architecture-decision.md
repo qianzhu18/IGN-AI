@@ -48,6 +48,7 @@
 - `apps/site/src/migrations/20260729_152845_m2_source_tracking.json`
 - `apps/site/vitest.config.ts`
 - `apps/site/.gitignore`
+- `docs/architecture/domestic-deployment-and-openship-evaluation.zh-CN.md`
 
 ## Community-facing value delivered
 
@@ -70,6 +71,7 @@
 - Event 补齐统一 SEO 字段，SEO 标题和描述可由内容自动补全，并通过第三条 PostgreSQL migration 管理。
 - 建立默认只读的 Notion -> Payload 迁移 CLI，统一输出 source ID、target ID、checksum、action、关系、正文和媒体候选校验结果；只有显式 `--apply --confirm=NOTION_TO_PAYLOAD` 才允许写入。
 - 为所有内容集合与 Media 增加 Notion source tracking，临时库真实写入与三次幂等重放通过；Notion/S3 临时签名参数不再造成 checksum 漂移。
+- Payload S3 存储层现在支持 provider-specific `region` 和 virtual-host/path-style 配置，可在不改变内容模型的前提下兼容 R2、腾讯 COS 与阿里 OSS。
 
 ## Upstreamable pieces identified
 
@@ -84,6 +86,7 @@
 1. 完成 M2 剩余项：处理 11 条源数据阻断项，将 32 个媒体候选及本地/R2 资产统一上传对象存储，并完成正式全量导入前抽样复核。
 2. 完成 M3/M4：按完整路由迁移、staging 验收、生产切换与旧站退出。
 3. 配置生产邮件适配器、对象存储和正式密钥；当前本地邮件只输出到控制台。
+4. 为官网建立专用公开媒体 bucket 与自有媒体域名；已验证的杭州 OSS bucket 当前匿名读取为 403，不能直接用于官网前台。
 4. 基础路由稳定后，以 About 为第一个 Hubtown 级交互原型，不提前重做整站。
 
 ## Verification evidence
@@ -106,3 +109,5 @@
 - M2 全量 dry-run：从 74 个 Notion source pages 中抽取 58 条支持的内容，结果为 40 create、1 update、11 error、32 个 media candidates、13 warnings；错误集中在重复 Member slug、重复模板 Post slug、缺标题 Post 与缺少可解析作者映射的 Post。
 - M2 临时库重放：`ignai_payload_m2_replay` 应用全部 migrations 后，用 `--apply --confirm=NOTION_TO_PAYLOAD --types=Config,Event,Record,Page --skip-blocks` 导入 11 个 Events、20 个 Records、6 个 Pages 并更新 Site Settings；修复 Notion/S3 临时封面 URL checksum 后，第三遍 dry-run 返回 38 条 `unchanged`。
 - M2 安全验证：正式验证库 `members/events/records/posts/pages` 在 dry-run 与临时库验证后均保持 0 条；临时库验证完成后已删除。
+- 国内部署评估：`cn-tx` 当前 4C4G、Swap 已满、磁盘使用 74%、80/443 已被既有代理占用，不适合安装 OpenShip Compose 控制面；推荐 GitHub Actions + Docker image + 现有反向代理，OpenShip 仅在独立 staging 机器试验。
+- OSS 兼容验证：杭州 OSS S3 签名 List/PUT/DELETE 成功，匿名 GET 为 403；探针对象已删除，未对 bucket ACL 或现有对象做任何修改。
