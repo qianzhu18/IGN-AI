@@ -17,6 +17,7 @@
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "migrate:notion": "tsx scripts/migrate-notion.ts",
+    "seed:demo": "tsx scripts/seed-demo.ts",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "db:migrate": "cross-env NODE_OPTIONS=--no-deprecation payload migrate",
     "db:migrate:create": "cross-env NODE_OPTIONS=--no-deprecation payload migrate:create",

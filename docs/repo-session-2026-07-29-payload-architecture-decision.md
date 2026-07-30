@@ -52,6 +52,16 @@
 - `docs/README.zh-CN.md`
 - `docs/architecture/why-payload-migration.zh-CN.md`
 - `docs/architecture/branch-and-legacy-code-policy.zh-CN.md`
+- `apps/site/src/app/(frontend)/members/`
+- `apps/site/src/app/(frontend)/records/`
+- `apps/site/src/app/(frontend)/posts/`
+- `apps/site/src/app/(frontend)/join/`
+- `apps/site/src/app/(frontend)/[slug]/page.tsx`
+- `apps/site/src/app/(frontend)/api/join/route.ts`
+- `apps/site/src/components/ContentCard.tsx`
+- `apps/site/src/components/PageRenderer.tsx`
+- `apps/site/src/components/JoinForm.tsx`
+- `apps/site/scripts/seed-demo.ts`
 
 ## Community-facing value delivered
 
@@ -77,6 +87,8 @@
 - Payload S3 存储层现在支持 provider-specific `region` 和 virtual-host/path-style 配置，可在不改变内容模型的前提下兼容 R2、腾讯 COS 与阿里 OSS。
 - 建立文档地图，明确 roadmap、架构、部署、设计与历史 session 的权威层级；不通过大规模移动或删除历史资料来制造“整洁”。
 - 固化迁移技术理由和分支政策：旧 NotionNext 根目录在 M4 前作为可运行回退冻结，新功能只进入 `apps/site/`，避免两套架构继续混写。
+- 完成可操作的 M3 前后端联调 Demo：后台发布的 Event、Member、Record、Post 和 Page 可在新前台对应列表、详情和 About 页面直接读取；Join 表单直接写入 Payload `Join Submissions`，匿名读取被拒绝。
+- 增加默认 dry-run、显式确认才写入的本地 Demo Seed，便于在无真实迁移数据时验证内容编辑、发布和前台显示闭环；不会在生产环境运行。
 
 ## Upstreamable pieces identified
 
@@ -89,7 +101,7 @@
 ## Remaining work
 
 1. 完成 M2 剩余项：处理 11 条源数据阻断项，将 32 个媒体候选及本地/R2 资产统一上传对象存储，并完成正式全量导入前抽样复核。
-2. 完成 M3/M4：按完整路由迁移、staging 验收、生产切换与旧站退出。
+2. 将 M3 Demo 替换为 M2 复核后的真实内容，并完成逐页 SEO、关系、媒体、移动端与无障碍验收；之后进入 staging、生产切换与旧站退出。
 3. 配置生产邮件适配器、对象存储和正式密钥；当前本地邮件只输出到控制台。
 4. 为官网建立专用公开媒体 bucket 与自有媒体域名；已验证的杭州 OSS bucket 当前匿名读取为 403，不能直接用于官网前台。
 5. 基础路由稳定后，以 About 为第一个 Hubtown 级交互原型，不提前重做整站。
@@ -116,3 +128,6 @@
 - M2 安全验证：正式验证库 `members/events/records/posts/pages` 在 dry-run 与临时库验证后均保持 0 条；临时库验证完成后已删除。
 - 国内部署评估：`cn-tx` 当前 4C4G、Swap 已满、磁盘使用 74%、80/443 已被既有代理占用，不适合安装 OpenShip Compose 控制面；推荐 GitHub Actions + Docker image + 现有反向代理，OpenShip 仅在独立 staging 机器试验。
 - OSS 兼容验证：杭州 OSS S3 签名 List/PUT/DELETE 成功，匿名 GET 为 403；探针对象已删除，未对 bucket ACL 或现有对象做任何修改。
+- M3 联调验证：本地 PostgreSQL 中显式 Seed 的 1 Member / 1 Event / 1 Record / 1 Post / 1 About Page 全部以 `published` 状态保存；公开 API 可读取 Member/Event，首页及 Events、Members、Records、Posts、About、Join 与四类详情路径均返回 200。
+- Join 联调验证：公开提交返回 201 且 PostgreSQL `join_submissions` 记录状态为 `submitted`；立即重复提交返回 429；匿名读取 `/api/join-submissions` 返回 403。
+- M3 构建验证：`pnpm lint`、`pnpm typecheck`、`pnpm test`（14 files / 37 tests）和 `pnpm build` 均通过。

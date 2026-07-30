@@ -25,6 +25,8 @@
   - [ ] 处理 11 条源数据阻断项：重复 Member slug、重复模板 Post slug、缺标题 Post、缺少可解析作者映射的 Post。
 - [ ] **M2** 将本地、Notion 临时媒体和现有 R2 资产统一到对象存储
 - [ ] **M3** 按 Events -> Records -> Members -> 首页/About -> Join -> Posts 顺序迁移路由
+- [x] 2026-07-30：完成 Payload 前台联调 Demo：Events、Records、Members、Posts、可编排 Pages/About 和 Join 全部具备公开列表/详情或表单落点；本地 Demo Seed 仅在显式确认后写入开发数据库。
+- [ ] 将 M3 Demo 替换为经过 M2 复核的真实迁移内容，并逐页完成 SEO、关系、媒体和移动端验收。
 - [ ] **M3** 基础路由稳定后建立 StoryRenderer / SceneRegistry / SceneShell / ScrollDirector
 - [ ] **M3** 以 About 为首个 Hubtown 级原型并完成移动端、无障碍和性能降级
 - [ ] **M4** 完成 staging、最终增量导入、正式域名切换和旧站退出

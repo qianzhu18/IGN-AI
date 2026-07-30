@@ -8,11 +8,13 @@ export const fallbackSettings = {
   heroStatement: '在真实世界，发生 AI',
   intro: '长沙青年 AI 社区。我们把线上信号带回真实现场，把相遇变成长期行动。',
   navigation: [
+    { href: '/about', label: '关于' },
     { href: '/events', label: '活动' },
-    { href: 'https://www.ignai.cn/members', label: '成员' },
-    { href: 'https://www.ignai.cn/records', label: '记录' },
+    { href: '/records', label: '记录' },
+    { href: '/members', label: '成员' },
+    { href: '/posts', label: '文章' },
   ],
-  primaryCTA: { href: 'https://www.ignai.cn/join', label: '加入社区' },
+  primaryCTA: { href: '/join', label: '加入社区' },
   siteName: 'IGN AI',
 } satisfies Pick<SiteSetting, 'heroStatement' | 'intro' | 'navigation' | 'primaryCTA' | 'siteName'>
 
@@ -29,6 +31,22 @@ export async function getPublishedDocuments<TCollection extends ContentCollectio
     limit,
     overrideAccess: false,
     sort: '-updatedAt',
+  })
+  return result.docs as ContentDocument<TCollection>[]
+}
+
+export async function getFeaturedDocuments<TCollection extends ContentCollection>(
+  collection: TCollection,
+  limit = 6,
+): Promise<ContentDocument<TCollection>[]> {
+  const payload = await getPayload({ config })
+  const result = await payload.find({
+    collection,
+    depth: 1,
+    limit,
+    overrideAccess: false,
+    sort: '-updatedAt',
+    where: { featured: { equals: true } },
   })
   return result.docs as ContentDocument<TCollection>[]
 }

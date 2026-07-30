@@ -45,21 +45,35 @@ export function SiteNav({ items }: { items: NavItem[] }) {
         </Link>
 
         <nav aria-label="主导航" className="site-nav__links">
-          {items.map((item) => (
-            <Link className="site-nav__link" href={item.href} key={`${item.href}-${item.label}`}>
-              {item.label}
-            </Link>
-          ))}
+          {items.map((item) => {
+            const external = /^https?:\/\//.test(item.href)
+            return external ? (
+              <a className="site-nav__link" href={item.href} key={`${item.href}-${item.label}`} rel="noreferrer" target="_blank">
+                {item.label}
+              </a>
+            ) : (
+              <Link className="site-nav__link" href={item.href} key={`${item.href}-${item.label}`}>
+                {item.label}
+              </Link>
+            )
+          })}
         </nav>
 
         <details className="mobile-nav">
           <summary aria-label="打开导航">导航</summary>
           <nav aria-label="移动端导航" className="mobile-nav__sheet">
-            {items.map((item) => (
-              <Link href={item.href} key={`mobile-${item.href}-${item.label}`}>
-                {item.label}
-              </Link>
-            ))}
+            {items.map((item) => {
+              const external = /^https?:\/\//.test(item.href)
+              return external ? (
+                <a href={item.href} key={`mobile-${item.href}-${item.label}`} rel="noreferrer" target="_blank">
+                  {item.label}
+                </a>
+              ) : (
+                <Link href={item.href} key={`mobile-${item.href}-${item.label}`}>
+                  {item.label}
+                </Link>
+              )
+            })}
           </nav>
         </details>
       </div>
