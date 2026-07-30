@@ -3,6 +3,7 @@ import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import type { Event, Member, Page, Post, Record } from '@/payload-types'
 import type { ContentCollection } from '@/lib/contentCollections'
 
+import { AboutStorySection, type AboutStoryData } from './AboutStory'
 import { RichText } from './RichText'
 
 type PreviewableDocument = Event | Member | Page | Post | Record
@@ -13,6 +14,10 @@ function PageLayout({ page }: { page: Page }) {
   return (
     <div className="preview-layout">
       {page.layout.map((block, index) => {
+        if (block.blockType === 'aboutStory') {
+          return <AboutStorySection key={block.id || index} story={block as AboutStoryData} />
+        }
+
         if (block.blockType === 'richText') {
           return <div key={block.id || index}>{richText(block.content)}</div>
         }

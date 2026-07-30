@@ -1,27 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono, Tomorrow } from 'next/font/google'
 import type { ReactNode } from 'react'
 
 import '@/styles/site.css'
-
-const geist = Geist({
-  display: 'swap',
-  subsets: ['latin'],
-  variable: '--font-geist',
-})
-
-const geistMono = Geist_Mono({
-  display: 'swap',
-  subsets: ['latin'],
-  variable: '--font-geist-mono',
-})
-
-const tomorrow = Tomorrow({
-  display: 'swap',
-  subsets: ['latin'],
-  variable: '--font-tomorrow',
-  weight: ['400', '600', '700'],
-})
 
 export const metadata: Metadata = {
   description: '长沙青年 AI 社区。让线上信号回到真实现场。',
@@ -40,7 +20,7 @@ export const viewport: Viewport = {
 
 export default function FrontendLayout({ children }: { children: ReactNode }) {
   return (
-    <html className={`${geist.variable} ${geistMono.variable} ${tomorrow.variable}`} lang="zh-CN">
+    <html lang="zh-CN">
       <body>{children}</body>
     </html>
   )

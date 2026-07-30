@@ -510,6 +510,47 @@ export interface Page {
   excerpt?: string | null;
   layout: (
     | {
+        hero: {
+          eyebrow: string;
+          line1: string;
+          line2: string;
+          copy: string;
+        };
+        stats: {
+          num: string;
+          label: string;
+          id?: string | null;
+        }[];
+        mission: {
+          eyebrow: string;
+          title: string;
+          paragraphs: {
+            text: string;
+            id?: string | null;
+          }[];
+        };
+        faq: {
+          q: string;
+          a: string;
+          id?: string | null;
+        }[];
+        valuesTitle: string;
+        values: {
+          title: string;
+          desc: string;
+          id?: string | null;
+        }[];
+        cta: {
+          title: string;
+          copy: string;
+          label: string;
+          href: string;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'aboutStory';
+      }
+    | {
         content: {
           root: {
             type: string;
@@ -1179,6 +1220,62 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        aboutStory?:
+          | T
+          | {
+              hero?:
+                | T
+                | {
+                    eyebrow?: T;
+                    line1?: T;
+                    line2?: T;
+                    copy?: T;
+                  };
+              stats?:
+                | T
+                | {
+                    num?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              mission?:
+                | T
+                | {
+                    eyebrow?: T;
+                    title?: T;
+                    paragraphs?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                  };
+              faq?:
+                | T
+                | {
+                    q?: T;
+                    a?: T;
+                    id?: T;
+                  };
+              valuesTitle?: T;
+              values?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              cta?:
+                | T
+                | {
+                    title?: T;
+                    copy?: T;
+                    label?: T;
+                    href?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         richText?:
           | T
           | {

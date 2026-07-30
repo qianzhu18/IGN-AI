@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import path from 'node:path'
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
+import type { Page } from '../src/payload-types'
 
 const lexical = (text: string): DefaultTypedEditorState => ({
   root: {
@@ -25,6 +26,63 @@ const lexical = (text: string): DefaultTypedEditorState => ({
 })
 
 const demoSlugs = ['demo-lin', 'demo-signal-night', 'demo-first-field-note', 'demo-working-note', 'about']
+
+const aboutStoryLayout = [
+  {
+    blockType: 'aboutStory',
+    cta: {
+      copy: '如果你也不想让一次活动变成一次性见面，来认识我们。带着好奇、项目或一个还没想清楚的问题都可以。',
+      href: '/join',
+      label: '加入社区',
+      title: 'Ignite before AGI.',
+    },
+    faq: [
+      {
+        a: '学生、开发者、产品人与创作者。有人刚接触 AI，有人已经在做产品，也有人只是想认识同频的人。',
+        q: '谁会在这里？',
+      },
+      {
+        a: '一起去活动、做小项目、参加分享和跨城见面。活动结束后，关系和讨论还能继续。',
+        q: '这里会发生什么？',
+      },
+      {
+        a: '从一次活动或一段具体交流开始。带着你正在做的事、一个问题，或者单纯的好奇来都可以。',
+        q: '怎么进入？',
+      },
+    ],
+    hero: {
+      copy: '很多人是在活动中认识的。可一场活动结束之后，热情往往很快散开。IGNAI 从这个瞬间开始：让愿意再聚的人，有一个继续出现的理由。',
+      eyebrow: 'About IGNAI',
+      line1: '为什么会有',
+      line2: 'IGNAI？',
+    },
+    mission: {
+      eyebrow: 'Mission',
+      paragraphs: [
+        {
+          text: 'IGNAI 聚集学生、开发者、产品人与创作者。我们在活动里认识彼此，也把一次见面之后还值得继续聊的工具、项目和想法留下来。',
+        },
+        {
+          text: '我们不把每次活动做成一次性相遇，也不要求每个人都带着成熟项目来。对 AI 有好奇、愿意参与真实现场，就已经足够成为开始。',
+        },
+      ],
+      title: '我们在做什么',
+    },
+    stats: [
+      { label: '2050 最初同行者', num: '7 人' },
+      { label: '后来参与青年团聚', num: '70+' },
+      { label: '第一次对外建立影响', num: '极客松' },
+      { label: '愿意再聚的理由', num: 'Just for fun' },
+    ],
+    values: [
+      { desc: '不要等想清楚一切再开始。从小项目、小分享、小连接开始。', title: '先行动' },
+      { desc: '把想法说出来，让它有机会被看见、被讨论、被连接。', title: '先表达' },
+      { desc: '让群聊关系走向真实协作，让线上认识走向线下见面。', title: '先连接' },
+      { desc: '社区不是一次活动，是持续的学习、实践、分享和彼此点燃。', title: '持续做' },
+    ],
+    valuesTitle: '我们相信什么',
+  },
+] satisfies Page['layout']
 
 async function main() {
   const args = new Map(
@@ -158,16 +216,27 @@ async function main() {
       })
     }
 
-    if (!existing.has('pages:about')) {
+    if (existing.has('pages:about')) {
+      const aboutPage = await payload
+        .find({ collection: 'pages', limit: 1, overrideAccess: true, where: { slug: { equals: 'about' } } })
+        .then((result) => result.docs[0])
+      await payload.update({
+        collection: 'pages',
+        data: {
+          excerpt: 'IGNAI 是一个从长沙出发的青年 AI 社区。我们让活动之后的人继续相遇，让想法有下一次行动。',
+          layout: aboutStoryLayout,
+          title: '关于 IGNAI',
+        },
+        draft: false,
+        id: aboutPage.id,
+        overrideAccess: true,
+      })
+    } else {
       await payload.create({
         collection: 'pages',
         data: {
-          excerpt: '这是可在后台编辑的 About 页面演示。',
-          layout: [
-            { blockType: 'richText', content: lexical('IGNAI 是一个把线上信号带回真实现场的青年 AI 社区。这里的文本、行动按钮和内容集合均来自 Payload 后台。') },
-            { action: { href: '/join', label: '加入社区' }, blockType: 'callToAction', body: '填写申请后，记录会直接进入运营后台。', heading: '下一次相遇，从一个行动开始。' },
-            { blockType: 'communityCollection', collection: 'events', featuredOnly: true, heading: '正在发生', limit: 3 },
-          ],
+          excerpt: 'IGNAI 是一个从长沙出发的青年 AI 社区。我们让活动之后的人继续相遇，让想法有下一次行动。',
+          layout: aboutStoryLayout,
           slug: 'about',
           title: '关于 IGNAI',
         },
@@ -205,7 +274,9 @@ async function main() {
   }
 }
 
-main().catch((error: unknown) => {
-  console.error(error instanceof Error ? error.message : error)
-  process.exit(1)
-})
+main()
+  .then(() => process.exit(0))
+  .catch((error: unknown) => {
+    console.error(error instanceof Error ? error.message : error)
+    process.exit(1)
+  })

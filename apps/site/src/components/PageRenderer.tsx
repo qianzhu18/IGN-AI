@@ -5,6 +5,7 @@ import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import type { Page } from '@/payload-types'
 import { getFeaturedDocuments, getPublishedDocuments } from '@/lib/content'
 
+import { AboutStorySection, type AboutStoryData } from './AboutStory'
 import { ContentCard } from './ContentCard'
 import { EventCard } from './EventCard'
 import { RichText } from './RichText'
@@ -14,6 +15,10 @@ export async function PageRenderer({ page }: { page: Page }) {
     <div className="page-layout">
       {await Promise.all(
         page.layout.map(async (block, index) => {
+          if (block.blockType === 'aboutStory') {
+            return <AboutStorySection key={block.id || index} story={block as AboutStoryData} />
+          }
+
           if (block.blockType === 'richText') {
             return <RichText data={block.content as DefaultTypedEditorState} key={block.id || index} />
           }

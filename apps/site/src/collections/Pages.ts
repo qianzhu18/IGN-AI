@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { admins, contentContributors, publishedOrAuthenticated } from '@/access/roles'
-import { CallToActionBlock, CommunityCollectionBlock, RichTextBlock } from '@/blocks'
+import { AboutStoryBlock, CallToActionBlock, CommunityCollectionBlock, RichTextBlock } from '@/blocks'
 import { seoFields, slugField, sourceFields } from '@/fields/shared'
 import { enforceAIServiceDrafts } from '@/hooks/enforceAIServiceDrafts'
 import { ensureSEO } from '@/hooks/ensureSEO'
@@ -30,7 +30,7 @@ export const Pages: CollectionConfig = {
     {
       name: 'layout',
       type: 'blocks',
-      blocks: [RichTextBlock, CallToActionBlock, CommunityCollectionBlock],
+      blocks: [AboutStoryBlock, RichTextBlock, CallToActionBlock, CommunityCollectionBlock],
       label: '页面区块',
       required: true,
     },

@@ -26,6 +26,7 @@
 - [ ] **M2** 将本地、Notion 临时媒体和现有 R2 资产统一到对象存储
 - [ ] **M3** 按 Events -> Records -> Members -> 首页/About -> Join -> Posts 顺序迁移路由
 - [x] 2026-07-30：完成 Payload 前台联调 Demo：Events、Records、Members、Posts、可编排 Pages/About 和 Join 全部具备公开列表/详情或表单落点；本地 Demo Seed 仅在显式确认后写入开发数据库。
+- [x] 2026-07-30：完成 About 首个视觉保真样板：`aboutStory` 结构化 Payload 区块、`/about` 专属原视觉渲染、demo seed 更新、浏览器首屏验证和生产构建均通过。
 - [ ] 将 M3 Demo 替换为经过 M2 复核的真实迁移内容，并逐页完成 SEO、关系、媒体和移动端验收。
 - [ ] **M3 硬性前台门**：以根目录现有 IGNAI 页面作为视觉事实源，按 About -> 首页 -> Events -> Records -> Members -> Join -> Posts 顺序迁移；每页需通过桌面/平板/手机截图对比、草稿预览、发布即时刷新与 reduced-motion 验收。不得把通用 Payload 联调 UI 当作官网生产视觉。
 - [ ] **M3** 基础路由稳定后建立 StoryRenderer / SceneRegistry / SceneShell / ScrollDirector
