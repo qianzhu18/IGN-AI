@@ -205,6 +205,40 @@ html[data-theme='dark'] {
   margin-right: 8px;
 }
 
+.ignai-admin-quick-actions {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(12rem, 0.75fr) 1.25fr;
+  margin-top: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 122, 24, 0.28);
+  background: rgba(255, 122, 24, 0.06);
+}
+
+.ignai-admin-quick-actions h2 {
+  margin: 0.3rem 0 0;
+  font-size: 1.2rem;
+}
+
+.ignai-admin-quick-actions__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 0.65rem;
+}
+
+.ignai-admin-quick-actions__links a {
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  color: inherit;
+  padding: 0.55rem 0.75rem;
+  text-decoration: none;
+}
+
+.ignai-admin-quick-actions__links a:hover {
+  border-color: var(--ignai-admin-accent);
+  color: var(--ignai-admin-accent);
+}
+
 @media (max-width: 600px) {
   .template-minimal__wrap {
     border-left: 0;
@@ -227,6 +261,10 @@ html[data-theme='dark'] {
   .ignai-admin-overview__metrics,
   .ignai-admin-workflow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ignai-admin-quick-actions {
+    grid-template-columns: 1fr;
   }
 }
 

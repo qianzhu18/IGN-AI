@@ -123,7 +123,7 @@ apps/site/
 
 ## 3.2 当前前端的保留与退出边界
 
-“在当前前端基础上”指保留已经验证的产品事实与品牌资产，不等于把 NotionNext 组件原样复制进新应用。
+“在当前前端基础上”首先指保留已经完成的 IGNAI 视觉系统、信息层级、动效语言和交互节奏；后台迁移不能把它替换成通用 CMS 演示页面。NotionNext 的内容读取和主题运行时需要退出，但已经形成品牌识别的页面组件、CSS token、排版、真实媒体编排和可访问性修复应迁入新应用并继续演进。
 
 必须保留：
 
@@ -134,8 +134,8 @@ apps/site/
 
 按领域重写或迁移：
 
-- `src/components` 中与业务无关的展示组件，可在 `apps/site` 重建为 typed components。
-- Hero、About、内容卡片只保留信息层级，不保留当前零散硬编码颜色和特效实现。
+- `src/components` 中与业务无关的展示组件、`src/styles/` 的视觉 token 和各页面的版式规则，迁入 `apps/site` 后改造成 typed components。
+- Hero、About、内容卡片保留现有视觉语言、信息层级、排版比例和经过验证的动效；仅替换其 NotionNext page props 与内容查询。
 - 真实内容先迁 Payload，再由新组件消费，不从旧 page props 直接桥接。
 
 明确退出：
@@ -146,6 +146,37 @@ apps/site/
 - 全站 Lenis RAF、随机外部图片和无法观测的 CDN 动效脚本。
 
 这能让新站继承当前工作的价值，同时真正摆脱导致前后端分裂的框架边界。
+
+## 3.3 M3 的第一原则：视觉保真迁移
+
+`apps/site` 里已经存在的通用联调页面只用于验证 Payload 的内容模型、权限、草稿、预览和发布链路，**不构成新官网设计，也不得作为生产前台继续扩展**。从 M3 开始，视觉保真是切换路由的硬性阶段门。
+
+### 视觉事实源
+
+- 迁移前台的视觉参考是仓库根目录现有的 IGNAI 页面与组件：`pages/`、`src/components/sections/`、`src/components/ui/`、`src/components/motion/`、`src/styles/`。
+- `main` 上运行的旧站是内容与视觉对照基准；Payload 分支不以通用模板截图作为验收标准。
+- 新增的 Hubtown 级交互是对现有品牌体验的增量，不是换一套色彩、排版和组件语法。
+
+### 路由迁移方法
+
+每个路由遵循同一个顺序：
+
+1. 锁定旧页面桌面与移动端截图、核心 DOM 文案、SEO 和交互清单。
+2. 抽取页面壳、区块组件、样式 token 和可复用动效到 `apps/site`；不把 Notion 查询逻辑带入新应用。
+3. 在 `lib/content/` 增加 Payload -> 页面 View Model 适配层，使旧组件接收稳定的 typed props。
+4. 先在本地使用同一份测试内容进行视觉对比，再验证草稿 Preview、发布、刷新、空状态和 reduced-motion。
+5. 只有视觉、内容和编辑闭环均通过，才允许该路由替代旧站；旧站继续保留为回退。
+
+首批顺序固定为 **About（原视觉原样接入） -> 首页 -> Events -> Records -> Members -> Join -> Posts**。任何新设计元素只能作为现有页面组件之上的可关闭 Scene/Block 增量加入，不能为了动效重新发明后台数据结构。
+
+### 验收门
+
+一个路由迁移完成至少需要证明：
+
+- 1440、768、390 三个断点下，品牌色、字体、布局密度、图片/视频位置和核心动效与旧页一致或有明确的设计批准差异。
+- Payload 后台编辑标题、正文、封面、关系和 CTA 后，草稿 Preview 与发布页均能正确反映，不依赖 Notion 或固定等待缓存。
+- 前台组件只消费 Payload View Model；不存在 Notion API、`ext` JSON 或静态 fallback 的运行时回退。
+- 新增互动元素在 `prefers-reduced-motion`、低性能移动设备和无 WebGL 环境下保留可读内容与可用操作。
 
 ## 4. 目标领域模型
 
