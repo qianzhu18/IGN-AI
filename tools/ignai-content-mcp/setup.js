@@ -1,0 +1,257 @@
+#!/usr/bin/env node
+
+/**
+ * IGNAI Content MCP - Interactive Setup Script
+ * Guides user to configure Notion API credentials locally
+ */
+
+const fs = require('fs')
+const path = require('path')
+const readline = require('readline')
+
+const ROOT = path.resolve(__dirname, '../..')
+const ENV_FILE = path.join(ROOT, '.env.notion.local')
+
+const REQUIRED_VARS = [
+  {
+    key: 'NOTION_PAGE_ID',
+    prompt: 'NOTION_PAGE_ID (Notion 主库 Page ID)',
+    example: '097e5f674880459d8e1b4407758dc4fb',
+    validator: (v) => /^[a-f0-9]{32}$/.test(v.replace(/-/g, '')),
+    errorMsg: '应为 32 位十六进制字符（可含连字符）'
+  },
+  {
+    key: 'NOTION_API_TOKEN',
+    prompt: 'NOTION_API_TOKEN (Notion Integration Token)',
+    example: 'ntn_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    validator: (v) => v.startsWith('ntn_') && v.length > 10,
+    errorMsg: '应以 ntn_ 开头，长度 > 10'
+  },
+  {
+    key: 'NOTION_API_VERSION',
+    prompt: 'NOTION_API_VERSION',
+    example: '2026-03-11',
+    validator: (v) => /^\d{4}-\d{2}-\d{2}$/.test(v),
+    errorMsg: '应为 YYYY-MM-DD 格式'
+  },
+  {
+    key: 'NOTION_MEMBERS_DATA_SOURCE_ID',
+    prompt: 'NOTION_MEMBERS_DATA_SOURCE_ID (Members 数据源 ID)',
+    example: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx',
+    validator: (v) => /^[a-f0-9-]{36}$/.test(v),
+    errorMsg: '应为 UUID 格式（含连字符）'
+  }
+]
+
+const OPTIONAL_VARS = [
+  {
+    key: 'NOTION_EVENTS_DATA_SOURCE_ID',
+    prompt: 'NOTION_EVENTS_DATA_SOURCE_ID (Events 数据源 ID，可选)',
+    validator: (v) => !v || /^[a-f0-9-]{36}$/.test(v),
+    errorMsg: '应为 UUID 格式或留空'
+  },
+  {
+    key: 'NOTION_CONTENT_DATA_SOURCE_ID',
+    prompt: 'NOTION_CONTENT_DATA_SOURCE_ID (Post/Record 数据源 ID，可选)',
+    validator: (v) => !v || /^[a-f0-9-]{36}$/.test(v),
+    errorMsg: '应为 UUID 格式或留空'
+  }
+]
+
+function createInterface() {
+  return readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+}
+
+function ask(rl, question, hideInput = false) {
+  return new Promise((resolve) => {
+    if (hideInput) {
+      // Hide input for sensitive tokens
+      process.stdout.write(question)
+      const stdin = process.openStdin()
+      const onData = (char) => {
+        char = char.toString()
+        if (char === '\n' || char === '\r' || char === '') {
+          stdin.removeListener('data', onData)
+          process.stdout.write('\n')
+          resolve(rl._previousStdin || '')
+        }
+      }
+      // Simpler approach: just ask normally but warn user
+      rl.question(question + ' (input will be visible): ', (answer) => {
+        resolve(answer.trim())
+      })
+    } else {
+      rl.question(question, (answer) => {
+        resolve(answer.trim())
+      })
+    }
+  })
+}
+
+async function main() {
+  console.log('')
+  console.log('  IGNAI Content MCP - Notion Setup')
+  console.log('  ==================================')
+  console.log('')
+  console.log('  This script configures .env.notion.local for the MCP server.')
+  console.log('  Required values can be found in Vercel dashboard:')
+  console.log('  https://vercel.com/qianzhu18s-projects/ign-ai/settings/environment-variables')
+  console.log('')
+  console.log('  For each variable, reveal the value in Vercel (click the eye icon)')
+  console.log('  and paste it below. Press Enter to confirm.')
+  console.log('')
+
+  // Check if env file already exists
+  if (fs.existsSync(ENV_FILE)) {
+    console.log(`  ⚠  .env.notion.local already exists.`)
+    const rl = createInterface()
+    const overwrite = await ask(rl, '  Overwrite? (y/N): ')
+    rl.close()
+    if (overwrite.toLowerCase() !== 'y') {
+      console.log('  Aborted.')
+      process.exit(0)
+    }
+  }
+
+  const values = {}
+  const rl = createInterface()
+
+  // Collect required variables
+  console.log('  Required variables:')
+  console.log('  -------------------')
+  for (const v of REQUIRED_VARS) {
+    let value = ''
+    while (true) {
+      value = await ask(rl, `  ${v.prompt}: `)
+      if (value && v.validator(value)) {
+        break
+      }
+      if (!value) {
+        console.log(`    ✗ This variable is required.`)
+      } else {
+        console.log(`    ✗ Invalid format: ${v.errorMsg}`)
+        console.log(`      Example: ${v.example}`)
+      }
+    }
+    values[v.key] = value
+    console.log('    ✓')
+  }
+
+  // Collect optional variables
+  console.log('')
+  console.log('  Optional variables (press Enter to skip):')
+  console.log('  -------------------------------------------')
+  for (const v of OPTIONAL_VARS) {
+    const value = await ask(rl, `  ${v.prompt}: `)
+    if (value) {
+      if (v.validator(value)) {
+        values[v.key] = value
+        console.log('    ✓')
+      } else {
+        console.log(`    ✗ Invalid format: ${v.errorMsg}`)
+        console.log('    (skipped)')
+      }
+    } else {
+      console.log('    (skipped)')
+    }
+  }
+
+  rl.close()
+
+  // Write env file
+  console.log('')
+  console.log('  Writing .env.notion.local...')
+
+  const lines = [
+    '# IGNAI Content MCP - Notion API Configuration',
+    '# Generated by setup.js',
+    '# ⚠  DO NOT COMMIT THIS FILE (already in .gitignore)',
+    ''
+  ]
+
+  for (const v of REQUIRED_VARS) {
+    lines.push(`${v.key}=${values[v.key]}`)
+  }
+
+  for (const v of OPTIONAL_VARS) {
+    if (values[v.key]) {
+      lines.push(`${v.key}=${values[v.key]}`)
+    }
+  }
+
+  lines.push('')
+  fs.writeFileSync(ENV_FILE, lines.join('\n'), 'utf8')
+  console.log('    ✓ Written to .env.notion.local')
+
+  // Verify with smoke test
+  console.log('')
+  console.log('  Verifying configuration...')
+  console.log('')
+
+  try {
+    // Load the env file into process.env
+    const content = fs.readFileSync(ENV_FILE, 'utf8')
+    for (const line of content.split('\n')) {
+      const match = line.match(/^([A-Z_][A-Z0-9_]*)=(.*)$/)
+      if (match) {
+        const [, key, value] = match
+        process.env[key] = value
+      }
+    }
+
+    // Run the smoke test
+    const { execSync } = require('child_process')
+    const smokeResult = execSync('node tools/ignai-content-mcp/smoke-test.js', {
+      cwd: ROOT,
+      encoding: 'utf8',
+      timeout: 10000
+    })
+    console.log('  ✓ Offline smoke test passed')
+
+    // Run the real Notion API test if possible
+    if (process.env.NOTION_MEMBERS_DATA_SOURCE_ID) {
+      try {
+        const schemaResult = execSync('node scripts/notion-member-api-smoke.js schema', {
+          cwd: ROOT,
+          encoding: 'utf8',
+          timeout: 15000,
+          env: { ...process.env }
+        })
+        console.log('  ✓ Notion API schema test passed')
+        console.log('')
+        console.log('  ✅ Setup complete! AI can now read/write Notion via MCP.')
+        console.log('')
+        console.log('  Next steps:')
+        console.log('    1. Start MCP server: yarn mcp:ignai')
+        console.log('    2. Run full smoke:   yarn mcp:ignai:smoke')
+        console.log('    3. Test member API:  node scripts/notion-member-api-smoke.js query')
+      } catch (err) {
+        console.log('  ⚠  Notion API test failed (offline smoke passed)')
+        console.log('     This may be a network issue or invalid credentials.')
+        console.log('     Try manually: node scripts/notion-member-api-smoke.js schema')
+        console.log('')
+        console.log('  Setup partially complete. .env.notion.local is written.')
+        console.log('  Verify credentials and try again.')
+      }
+    } else {
+      console.log('')
+      console.log('  Setup complete (offline mode).')
+      console.log('  .env.notion.local has been written.')
+      console.log('')
+      console.log('  To test real Notion API, run:')
+      console.log('    source .env.notion.local && node scripts/notion-member-api-smoke.js schema')
+    }
+  } catch (err) {
+    console.log('  ✗ Smoke test failed:', err.message)
+    console.log('')
+    console.log('  .env.notion.local was written, but verification failed.')
+    console.log('  Please check your credentials and try again.')
+  }
+
+  console.log('')
+}
+
+main().catch(console.error)
