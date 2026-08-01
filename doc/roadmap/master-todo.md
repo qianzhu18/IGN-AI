@@ -55,6 +55,7 @@
   - [x] 2026-07-16：补齐正在执行的智极松长沙 miniCamp；官网活动列表合并已核验的本地进行中活动与 Notion Event，暂缺报名链接的活动不再被误过滤；同时补上长沙理工大学 AI 交流入口记录，并建立 12 份活动材料逐项公开台账。
 - [x] 2026-07-16：从 `/resume/12-社区` 提取第一批真实 Field Notes，补齐社区起源、极客松、三人行、AIPO、2050、马栏山与证据台账 7 条记录
 - [x] **P1 / 8.6** 2026-07-05：IGNAI 官网内容写作 MCP 协议层首版落地，支持状态检查、Notion 草稿 payload、草稿写入入口、后台读写工具和缓存刷新入口
+- [x] 2026-08-02：MCP 强制 NotionNext 原生写作契约；创建、预览、更新均禁止 `ext`，正文写页面 blocks，封面写原生 Page Cover，Record / Event 使用独立属性
 - [x] 2026-07-16：修复本地 Notion Event 写入配置，归档两条 mock 活动，并将第一批真实活动写入 Notion Published Event 行
 - [ ] **P1 / 8.5** MCP 真实发布链路复测：补齐 `NOTION_API_TOKEN`、Post / Event / Member / Record data source id 后，完成真实 Notion 读取 / 写入 / 更新 / 追加 blocks smoke
 - [ ] **P1 / 8.6** 明确“官号内容 vs 官网内容”分工：官号承载传播型长文，官网承载开源经历、社区经历、成员/活动/记录证明链路
