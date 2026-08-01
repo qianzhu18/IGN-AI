@@ -1,7 +1,7 @@
 # IGNAI 社区官网排期
 
 记录日期：2026-05-11
-最近校准：2026-06-13
+最近校准：2026-07-31
 说明：这是一个滚动排期，会随着开发实时更新。
 
 ## 1. 排期方法
@@ -40,7 +40,8 @@
 - [x] **P0** 活动详情页支持 Notion 报名链接 / 报名二维码展示
 - [x] **P0** 活动官方 API 补数与真实 Event slug 路由映射完成
 - [x] **P0** 活动后台支持 Notion 发布后刷新首页、活动列表和活动详情缓存
-- [x] **P0** 活动支持 Notion `ext.status=planning/ongoing/recap` 与 `ext.eventDateText` 时间段展示
+- [x] **P0** 活动支持 Notion `event_status=planning/ongoing/recap`、`event_format` 与 `date` / `event_start` / `event_end` 动态展示
+- [x] **P0** Record 通过 `related_event_slug` 单向维护关系，Event / Record 详情自动双向展示
 - [x] **P0** 社区记录 `/records`、`/records/[slug]` 与首页 Field Notes 前台入口补齐
 - [x] **P0** 头像上传 API 12 路并发烟测通过，确认 R2 上传链路可用
 - [x] **P0** 本地 `yarn build` 完整通过，日报入口已从桌面 / 移动导航移除

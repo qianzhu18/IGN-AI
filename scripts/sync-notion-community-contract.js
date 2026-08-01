@@ -7,6 +7,7 @@
 const fs = require('fs')
 const path = require('path')
 
+loadEnvFile('.env.notion.local')
 loadEnvFile('.env.local')
 loadEnvFile('.env')
 
@@ -174,19 +175,6 @@ function slugFromPage(page, fields) {
   )
 }
 
-function parseExt(page, fields) {
-  const raw = value(page.properties?.[fields.ext.key])
-  if (!raw) return {}
-  try {
-    const parsed = JSON.parse(raw)
-    return parsed && typeof parsed === 'object' && !Array.isArray(parsed)
-      ? parsed
-      : {}
-  } catch {
-    return {}
-  }
-}
-
 async function notion(pathname, options = {}) {
   const response = await fetch(`${API_BASE}${pathname}`, {
     ...options,
@@ -261,11 +249,12 @@ async function main() {
 
   const dataSource = await notion(`/data_sources/${DATA_SOURCE_ID}`)
   const fields = Object.fromEntries(
-    ['title', 'type', 'status', 'slug', 'summary', 'ext'].map(name => [
+    ['title', 'type', 'status', 'slug', 'summary'].map(name => [
       name,
       findProperty(dataSource, name)
     ])
   )
+  fields.relatedEventSlug = findProperty(dataSource, 'related_event_slug')
   const pages = await getAllPages()
   const rows = pages.map(page => ({
     page,
@@ -324,40 +313,15 @@ async function main() {
       })
       continue
     }
-    const recordExt = parseExt(record.page, fields)
-    if (recordExt.relatedEventSlug !== eventSlug) {
+    const currentEventSlug = value(
+      record.page.properties?.[fields.relatedEventSlug.key]
+    )
+    if (currentEventSlug !== eventSlug) {
       actions.push({
         kind: 'link-record',
         slug: recordSlug,
         run: () =>
-          updatePage(record.page.id, fields, [
-            [
-              'ext',
-              JSON.stringify({ ...recordExt, relatedEventSlug: eventSlug })
-            ]
-          ])
-      })
-    }
-    const eventExt = parseExt(event.page, fields)
-    const relatedRecordSlugs = [
-      ...new Set([
-        ...(Array.isArray(eventExt.relatedRecordSlugs)
-          ? eventExt.relatedRecordSlugs
-          : []),
-        recordSlug
-      ])
-    ]
-    if (
-      JSON.stringify(eventExt.relatedRecordSlugs || []) !==
-      JSON.stringify(relatedRecordSlugs)
-    ) {
-      actions.push({
-        kind: 'link-event',
-        slug: eventSlug,
-        run: () =>
-          updatePage(event.page.id, fields, [
-            ['ext', JSON.stringify({ ...eventExt, relatedRecordSlugs })]
-          ])
+          updatePage(record.page.id, fields, [['relatedEventSlug', eventSlug]])
       })
     }
   }

@@ -1,6 +1,7 @@
 # IGNAI Notion 与前台关联现状
 
 记录日期：2026-06-04
+最近校准：2026-07-31
 
 ## 1. 已经打通
 
@@ -22,29 +23,19 @@
 
 - Notion `type=Event`
 - 前台：`/events`、`/events/[slug]`、首页活动区块
-- 字段入口：基础字段 + `ext` JSON
+- 字段入口：Notion 顶层字段；`ext` 不再参与 Event / Record 运行时读取
 - 数据读取：除 NotionNext collection view 外，服务端会通过 Notion 官方 data_source API 补拉真实 `Event` 行，避免活动被视图过滤后前台退回静态内容
 - 路由映射：活动详情页静态路径来自真实 Notion Event slug；`events/foo` 和 `foo` 会归一为 `/events/foo`
-- 封面：优先读取 Notion 页面顶部 cover，`ext.cover` / `ext.coverUrl` 只作为历史兼容兜底
-- 封面比例：前台活动卡片统一使用 16:9；可通过 `ext.coverPosition` 控制裁剪位置，例如 `center`、`top`、`50% 35%`
-- 活动关系：`ext.kind` 用于标记 IGNAI 与活动的关系，可选 `hosted`（成员组织）、`cohosted`（联动活动）、`promoted`（协助宣发）、`participating`（成员参与）
-- 活动状态：`ext.status` 推荐使用 `planning`（筹备中）、`ongoing`（进行中）、`recap`（已复盘）；继续兼容 `open` / `closed` / `finished`
-- 活动时间：列表优先显示 `ext.eventDateText` / `ext.dateRange` / `ext.period`；如果没有，则显示 `event_start` + `event_end` 组成的时间段，再退回 `date`
-- 发布时间：Notion `date` 可以继续作为发布 / 收录日期使用；活动真实发生时间优先放在 `ext.eventDateText`，或用 `event_start` + `event_end`
+- 封面：直接读取 Notion 页面顶部 cover，并转换为 Notion 稳定附件地址，避免官方 API 一小时签名过期后回退到旧海报
+- 封面比例：前台活动卡片统一使用 16:9；Notion 封面的 `Reposition` 会按 NotionNext 原生公式同步为裁剪位置。`cover_position` 只保留为可选人工覆盖
+- 活动关系：Notion `category` 标记 IGNAI 与活动的关系，例如主办、联合承办、协助宣发、参与
+- 活动状态：`event_status` 使用 `planning`（筹备中）、`ongoing`（进行中）、`recap`（已复盘）
+- 活动形式：`event_format` 使用 `offline`、`online`、`hybrid`
+- 活动时间：使用 `date`；需要兼容旧活动时也支持 `event_start` + `event_end`
+- 首页展示：`public_listing` 可显式控制；有 `website` 或 `registration_qr` 时也可进入首页活动区
 - 外部活动：如果 Notion `slug` 填写 `https://...`，前台会把它识别为外部活动入口，列表 / 首页点击直接打开外部 URL
-- 外部活动默认关系：如果有外部入口但没有填写 `ext.kind`，前台默认显示为 `participating`（成员参与），避免误标为“成员组织”
-- OPC 示例 `ext`：
-
-```json
-{
-  "status": "ongoing",
-  "kind": "promoted",
-  "eventDateText": "2026 / 06 / 04 起，投票与参与进行中",
-  "coverPosition": "50% 42%"
-}
-```
-
-- 报名：活动详情读取 `registrationUrl` / `registrationQrImage`
+- 外部活动默认关系：如果 slug 是外部 URL 且没有填写 category，前台默认显示为成员参与
+- 报名：活动详情读取 `website` / `registration_qr`
 - 发布同步：管理后台可手动刷新首页、活动列表和活动详情缓存
 - 离线兜底：`src/content/events.ts` 只保留当前 Notion 里已存在的真实活动种子，不再放虚构 mock 活动
 
@@ -56,16 +47,16 @@
 - 后续开启：清理 Notion Menu 后，将 `IGNAI_NAV_USE_NOTION_MENU` 设为 true，即可让 Header 读取 Notion customMenu
 - 友链准备：`友链` / `友情链接` / `Link` 不再被标题过滤；清理模板菜单并开启开关后，可作为真实 Menu 接入
 
-## 2. 已有 Notion 记录，但前台仍以版本库事实稿为渲染源
+## 2. 社区记录
 
 ### 社区记录
 
 - 当前前台：`/records`、`/records/[slug]`、首页 Field Notes
-- 前台渲染源：`src/content/records.ts`，用于保存经过核验的图文段落与本地图片映射
-- Notion 镜像：共享数据源中的 `type=Record`；2026-07-17 已将 7 条错误旧记录设为 `Invisible`，并写入 9 条与前台同 slug 的真实记录
-- 时间规则：5 条可确认记录使用 `date` + `ext.timelineDate`；4 条日期不足的材料不填 `date`，统一使用 `ext.dateStatus=unknown`
-- 当前边界：Notion 可以自由读写和维护发布状态，但 Record 前台尚未像 Event 一样直接补拉官方 data source；修改记录正文后仍需同步 `src/content/records.ts`
-- 后续建议：实现 Record 官方 API 读取与正文 block 规范化，让 Notion 成为唯一主源，并保留本地图片作为稳定降级
+- 内容主源：共享数据源中的 `type=Record`；列表字段走官方 data source API，详情正文直接渲染 Notion page blocks
+- 时间规则：使用顶层 `date`；没有明确日期时留空并在列表中沉底
+- 关联规则：Record 填写单个 `related_event_slug`；Record 详情显示活动入口，Event 详情自动反查相关 Record
+- 封面规则：优先使用 Notion 页面 cover，本地图片只作为稳定降级
+- 发布规则：`status=Published` 展示，`Invisible` / Draft 隐藏
 
 ## 3. 仍需上线前关注
 

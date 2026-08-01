@@ -21,6 +21,7 @@ import {
   normalizeNotionEvent,
   getEventCoverFallback
 } from '@/lib/utils/event'
+import { mergeOfficialPages } from '@/lib/db/notion/mergeOfficialPages'
 import { getAllRecords } from '@/lib/records'
 import Link from 'next/link'
 import { CalendarDays, MapPin, ArrowLeft } from 'lucide-react'
@@ -207,7 +208,7 @@ export async function getStaticPaths({ locales = [] } = {}) {
       fetchEventsFromOfficialAPI()
     ])
     events = normalizeEventList(
-      freshEvents.length > 0 ? freshEvents : props.allEvents || []
+      mergeOfficialPages(props.allEvents || [], freshEvents)
     )
   } catch (error) {
     console.warn(
@@ -239,7 +240,7 @@ export async function getStaticProps({ params, locale }) {
     fetchEventsFromOfficialAPI(),
     fetchRecordsFromOfficialAPI()
   ])
-  const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
+  const allEvents = mergeOfficialPages(props.allEvents || [], freshEvents)
   const allRecords =
     freshRecords.length > 0 ? freshRecords : props.allRecords || []
 

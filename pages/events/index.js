@@ -16,6 +16,7 @@ import {
   isExternalEvent,
   normalizeEventList
 } from '@/lib/utils/event'
+import { mergeOfficialPages } from '@/lib/db/notion/mergeOfficialPages'
 import Link from 'next/link'
 import { CalendarDays, ExternalLink, MapPin } from 'lucide-react'
 
@@ -175,7 +176,7 @@ export async function getStaticProps({ locale }) {
   const from = 'events-index'
   const props = await fetchGlobalAllData({ from, locale })
   const freshEvents = await fetchEventsFromOfficialAPI()
-  const allEvents = freshEvents.length > 0 ? freshEvents : props.allEvents || []
+  const allEvents = mergeOfficialPages(props.allEvents || [], freshEvents)
 
   const events = normalizeEventList(allEvents)
   const pageTitle = 'IGNAI - 活动'

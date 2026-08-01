@@ -8,6 +8,7 @@ import {
   MapPin
 } from 'lucide-react'
 import {
+  fetchEventsFromOfficialAPI,
   fetchGlobalAllData,
   fetchRecordsFromOfficialAPI,
   getPostBlocks
@@ -23,6 +24,7 @@ import {
   isExternalEvent,
   normalizeEventList
 } from '@/lib/utils/event'
+import { mergeOfficialPages } from '@/lib/db/notion/mergeOfficialPages'
 
 // Walk a Notion blockMap and return the first child paragraph's plain text.
 // Used as a fallback excerpt when the Notion `summary` property is empty,
@@ -249,9 +251,13 @@ export async function getStaticProps({ params, locale }) {
   const { slug } = params
   const from = 'record-detail'
   const props = await fetchGlobalAllData({ from, locale })
-  const freshRecords = await fetchRecordsFromOfficialAPI()
+  const [freshRecords, freshEvents] = await Promise.all([
+    fetchRecordsFromOfficialAPI(),
+    fetchEventsFromOfficialAPI()
+  ])
   const allRecords =
     freshRecords.length > 0 ? freshRecords : props.allRecords || []
+  const allEvents = mergeOfficialPages(props.allEvents || [], freshEvents)
 
   const recordItem = getRecordBySlug(allRecords, slug)
   if (!recordItem) {
@@ -291,8 +297,8 @@ export async function getStaticProps({ params, locale }) {
 
   const allRecordItems = getAllRecords(allRecords)
   const relatedEventSlugs = new Set(recordItem.relatedEventSlugs || [])
-  const relatedEvents = normalizeEventList(props.allEvents || []).filter(
-    event => relatedEventSlugs.has(event.slug)
+  const relatedEvents = normalizeEventList(allEvents).filter(event =>
+    relatedEventSlugs.has(event.slug)
   )
   const moreRecords = allRecordItems
     .filter(item => item.slug !== recordItem.slug)

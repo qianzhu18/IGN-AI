@@ -1,7 +1,7 @@
 # IGNAI 社区官网总 TO DO
 
 记录日期：2026-05-11
-最近校准：2026-07-05
+最近校准：2026-07-31
 说明：这是总 TO DO。只要这里还有未完成项，就代表项目仍处于持续优化阶段。
 
 ## A. Member 体系 ✅ 基本完成
@@ -29,6 +29,11 @@
 - [x] 活动通过 Notion 官方 data_source API 补拉真实 `Event` 行，详情页路径映射到具体 Event slug
 - [x] Event 支持成员组织 / 联动 / 宣发 / 参与关系、外部活动入口和 16:9 封面裁剪
 - [x] Event 支持 Notion 管理 `planning` / `ongoing` / `recap` 状态与活动时间段展示
+- [x] 2026-07-31：恢复 Event / Record 顶层字段一一映射，创建并接通 `event_status`、`event_format`、`public_listing`、`registration_qr`、`cover_position`、`related_event_slug`
+- [x] 2026-07-31：为 9 组真实活动与回顾回填单向关系；Event 详情从 Record 关系自动反查，不再运行时依赖 `ext` JSON 或静态关系表
+- [x] 2026-07-31：官方 Notion API 行覆盖不完整的 collection-view 同 ID 行，避免首页和详情页读取不同字段版本
+- [x] 2026-07-31：Record 详情直接补拉最新 Event 行，生产构建产物已验证活动与回顾双向入口
+- [x] 2026-07-31：恢复 Notion 页面封面原生 Reposition；官方临时文件 URL 转为稳定附件地址，活动卡片不再过期后显示旧静态海报
 - [x] 社区记录 `/records` 与 `/records/[slug]` 前台入口补齐
 - [x] 首页 Field Notes 区块接入社区记录
 - [x] Post 详情页展示关联 Member / Event 的首轮使用闭环

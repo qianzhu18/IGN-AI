@@ -88,3 +88,13 @@
 - 可复跑脚本：`yarn notion:community:contract`（只读预览）与 `yarn notion:community:contract:apply`（写入）。写入后复读结果为 `planned: []`。
 
 仍未做真实 Join 提交，以避免在未经运营确认时新增申请数据；该链路需在生产环境变量完整的情况下单独 smoke。
+
+## 字段回归修复（2026-07-31）
+
+7 月 24 日删除 `ext` JSON 后，替代它的顶层字段没有完整创建和映射，导致活动状态、形式、公开开关和 Event / Record 关系在部分页面退回默认值或空值。现已完成：
+
+- 内容库新增 `event_status`、`event_format`、`public_listing`、`registration_qr`、`cover_position`、`related_event_slug`。
+- Event / Record 官方 API 映射、页面标准化和 TypeScript 契约统一读取这些顶层字段。
+- 9 组真实 Record 已回填 `related_event_slug`；Event 详情根据 Record 单向关系反查回顾，不再要求双向手工维护。
+- 官方 API 返回的完整行会覆盖 collection view 中同 ID 的不完整行，避免首页与详情页字段不一致。
+- `yarn notion:community:schema` 默认只检查；`yarn notion:community:schema:apply` 才补齐缺失列。

@@ -46,13 +46,51 @@ function categoryLabelToType(label: string | undefined): RecordType {
   return map[label || ''] || 'story'
 }
 
+function formatRecordDateRange(start?: string, end?: string): string {
+  if (!start) return ''
+  if (!end || end === start) return start
+  return `${start} – ${end}`
+}
+
+function readStringArray(...values: unknown[]): string[] {
+  for (const value of values) {
+    if (Array.isArray(value)) {
+      return value
+        .filter((item): item is string => typeof item === 'string')
+        .map(item => item.trim())
+        .filter(Boolean)
+    }
+    if (typeof value === 'string' && value.trim()) {
+      return value
+        .split(/[,，、\n]/)
+        .map(item => item.trim())
+        .filter(Boolean)
+    }
+  }
+  return []
+}
+
+function normalizeRelatedSlug(value: string): string {
+  return (
+    value
+      .trim()
+      .replace(/^https?:\/\/[^/]+/i, '')
+      .replace(/^\/+|\/+$/g, '')
+      .split('/')
+      .filter(Boolean)
+      .pop() || ''
+  )
+}
+
 export function normalizeRecord(page: BasePage): RecordItem {
+  const start = page?.date?.start
+  const end = page?.date?.end
   const record: RecordItem = {
     slug: page?.slug ?? '',
     title: page?.title ?? '',
     type: categoryLabelToType(page?.category),
-    dateText: '',
-    dateStatus: 'unknown',
+    dateText: formatRecordDateRange(start, end),
+    dateStatus: start ? 'confirmed' : 'unknown',
     cover: page?.cover || page?.pageCoverThumbnail || '',
     excerpt: page?.summary ?? '',
     tags: Array.isArray(page?.tags) ? page.tags : []
@@ -61,11 +99,21 @@ export function normalizeRecord(page: BasePage): RecordItem {
   if (page?.id) record.id = page.id
 
   // Read from top-level date property (Notion date with optional end).
-  if (page?.date?.start) record.timelineDate = page.date.start
-  if (page?.date?.end) record.timelineEndDate = page.date.end
+  if (start) record.timelineDate = start
+  if (end) record.timelineEndDate = end
 
   // Read from top-level location property.
   if (page?.location) record.location = page.location
+
+  const relatedEventSlugs = readStringArray(
+    page?.relatedEventSlugs,
+    page?.relatedEventSlug
+  )
+    .map(normalizeRelatedSlug)
+    .filter(Boolean)
+  if (relatedEventSlugs.length > 0) {
+    record.relatedEventSlugs = Array.from(new Set(relatedEventSlugs))
+  }
 
   return record
 }

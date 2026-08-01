@@ -20,12 +20,13 @@ const contentCards = [
       '发布新活动：在 Notion 新建 type=Event 的页面',
       '活动封面：直接使用 Notion 页面顶部的添加封面 / 更换封面',
       '核心字段：slug、summary、date 或 event_start、location、tags',
-      '活动状态：维护 ext.status=planning/ongoing/recap，兼容 open/closed/finished',
-      '活动时间段：优先维护 ext.eventDateText，或填写 event_start / event_end',
-      '活动关系：维护 ext.kind=hosted/cohosted/promoted/participating',
+      '活动状态：直接选择 event_status=planning/ongoing/recap',
+      '活动形式：直接选择 event_format=offline/online/hybrid',
+      '首页展示：勾选 public_listing；有报名链接或二维码时也会自动进入首页活动区',
+      '活动时间：填写 date，或使用 event_start / event_end',
       '外部活动：slug 可直接填外部活动 URL，官网会作为外部入口打开',
-      '封面裁剪：维护 ext.coverPosition，例如 center、top、50% 35%',
-      '报名链接与二维码：维护 ext.registrationUrl / ext.registrationQrImage'
+      '封面裁剪：直接在 Notion 封面上点击 Reposition；cover_position 仅用于需要手工覆盖时',
+      '报名链接与二维码：填写 website / registration_qr'
     ]
   },
   {
@@ -34,9 +35,9 @@ const contentCards = [
     bullets: [
       '查看记录前台：/records 与 /records/[slug]',
       '后台镜像：Notion type=Record，Published 展示，Invisible 隐藏',
-      '详情正文：直接读取对应 Notion 页面 blocks；列表按 ext.timelineDate 排序',
-      '日期无法确认的记录不填 date，并在 ext 标记 dateStatus=unknown',
-      '关联活动：在 ext.relatedEventSlug 填 Event 的 slug，前后端会双向展示关联入口'
+      '详情正文：直接读取对应 Notion 页面 blocks；列表按 date 排序',
+      '时间与地点：直接填写 date / location；没有明确日期时 date 留空',
+      '关联活动：填写 related_event_slug；Record 与 Event 详情会自动双向展示入口'
     ]
   }
 ]

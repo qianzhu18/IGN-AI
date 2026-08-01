@@ -13,7 +13,14 @@ export interface SiteInfo {
 }
 
 export type PageStatus = 'Published' | 'Invisible'
-export type PageType = 'Post' | 'Page' | 'Notice' | 'Menu' | 'SubMenu' | 'Member' | 'Event'
+export type PageType =
+  | 'Post'
+  | 'Page'
+  | 'Notice'
+  | 'Menu'
+  | 'SubMenu'
+  | 'Member'
+  | 'Event'
 
 export interface PageDate {
   start?: string
@@ -60,6 +67,14 @@ export interface BasePage {
   authors?: ResolvedAuthor[]
   location?: string
   website?: string
+  eventStatus?: string
+  format?: string
+  publicListing?: boolean
+  registrationQrImage?: string
+  coverPosition?: string
+  organizer_slugs?: string[]
+  relatedEventSlug?: string
+  relatedEventSlugs?: string[]
   ext?: Record<string, unknown>
 }
 

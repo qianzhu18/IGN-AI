@@ -12,6 +12,7 @@ import { DynamicLayout } from '@/themes/theme'
 import { generateRedirectJson } from '@/lib/utils/redirect'
 import { checkDataFromAlgolia } from '@/lib/plugins/algolia'
 import { normalizeEventList } from '@/lib/utils/event'
+import { mergeOfficialPages } from '@/lib/db/notion/mergeOfficialPages'
 import pLimit from 'p-limit'
 import { mergeFixturePosts } from '@/lib/dev/contentFixtures'
 
@@ -72,9 +73,7 @@ export async function getStaticProps(req) {
   if (freshMembers.length > 0) {
     props.allMembers = freshMembers
   }
-  if (freshEvents.length > 0) {
-    props.allEvents = freshEvents
-  }
+  props.allEvents = mergeOfficialPages(props.allEvents || [], freshEvents)
   // 首页只序列化 Notion 中已发布的活动；不再混入仓库里的示例数据。
   props.allEvents = normalizeEventList(props.allEvents || [])
   if (process.env.NODE_ENV === 'development') {

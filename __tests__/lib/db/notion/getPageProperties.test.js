@@ -148,4 +148,24 @@ describe('getPageProperties member mapping', () => {
     expect(properties.status).toBe('Published')
     expect(properties.href).toBe('/alice-chen')
   })
+
+  it('maps the native Notion cover Reposition value to CSS object-position', async () => {
+    const { default: getPageProperties } = loadGetPageProperties()
+    const pageValue = createPageValue({
+      title: [['活动']],
+      type: [['Event']],
+      status: [['Published']]
+    })
+    pageValue.format.page_cover_position = 0.25
+
+    const properties = await getPageProperties(
+      'event-page-id',
+      pageValue,
+      memberSchema,
+      null,
+      []
+    )
+
+    expect(properties.coverPosition).toBe('center 75%')
+  })
 })
