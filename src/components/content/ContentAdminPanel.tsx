@@ -15,8 +15,8 @@ export function ContentAdminPanel({ type }: ContentAdminPanelProps) {
             "活动内容以 Notion Event 为主源。每条活动可以在 Notion 中维护标题、时间、地点、封面、详情正文、报名链接，以及报名二维码。",
           bullets: [
             "发布新活动：在 Notion 新建 type=Event 的页面",
-            "活动报名：填写 ext.registrationUrl",
-            "如果你要放二维码：填写 ext.registrationQrImage",
+            "活动报名：填写顶层 website 字段",
+            "报名二维码：填写顶层 registration_qr；封面使用页面顶部 Add cover / Change cover",
           ],
         }
       : {
@@ -25,9 +25,9 @@ export function ContentAdminPanel({ type }: ContentAdminPanelProps) {
           body:
             "现场记录的编辑入口同样在 Studio。你可以继续新增活动复盘、成员故事、工具清单和项目记录。",
           bullets: [
-            "发布新记录：进入 Studio -> 现场记录",
-            "可编辑标题、摘要、封面、正文和相关链接",
-            "首页与列表页会按排序字段自动展示",
+            "发布新记录：在 Notion 新建 type=Record 的页面",
+            "正文写在 Notion 页面 blocks，封面使用页面顶部 Add cover / Change cover",
+            "填写 related_event_slug 后，Event 与 Record 会显示双向入口",
           ],
         };
 

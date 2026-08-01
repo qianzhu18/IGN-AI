@@ -1,7 +1,7 @@
 # IGNAI Notion 与前台关联现状
 
 记录日期：2026-06-04
-最近校准：2026-07-31
+最近校准：2026-08-02
 
 ## 1. 已经打通
 
@@ -38,6 +38,8 @@
 - 报名：活动详情读取 `website` / `registration_qr`
 - 发布同步：管理后台可手动刷新首页、活动列表和活动详情缓存
 - 离线兜底：`src/content/events.ts` 只保留当前 Notion 里已存在的真实活动种子，不再放虚构 mock 活动
+- 历史迁移：10 条 Event 的旧 `ext` 已清空；其中 7 条的关系、状态、形式、地点、封面位置和封面已迁入顶层字段 / Notion 原生 Page Cover
+- 防回退：旧 `scripts/seed-notion-events.js` 已禁用，避免再次把活动编辑数据写回 `ext`
 
 ### 导航
 
@@ -57,8 +59,17 @@
 - 关联规则：Record 填写单个 `related_event_slug`；Record 详情显示活动入口，Event 详情自动反查相关 Record
 - 封面规则：优先使用 Notion 页面 cover，本地图片只作为稳定降级
 - 发布规则：`status=Published` 展示，`Invisible` / Draft 隐藏
+- 素材规则：根目录 `活动记录/` 只作为事实底稿和迁移档案，不参与运行时覆盖；公开修改统一进入 Notion Record 正文与顶层字段
 
-## 3. 仍需上线前关注
+## 3. 日常编辑规则
+
+- 活动预告 / 报名页：编辑 `type=Event`
+- 活动完成后的社区现场 / 复盘：编辑 `type=Record`，并填写 `related_event_slug`
+- 正文：直接写在对应 Notion 页面正文，不写入 `ext`
+- 封面：使用 Notion 页面顶部 Add cover / Change cover，并用 Reposition 调整裁剪
+- `活动记录/`：保留原始材料和映射，不作为第二套 CMS
+
+## 4. 仍需上线前关注
 
 - Vercel / 干净远端构建环境需要复验
 - Notion 生成成员清理：`yarn notion:members:cleanup` 只做 dry-run；确认后再运行 `yarn notion:members:cleanup:apply` 把生成成员改为 `Invisible`
