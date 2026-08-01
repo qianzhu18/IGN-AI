@@ -5,6 +5,8 @@
 
 ## 1. 已经打通
 
+官方社区介绍以飞书文档 [IGNAI / 洋来社｜AI 社区合作介绍](https://my.feishu.cn/docx/QaI1dMy6koIwWDxUqKMc1YHvnjc) 为内容口径；官网 About Config 与本地 fallback 保持同一份核心介绍和数据。
+
 ### 文章
 
 - Notion `type=Post`

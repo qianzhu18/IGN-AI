@@ -5,6 +5,7 @@
 - `scripts/migrate-notion-community-content.js`
 - `scripts/seed-notion-events.js`
 - `src/components/content/ContentAdminPanel.tsx`
+- `pages/about.tsx`
 - `package.json`
 - `__tests__/scripts/migrate-notion-community-content.test.js`
 - `docs/notion-frontend-linkage-status.zh-CN.md`
@@ -17,6 +18,7 @@
 - “三人行必有 AI 黑客松长沙站”的 Event 关系从错误的默认“成员组织”恢复为“联合承办”。
 - Event 与 Record 不再混为一条数据：Event 表达活动事实，Record 表达活动后的社区现场，通过 `related_event_slug` 关联。
 - 日常编辑统一为 NotionNext 熟悉的方式：属性写顶层字段、正文写页面 blocks、封面使用页面顶部封面与 Reposition。
+- About Config 与本地 fallback 已同步官方飞书《IGNAI / 洋来社｜AI 社区合作介绍》revision 22，并在官网提供完整介绍入口。
 
 ## 可上游部分
 
