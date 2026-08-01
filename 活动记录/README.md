@@ -17,21 +17,21 @@
 
 ## 当前素材映射
 
-| 原始记录 | 官网条目 | 类型 | 公开状态 | 还缺什么 |
-| --- | --- | --- | --- | --- |
-| `2050 青年团聚.md` | `2050-community-meetup-2026`、`2050-cross-city-showcase` | Event + Record | 已进入官网 | 可继续补现场合影、展位项目详情、照片授权 |
-| `26 年前几次活动的记录.md` | `early-activity-relationship-carrier` | Record | 已进入官网 | 补具体活动名称、时间线、代表成员故事 |
-| `极客松——社区正式启动的节点.md` | `geekathon-community-launch-node` | Record | 已进入官网 | 补活动准确日期、现场职责、后续成立节点 |
-| `三人行必有 AI 黑客松·长沙站线下协办.md` | `sanrenxing-ai-changsha-2026`、`sanrenxing-ai-community-bridge` | Event + Record | 已进入官网 | 补现场结果、成员项目、获奖或后续跟进 |
-| `LEV0 Hackathon LEV0零阶 社区合作.md` | `lev0-minicamp-hackathon-2026`、`lev0-minicamp-award-record` | Event + Record | 已进入官网 | 补参赛项目名、成员分工、技术方案 |
-| `合作观猹 AI 产品经理共学营.md` | `guanchai-ai-product-manager-camp-2026`、`guanchai-ai-product-manager-camp` | Event + Record | 已进入官网 | 补开营日期、报名数据、课程产出 |
-| `观猹长理分园成立.md` | `guanchai-changli-ai-garden-2026` | Event | 已进入官网 | 补成立时间、社群人数、后续活动 |
-| `datawhale 高校宣传活动.md` | `datawhale-campus-promotion-2026` | Event | 已进入官网但按证据露出处理 | 补活动名称、职责、时间、链接 |
-| `社区受邀分享 openclaw 相关内容.md` | `openclaw-sharing-record` | Record | 已进入官网但按待补处理 | 补活动名称、时间、地点、项目说明 |
-| `花猫社区.md` | `huamao-badge-generator-booth` | Record | 已进入官网 | 补活动名称、日期、现场反馈、项目截图 |
-| `观猹百万博主线上联动活动.md` | `guanchai-million-blogger-online-linkage` | Record | 已进入官网但按合作证据处理 | 补活动链接、职责、结果 |
-| `观猹 FDE 共学营｜IGNAI 合作伙伴预热（2026）.md` | `guanchai-fde-study-camp-2026` | Event | Notion `Invisible` 草稿已创建 | 核对具体合作权益与报名页有效性 |
-| `智极松 MiniCamp 长沙站｜线下黑客松执行复盘（2026）.md` | `zhijisong-minicamp-changsha-2026` | Event + Record 底稿 | 已追加至既有 Notion Event，状态 `recap` | 补经授权的项目、成员与后续结果 |
+| 原始记录                                                | 官网条目                                                                    | 类型                    | 公开状态                                                 | 还缺什么                                 |
+| ------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------- | ---------------------------------------- |
+| `2050 青年团聚.md`                                      | `2050-community-meetup-2026`、`2050-cross-city-showcase`                    | Event + Record          | 已进入官网                                               | 可继续补现场合影、展位项目详情、照片授权 |
+| `26 年前几次活动的记录.md`                              | `early-activity-relationship-carrier`                                       | Record                  | 已进入官网                                               | 补具体活动名称、时间线、代表成员故事     |
+| `极客松——社区正式启动的节点.md`                         | `geekathon-community-launch-node`                                           | Record                  | 已进入官网                                               | 补活动准确日期、现场职责、后续成立节点   |
+| `三人行必有 AI 黑客松·长沙站线下协办.md`                | `sanrenxing-ai-changsha-2026`、`sanrenxing-ai-community-bridge`             | Event + Record          | 已进入官网                                               | 补现场结果、成员项目、获奖或后续跟进     |
+| `LEV0 Hackathon LEV0零阶 社区合作.md`                   | `lev0-minicamp-hackathon-2026`、`lev0-minicamp-award-record`                | Event + Record          | 已进入官网                                               | 补参赛项目名、成员分工、技术方案         |
+| `合作观猹 AI 产品经理共学营.md`                         | `guanchai-ai-product-manager-camp-2026`、`guanchai-ai-product-manager-camp` | Event + Record          | 已进入官网                                               | 补开营日期、报名数据、课程产出           |
+| `观猹长理分园成立.md`                                   | `guanchai-changli-ai-garden`                                                | Record                  | 已进入官网；无依据的重复 Event 已归档                    | 补成立时间、社群人数、后续活动           |
+| `datawhale 高校宣传活动.md`                             | `datawhale-campus-promotion-2026`、`datawhale-campus-promotion`             | Event + Record 证据草稿 | `Invisible`，不公开                                      | 补活动名称、职责、时间、链接             |
+| `社区受邀分享 openclaw 相关内容.md`                     | `openclaw-sharing-record`                                                   | Record                  | 已进入官网但按待补处理                                   | 补活动名称、时间、地点、项目说明         |
+| `花猫社区.md`                                           | `huamao-badge-generator-booth`                                              | Record                  | 已进入官网                                               | 补活动名称、日期、现场反馈、项目截图     |
+| `观猹百万博主线上联动活动.md`                           | `guanchai-million-creator`                                                  | Record 证据草稿         | `Invisible`，不公开                                      | 补活动链接、职责、时间、结果             |
+| `观猹 FDE 共学营｜IGNAI 合作伙伴预热（2026）.md`        | `guanchai-fde-study-camp-2026`                                              | Event                   | Notion `Published`，活动进行中；过早创建的 Record 已归档 | 活动结束后再补现场证据和正式回顾         |
+| `智极松 MiniCamp 长沙站｜线下黑客松执行复盘（2026）.md` | `zhijisong-minicamp-changsha-2026`                                          | Event + Record 底稿     | 已追加至既有 Notion Event，状态 `recap`                  | 补经授权的项目、成员与后续结果           |
 
 ## 已生成官网封面
 

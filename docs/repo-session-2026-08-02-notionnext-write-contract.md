@@ -25,7 +25,7 @@
 
 - Record `ignai-community-origin-story`
   - `recordType=story` 迁移为 `category=社区故事`
-  - 日期和地点保留在 `date` / `location`
+  - 清除无来源的 `2025-01-01` 占位日期，地点保留在 `location`
   - 三条 outcomes 迁移为页面正文标题与列表 blocks
   - `ext` 已清空，页面仍保持 `Invisible` 等待人工审核
 
@@ -36,6 +36,6 @@
 
 ## 剩余工作
 
-- 扫描其余 Invisible Event / Record，按同一规则做人工复核式迁移。
+- 其余 Invisible Event / Record 已于同日完成人工复核式迁移和内容质量清理，详见 `repo-session-2026-08-02-notion-content-quality-cleanup.md`。
 - 完成生产 MCP 的真实创建、更新、追加 blocks 全链路 smoke。
 - 继续保持前台读取顶层字段，不新增 `ext` 回退。

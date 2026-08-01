@@ -28,6 +28,8 @@
     "notion:community:schema:apply": "node scripts/sync-notion-community-schema.js --apply",
     "notion:community:migrate": "node scripts/migrate-notion-community-content.js",
     "notion:community:migrate:apply": "node scripts/migrate-notion-community-content.js --apply",
+    "notion:community:cleanup": "node scripts/cleanup-notion-content-quality.js",
+    "notion:community:cleanup:apply": "node scripts/cleanup-notion-content-quality.js --apply",
     "mcp:ignai": "node tools/ignai-content-mcp/server.js",
     "mcp:ignai:smoke": "node tools/ignai-content-mcp/smoke-test.js",
     "mcp:ignai:setup": "node tools/ignai-content-mcp/setup.js",

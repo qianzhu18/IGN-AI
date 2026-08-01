@@ -29,4 +29,4 @@
 
 - 继续补齐少数 Published Event / Record 缺失的 Notion 原生封面。
 - 把新增内容流程固化为 Invisible 草稿、人工核验、Published 发布与缓存刷新。
-- 逐步清理仍为 Invisible 的旧 Record `ext`，但需先核对是否含有尚未迁入正文的历史内容。
+- Invisible Record 的旧 `ext` 已于同日逐条核对并迁移；未知 key 仍由清理脚本阻断，不做静默丢弃。
