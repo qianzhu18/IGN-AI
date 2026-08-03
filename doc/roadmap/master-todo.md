@@ -157,6 +157,8 @@
 - [x] **P0 / 9.9** 成员 / 活动 Published 后刷新链路修复：核心页面直接补拉官方 Notion data source，ISR 上限收敛到 60 秒，手动刷新路径覆盖 `/members` / `/events` / `/records`
 - [ ] **P0 / 9.8** Notion 内容填充完成：`/members` 至少展示真实 Published 成员，避免成员目录为空
 - [x] **P0 / 9.5** SEO 基础输出修复：`robots.txt`、`sitemap.xml`、RSS、canonical 不出现 `undefined`，并收录成员 / 活动 / 记录 / 加入 / 关于页
+- [x] 2026-08-03：按 [qiaomu-seo](https://github.com/joeseesun/qiaomu-seo) 的证据链方法增强 SEO：动态索引策略、成员 / 活动 / 记录结构化数据、动态 sitemap、正式 OG fallback、图片 alt
+- [ ] 2026-08-03：正式部署恢复后复验 `robots.txt`、`sitemap.xml`、RSS、canonical、OG、JSON-LD 与 Google/Bing 抓取状态
 - [x] **P0 / 9.2** 公开危险接口收口：`/api/cache` 必须鉴权或关闭公开访问
 - [ ] **P0 / 9.0** 生产环境变量核对：`OPS_ACCESS_PASSWORD`、图床、Join 数据落点、正式域名、Notion Token
 - [ ] **P0 / 9.0** 生产运行时配置核对：避免 `LINK=http://preview.tangly1024.com`、`THEME=endspace`、`LANG=en-US` 等旧配置进入线上 pageProps

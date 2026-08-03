@@ -5,6 +5,12 @@ export function getServerSideProps({ res }) {
   const body = [
     'User-agent: *',
     'Allow: /',
+    'Disallow: /api/',
+    'Disallow: /manage',
+    'Disallow: /dashboard',
+    'Disallow: /auth',
+    'Disallow: /sign-in',
+    'Disallow: /sign-up',
     '',
     `Sitemap: ${siteUrl}/sitemap.xml`,
     ''

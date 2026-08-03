@@ -24,6 +24,7 @@ const BLOG = {
   LINK: process.env.NEXT_PUBLIC_LINK || 'https://www.yanglaishe.cn', // 网站地址
   KEYWORDS: process.env.NEXT_PUBLIC_KEYWORD || 'IGNAI, AI社区, 长沙, 人工智能, 科技社区', // 网站关键词
   BLOG_FAVICON: process.env.NEXT_PUBLIC_FAVICON || '/brand/ignai/favicon-512.png', // IGNAI favicon
+  OG_IMAGE: process.env.NEXT_PUBLIC_OG_IMAGE || '/brand/ignai/og-default.jpg', // 1200x630 站点分享图
   BEI_AN: process.env.NEXT_PUBLIC_BEI_AN || '', // 备案号 闽ICP备XXXXXX
   BEI_AN_LINK: process.env.NEXT_PUBLIC_BEI_AN_LINK || 'https://beian.miit.gov.cn/', // 备案查询链接，如果用了萌备等备案请在这里填写
   BEI_AN_GONGAN: process.env.NEXT_PUBLIC_BEI_AN_GONGAN || '', // 公安备案号，例如 '浙公网安备3xxxxxxxx8号'

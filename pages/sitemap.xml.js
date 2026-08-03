@@ -1,18 +1,27 @@
 // pages/sitemap.xml.js
 import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
-import { fetchGlobalAllData } from '@/lib/db/SiteDataApi'
 import {
-  buildSitemapLoc,
-  normalizeSitemapBaseUrl,
-  normalizeSitemapLocale,
-  toSitemapDateString
-} from '@/lib/sitemap-utils'
+  fetchEventsFromOfficialAPI,
+  fetchGlobalAllData,
+  fetchMembersFromOfficialAPI,
+  fetchRecordsFromOfficialAPI
+} from '@/lib/db/SiteDataApi'
+import { mergeOfficialPages } from '@/lib/db/notion/mergeOfficialPages'
+import {
+  buildCommunitySitemapFields,
+  renderSitemapXml
+} from '@/lib/seo/sitemap'
 import { extractLangId, extractLangPrefix } from '@/lib/utils/pageId'
 
 export const getServerSideProps = async ctx => {
   let fields = []
   const siteIds = BLOG.NOTION_PAGE_ID.split(',')
+  const [freshEvents, freshMembers, freshRecords] = await Promise.all([
+    fetchEventsFromOfficialAPI(),
+    fetchMembersFromOfficialAPI(),
+    fetchRecordsFromOfficialAPI()
+  ])
 
   for (let index = 0; index < siteIds.length; index++) {
     const siteId = siteIds[index]
@@ -28,7 +37,14 @@ export const getServerSideProps = async ctx => {
       siteData?.siteInfo?.link,
       siteData.NOTION_CONFIG
     )
-    const localeFields = generateLocalesSitemap(link, siteData.allPages, locale)
+    const localeFields = buildCommunitySitemapFields({
+      link,
+      locale,
+      allPages: siteData.allPages,
+      allMembers: freshMembers.length > 0 ? freshMembers : siteData.allMembers,
+      allEvents: mergeOfficialPages(siteData.allEvents || [], freshEvents),
+      allRecords: freshRecords.length > 0 ? freshRecords : siteData.allRecords
+    })
     fields = fields.concat(localeFields)
   }
 
@@ -48,61 +64,6 @@ export const getServerSideProps = async ctx => {
   }
 }
 
-function generateLocalesSitemap(link, allPages, locale) {
-  const normalizedLink = normalizeSitemapBaseUrl(link)
-  const normalizedLocale = normalizeSitemapLocale(locale)
-  const dateNow = toSitemapDateString(new Date())
-  const communitySlugs = [
-    '',
-    'events',
-    'records',
-    'join',
-    'about',
-    'archive',
-    'category',
-    'tag',
-    'search',
-    'rss/feed.xml'
-  ]
-
-  const defaultFields = communitySlugs
-    .map(slug => ({
-      loc: buildSitemapLoc({
-        baseUrl: normalizedLink,
-        locale: normalizedLocale,
-        slug
-      }),
-      lastmod: dateNow,
-      changefreq: 'daily',
-      priority: slug === '' ? '1.0' : '0.8'
-    }))
-    .filter(field => Boolean(field?.loc))
-
-  const postFields =
-    allPages
-      ?.filter(p => p.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
-      // 过滤掉外部链接(http开头)和锚点链接(#开头)
-      ?.filter(p => p.slug && !p.slug.startsWith('http') && !p.slug.startsWith('#'))
-      ?.map(post => {
-        const loc = buildSitemapLoc({
-          baseUrl: normalizedLink,
-          locale: normalizedLocale,
-          slug: post?.slug
-        })
-        if (!loc) return null
-
-        return {
-          loc,
-          lastmod: toSitemapDateString(post?.publishDay, dateNow),
-          changefreq: 'daily',
-          priority: '0.7'
-        }
-      })
-      ?.filter(Boolean) ?? []
-
-  return defaultFields.concat(postFields)
-}
-
 function getUniqueFields(fields) {
   const uniqueFieldsMap = new Map()
 
@@ -117,31 +78,6 @@ function getUniqueFields(fields) {
   return Array.from(uniqueFieldsMap.values())
 }
 
-function escapeXml(value) {
-  return `${value ?? ''}`
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
+function SitemapXml() { }
 
-function renderSitemapXml(fields) {
-  const urls = fields
-    .filter(field => field?.loc)
-    .map(field => {
-      return [
-        '  <url>',
-        `    <loc>${escapeXml(field.loc)}</loc>`,
-        field.lastmod ? `    <lastmod>${escapeXml(field.lastmod)}</lastmod>` : '',
-        field.changefreq ? `    <changefreq>${escapeXml(field.changefreq)}</changefreq>` : '',
-        field.priority ? `    <priority>${escapeXml(field.priority)}</priority>` : '',
-        '  </url>'
-      ].filter(Boolean).join('\n')
-    })
-    .join('\n')
-
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`
-}
-
-export default () => { }
+export default SitemapXml

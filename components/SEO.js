@@ -1,28 +1,14 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
+import {
+  buildAbsoluteUrl,
+  buildStructuredData,
+  getIndexingPolicy,
+  resolveSeoImage,
+  serializeJsonLd
+} from '@/lib/seo/metadata'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-
-function trimSlashes(value = '') {
-  return `${value}`.replace(/^\/+|\/+$/g, '')
-}
-
-function trimTrailingSlash(value = '') {
-  return `${value}`.replace(/\/+$/g, '')
-}
-
-function buildAbsoluteUrl(base, ...parts) {
-  const root = trimTrailingSlash(base || '')
-  const pathname = parts.map(trimSlashes).filter(Boolean).join('/')
-  return pathname ? `${root}/${pathname}` : root
-}
-
-function resolveSeoImage(image, link) {
-  const fallback = '/bg_image.jpg'
-  const value = image && image !== 'undefined' ? image : fallback
-  if (/^https?:\/\//i.test(value)) return value
-  return buildAbsoluteUrl(link, value)
-}
 
 /**
  * 页面的Head头，有用于SEO
@@ -33,11 +19,25 @@ const SEO = props => {
   const { children, siteInfo, post, NOTION_CONFIG } = props
   const LINK = siteConfig('LINK')
   const SUB_PATH = siteConfig('SUB_PATH', '')
-  let url = buildAbsoluteUrl(LINK, SUB_PATH)
+  const siteUrl = buildAbsoluteUrl(LINK, SUB_PATH)
+  let url = siteUrl
   let image
   const router = useRouter()
   const meta = getSEOMeta(props, router, useGlobal()?.locale)
-  const webFontUrl = siteConfig('FONT_URL')
+  const indexingPolicy = getIndexingPolicy(router?.route)
+  const defaultOgImage = siteConfig(
+    'OG_IMAGE',
+    '/brand/ignai/og-default.jpg',
+    NOTION_CONFIG
+  )
+  const routeUsesDefaultOg = [
+    '/',
+    '/members',
+    '/events',
+    '/records',
+    '/join',
+    '/about'
+  ].includes(router?.route)
 
   // SEO关键词
   const KEYWORDS = siteConfig('KEYWORDS')
@@ -47,16 +47,25 @@ const SEO = props => {
   }
   if (meta) {
     if (meta.slug) {
-      url = buildAbsoluteUrl(url, meta.slug)
+      url = /^https?:\/\//i.test(meta.slug)
+        ? siteUrl
+        : buildAbsoluteUrl(siteUrl, meta.slug)
     }
-    image = meta.image || siteInfo?.pageCover || '/bg_image.jpg'
+    image = routeUsesDefaultOg
+      ? defaultOgImage
+      : meta.image || siteInfo?.pageCover || defaultOgImage
   }
-  image = resolveSeoImage(image, LINK)
+  image = resolveSeoImage(
+    image,
+    siteUrl,
+    defaultOgImage
+  )
   const TITLE = siteConfig('TITLE')
-  const title = meta?.title || TITLE
-  const description = meta?.description || siteConfig('DESCRIPTION') || siteInfo?.description
+  const title = meta?.title || TITLE || 'IGNAI'
+  const description = meta?.description || siteConfig('DESCRIPTION') || siteInfo?.description || ''
   const type = meta?.type || 'website'
-  const lang = siteConfig('LANG').replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
+  const language = siteConfig('LANG', 'zh-CN')
+  const lang = language.replace('-', '_') // Facebook OpenGraph 要 zh_CN 這樣的格式才抓得到語言
   const category = meta?.category || KEYWORDS // section 主要是像是 category 這樣的分類，Facebook 用這個來抓連結的分類
   const favicon = siteConfig('BLOG_FAVICON')
   const BACKGROUND_DARK = siteConfig('BACKGROUND_DARK', '', NOTION_CONFIG)
@@ -72,8 +81,6 @@ const SEO = props => {
     null,
     NOTION_CONFIG
   )
-
-  const BLOG_FAVICON = siteConfig('BLOG_FAVICON', null, NOTION_CONFIG)
 
   const COMMENT_WEBMENTION_ENABLE = siteConfig(
     'COMMENT_WEBMENTION_ENABLE',
@@ -109,7 +116,14 @@ const SEO = props => {
         name='viewport'
         content='width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0'
       />
-      <meta name='robots' content='follow, index, max-snippet:-1, max-image-preview:large, max-video-preview:-1' />
+      <meta
+        name='robots'
+        content={
+          indexingPolicy.index
+            ? 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1'
+            : 'noindex, follow'
+        }
+      />
       <meta charSet='UTF-8' />
       <meta name='format-detection' content='telephone=no' />
       <meta name='mobile-web-app-capable' content='yes' />
@@ -138,7 +152,7 @@ const SEO = props => {
       <meta name='generator' content='NotionNext' />
 
       {/* 语言和地区 */}
-      <meta httpEquiv='content-language' content={siteConfig('LANG')} />
+      <meta httpEquiv='content-language' content={language} />
       <meta name='geo.region' content={siteConfig('GEO_REGION', 'CN')} />
       <meta name='geo.country' content={siteConfig('GEO_COUNTRY', 'CN')} />
       {/* Open Graph 元数据 */}
@@ -157,16 +171,25 @@ const SEO = props => {
       <link rel='canonical' href={url} />
 
       {/* Hreflang */}
-      <link rel='alternate' hrefLang='zh-CN' href={url} />
+      <link rel='alternate' hrefLang={language} href={url} />
       <link rel='alternate' hrefLang='x-default' href={url} />
 
       {/* RSS 发现 */}
-      <link rel='alternate' type='application/rss+xml' title='IGNAI RSS' href='/rss/feed.xml' />
+      <link
+        rel='alternate'
+        type='application/rss+xml'
+        title='IGNAI RSS'
+        href={buildAbsoluteUrl(siteUrl, 'rss/feed.xml')}
+      />
 
       {/* Twitter Card 元数据 */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta name='twitter:site' content={siteConfig('TWITTER_SITE', '')} />
-      <meta name='twitter:creator' content={siteConfig('TWITTER_CREATOR', '')} />
+      {siteConfig('TWITTER_SITE', '') && (
+        <meta name='twitter:site' content={siteConfig('TWITTER_SITE', '')} />
+      )}
+      {siteConfig('TWITTER_CREATOR', '') && (
+        <meta name='twitter:creator' content={siteConfig('TWITTER_CREATOR', '')} />
+      )}
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={image} />
@@ -201,15 +224,36 @@ const SEO = props => {
           <meta property='article:author' content={AUTHOR} />
           <meta property='article:section' content={category} />
           <meta property='article:tag' content={keywords} />
-          <meta property='article:publisher' content={FACEBOOK_PAGE} />
+          {FACEBOOK_PAGE && <meta property='article:publisher' content={FACEBOOK_PAGE} />}
         </>
       )}
 
       {/* 结构化数据 */}
       <script
+        id='ignai-structured-data'
         type='application/ld+json'
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(generateStructuredData(meta, siteInfo, url, image, AUTHOR))
+          __html: serializeJsonLd(
+            buildStructuredData({
+              route: router?.route,
+              meta: { ...meta, title, description, image },
+              siteInfo,
+              pageData: props,
+              url,
+              siteUrl,
+              siteTitle: TITLE,
+              siteDescription: description,
+              language,
+              author: AUTHOR,
+              logo: siteInfo?.icon || siteConfig('BLOG_FAVICON'),
+              sameAs: [
+                siteConfig('CONTACT_GITHUB', '', NOTION_CONFIG),
+                siteConfig('CONTACT_TWITTER', '', NOTION_CONFIG),
+                siteConfig('CONTACT_LINKEDIN', '', NOTION_CONFIG),
+                siteConfig('CONTACT_XIAOHONGSHU', '', NOTION_CONFIG)
+              ]
+            })
+          )
         }}
       />
 
@@ -225,87 +269,20 @@ const SEO = props => {
 }
 
 /**
- * 生成结构化数据
- * @param {*} meta
- * @param {*} siteInfo
- * @param {*} url
- * @param {*} image
- * @param {*} author
- * @returns
- */
-const generateStructuredData = (meta, siteInfo, url, image, author) => {
-  const siteTitle = siteConfig('TITLE') || siteInfo?.title
-  const siteDesc = siteConfig('DESCRIPTION') || siteInfo?.description
-  const baseData = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteTitle,
-    description: siteDesc,
-    url: siteConfig('LINK'),
-    author: {
-      '@type': 'Organization',
-      name: author
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: siteTitle,
-      logo: {
-        '@type': 'ImageObject',
-        url: siteInfo?.icon
-      }
-    }
-  }
-
-  // 如果是文章页面，添加文章结构化数据
-  if (meta?.type === 'Post') {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'BlogPosting',
-      headline: meta.title,
-      description: meta.description,
-      image: image,
-      url: url,
-      datePublished: meta.publishDay,
-      dateModified: meta.lastEditedDay || meta.publishDay,
-      author: {
-        '@type': 'Person',
-        name: author
-      },
-      publisher: {
-        '@type': 'Organization',
-        name: siteTitle,
-        logo: {
-          '@type': 'ImageObject',
-          url: siteInfo?.icon
-        }
-      },
-      mainEntityOfPage: {
-        '@type': 'WebPage',
-        '@id': url
-      },
-      keywords: meta.tags?.join(', '),
-      articleSection: meta.category
-    }
-  }
-
-  return baseData
-}
-
-/**
  * 获取SEO信息
  * @param {*} props
  * @param {*} router
  */
 const getSEOMeta = (props, router, locale) => {
   const { post, siteInfo, tag, category, page, pageTitle, pageDescription } = props
-  const keyword = router?.query?.s
+  const keyword = router?.query?.s || router?.query?.keyword
 
   const TITLE = siteConfig('TITLE')
   const DESCRIPTION = siteConfig('DESCRIPTION') || siteInfo?.description
   switch (router.route) {
     case '/':
       return {
-        title: `${TITLE} | ${DESCRIPTION}`,
+        title: `${TITLE} | 长沙 AI 社区`,
         description: DESCRIPTION,
         image: `${siteInfo?.pageCover}`,
         slug: '',
@@ -369,12 +346,15 @@ const getSEOMeta = (props, router, locale) => {
         type: 'website'
       }
     case '/members/[slug]':
+      {
+      const member = props.member || post
       return {
-        title: post?.title ? `${post.title} | ${TITLE}` : `成员 | ${TITLE}`,
-        description: post?.summary || post?.bio || DESCRIPTION,
-        image: post?.avatar || post?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
-        slug: post?.slug || `members/${router?.query?.slug || ''}`,
+        title: member?.title ? `${member.title} | ${TITLE}` : `成员 | ${TITLE}`,
+        description: member?.summary || member?.bio || DESCRIPTION,
+        image: member?.avatar || member?.pageCoverThumbnail || `${siteInfo?.pageCover}`,
+        slug: member?.slug || `members/${router?.query?.slug || ''}`,
         type: 'profile'
+      }
       }
     case '/events':
       return {
@@ -385,12 +365,19 @@ const getSEOMeta = (props, router, locale) => {
         type: 'website'
       }
     case '/events/[slug]':
+      {
+      const event = props.event
       return {
-        title: pageTitle || `活动 | ${TITLE}`,
-        description: pageDescription || DESCRIPTION,
-        image: `${siteInfo?.pageCover}`,
-        slug: `events/${router?.query?.slug || ''}`,
+        title: pageTitle || (event?.title ? `${event.title} | ${TITLE}` : `活动 | ${TITLE}`),
+        description: pageDescription || event?.excerpt || event?.subtitle || DESCRIPTION,
+        image: event?.cover || `${siteInfo?.pageCover}`,
+        slug: event?.slug
+          ? event.slug.startsWith('events/')
+            ? event.slug
+            : `events/${event.slug}`
+          : `events/${router?.query?.slug || ''}`,
         type: 'website'
+      }
       }
     case '/records':
       return {
@@ -401,12 +388,19 @@ const getSEOMeta = (props, router, locale) => {
         type: 'website'
       }
     case '/records/[slug]':
+      {
+      const record = props.record
       return {
-        title: pageTitle || `社区记录 | ${TITLE}`,
-        description: pageDescription || DESCRIPTION,
-        image: `${siteInfo?.pageCover}`,
-        slug: `records/${router?.query?.slug || ''}`,
+        title: pageTitle || (record?.title ? `${record.title} | ${TITLE}` : `社区记录 | ${TITLE}`),
+        description: pageDescription || record?.excerpt || DESCRIPTION,
+        image: record?.cover || `${siteInfo?.pageCover}`,
+        slug: record?.slug
+          ? record.slug.startsWith('records/')
+            ? record.slug
+            : `records/${record.slug}`
+          : `records/${router?.query?.slug || ''}`,
         type: 'article'
+      }
       }
     case '/join':
       return {

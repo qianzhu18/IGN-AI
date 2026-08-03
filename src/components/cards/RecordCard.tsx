@@ -40,7 +40,7 @@ export function RecordCard({ record, featured = false }: RecordCardProps) {
       <div className="px-5 sm:px-6">
         <img
           src={record.cover}
-          alt=""
+          alt={`${record.title} 社区记录封面`}
           className="aspect-[2.05] w-full rounded-lg border border-white/8 object-cover"
         />
       </div>

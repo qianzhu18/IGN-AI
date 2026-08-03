@@ -80,7 +80,7 @@
 生产级品质上线 + 持续上游贡献。
 
 ### 任务
-- [ ] SEO 优化（sitemap、RSS、正式 OG 图、结构化数据）
+- [x] SEO 优化（sitemap、RSS、正式 OG 图、结构化数据）代码层完成（2026-08-03）；待正式部署恢复后做线上 smoke
 - [ ] 轻量生产观测栈上线（PostHog Cloud + Clarity + Umami + UptimeRobot + Sentry / PostHog Error Tracking）
 - [ ] 国内访问优化（Vercel CNAME 或 Docker 部署）
 - [ ] 性能优化（图片压缩、ISR 缓存调优）

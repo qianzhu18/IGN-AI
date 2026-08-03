@@ -106,7 +106,7 @@ const RecordDetailPage = ({
             <div className='mt-10 overflow-hidden rounded-lg border border-white/10'>
               <img
                 src={record.cover}
-                alt=''
+                alt={`${record.title} 社区记录封面`}
                 className='aspect-[16/9] w-full object-cover'
               />
             </div>

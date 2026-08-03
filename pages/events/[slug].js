@@ -59,7 +59,7 @@ const EventDetailPage = ({
           {event.cover && (
             <img
               src={event.cover || getEventCoverFallback(event)}
-              alt=''
+              alt={`${event.title} 活动封面`}
               style={{ objectPosition: event.coverPosition || 'center' }}
               className='w-full rounded-lg object-cover aspect-[16/9] mb-8'
               onError={({ currentTarget }) => {

@@ -16,7 +16,7 @@ export function EventCard({ event }: EventCardProps) {
       <div className="relative overflow-hidden">
         <img
           src={event.cover}
-          alt=""
+          alt={`${event.title} 活动封面`}
           className="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-[1.03]"
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,6,10,0.06)_0%,rgba(4,6,10,0.18)_42%,rgba(4,6,10,0.82)_100%)]" />
