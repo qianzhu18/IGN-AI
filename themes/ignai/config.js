@@ -169,6 +169,7 @@ const CONFIG = {
         { title: '首页', href: '/' },
         { title: '活动', href: '/events' },
         { title: '社区现场', href: '/records' },
+        { title: '内容文章', href: '/archive' },
         { title: '关于社区', href: '/about' },
         { title: '加入我们', href: '/join' }
       ]
@@ -200,6 +201,7 @@ const CONFIG = {
   IGNAI_NAV_ITEMS: [
     { label: '活动', href: '/events' },
     { label: '社区现场', href: '/records' },
+    { label: '文章', href: '/archive' },
     { label: '关于 IGNAI', href: '/about' }
   ],
 
